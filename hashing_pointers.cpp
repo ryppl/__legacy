@@ -6,7 +6,7 @@ namespace detail {
     {
 	size_t operator()( const std::type_info* p) const
 	{
-	    return (reinterpret_cast<size_t>(p) >> sizeof(void*)) & hash_mask;
+	    return (reinterpret_cast<size_t>(p) >> 6) & hash_mask;
 	}
     };
 }
