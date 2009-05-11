@@ -1,3 +1,9 @@
+//
+// pointers point to things that are aligned on certain
+// boundaries... you can hash them by chopping off the zero bits on
+// the right.  Found this on the net somewhere.
+//
+//
 namespace detail {
     const unsigned nbuckets = 1024; 
     const unsigned hash_mask = nbuckets-1; // 0x3FF if nbuckets is 1024
