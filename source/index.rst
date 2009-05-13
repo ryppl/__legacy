@@ -372,6 +372,20 @@ have yourself a hack:
   Branch myfeature set up to track remote branch refs/remotes/origin/release.
   Switched to a new branch "myfeature"
 
+Get files from another branch
+-----------------------------
+
+This one is dead easy.  You just check them out.  Say a couple of
+files exist on branch *allmystuff*, but not on branch
+*sentinel-iterator*.  For instance, you've got tons of things going on
+*allmystuff* and now want to make the just sentinel iterator specific
+stuff available to the world.  You make a branch of upstream svn::
+
+  % git checkout -b sentinel-iterator svn/release
+  % git checkout allmystuff libs/sentinel-iterator
+
+At this point git status will show new files on your local branch.
+
 How this was all set up
 =======================
 
