@@ -11,7 +11,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
+import sys, os, subprocess
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -22,9 +22,8 @@ sys.path.append(os.path.abspath('.'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.ifconfig', 'sphinx.ext.todo']
+extensions = ['sphinx.ext.ifconfig', 'sphinx.ext.todo', 'GitLexer']
 todo_include_todos = True
-
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -35,12 +34,23 @@ source_suffix = '.rst'
 # The encoding of source files.
 #source_encoding = 'utf-8'
 
+show_sphinx = False
+
 # The master toctree document.
 master_doc = 'index'
 
 # General information about the project.
-project = u'gitting boost'
-copyright = u'2009, troy d. straszheim'
+project = u'Hacking Boost via Git'
+gitcmd = 'git log -n1 --pretty=format:%cD'.split()
+print gitcmd
+
+lastmod = subprocess.Popen(gitcmd, stdout=subprocess.PIPE).communicate()[0]
+dochash = subprocess.Popen('git log -n1 --pretty=format:%H'.split(),
+                           stdout=subprocess.PIPE).communicate()[0]
+
+copyright.version = "BLAMMO"
+
+copyright = u'2009, troy d. straszheim -- ' + ' Version ' + dochash + ", " + ' '.join(lastmod.split(' ')[:4])
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -80,7 +90,7 @@ exclude_trees = []
 
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
-#show_authors = False
+show_authors = True
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -126,7 +136,10 @@ html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-#html_last_updated_fmt = '%b %d, %Y'
+#
+# tds: We don't use this, we use the git timestamp
+#
+# html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
