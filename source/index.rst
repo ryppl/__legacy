@@ -4,11 +4,12 @@ Hacking Boost via Git
 =====================
 
 As of this writing (|today|) *there is no serious proposal to switch
-primary source control for boost away from subversion to git* and this
+main source control for boost away from subversion to git* and this
 document does not constitute such a proposal.
 
-But it may become such a proposal.  This document intends to 
+But it may become such a proposal.  This document intends to
 
+* propose a superior alternative to current sandbox/vault practice
 * establish what best practices would be
 * provide a demonstration of the system 
 * foment discontent
@@ -557,10 +558,6 @@ and have some local changes.  As an example I'll pull some
 You can easily format a patch to transform the svn trunk into your current branch::
 
   % git diff -p svn/master
-
-it looks like this::
-
-  % git diff -p svn/master
   diff --git a/CMakeLists.txt b/CMakeLists.txt
   index 5e521ad..e4ddc93 100644
   --- a/CMakeLists.txt
@@ -639,109 +636,91 @@ Buuuut svn doesn't know what to do with these things.  I suppose you'd
 have to write a little script to apply the patches and commit them
 with their original log messages.  
 
-Other things to try
-===================
+Various HOWTOS
+==============
 
-- make branches of the trunk and release and diff them, something rather 
-  time consuming with subversion:
+Diff trunk and release
+----------------------
+
+This is rather time consuming with subversion (I don't seem to be able
+to do it at all, apparently due to network timeouts):
   
-  SVN version::
+**SVN version**::
   
     % svn diff http://svn.boost.org/svn/boost/branches/release http://svn.boost.org/svn/boost/trunk > svndiff
     svn: Caught signal
     svn: Error reading spooled REPORT request response
     [1]  + exit 1     svn diff http://svn.boost.org/svn/boost/branches/release  > svndiff
       
-  GIT version::
+**GIT version** (sooooo fast)::
   
-    % git checkout -b local_trunk origin/trunk
-    Branch local_trunk set up to track remote branch refs/remotes/origin/trunk.
-    Switched to a new branch "local_trunk"
+    % git diff --stat svn/release svn/master
+    CMakeLists.txt                                     |   66 +-
+    CTestConfig.cmake                                  |    2 +-
+    Welcome.txt                                        |    7 +
+    boost-build.jam                                    |    1 +
+    boost/aligned_storage.hpp                          |   25 +-
+    ...
+    tools/release/snapshot_windows.sh                  |   23 +-
+    tools/release/strftime.cpp                         |   68 +
+    tools/wave/cpp.cpp                                 |    6 +-
+    3416 files changed, 199432 insertions(+), 56085 deletions(-)
 
-    % git diff local_trunk my_release_branch | wc -l
-    250605
+    % time git diff svn/release svn/master > /dev/null
+    git diff svn/release svn/master > /dev/null  0.81s user 0.03s system 100% cpu 0.839 total
 
-    % time git diff local_trunk my_release_branch >/dev/null
-    git diff local_trunk my_release_branch > /dev/null  0.70s user 0.02s system 99% cpu 0.724 total
-
-  250k Lines!
+  That's a big diff.
   
-- Go to the cgit front end at http://sodium.resophonic.com/git/boost/,
-  select 'release' from the top right pulldown, hit switch, type
-  'beman' into the search box below it, choose 'log msg', hit search,
-  and within an instant, see all commits mentioning beman on the
-  release branch.  (Some won't mention Beman in the short message.
-  Hit expand, and in the blink of an eye, see the full text.)
+Track a particular branch
+-------------------------
 
-Various HOWTOS
-==============
+The main repository's branch namespace is badly polluted.  Say you're
+interested in playing with things on the cpp0x branch.  This is
+mirrored over in the sodium.resophonic.com repository (this could also
+be mirrored to gitorious).  In your clone (it doesn't need to have
+started with a clone from sodium.resophonic.com, a gitosis one will do).
+First find the interesting branch with ``ls-remote`` and ``grep``::
 
-Track only certain branches
----------------------------
+  % git ls-remote git://sodium.resophonic.com/boost | grep cpp
+  c65edc0dce094b990b55955ed9dd1ede1885d360        refs/heads/cpp0x
 
-The main repository's branch namespace is badly polluted.  If you're
-interested in, say, only ``trunk``, ``release``, and the latest
-release tag, do::
+And add the remote, specifying the branch::
 
-  % mkdir -p boost/src
-  % cd boost/src
-  % git init
-  % git remote add -t trunk -t release -t tags/Boost_1_39_0 origin git://sodium.resophonic.com/boost
+  % git add remote sodium git://sodium.resophonic.com/boost -t cpp0x
 
-Nothing will get downloaded, but your git repository now has some
-internal pointers to the upstream git mirror::
+Fetch yourself the changes::
 
-  % cat .git/config 
-  cat .git/config 
-  [core]
-  	repositoryformatversion = 0
-  	filemode = true
-  	bare = false
-  	logallrefupdates = true
-  [remote "origin"]
-  	url = git://sodium.resophonic.com/boost
-  	fetch = +refs/heads/trunk:refs/remotes/origin/trunk
-  	fetch = +refs/heads/release:refs/remotes/origin/release
-  	fetch = +refs/heads/tags/Boost_1_39_0:refs/remotes/origin/tags/Boost_1_39_0
-
-Then tell git to fetch the relevant code::
-
-  % git fetch
-  warning: no common commits
-  remote: Counting objects: 387996, done.
-  remote: Compressing objects: 100% (119496/119496), done.
-  Receiving objects: 100% (387996/387996), 123.74 MiB | 210 KiB/s, done.
-  Resolving deltas: 100% (273366/273366), done.
+  % git fetch sodium
+  remote: Counting objects: 371, done.
+  remote: Compressing objects: 100% (131/131), done.
+  remote: Total 270 (delta 192), reused 208 (delta 138)
+  Receiving objects: 100% (270/270), 95.71 KiB, done.
+  Resolving deltas: 100% (192/192), completed with 35 local objects.
   From git://sodium.resophonic.com/boost
-   * [new branch]      trunk      -> origin/trunk
-   * [new branch]      release    -> origin/release
-   * [new branch]      tags/Boost_1_39_0 -> origin/tags/Boost_1_39_0
+   * [new branch]      cpp0x      -> sodium/cpp0x
+
+Check it out and see what has been happening::
+
+  % git checkout -b my_0x sodium/cpp0x
+  Branch my_0x set up to track remote branch refs/remotes/sodium/cpp0x.
+  Switched to a new branch "my_0x"
+  % git log
+  commit c65edc0dce094b990b55955ed9dd1ede1885d360
+  Author: bemandawes <bemandawes@b8fc166d-592f-0410-95f2-cb63ce0dd405>
+  Date:   Sat Feb 21 13:31:16 2009 +0000
   
-This will take a while, but the size of the repository will be
-somewhat smaller than if you just clone the entire thing, and your
-local branch namespace will be significantly less polluted:
-
-  % git branch -a
-    origin/release
-    origin/tags/Boost_1_39_0
-    origin/trunk
-
-at this point nothing is checked out::
-
-  % git branch -l
-  (no output)
-
-So check out a branch and have yourself a hack.  In this case to
-maintain the proposed Boost.Process library against the relesae
-branch.  We're calling it *feature*\ ``_priv`` for reasons explained in
-:ref:`rebase_vs_merge` ::
-
-  % git checkout -b release_plus_process_priv origin/release
-  warning: You appear to be on a branch yet to be born.
-  warning: Forcing checkout of origin/release.
-  Checking out files: 100% (22185/22185), done.
-  Branch release_plus_process_priv set up to track remote branch refs/remotes/origin/release.
-  Switched to a new branch "release_plus_process_priv"
+      Rebuild docs
+      
+      git-svn-id: http://svn.boost.org/svn/boost/branches/cpp0x@51363 b8fc166d-592f-0410-95f2-cb63ce0dd405
+  
+  commit 2605f00422d11957b9e1e305a8317cfb88e56d40
+  Author: bemandawes <bemandawes@b8fc166d-592f-0410-95f2-cb63ce0dd405>
+  Date:   Sat Feb 21 12:29:29 2009 +0000
+  
+      Both regular and 'all' tests passing
+      
+      git-svn-id: http://svn.boost.org/svn/boost/branches/cpp0x@51362 b8fc166d-592f-0410-95f2-cb63ce0dd405
+  ...
 
 Get files from another branch
 -----------------------------
@@ -760,8 +739,8 @@ At this point git status will show new files on your local branch.
 How this was all set up
 =======================
 
-This is a several-step and very time-consuming process.  I have plans
-to modify this to push to a repository on `gitorious.org <http://gitorious.org>`_
+For historical interest.  This is a several-step and very
+time-consuming process.  
 
 * git-svn clone the original repository, to a private location (not
   where cgit can see it)::
@@ -805,6 +784,14 @@ to modify this to push to a repository on `gitorious.org <http://gitorious.org>`
 * Point your cgit at /var/git/boost (the one getting pushed to, not
   the one doing the fetching).
 
+About this documentation
+========================
+
+This documentation is written in `reStructuredText
+<http://docutils.sourceforge.net/rst.html>`_ and assembled by `Sphinx
+<http://sphinx.pocoo.org>`_.  You can get the source from the
+``boost-git-docs`` branch of the git repository at
+``git://sodium.resophonic.com/boost_cookbook``.  
 
 .. rubric:: Footnotes
 
@@ -813,3 +800,8 @@ to modify this to push to a repository on `gitorious.org <http://gitorious.org>`
    		 ``git diff origin/release | (cd /tmp/svn ;
    		 patch -p1)``
 
+.. rubric:: Why does the logo at the top say *unauthorized*?
+
+Because the content is neither official boost (ie having passed
+code review and been accepted) nor *proposed*.  I suppose I could
+have used "fringe" as well.
