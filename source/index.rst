@@ -40,7 +40,7 @@ Register and make a clone on gitorious
 
 * Find the link on the right that says "Clone this repository on
   Gitorious".  This is where you will push your code to for public
-  consumption.  I've chosen to name it "straszheim-sandbox" for the
+  consumption.  I've chosen to name it "straszheim" for the
   purposes of this documentation.  This repository is now listed as a
   clone on the main boost page.
 
@@ -52,8 +52,8 @@ Clone your clone to your local machine
 Clone to your local machine via the 'push url' (there's a little
 questionmark box there that shows you the command)::
 
-  % git clone git@gitorious.org:~straszheim/boost/straszheim-sandbox.git
-  Initialized empty Git repository in /tmp/straszheim-sandbox/.git/
+  % git clone git@gitorious.org:~straszheim/boost/straszheim.git
+  Initialized empty Git repository in /tmp/straszheim/.git/
   remote: Counting objects: 389544, done.
   remote: Compressing objects: 100% (123052/123052), done.
   remote: Total 389544 (delta 269483), reused 383698 (delta 263651)
@@ -83,7 +83,7 @@ directory,
           bare = false
           logallrefupdates = true
   [remote "origin"]
-          url = git@gitorious.org:~straszheim/boost/straszheim-sandbox.git
+          url = git@gitorious.org:~straszheim/boost/straszheim.git
           fetch = +refs/heads/*:refs/remotes/origin/*
   [branch "master"]
       remote = origin
@@ -141,7 +141,7 @@ url::
 You can have a look at them::
 
   % git remote -v
-  origin  git@gitorious.org:~straszheim/boost/straszheim-sandbox.git
+  origin  git@gitorious.org:~straszheim/boost/straszheim.git
   svn     git://gitorious.org/boost/svn.git
   
 Also notice that the following lines have appeared in your
@@ -318,7 +318,7 @@ and recommit::
 
 So note that our commit comes after danieljames' 26a0f19....
 
-.. straszheim-sandbox.process.tar.gz
+.. straszheim.process.tar.gz
 
 Rebase
 ^^^^^^
@@ -422,7 +422,7 @@ and we push this branch up to our git clone at gitorious::
   Compressing objects: 100% (191/191), done.
   Writing objects: 100% (192/192), 124.68 KiB, done.
   Total 192 (delta 117), reused 0 (delta 0)
-  To git@gitorious.org:~straszheim/boost/straszheim-sandbox.git
+  To git@gitorious.org:~straszheim/boost/straszheim.git
    * [new branch]      trunk_process_pub -> trunk_process
   => Syncing Gitorious... [OK]
 
@@ -433,7 +433,7 @@ simply ``frombranch:tobranch``, or from local branch
 announce the availablility and location of the hacks.
 
 You can browse the *trunk_process* branch at 
-http://gitorious.org/~straszheim/boost/straszheim-sandbox/commits/trunk_process
+http://gitorious.org/~straszheim/boost/straszheim/commits/trunk_process
 
 Lather, rinse, repeat
 ^^^^^^^^^^^^^^^^^^^^^
@@ -793,6 +793,12 @@ This documentation is written in `reStructuredText
 ``boost-git-docs`` branch of the git repository at
 ``git://sodium.resophonic.com/boost_cookbook``.  
 
+.. rubric:: Why does the logo at the top say *unauthorized*?
+
+Because the content is neither official boost (ie having passed
+code review and been accepted) nor *proposed*.  I suppose I could
+have used "fringe" as well.
+
 .. rubric:: Footnotes
 
 .. [#quickpatch] A quicker way, if you keep a clean subversion
@@ -800,8 +806,3 @@ This documentation is written in `reStructuredText
    		 ``git diff origin/release | (cd /tmp/svn ;
    		 patch -p1)``
 
-.. rubric:: Why does the logo at the top say *unauthorized*?
-
-Because the content is neither official boost (ie having passed
-code review and been accepted) nor *proposed*.  I suppose I could
-have used "fringe" as well.
