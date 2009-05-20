@@ -1,3 +1,5 @@
+.. highlight:: git_shell
+
 SVN Command equivalents
 =======================
 

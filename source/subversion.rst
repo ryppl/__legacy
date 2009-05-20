@@ -1,3 +1,4 @@
+.. highlight:: git_shell
 
 Committing back to subversion
 =============================

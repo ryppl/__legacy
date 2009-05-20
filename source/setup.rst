@@ -1,5 +1,4 @@
-   
-
+.. highlight:: git_shell
 
 Getting started
 ---------------
