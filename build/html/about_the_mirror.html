@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How this was all set up &mdash; Gitting boost</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Gitting boost" href="index.html" />
+    <link rel="prev" title="Various HOWTOS" href="various_howtos.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="various_howtos.html" title="Various HOWTOS"
+             accesskey="P">previous</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="index.html">Gitting boost</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/boost-small.png" alt="Logo"/>
+            </a></p>
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="various_howtos.html"
+                                  title="previous chapter">Various HOWTOS</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/about_the_mirror.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-this-was-all-set-up">
+<h1>How this was all set up<a class="headerlink" href="#how-this-was-all-set-up" title="Permalink to this headline">¶</a></h1>
+<p>For historical interest.  This is a several-step and very
+time-consuming process.</p>
+<ul>
+<li><p class="first">git-svn clone the original repository, to a private location (not
+where cgit can see it):</p>
+<div class="highlight-python"><pre>% git svn clone http://svn.boost.org/svn/boost --no-checkout -Ttrunk -ttags/release -bbranches /path/to/boost_gitsvn</pre>
+</div>
+<p>The only thing allowed to touch /path/to/boost-gitsvn is a cronjob.
+Nobody pushes to this repository.</p>
+</li>
+<li><p class="first">Next create a bare repository someplace where cgit can see it (this
+is what people will clone from):</p>
+<div class="highlight-python"><pre>% mkdir /var/git/boost
+% cd /var/git/boost
+% git init --bare</pre>
+</div>
+</li>
+<li><p class="first">Create your cronjob script, containing the following:</p>
+<div class="highlight-python"><pre>% cd /path/to/boost_gitsvn
+% git svn fetch
+% git push /var/git/boost 'refs/remotes/*:refs/heads/*' 2&gt;&amp;1 | grep -v 'Everything up-to-date'
+% git push gitorious refs/remotes/trunk:refs/heads/master
+# and so on for other branches mirrored to gitorious</pre>
+</div>
+<p>which moves the gitsvn branches into the local namespace of the
+/var/git/boost repository.  The <tt class="docutils literal"><span class="pre">grep</span> <span class="pre">-v</span></tt> keeps you from getting
+email when there is nothing to do.  Note: thanks doener from
+freenode:#git!</p>
+</li>
+<li><p class="first">Now run that cronjob.  It should happily fetch and push.  Set that
+script to run every so often.</p>
+</li>
+<li><p class="first">Now, the repository that you&#8217;re pushing svn commits to,
+<tt class="docutils literal"><span class="pre">/var/git/boost</span></tt>, doesn&#8217;t have a &#8216;master&#8217;.  This will give the
+uninitiated a confusing error when cloning the repository.  Solve
+the problem by making &#8216;trunk&#8217; act like master like this:</p>
+<div class="highlight-python"><pre>% cd /var/git/boost
+% git symbolic-ref HEAD refs/heads/trunk</pre>
+</div>
+</li>
+<li><p class="first">Point your cgit at /var/git/boost (the one getting pushed to, not
+the one doing the fetching).</p>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="various_howtos.html" title="Various HOWTOS"
+             >previous</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="index.html">Gitting boost</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, troy d. straszheim --  Version 4fda2016a1c5780c032675b9c4754dd0f3f413ce, Thu, 15 Oct 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

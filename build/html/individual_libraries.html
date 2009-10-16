@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Building individual libraries with cmake &mdash; Boost.CMake</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Boost.CMake" href="index.html" />
+    <link rel="next" title="Adding a Boost Library" href="add_boost_library.html" />
+    <link rel="prev" title="Testing" href="testing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="add_boost_library.html" title="Adding a Boost Library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="testing.html" title="Testing"
+             accesskey="P">previous</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="index.html">Boost.CMake</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/boost-small.png" alt="Logo"/>
+            </a></p>
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference" href="">Building individual libraries with cmake</a><ul>
+<li><a class="reference" href="#preprocessing">Preprocessing</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="testing.html"
+                                  title="previous chapter">Testing</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="add_boost_library.html"
+                                  title="next chapter">Adding a Boost Library</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/individual_libraries.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="building-individual-libraries-with-cmake">
+<h1>Building individual libraries with cmake<a class="headerlink" href="#building-individual-libraries-with-cmake" title="Permalink to this headline">¶</a></h1>
+<p>In a configured cmake workspace, <tt class="docutils literal"><span class="pre">make</span> <span class="pre">help</span></tt> will display a list of available targets.  Example:</p>
+<div class="highlight-python"><pre>% make help
+The following are some of the valid targets for this Makefile:
+... all (the default if no target is provided)
+... clean
+... depend
+... edit_cache
+... install
+... install/local
+... install/strip
+... list_install_components
+... package
+... package_source
+... rebuild_cache
+... boost_date_time
+... boost_date_time-mt-shared
+... boost_date_time-mt-shared-debug
+... boost_date_time-mt-static
+... boost_date_time-mt-static-debug
+... boost_date_time-shared
+... boost_date_time-shared-debug
+... boost_date_time-static
+... boost_date_time-static-debug
+... boost_filesystem
+... boost_filesystem-mt-shared
+... boost_filesystem-mt-shared-debug
+... boost_filesystem-mt-static
+... boost_filesystem-mt-static-debug
+... boost_filesystem-shared
+... boost_filesystem-shared-debug
+... boost_filesystem-static
+... boost_filesystem-static-debug
+[etc]</pre>
+</div>
+<p>You can build any target by passing it as an argument:</p>
+<div class="highlight-python"><pre>% make boost_signals-static
+[  0%] Building CXX object libs/signals/src/CMakeFiles/boost_signals-static.dir/trackable.cpp.o
+[  0%] Building CXX object libs/signals/src/CMakeFiles/boost_signals-static.dir/connection.cpp.o
+[100%] Building CXX object libs/signals/src/CMakeFiles/boost_signals-static.dir/named_slot_map.cpp.o
+[100%] Building CXX object libs/signals/src/CMakeFiles/boost_signals-static.dir/signal_base.cpp.o
+[100%] Building CXX object libs/signals/src/CMakeFiles/boost_signals-static.dir/slot.cpp.o
+Linking CXX static library ../../../lib/libboost_signals-gcc41-1_35.a
+[100%] Built target boost_signals-static</pre>
+</div>
+<div class="section" id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>In build directories corresponding to a source library containing a
+<tt class="docutils literal"><span class="pre">CMakeLists.txt</span></tt> containing a <tt class="docutils literal"><span class="pre">boost_add_library</span></tt> invocation
+(e.g. <tt class="docutils literal"><span class="pre">build/libs/signals/src,</span> <span class="pre">build/libs/filesystem/src</span></tt>), more
+detailed targets are available:</p>
+<div class="highlight-python"><pre>% cd libs/signals/src
+% make help
+The following are some of the valid targets for this Makefile:
+  [many omitted]
+... signal_base.o
+... signal_base.i
+... signal_base.s
+... slot.o
+... slot.i
+... slot.s</pre>
+</div>
+<p>making <tt class="docutils literal"><span class="pre">slot.i</span></tt> will run <tt class="docutils literal"><span class="pre">slot.cpp</span></tt> through the preprocessor:</p>
+<div class="highlight-python"><pre>% make slot.i
+Preprocessing CXX source to CMakeFiles/boost_signals-mt-shared.dir/slot.cpp.i</pre>
+</div>
+<p>If you are always interested in seeing the compiler flags you can
+enable <tt class="docutils literal"><span class="pre">CMAKE_VERBOSE_MAKEFILES</span></tt> via <tt class="docutils literal"><span class="pre">ccmake</span></tt>, or for a one-off
+just pass <tt class="docutils literal"><span class="pre">VERBOSE=1</span></tt> on the command line:</p>
+<div class="highlight-python"><pre>% make VERBOSE=1 slot.i
+make[1]: Entering directory `/home/troy/Projects/boost/branches/CMake/Boost_1_35_0-build'
+Preprocessing CXX source to CMakeFiles/boost_signals-mt-shared.dir/slot.cpp.i
+cd /home/troy/Projects/boost/branches/CMake/Boost_1_35_0-build/libs/signals/src &amp;&amp; /usr/bin/gcc-4.1
+-DBOOST_ALL_NO_LIB=1 -DBOOST_SIGNALS_NO_LIB=1 -Dboost_signals_mt_shared_EXPORTS -fPIC
+-I/home/troy/Projects/boost/branches/CMake/Boost_1_35_0     -O3 -DNDEBUG -DBOOST_SIGNALS_DYN_LINK=1
+-pthread -D_REENTRANT -E /home/troy/Projects/boost/branches/CMake/Boost_1_35_0/libs/signals/src/slot.cpp &gt; CMakeFiles/boost_signals-mt-shared.dir/slot.cpp.i</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="add_boost_library.html" title="Adding a Boost Library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="testing.html" title="Testing"
+             >previous</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="index.html">Boost.CMake</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008-2009, Troy D. Straszheim, 2008 Douglas Gregor --  Version 07d7900cc9968efd033c321ccb373459888dae67, Thu, 21 May 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6b1.
+    </div>
+  </body>
+</html>

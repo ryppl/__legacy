@@ -1,0 +1,179 @@
+.. _configure_and_build:
+
+Configuring the buildspace
+===========================
+
+Setting the compiler
+--------------------
+
+See :ref:`setting_the_compiler` below.
+
+Configuration tools
+-------------------
+
+Included in the standard cmake distribution are the Windows `CMake`
+gui and the unix `ccmake` curses interface, which allow one to
+configure various aspects of the cmake build.  On Microsoft Windows
+run the CMake configuration program from the Start menu.  On unix, run
+::
+
+  ccmake <path-to-source>
+
+where `ccmake` will be in CMake's binary directory.  If you have not
+yet run `cmake` in this directory, you will see an empty list of
+options::
+
+                                                       Page 0 of 1
+   EMPTY CACHE
+  
+  EMPTY CACHE:                                                                                   
+  Press [enter] to edit option         CMake Version 2.6 - patch 0
+  Press [c] to configure
+  Press [h] for help         Press [q] to quit without generating
+  Press [t] to toggle advanced mode (Currently Off)
+  
+
+After pressing `c` to configure, (or if you've run `cmake` already),
+You will be presented with a list of editable build options something
+like this::
+
+   BUILD_BOOST_DATE_TIME            ON                                                        
+   BUILD_BOOST_FILESYSTEM           ON                                                        
+   BUILD_BOOST_GRAPH                ON                                                        
+   BUILD_BOOST_IOSTREAMS            ON                                                        
+   BUILD_BOOST_PROGRAM_OPTIONS      ON                                                        
+   BUILD_BOOST_PYTHON               ON                                                        
+   BUILD_BOOST_REGEX                ON                                                        
+   BUILD_BOOST_SERIALIZATION        ON                                                        
+   BUILD_BOOST_SIGNALS              ON                                                        
+   BUILD_BOOST_TEST                 ON                                                        
+   BUILD_BOOST_THREAD               ON                                                        
+   BUILD_BOOST_WAVE                 ON                                                        
+   BUILD_BOOST_WSERIALIZATION       ON                                                        
+   BUILD_DEBUG                      ON                                                        
+   BUILD_MULTI_THREADED             ON                                                        
+   BUILD_RELEASE                    ON                                                        
+   BUILD_SHARED                     ON                                                        
+   BUILD_SINGLE_THREADED            ON                                                        
+   BUILD_STATIC                     ON                                                        
+   BUILD_REGRESSION_TESTS           OFF                                                       
+   BUILD_VERSIONED                  ON                                                        
+   CMAKE_BACKWARDS_COMPATIBILITY    2.4                                                       
+   CMAKE_BUILD_TYPE                                                                           
+   CMAKE_INSTALL_PREFIX             /usr/local                                                
+   DEBUG_COMPILE_FLAGS              -g                                                        
+   EXECUTABLE_OUTPUT_PATH                                                                     
+   LIBRARY_OUTPUT_PATH                                                                        
+   PYTHON_EXECUTABLE                /usr/bin/python2.4                                        
+   PYTHON_INCLUDE_PATH              /usr/include/python2.4                                    
+   PYTHON_LIBRARY                   /usr/lib/python2.4/config/libpython2.4.so                 
+   RELEASE_COMPILE_FLAGS            -O3 -DNDEBUG                                              
+  
+  
+  BUILD_VERSIONED: Use versioned library names, e.g., boost_filesystem-gcc41-1_34              
+  Press [enter] to edit option                        CMake Version 2.4 - patch 5
+  Press [c] to configure     Press [g] to generate and exit
+  Press [h] for help         Press [q] to quit without generating
+  Press [t] to toggle advanced mode (Currently Off)
+
+   
+Use the arrow keys to select particular options.  Press :kbd:`c`
+(for (c)onfigure) to perform the preliminary configuration of the
+CMake build system when you are done.  When the options you have
+selected have stabilized, CMake will give you the (g)enerate
+option. If you do not see this option, press :kbd:`c` again to
+reconfigure.  Try the :kbd:`t` key to see more options.  When
+you're done press :kbd:`g` to generate makefiles and exit.
+
+CMakeCache.txt
+==============
+
+The same information is stored in a file `CMakeCache.txt` located in
+the build directory.  For this reason, after you've done the initial
+configuration of a build directory you can invoke `ccmake` like this::
+
+  ccmake <path-to-build>
+
+or have the makefiles do it for you::
+
+  make edit_cache
+
+The CMakeCache.txt file is hand-editable, though this is usually not
+as convenient as the cmake-supplied configuration tools mentioned
+above.  An excerpt of this file::
+
+  //
+  // Enable/Disable color output during build.
+  //
+  CMAKE_COLOR_MAKEFILE:BOOL=ON
+  
+  //
+  // Use versioned library names, e.g., boost_filesystem-gcc41-1_34
+  //
+  BUILD_VERSIONED:BOOL=ON
+  
+
+On unix, (?windows too?) the generated makefiles will detect if this
+file has been edited and will automatically rerun the makefile
+generation phase.  If you should need to trigger this regeneration
+manually you may execute ::
+
+  make rebuild_cache
+
+
+Useful options
+--------------
+
+More detail on some of these options is available elsewhere.  But here is a summary:
+
+``BUILD_VERSIONED``       	 
+
+  Toggles mangling of compiler name and boost version into library names
+
+``BUILD_REGRESSION_TESTS``
+
+  Toggles build of regression tests
+
+``BUILD_``\ *feature*
+
+  Toggles build of feature *feature*, where *feature* comes from the
+  list found at *FIXME*, e.g. ``BUILD_RELEASE``, ``BUILD_DEBUG``,
+  ``BUILD_MULTI_THREADED``, etc.
+
+``BUILD_BOOST_``\ *library*
+
+  Toggles building and testing of *library* (e.g. this will appear as
+  ``BUILD_BOOST_REGEX``, ``BUILD_BOOST_PROGRAM_OPTIONS``, etc.
+
+``TEST_BOOST_``\ *library* 	 
+
+  Toggles testing of ''library'' (this option appears only if
+  ``BUILD_BOOST``\_''library'' and ``BUILD_REGRESSION_TESTS`` are enabled.  See
+  *fixme*.
+
+``CMAKE_OSX_ARCHITECTURES`` 	 
+
+  *Mac OS X users*: to build universal binaries, set this to
+   ``ppc;i386``.
+
+.. _setting_the_compiler:
+
+Advanced options
+----------------
+
+``ccmake`` provides the keystroke option ``t`` which toggles advanced mode.  Some of the useful options here are:
+
+``CMAKE_VERBOSE_MAKEFILE``  
+
+  Displays full build commands during build.  Good for debugging.
+  Advanced option: use ``t`` to toggle display of this option and
+  others.  On unix, you can also build verbose by passing the command
+  line option VERBOSE=1 to your ``make`` invocation.
+
+``CMAKE_CXX_COMPILER``      
+
+  Sets the compiler.  If you have a nonstandard compiler and no
+  default compiler, you may have to pass the value of this option on
+  the commandline.
+
+

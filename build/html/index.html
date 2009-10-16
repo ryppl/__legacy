@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Hacking Boost via Git &mdash; Gitting boost</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Gitting boost" href="" />
+    <link rel="next" title="Getting started" href="setup.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="setup.html" title="Getting started"
+             accesskey="N">next</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="">Gitting boost</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="">
+              <img class="logo" src="_static/boost-small.png" alt="Logo"/>
+            </a></p>
+            <h3><a href="">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Hacking Boost via Git</a></li>
+<li><a class="reference external" href="#id1">Contents</a><ul>
+</ul>
+</li>
+<li><a class="reference external" href="#about-this-documentation">About this documentation</a></li>
+</ul>
+
+            <h4>Next topic</h4>
+            <p class="topless"><a href="setup.html"
+                                  title="next chapter">Getting started</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="hacking-boost-via-git">
+<span id="contents"></span><h1>Hacking Boost via Git<a class="headerlink" href="#hacking-boost-via-git" title="Permalink to this headline">¶</a></h1>
+<p>As of this writing (October 15, 2009) this is not <em>yet</em> a proposal to switch
+main source control for boost away from subversion to git.  In the
+meantime, this evolving document intends to</p>
+<ul class="simple">
+<li>provide a demonstration of the system and a &#8220;try it out&#8221; process for
+the curious</li>
+<li>propose a superior alternative to current sandbox/vault practice</li>
+<li>establish best practices for those who are already hacking boost via
+git</li>
+<li>serve as a reference point for discussion and experimentation</li>
+</ul>
+<p class="rubric">Highly recommended reading:</p>
+<p>Thanks to the folks on freenode&#8217;s #git:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://ftp.newartisans.com/pub/git.from.bottom.up.pdf">Git from the bottom up</a> (See also the links at the end of this document).</li>
+<li><a class="reference external" href="http://eagain.net/articles/git-for-computer-scientists/">Git for Computer Scientists</a></li>
+<li><a class="reference external" href="http://git-scm.com">Git home page</a></li>
+</ul>
+<p class="rubric">YouTube:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.youtube.com/watch?v=4XpnKHJAok8">Linus Torvalds on Git</a> the now famous Google
+Tech Talk.  A must-watch.</li>
+<li><a class="reference external" href="http://www.youtube.com/watch?v=j45cs5_nY2k">Contributing with Git</a> Johannes Schindelin&#8217;s
+Google Tech Talk.  Good for beginners.</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1>Contents<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="setup.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference external" href="setup.html#register-and-make-a-clone-on-gitorious">Register and make a clone on gitorious</a></li>
+<li class="toctree-l2"><a class="reference external" href="setup.html#clone-your-clone-to-your-local-machine">Clone your clone to your local machine</a></li>
+<li class="toctree-l2"><a class="reference external" href="setup.html#add-a-remote-for-svn">Add a remote for svn</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="development.html">Do some development</a><ul>
+<li class="toctree-l2"><a class="reference external" href="development.html#make-a-local-feature-branch">Make a local &#8220;feature&#8221; branch</a></li>
+<li class="toctree-l2"><a class="reference external" href="development.html#hack-hack">Hack hack</a></li>
+<li class="toctree-l2"><a class="reference external" href="development.html#redo-a-bad-commit">Redo a bad commit</a></li>
+<li class="toctree-l2"><a class="reference external" href="development.html#rebase">Rebase</a></li>
+<li class="toctree-l2"><a class="reference external" href="development.html#push-out-our-code">Push out our code</a></li>
+<li class="toctree-l2"><a class="reference external" href="development.html#lather-rinse-repeat">Lather, rinse, repeat</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="subversion.html">Committing back to subversion</a></li>
+<li class="toctree-l1"><a class="reference external" href="svn_equivs.html">SVN Command equivalents</a><ul>
+<li class="toctree-l2"><a class="reference external" href="svn_equivs.html#svn-cat">svn cat</a></li>
+<li class="toctree-l2"><a class="reference external" href="svn_equivs.html#svn-revert">svn revert</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="various_howtos.html">Various HOWTOS</a><ul>
+<li class="toctree-l2"><a class="reference external" href="various_howtos.html#diff-trunk-and-release">Diff trunk and release</a></li>
+<li class="toctree-l2"><a class="reference external" href="various_howtos.html#track-a-particular-branch">Track a particular branch</a></li>
+<li class="toctree-l2"><a class="reference external" href="various_howtos.html#get-files-from-another-branch">Get files from another branch</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="about_the_mirror.html">How this was all set up</a></li>
+</ul>
+</div>
+<div class="section" id="about-this-documentation">
+<h1>About this documentation<a class="headerlink" href="#about-this-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This documentation is written in <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> and assembled by <a class="reference external" href="http://sphinx.pocoo.org">Sphinx</a>.  You can get the source from the
+<tt class="docutils literal"><span class="pre">boost-git-docs</span></tt> branch of the git repository at
+<tt class="docutils literal"><span class="pre">git://sodium.resophonic.com/boost_cookbook</span></tt>.</p>
+<p class="rubric">Why does the logo at the top say <em>unauthorized</em>?</p>
+<p>Because the content is neither official boost (ie having passed
+code review and been accepted) nor <em>proposed</em>.  I suppose I could
+have used &#8220;fringe&#8221; as well.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="setup.html" title="Getting started"
+             >next</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="">Gitting boost</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, troy d. straszheim --  Version 4fda2016a1c5780c032675b9c4754dd0f3f413ce, Thu, 15 Oct 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

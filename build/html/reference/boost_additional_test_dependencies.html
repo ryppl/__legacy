@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>boost_additional_test_dependencies &mdash; Boost.CMake</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Boost.CMake" href="../index.html" />
+    <link rel="prev" title="boost_add_executable" href="boost_add_executable.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="boost_add_executable.html" title="boost_add_executable"
+             accesskey="P">previous</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="../index.html">Boost.CMake</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/boost-small.png" alt="Logo"/>
+            </a></p>
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="boost_add_executable.html"
+                                  title="previous chapter">boost_add_executable</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/reference/boost_additional_test_dependencies.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="boost-additional-test-dependencies">
+<h1>boost_additional_test_dependencies<a class="headerlink" href="#boost-additional-test-dependencies" title="Permalink to this headline">¶</a></h1>
+<p>Add additional include directories based on the dependencies of the
+library being tested &#8216;libname&#8217; and all of its dependencies.</p>
+<dl class="cmake">
+<dt>
+<tt class="descname">boost_additional_test_dependencies(libname, ...</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>libname</em> &#8211; name of library being tested</li>
+<li><em>BOOST_DEPENDS</em> &#8211; libdepend1 libdepend2 ...</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p><cite>libname</cite></p>
+<blockquote>
+the name of the boost library being tested. (signals)</blockquote>
+<p><cite>BOOST_DEPENDS</cite></p>
+<blockquote>
+The list of the extra boost libraries that the test suite will
+depend on. You do NOT have to list those libraries already listed
+by the module.cmake file as these will be used.</blockquote>
+<p class="rubric">Example</p>
+<p>The following invocation of the <cite>boost_additional_test_dependencies</cite>
+macro is taken from the signals library.</p>
+<div class="highlight-python"><pre>boost_additional_test_dependencies(signals BOOST_DEPENDS test optional)</pre>
+</div>
+<p class="rubric">Where Defined</p>
+<p>This macro is defined in the Boost Testing module in
+tools/build/CMake/BoostTesting.cmake</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="boost_add_executable.html" title="boost_add_executable"
+             >previous</a> |</li>
+    <li><a href="http://www.boost.org/">Boost</a> &raquo;</li>
+    
+        <li><a href="../index.html">Boost.CMake</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008-2009, Troy D. Straszheim, 2008 Douglas Gregor --  Version 07d7900cc9968efd033c321ccb373459888dae67, Thu, 21 May 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6b1.
+    </div>
+  </body>
+</html>
