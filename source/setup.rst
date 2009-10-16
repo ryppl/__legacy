@@ -7,10 +7,16 @@ Register and make a clone on gitorious
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Go to http://gitorious.org and register.  You'll need to upload an
-  ssh key for committing purposes.
+  ssh key for committing purposes.  To generate an ssh key on unix,
+  try ::
+
+    ssh-keygen -t rsa
+
+  the file :file:`~/.ssh/id_rsa.pub` that is created is your public
+  key.
 
 * Go to this page: http://gitorious.org/boost, have a quick look.
-  That's the main project page.
+  That's the boost project main page.
 
 * Click on the 'svn' link to take you to
   http://gitorious.org/boost/svn.  This is the git repository that is
