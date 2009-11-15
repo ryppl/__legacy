@@ -5,9 +5,9 @@
 Hacking Boost via Git
 =====================
 
-As of this writing (|today|) this is not *yet* a proposal to switch
-main source control for boost away from subversion to git.  In the
-meantime, this evolving document intends to
+This is not a proposal to switch main source control for boost away
+from subversion to git.  In the meantime, this evolving document
+intends to
 
 * provide a demonstration of the system and a "try it out" process for
   the curious
@@ -31,6 +31,10 @@ Thanks to the folks on freenode's #git:
 * `Contributing with Git
   <http://www.youtube.com/watch?v=j45cs5_nY2k>`_ Johannes Schindelin's
   Google Tech Talk.  Good for beginners.
+
+.. rubric:: IRC
+
+``#alt.boost`` on freenode.  
 
 Contents
 ========
@@ -57,9 +61,8 @@ This documentation is written in `reStructuredText
 ``boost-git-docs`` branch of the git repository at
 ``git://sodium.resophonic.com/boost_cookbook``.  
 
-.. rubric:: Why does the logo at the top say *unauthorized*?
+.. rubric:: Why alt dot boost?
 
-Because the content is neither official boost (ie having passed
-code review and been accepted) nor *proposed*.  I suppose I could
-have used "fringe" as well.
+Because this neither official boost nor currently proposed.  It is a
+separate effort that proceeds independently of upstream boost.
 
