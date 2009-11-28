@@ -109,7 +109,7 @@ following links for full discussion:</p>
 meaning &#8220;based on the trunk, plus process, private&#8221;.  The private bit
 is important: you&#8217;re not going to push this:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">checkout </span><span class="o">-b </span>trunk_process_priv<span class="g-Whitespace"></span>
-<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">a</span><span class="g-Whitespace"> </span><span class="go">new</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">&quot;trunk_process_priv&quot;</span><span class="g-Whitespace"></span>
+<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">a</span><span class="g-Whitespace"> </span><span class="go">new</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="s2">&quot;trunk_process_priv&quot;</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>Git branch shows you where you are:</p>
@@ -124,30 +124,30 @@ is important: you&#8217;re not going to push this:</p>
 <p>I unpack the process code and copy it into the source tree.  At this
 point git hasn&#8217;t added it to the pending commit:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">status</span>
-<span class="go">#</span><span class="g-Whitespace"> </span><span class="go">On</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">trunk_process_priv</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace"> </span><span class="go">Untracked</span><span class="g-Whitespace"> </span><span class="go">files:</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">   </span><span class="go">(use</span><span class="g-Whitespace"> </span><span class="go">&quot;git</span><span class="g-Whitespace"> </span><span class="go">add</span><span class="g-Whitespace"> </span><span class="go">&lt;file&gt;...&quot;</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">include</span><span class="g-Whitespace"> </span><span class="go">in</span><span class="g-Whitespace"> </span><span class="go">what</span><span class="g-Whitespace"> </span><span class="go">will</span><span class="g-Whitespace"> </span><span class="go">be</span><span class="g-Whitespace"> </span><span class="go">committed)</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">       </span><span class="go">boost/process.hpp</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">       </span><span class="go">boost/process/</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">       </span><span class="go">libs/process/</span><span class="g-Whitespace"></span>
+<span class="c"># On branch trunk_process_priv</span>
+<span class="c"># Untracked files:</span>
+<span class="c">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span>
+<span class="c">#</span>
+<span class="c">#       boost/process.hpp</span>
+<span class="c">#       boost/process/</span>
+<span class="c">#       libs/process/</span>
 </pre></div>
 </div>
 <p>I add the new files to the commit:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">add </span>boost/process.hpp<span class="g-Whitespace"> </span>boost/process/<span class="g-Whitespace"> </span>libs/process/<span class="g-Whitespace"></span>
 <span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">status</span>
-<span class="go">#</span><span class="g-Whitespace"> </span><span class="go">On</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">trunk_process_priv</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace"> </span><span class="go">Changes</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">be</span><span class="g-Whitespace"> </span><span class="go">committed:</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">   </span><span class="go">(use</span><span class="g-Whitespace"> </span><span class="go">&quot;git</span><span class="g-Whitespace"> </span><span class="go">reset</span><span class="g-Whitespace"> </span><span class="go">HEAD</span><span class="g-Whitespace"> </span><span class="go">&lt;file&gt;...&quot;</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">unstage)</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">       </span><span class="go">new</span><span class="g-Whitespace"> </span><span class="go">file:</span><span class="g-Whitespace">   </span><span class="go">boost/process.hpp</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">       </span><span class="go">new</span><span class="g-Whitespace"> </span><span class="go">file:</span><span class="g-Whitespace">   </span><span class="go">boost/process/child.hpp</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">       </span><span class="go">new</span><span class="g-Whitespace"> </span><span class="go">file:</span><span class="g-Whitespace">   </span><span class="go">boost/process/config.hpp</span><span class="g-Whitespace"></span>
+<span class="c"># On branch trunk_process_priv</span>
+<span class="c"># Changes to be committed:</span>
+<span class="c">#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span>
+<span class="c">#</span>
+<span class="c">#       new file:   boost/process.hpp</span>
+<span class="c">#       new file:   boost/process/child.hpp</span>
+<span class="c">#       new file:   boost/process/config.hpp</span>
 <span class="go">(etc)</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>and <em>fire</em>:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">commit </span><span class="o">-m </span>&quot;Process<span class="g-Whitespace"> </span>from<span class="g-Whitespace"> </span>the<span class="g-Whitespace"> </span>vault&quot;<span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">commit </span><span class="o">-m </span><span class="s2">&quot;Process from the vault&quot;</span><span class="g-Whitespace"></span>
 <span class="go">Created</span><span class="g-Whitespace"> </span><span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">013e5ac:</span><span class="g-Whitespace"> </span><span class="go">Process</span><span class="g-Whitespace"> </span><span class="go">from</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">vault</span><span class="g-Whitespace"></span>
 <span class="go">101</span><span class="g-Whitespace"> </span><span class="go">files</span><span class="g-Whitespace"> </span><span class="go">changed,</span><span class="g-Whitespace"> </span><span class="go">10048</span><span class="g-Whitespace"> </span><span class="go">insertions(+),</span><span class="g-Whitespace"> </span><span class="go">0</span><span class="g-Whitespace"> </span><span class="go">deletions(-)</span><span class="g-Whitespace"></span>
 <span class="go">create</span><span class="g-Whitespace"> </span><span class="go">mode</span><span class="g-Whitespace"> </span><span class="go">100644</span><span class="g-Whitespace"> </span><span class="go">boost/process.hpp</span><span class="g-Whitespace"></span>
@@ -159,7 +159,7 @@ point git hasn&#8217;t added it to the pending commit:</p>
 <h2>Redo a bad commit<a class="headerlink" href="#redo-a-bad-commit" title="Permalink to this headline">¶</a></h2>
 <p>I have a look at the git log:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">log</span>
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">013e5ac89aa9298a8bb98d75fa1f1666340b2d77</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">013e5ac89aa9298a8bb98d75fa1f1666340b2d77</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">troy</span><span class="g-Whitespace"> </span><span class="go">&lt;troy@zinc.(none)&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">12:52:00</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">-0400</span><span class="g-Whitespace"></span>
 
@@ -177,21 +177,21 @@ the commit (!):</p>
 committed&#8221;). <tt class="docutils literal"><span class="pre">HEAD</span></tt> is the current head, and the carat means <tt class="docutils literal"><span class="pre">minus</span>
 <span class="pre">one</span></tt>, so that just all just means &#8220;undo the last commit&#8221;.  Now I set
 my email address:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">config </span>--global<span class="g-Whitespace"> </span>user.name<span class="g-Whitespace"> </span>&quot;troy<span class="g-Whitespace"> </span>d.<span class="g-Whitespace"> </span>straszheim&quot;<span class="g-Whitespace"></span>
-<span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">config </span>--global<span class="g-Whitespace"> </span>user.email<span class="g-Whitespace"> </span>&quot;troy@resophonic.com&quot;<span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">config </span>--global<span class="g-Whitespace"> </span>user.name<span class="g-Whitespace"> </span><span class="s2">&quot;troy d. straszheim&quot;</span><span class="g-Whitespace"></span>
+<span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">config </span>--global<span class="g-Whitespace"> </span>user.email<span class="g-Whitespace"> </span><span class="s2">&quot;troy@resophonic.com&quot;</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>and recommit:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">commit </span><span class="o">-m </span>&quot;Process<span class="g-Whitespace"> </span>from<span class="g-Whitespace"> </span>the<span class="g-Whitespace"> </span>vault&quot;<span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">commit </span><span class="o">-m </span><span class="s2">&quot;Process from the vault&quot;</span><span class="g-Whitespace"></span>
 <span class="go">(same</span><span class="g-Whitespace"> </span><span class="go">output</span><span class="g-Whitespace"> </span><span class="go">as</span><span class="g-Whitespace"> </span><span class="go">before)</span><span class="g-Whitespace"></span>
 <span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">log</span>
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">3b118595c053509810c6ea0256d67dd92b796e3b</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">3b118595c053509810c6ea0256d67dd92b796e3b</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">troy</span><span class="g-Whitespace"> </span><span class="go">d.</span><span class="g-Whitespace"> </span><span class="go">straszheim</span><span class="g-Whitespace"> </span><span class="go">&lt;troy@resophonic.com&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">14:03:38</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">-0400</span><span class="g-Whitespace"></span>
 
 <span class="g-Whitespace">    </span><span class="go">Process</span><span class="g-Whitespace"> </span><span class="go">from</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">vault</span><span class="g-Whitespace"></span>
 
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">26a0f19b5d21d86292fe4bcccb8fa2f3212a052d</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">26a0f19b5d21d86292fe4bcccb8fa2f3212a052d</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">danieljames</span><span class="g-Whitespace"> </span><span class="go">&lt;danieljames@b8fc166d-592f-0410-95f2-cb63ce0dd405&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sat</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">16</span><span class="g-Whitespace"> </span><span class="go">14:58:33</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">+0000</span><span class="g-Whitespace"></span>
 
@@ -214,37 +214,37 @@ branch&#8221;:</p>
 <span class="go">remote:</span><span class="g-Whitespace"> </span><span class="go">Total</span><span class="g-Whitespace"> </span><span class="go">13</span><span class="g-Whitespace"> </span><span class="go">(delta</span><span class="g-Whitespace"> </span><span class="go">12),</span><span class="g-Whitespace"> </span><span class="go">reused</span><span class="g-Whitespace"> </span><span class="go">0</span><span class="g-Whitespace"> </span><span class="go">(delta</span><span class="g-Whitespace"> </span><span class="go">0)</span><span class="g-Whitespace"></span>
 <span class="go">Unpacking</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">100%</span><span class="g-Whitespace"> </span><span class="go">(13/13),</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
 <span class="go">From</span><span class="g-Whitespace"> </span><span class="go">git://gitorious.org/boost/svn</span><span class="g-Whitespace"></span>
-<span class="g-Whitespace">   </span><span class="go">6feea60..7b88c98</span><span class="g-Whitespace">  </span><span class="go">master</span><span class="g-Whitespace">     </span><span class="go">-&gt;</span><span class="g-Whitespace"> </span><span class="go">svn/master</span><span class="g-Whitespace"></span>
+<span class="g-Whitespace">   </span><span class="mh">6feea60..7b88c98</span><span class="g-Whitespace">  </span><span class="go">master</span><span class="g-Whitespace">     </span><span class="go">-&gt;</span><span class="g-Whitespace"> </span><span class="go">svn/master</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>Ah, there are some new changes there.  Now I want to &#8220;re-base&#8221; my
 local changes on top of them.  This isn&#8217;t a merge: I&#8217;m going to take
 the changes that I&#8217;ve made since the last time I fetched from svn, and
 make patches out of them, then I&#8217;m going to apply them to the new svn
-head.  See the links in <em class="xref">featurebranch</em>, for a full discussion.</p>
+head.  See the links in <strong>FIXME</strong>, for a full discussion.</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">rebase </span>svn/master<span class="g-Whitespace"></span>
 <span class="go">First,</span><span class="g-Whitespace"> </span><span class="go">rewinding</span><span class="g-Whitespace"> </span><span class="go">head</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">replay</span><span class="g-Whitespace"> </span><span class="go">your</span><span class="g-Whitespace"> </span><span class="go">work</span><span class="g-Whitespace"> </span><span class="go">on</span><span class="g-Whitespace"> </span><span class="go">top</span><span class="g-Whitespace"> </span><span class="go">of</span><span class="g-Whitespace"> </span><span class="go">it...</span><span class="g-Whitespace"></span>
 <span class="go">Applying</span><span class="g-Whitespace"> </span><span class="go">Process</span><span class="g-Whitespace"> </span><span class="go">from</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">vault</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>and looking again at the git log:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">d6a58a60a2f26f708fcd0e928ea3dda825fe4b8b</span><span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">d6a58a60a2f26f708fcd0e928ea3dda825fe4b8b</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">troy</span><span class="g-Whitespace"> </span><span class="go">d.</span><span class="g-Whitespace"> </span><span class="go">straszheim</span><span class="g-Whitespace"> </span><span class="go">&lt;troy@resophonic.com&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">14:03:38</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">-0400</span><span class="g-Whitespace"></span>
 
 <span class="g-Whitespace">    </span><span class="go">Process</span><span class="g-Whitespace"> </span><span class="go">from</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">vault</span><span class="g-Whitespace"></span>
 
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">bemandawes</span><span class="g-Whitespace"> </span><span class="go">&lt;bemandawes@b8fc166d-592f-0410-95f2-cb63ce0dd405&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">15:55:46</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">+0000</span><span class="g-Whitespace"></span>
 
-<span class="g-Whitespace">    </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="go">#2925,</span><span class="g-Whitespace"> </span><span class="go">copy_file</span><span class="g-Whitespace"> </span><span class="go">atomiticity</span><span class="g-Whitespace"></span>
+<span class="g-Whitespace">    </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="c">#2925, copy_file atomiticity</span>
 
 <span class="g-Whitespace">    </span><span class="go">git-svn-id:</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/trunk@53073</span><span class="g-Whitespace"> </span><span class="go">b8fc166d-592f-0410-95</span><span class="g-Whitespace"></span>
 
 <span class="go">(...</span><span class="g-Whitespace"> </span><span class="go">more</span><span class="g-Whitespace"> </span><span class="go">commits</span><span class="g-Whitespace"> </span><span class="go">...)</span><span class="g-Whitespace"></span>
 
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">26a0f19b5d21d86292fe4bcccb8fa2f3212a052d</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">26a0f19b5d21d86292fe4bcccb8fa2f3212a052d</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">danieljames</span><span class="g-Whitespace"> </span><span class="go">&lt;danieljames@b8fc166d-592f-0410-95f2-cb63ce0dd405&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sat</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">16</span><span class="g-Whitespace"> </span><span class="go">14:58:33</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">+0000</span><span class="g-Whitespace"></span>
 
@@ -271,13 +271,13 @@ trunk:</p>
 </div>
 <p>have a peek at the last three commits, they are as expected:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">log </span><span class="o">-n2 </span>--pretty=oneline<span class="g-Whitespace"></span>
-<span class="go">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"> </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="go">#2925,</span><span class="g-Whitespace"> </span><span class="go">copy_file</span><span class="g-Whitespace"> </span><span class="go">atomiticity</span><span class="g-Whitespace"></span>
-<span class="go">6feea60c25b3fac8b4e2878a5834d6f49379fecf</span><span class="g-Whitespace"> </span><span class="go">Allow</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">Boost.Test</span><span class="g-Whitespace"> </span><span class="go">library</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">be</span><span class="g-Whitespace"> </span><span class="go">built</span><span class="g-Whitespace"> </span><span class="go">with</span><span class="g-Whitespace"> </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">CC</span><span class="g-Whitespace"></span>
+<span class="mh">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"> </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="c">#2925, copy_file atomiticity</span>
+<span class="mh">6feea60c25b3fac8b4e2878a5834d6f49379fecf</span><span class="g-Whitespace"> </span><span class="go">Allow</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">Boost.Test</span><span class="g-Whitespace"> </span><span class="go">library</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">be</span><span class="g-Whitespace"> </span><span class="go">built</span><span class="g-Whitespace"> </span><span class="go">with</span><span class="g-Whitespace"> </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">CC</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>and <em>merge</em> in our changes from the private branch:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">merge </span>trunk_process_priv<span class="g-Whitespace"></span>
-<span class="go">Updating</span><span class="g-Whitespace"> </span><span class="go">7b88c98..d6a58a6</span><span class="g-Whitespace"></span>
+<span class="go">Updating</span><span class="g-Whitespace"> </span><span class="mh">7b88c98..d6a58a6</span><span class="g-Whitespace"></span>
 <span class="go">Fast</span><span class="g-Whitespace"> </span><span class="go">forward</span><span class="g-Whitespace"></span>
 <span class="go">boost/process.hpp</span><span class="g-Whitespace">                                  </span><span class="go">|</span><span class="g-Whitespace">   </span><span class="go">50</span><span class="g-Whitespace"> </span><span class="go">++</span><span class="g-Whitespace"></span>
 <span class="go">boost/process/child.hpp</span><span class="g-Whitespace">                            </span><span class="go">|</span><span class="g-Whitespace">  </span><span class="go">200</span><span class="g-Whitespace"> </span><span class="go">+++++++</span><span class="g-Whitespace"></span>
@@ -289,9 +289,9 @@ trunk:</p>
 </div>
 <p>now we see process tacked on to the end:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">log </span><span class="o">-n3 </span>--pretty=oneline<span class="g-Whitespace"></span>
-<span class="go">d6a58a60a2f26f708fcd0e928ea3dda825fe4b8b</span><span class="g-Whitespace"> </span><span class="go">Process</span><span class="g-Whitespace"> </span><span class="go">from</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">vault</span><span class="g-Whitespace"></span>
-<span class="go">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"> </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="go">#2925,</span><span class="g-Whitespace"> </span><span class="go">copy_file</span><span class="g-Whitespace"> </span><span class="go">atomiticity</span><span class="g-Whitespace"></span>
-<span class="go">6feea60c25b3fac8b4e2878a5834d6f49379fecf</span><span class="g-Whitespace"> </span><span class="go">Allow</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">Boost.Test</span><span class="g-Whitespace"> </span><span class="go">library</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">be</span><span class="g-Whitespace"> </span><span class="go">built</span><span class="g-Whitespace"> </span><span class="go">with</span><span class="g-Whitespace"> </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">CC</span><span class="g-Whitespace"></span>
+<span class="mh">d6a58a60a2f26f708fcd0e928ea3dda825fe4b8b</span><span class="g-Whitespace"> </span><span class="go">Process</span><span class="g-Whitespace"> </span><span class="go">from</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">vault</span><span class="g-Whitespace"></span>
+<span class="mh">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"> </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="c">#2925, copy_file atomiticity</span>
+<span class="mh">6feea60c25b3fac8b4e2878a5834d6f49379fecf</span><span class="g-Whitespace"> </span><span class="go">Allow</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">Boost.Test</span><span class="g-Whitespace"> </span><span class="go">library</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">be</span><span class="g-Whitespace"> </span><span class="go">built</span><span class="g-Whitespace"> </span><span class="go">with</span><span class="g-Whitespace"> </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">CC</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>and we push this branch up to our git clone at gitorious:</p>
@@ -300,7 +300,7 @@ trunk:</p>
 <span class="go">Compressing</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">100%</span><span class="g-Whitespace"> </span><span class="go">(191/191),</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
 <span class="go">Writing</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">100%</span><span class="g-Whitespace"> </span><span class="go">(192/192),</span><span class="g-Whitespace"> </span><span class="go">124.68</span><span class="g-Whitespace"> </span><span class="go">KiB,</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
 <span class="go">Total</span><span class="g-Whitespace"> </span><span class="go">192</span><span class="g-Whitespace"> </span><span class="go">(delta</span><span class="g-Whitespace"> </span><span class="go">117),</span><span class="g-Whitespace"> </span><span class="go">reused</span><span class="g-Whitespace"> </span><span class="go">0</span><span class="g-Whitespace"> </span><span class="go">(delta</span><span class="g-Whitespace"> </span><span class="go">0)</span><span class="g-Whitespace"></span>
-<span class="go">To</span><span class="g-Whitespace"> </span><span class="go">git@gitorious.org:~straszheim/boost/straszheim.git</span><span class="g-Whitespace"></span>
+<span class="go">To</span><span class="g-Whitespace"> </span><span class="ow">git@gitorious.org:~straszheim/boost/straszheim.git</span><span class="g-Whitespace"></span>
 <span class="g-Whitespace"> </span><span class="go">*</span><span class="g-Whitespace"> </span><span class="go">[new</span><span class="g-Whitespace"> </span><span class="go">branch]</span><span class="g-Whitespace">      </span><span class="go">trunk_process_pub</span><span class="g-Whitespace"> </span><span class="go">-&gt;</span><span class="g-Whitespace"> </span><span class="go">trunk_process</span><span class="g-Whitespace"></span>
 <span class="go">=&gt;</span><span class="g-Whitespace"> </span><span class="go">Syncing</span><span class="g-Whitespace"> </span><span class="go">Gitorious...</span><span class="g-Whitespace"> </span><span class="go">[OK]</span><span class="g-Whitespace"></span>
 </pre></div>
@@ -328,20 +328,20 @@ to do this development cycle again, the second time we will need to
 rebase on our public branch, <strong>not</strong> on <em>svn/master</em>.</p>
 <p>Let&#8217;s iterate again.  I switch to my private development branch:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">checkout </span>trunk_process_priv<span class="g-Whitespace"></span>
-<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">&quot;trunk_process_priv&quot;</span><span class="g-Whitespace"></span>
-<span class="go">Your</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">is</span><span class="g-Whitespace"> </span><span class="go">ahead</span><span class="g-Whitespace"> </span><span class="go">of</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">tracked</span><span class="g-Whitespace"> </span><span class="go">remote</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">&#39;svn/master&#39;</span><span class="g-Whitespace"> </span><span class="go">by</span><span class="g-Whitespace"> </span><span class="go">1</span><span class="g-Whitespace"> </span><span class="go">commit.</span><span class="g-Whitespace"></span>
+<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="s2">&quot;trunk_process_priv&quot;</span><span class="g-Whitespace"></span>
+<span class="go">Your</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">is</span><span class="g-Whitespace"> </span><span class="go">ahead</span><span class="g-Whitespace"> </span><span class="go">of</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">tracked</span><span class="g-Whitespace"> </span><span class="go">remote</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="s1">&#39;svn/master&#39;</span><span class="g-Whitespace"> </span><span class="go">by</span><span class="g-Whitespace"> </span><span class="go">1</span><span class="g-Whitespace"> </span><span class="go">commit.</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>make some minor tweaks and commit:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">status</span>
-<span class="go">#</span><span class="g-Whitespace"> </span><span class="go">On</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">trunk_process_priv</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace"> </span><span class="go">Changed</span><span class="g-Whitespace"> </span><span class="go">but</span><span class="g-Whitespace"> </span><span class="go">not</span><span class="g-Whitespace"> </span><span class="go">updated:</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">   </span><span class="go">(use</span><span class="g-Whitespace"> </span><span class="go">&quot;git</span><span class="g-Whitespace"> </span><span class="go">add</span><span class="g-Whitespace"> </span><span class="go">&lt;file&gt;...&quot;</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">update</span><span class="g-Whitespace"> </span><span class="go">what</span><span class="g-Whitespace"> </span><span class="go">will</span><span class="g-Whitespace"> </span><span class="go">be</span><span class="g-Whitespace"> </span><span class="go">committed)</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace">       </span><span class="go">modified:</span><span class="g-Whitespace">   </span><span class="go">boost/process.hpp</span><span class="g-Whitespace"></span>
-<span class="go">#</span><span class="g-Whitespace"></span>
-<span class="go">no</span><span class="g-Whitespace"> </span><span class="go">changes</span><span class="g-Whitespace"> </span><span class="go">added</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">(use</span><span class="g-Whitespace"> </span><span class="go">&quot;git</span><span class="g-Whitespace"> </span><span class="go">add&quot;</span><span class="g-Whitespace"> </span><span class="go">and/or</span><span class="g-Whitespace"> </span><span class="go">&quot;git</span><span class="g-Whitespace"> </span><span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">-a&quot;)</span><span class="g-Whitespace"></span>
-<span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">commit </span><span class="o">-a -m </span>&quot;Minor<span class="g-Whitespace"> </span>tweak<span class="g-Whitespace"> </span>to<span class="g-Whitespace"> </span>process<span class="g-Whitespace"> </span>header&quot;<span class="g-Whitespace"></span>
+<span class="c"># On branch trunk_process_priv</span>
+<span class="c"># Changed but not updated:</span>
+<span class="c">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
+<span class="c">#</span>
+<span class="c">#       modified:   boost/process.hpp</span>
+<span class="c">#</span>
+<span class="go">no</span><span class="g-Whitespace"> </span><span class="go">changes</span><span class="g-Whitespace"> </span><span class="go">added</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">(use</span><span class="g-Whitespace"> </span><span class="s2">&quot;git add&quot;</span><span class="g-Whitespace"> </span><span class="go">and/or</span><span class="g-Whitespace"> </span><span class="s2">&quot;git commit -a&quot;</span><span class="go">)</span><span class="g-Whitespace"></span>
+<span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">commit </span><span class="o">-a -m </span><span class="s2">&quot;Minor tweak to process header&quot;</span><span class="g-Whitespace"></span>
 <span class="go">Created</span><span class="g-Whitespace"> </span><span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">d8b9f1c:</span><span class="g-Whitespace"> </span><span class="go">Minor</span><span class="g-Whitespace"> </span><span class="go">tweak</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">process</span><span class="g-Whitespace"> </span><span class="go">header</span><span class="g-Whitespace"></span>
 <span class="g-Whitespace"> </span><span class="go">1</span><span class="g-Whitespace"> </span><span class="go">files</span><span class="g-Whitespace"> </span><span class="go">changed,</span><span class="g-Whitespace"> </span><span class="go">2</span><span class="g-Whitespace"> </span><span class="go">insertions(+),</span><span class="g-Whitespace"> </span><span class="go">2</span><span class="g-Whitespace"> </span><span class="go">deletions(-)</span><span class="g-Whitespace"></span>
 </pre></div>
@@ -353,7 +353,7 @@ rebase on our public branch, <strong>not</strong> on <em>svn/master</em>.</p>
 <span class="go">remote:</span><span class="g-Whitespace"> </span><span class="go">Total</span><span class="g-Whitespace"> </span><span class="go">6</span><span class="g-Whitespace"> </span><span class="go">(delta</span><span class="g-Whitespace"> </span><span class="go">5),</span><span class="g-Whitespace"> </span><span class="go">reused</span><span class="g-Whitespace"> </span><span class="go">0</span><span class="g-Whitespace"> </span><span class="go">(delta</span><span class="g-Whitespace"> </span><span class="go">0)</span><span class="g-Whitespace"></span>
 <span class="go">Unpacking</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">100%</span><span class="g-Whitespace"> </span><span class="go">(6/6),</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
 <span class="go">From</span><span class="g-Whitespace"> </span><span class="go">git://gitorious.org/boost/svn</span><span class="g-Whitespace"></span>
-<span class="g-Whitespace">   </span><span class="go">7b88c98..4a25821</span><span class="g-Whitespace">  </span><span class="go">master</span><span class="g-Whitespace">     </span><span class="go">-&gt;</span><span class="g-Whitespace"> </span><span class="go">svn/master</span><span class="g-Whitespace"></span>
+<span class="g-Whitespace">   </span><span class="mh">7b88c98..4a25821</span><span class="g-Whitespace">  </span><span class="go">master</span><span class="g-Whitespace">     </span><span class="go">-&gt;</span><span class="g-Whitespace"> </span><span class="go">svn/master</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>and (here&#8217;s the different bit), I merge upstream changes into my
@@ -371,19 +371,19 @@ public branch:</p>
 </pre></div>
 </div>
 <p>and have a look at my rebased private development branch:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">1cecb3a99a15208aad3c2a6c4d5d21ce9e683f54</span><span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">1cecb3a99a15208aad3c2a6c4d5d21ce9e683f54</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">troy</span><span class="g-Whitespace"> </span><span class="go">d.</span><span class="g-Whitespace"> </span><span class="go">straszheim</span><span class="g-Whitespace"> </span><span class="go">&lt;troy@resophonic.com&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">14:43:38</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">-0400</span><span class="g-Whitespace"></span>
 
 <span class="g-Whitespace">    </span><span class="go">Minor</span><span class="g-Whitespace"> </span><span class="go">tweak</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">process</span><span class="g-Whitespace"> </span><span class="go">header</span><span class="g-Whitespace"></span>
 
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">2f85eeacae47b2b8f29ec9d682b16f7011dcbd59</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">2f85eeacae47b2b8f29ec9d682b16f7011dcbd59</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">troy</span><span class="g-Whitespace"> </span><span class="go">d.</span><span class="g-Whitespace"> </span><span class="go">straszheim</span><span class="g-Whitespace"> </span><span class="go">&lt;troy@resophonic.com&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">14:03:38</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">-0400</span><span class="g-Whitespace"></span>
 
 <span class="g-Whitespace">    </span><span class="go">Process</span><span class="g-Whitespace"> </span><span class="go">from</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">vault</span><span class="g-Whitespace"></span>
 
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">4a258213274e1d09bff7cac3f602d6b275ba8144</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">4a258213274e1d09bff7cac3f602d6b275ba8144</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">bemandawes</span><span class="g-Whitespace"> </span><span class="go">&lt;bemandawes@b8fc166d-592f-0410-95f2-cb63ce0dd405&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">18:13:06</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">+0000</span><span class="g-Whitespace"></span>
 
@@ -391,11 +391,11 @@ public branch:</p>
 
 <span class="g-Whitespace">    </span><span class="go">git-svn-id:</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/trunk@53074</span><span class="g-Whitespace"> </span><span class="go">b8fc166d-592f-0410-95f2-cb63ce0dd405</span><span class="g-Whitespace"></span>
 
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">7b88c980838ab57efc7eddd42ac11e912952c98a</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">bemandawes</span><span class="g-Whitespace"> </span><span class="go">&lt;bemandawes@b8fc166d-592f-0410-95f2-cb63ce0dd405&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sun</span><span class="g-Whitespace"> </span><span class="go">May</span><span class="g-Whitespace"> </span><span class="go">17</span><span class="g-Whitespace"> </span><span class="go">15:55:46</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">+0000</span><span class="g-Whitespace"></span>
 
-<span class="g-Whitespace">    </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="go">#2925,</span><span class="g-Whitespace"> </span><span class="go">copy_file</span><span class="g-Whitespace"> </span><span class="go">atomiticity</span><span class="g-Whitespace"></span>
+<span class="g-Whitespace">    </span><span class="go">Fix</span><span class="g-Whitespace"> </span><span class="go">Filesystem</span><span class="g-Whitespace"> </span><span class="c">#2925, copy_file atomiticity</span>
 
 <span class="g-Whitespace">    </span><span class="go">git-svn-id:</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/trunk@53073</span><span class="g-Whitespace"> </span><span class="go">b8fc166d-592f-0410-95f2-cb63ce0dd405</span><span class="g-Whitespace"></span>
 </pre></div>
@@ -403,8 +403,8 @@ public branch:</p>
 <p>again the commits are nicely lined up atop the latest bits from the
 trunk.  Switch to the pub branch, merge and push:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">checkout </span>trunk_process_pub<span class="g-Whitespace"></span>
-<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">&quot;trunk_process_pub&quot;</span><span class="g-Whitespace"></span>
-<span class="go">Your</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">and</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">tracked</span><span class="g-Whitespace"> </span><span class="go">remote</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">&#39;svn/master&#39;</span><span class="g-Whitespace"> </span><span class="go">have</span><span class="g-Whitespace"> </span><span class="go">diverged,</span><span class="g-Whitespace"></span>
+<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="s2">&quot;trunk_process_pub&quot;</span><span class="g-Whitespace"></span>
+<span class="go">Your</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">and</span><span class="g-Whitespace"> </span><span class="go">the</span><span class="g-Whitespace"> </span><span class="go">tracked</span><span class="g-Whitespace"> </span><span class="go">remote</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="s1">&#39;svn/master&#39;</span><span class="g-Whitespace"> </span><span class="go">have</span><span class="g-Whitespace"> </span><span class="go">diverged,</span><span class="g-Whitespace"></span>
 <span class="go">and</span><span class="g-Whitespace"> </span><span class="go">respectively</span><span class="g-Whitespace"> </span><span class="go">have</span><span class="g-Whitespace"> </span><span class="go">1</span><span class="g-Whitespace"> </span><span class="go">and</span><span class="g-Whitespace"> </span><span class="go">1</span><span class="g-Whitespace"> </span><span class="go">different</span><span class="g-Whitespace"> </span><span class="go">commit(s)</span><span class="g-Whitespace"> </span><span class="go">each.</span><span class="g-Whitespace"></span>
 <span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">merge </span>trunk_process_priv<span class="g-Whitespace"></span>
 
@@ -439,7 +439,7 @@ trunk.  Switch to the pub branch, merge and push:</p>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, troy d. straszheim --  Version 5e668397803dafad780072a3d58c174cb5bf7624, Sun, 15 Nov 2009.
+      &copy; Copyright 2009, troy d. straszheim --  Version f13725bd970f99e7d5eff2da02fb76c1d28a123c, Sun, 15 Nov 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
     </div>
   </body>

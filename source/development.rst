@@ -153,7 +153,7 @@ Ah, there are some new changes there.  Now I want to "re-base" my
 local changes on top of them.  This isn't a merge: I'm going to take
 the changes that I've made since the last time I fetched from svn, and
 make patches out of them, then I'm going to apply them to the new svn
-head.  See the links in :ref:`featurebranch`, for a full discussion. ::
+head.  See the links in **FIXME**, for a full discussion. ::
 
 
   % git rebase svn/master

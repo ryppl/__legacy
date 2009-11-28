@@ -79,7 +79,7 @@
   <div class="section" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="register-and-make-a-clone-on-gitorious">
-<h2>Register and make a clone on gitorious<a class="headerlink" href="#register-and-make-a-clone-on-gitorious" title="Permalink to this headline">¶</a></h2>
+<span id="sshkeys"></span><h2>Register and make a clone on gitorious<a class="headerlink" href="#register-and-make-a-clone-on-gitorious" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">Go to <a class="reference external" href="http://gitorious.org">http://gitorious.org</a> and register.  You&#8217;ll need to upload an
 ssh key for committing purposes.  To generate an ssh key on unix,
@@ -111,7 +111,7 @@ clone on the main boost page.</p>
 <h2>Clone your clone to your local machine<a class="headerlink" href="#clone-your-clone-to-your-local-machine" title="Permalink to this headline">¶</a></h2>
 <p>Clone to your local machine via the &#8216;push url&#8217; (there&#8217;s a little
 questionmark box there that shows you the command):</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">clone </span><span class="s">git@gitorious.org:~straszheim/boost/straszheim.git</span><span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">clone </span><span class="ow">git@gitorious.org:~straszheim/boost/straszheim.git</span><span class="g-Whitespace"></span>
 <span class="go">Initialized</span><span class="g-Whitespace"> </span><span class="go">empty</span><span class="g-Whitespace"> </span><span class="go">Git</span><span class="g-Whitespace"> </span><span class="go">repository</span><span class="g-Whitespace"> </span><span class="go">in</span><span class="g-Whitespace"> </span><span class="go">/tmp/straszheim/.git/</span><span class="g-Whitespace"></span>
 <span class="go">remote:</span><span class="g-Whitespace"> </span><span class="go">Counting</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">389544,</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
 <span class="go">remote:</span><span class="g-Whitespace"> </span><span class="go">Compressing</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">100%</span><span class="g-Whitespace"> </span><span class="go">(123052/123052),</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
@@ -125,7 +125,7 @@ questionmark box there that shows you the command):</p>
 The semantics are that the &#8220;public&#8221; (<tt class="docutils literal"><span class="pre">git://...</span></tt>) and http clone
 urls are readonly.  The &#8220;push&#8221; (<tt class="docutils literal"><span class="pre">git&#64;gitorious...</span></tt>) url is
 readwrite.  You should now be looking at a checkout of the svn trunk:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% </span>ls
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="go">%</span><span class="g-Whitespace"> </span><span class="go">ls</span><span class="g-Whitespace"></span>
 <span class="go">CMakeLists.txt</span><span class="g-Whitespace">     </span><span class="go">LICENSE_1_0.txt</span><span class="g-Whitespace">  </span><span class="go">boost.css</span><span class="g-Whitespace">      </span><span class="go">doc/</span><span class="g-Whitespace">        </span><span class="go">more/</span><span class="g-Whitespace">    </span><span class="go">tools/</span><span class="g-Whitespace"></span>
 <span class="go">CTestConfig.cmake</span><span class="g-Whitespace">  </span><span class="go">Welcome.txt</span><span class="g-Whitespace">      </span><span class="go">boost.png</span><span class="g-Whitespace">      </span><span class="go">index.htm</span><span class="g-Whitespace">   </span><span class="go">people/</span><span class="g-Whitespace">  </span><span class="go">wiki/</span><span class="g-Whitespace"></span>
 <span class="go">INSTALL</span><span class="g-Whitespace">            </span><span class="go">boost/</span><span class="g-Whitespace">           </span><span class="go">bootstrap.bat</span><span class="g-Whitespace">  </span><span class="go">index.html</span><span class="g-Whitespace">  </span><span class="go">rst.css</span><span class="g-Whitespace"></span>
@@ -187,13 +187,13 @@ really easy.</li>
 <p>So we&#8217;ll need access to the remote &#8216;svn&#8217; git repository, where code
 from svn arrives.  Add a remote for svn, using the readonly &#8220;public&#8221;
 url:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">remote add svn </span><span class="s">git://gitorious.org/boost/svn.git</span><span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">remote add svn </span><span class="ow">git://gitorious.org/boost/svn.git</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>You can have a look at them:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">remote </span>-v<span class="g-Whitespace"></span>
-<span class="go">origin</span><span class="g-Whitespace">  </span><span class="go">git@gitorious.org:~straszheim/boost/straszheim.git</span><span class="g-Whitespace"></span>
-<span class="go">svn</span><span class="g-Whitespace">     </span><span class="go">git://gitorious.org/boost/svn.git</span><span class="g-Whitespace"></span>
+<span class="go">origin</span><span class="g-Whitespace">  </span><span class="ow">git@gitorious.org:~straszheim/boost/straszheim.git</span><span class="g-Whitespace"></span>
+<span class="go">svn</span><span class="g-Whitespace">     </span><span class="ow">git://gitorious.org/boost/svn.git</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>Also notice that the following lines have appeared in your
@@ -265,7 +265,7 @@ many more branches.  You also always have the option of
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, troy d. straszheim --  Version 5e668397803dafad780072a3d58c174cb5bf7624, Sun, 15 Nov 2009.
+      &copy; Copyright 2009, troy d. straszheim --  Version f13725bd970f99e7d5eff2da02fb76c1d28a123c, Sun, 15 Nov 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
     </div>
   </body>

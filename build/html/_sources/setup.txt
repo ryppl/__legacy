@@ -3,6 +3,8 @@
 Getting started
 ---------------
 
+.. _sshkeys:
+
 Register and make a clone on gitorious
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

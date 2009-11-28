@@ -47,8 +47,9 @@ Contents
    subversion
    svn_equivs
    various_howtos
+   ryppl/index
    about_the_mirror
-   
+      
 
 
 

@@ -20,7 +20,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Gitting boost" href="index.html" />
-    <link rel="next" title="How this was all set up" href="about_the_mirror.html" />
+    <link rel="next" title="Ryppl: a prototype" href="ryppl/index.html" />
     <link rel="prev" title="SVN Command equivalents" href="svn_equivs.html" /> 
   </head>
   <body>
@@ -31,7 +31,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="about_the_mirror.html" title="How this was all set up"
+          <a href="ryppl/index.html" title="Ryppl: a prototype"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="svn_equivs.html" title="SVN Command equivalents"
@@ -61,8 +61,8 @@
             <p class="topless"><a href="svn_equivs.html"
                                   title="previous chapter">SVN Command equivalents</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="about_the_mirror.html"
-                                  title="next chapter">How this was all set up</a></p>
+            <p class="topless"><a href="ryppl/index.html"
+                                  title="next chapter">Ryppl: a prototype</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/various_howtos.txt"
@@ -83,7 +83,7 @@
 <p>This is rather time consuming with subversion (I don&#8217;t seem to be able
 to do it at all, apparently due to network timeouts):</p>
 <p><strong>SVN version</strong>:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% </span>svn diff http://svn.boost.org/svn/boost/branches/release http://svn.boost.org/svn/boost/trunk &gt; svndiff
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="go">%</span><span class="g-Whitespace"> </span><span class="go">svn</span><span class="g-Whitespace"> </span><span class="go">diff</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/branches/release</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/trunk</span><span class="g-Whitespace"> </span><span class="go">&gt;</span><span class="g-Whitespace"> </span><span class="go">svndiff</span><span class="g-Whitespace"></span>
 <span class="go">svn:</span><span class="g-Whitespace"> </span><span class="go">Caught</span><span class="g-Whitespace"> </span><span class="go">signal</span><span class="g-Whitespace"></span>
 <span class="go">svn:</span><span class="g-Whitespace"> </span><span class="go">Error</span><span class="g-Whitespace"> </span><span class="go">reading</span><span class="g-Whitespace"> </span><span class="go">spooled</span><span class="g-Whitespace"> </span><span class="go">REPORT</span><span class="g-Whitespace"> </span><span class="go">request</span><span class="g-Whitespace"> </span><span class="go">response</span><span class="g-Whitespace"></span>
 <span class="go">[1]</span><span class="g-Whitespace">  </span><span class="go">+</span><span class="g-Whitespace"> </span><span class="go">exit</span><span class="g-Whitespace"> </span><span class="go">1</span><span class="g-Whitespace">     </span><span class="go">svn</span><span class="g-Whitespace"> </span><span class="go">diff</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/branches/release</span><span class="g-Whitespace">  </span><span class="go">&gt;</span><span class="g-Whitespace"> </span><span class="go">svndiff</span><span class="g-Whitespace"></span>
@@ -102,7 +102,7 @@ to do it at all, apparently due to network timeouts):</p>
 <span class="g-Whitespace">  </span><span class="go">tools/wave/cpp.cpp</span><span class="g-Whitespace">                                 </span><span class="go">|</span><span class="g-Whitespace">    </span><span class="go">6</span><span class="g-Whitespace"> </span><span class="go">+-</span><span class="g-Whitespace"></span>
 <span class="g-Whitespace">  </span><span class="go">3416</span><span class="g-Whitespace"> </span><span class="go">files</span><span class="g-Whitespace"> </span><span class="go">changed,</span><span class="g-Whitespace"> </span><span class="go">199432</span><span class="g-Whitespace"> </span><span class="go">insertions(+),</span><span class="g-Whitespace"> </span><span class="go">56085</span><span class="g-Whitespace"> </span><span class="go">deletions(-)</span><span class="g-Whitespace"></span>
 
-<span class="g-Whitespace">  </span><span class="k">% </span>time git diff svn/release svn/master &gt; /dev/null
+<span class="g-Whitespace">  </span><span class="go">%</span><span class="g-Whitespace"> </span><span class="go">time</span><span class="g-Whitespace"> </span><span class="go">git</span><span class="g-Whitespace"> </span><span class="go">diff</span><span class="g-Whitespace"> </span><span class="go">svn/release</span><span class="g-Whitespace"> </span><span class="go">svn/master</span><span class="g-Whitespace"> </span><span class="go">&gt;</span><span class="g-Whitespace"> </span><span class="go">/dev/null</span><span class="g-Whitespace"></span>
 <span class="g-Whitespace">  </span><span class="go">git</span><span class="g-Whitespace"> </span><span class="go">diff</span><span class="g-Whitespace"> </span><span class="go">svn/release</span><span class="g-Whitespace"> </span><span class="go">svn/master</span><span class="g-Whitespace"> </span><span class="go">&gt;</span><span class="g-Whitespace"> </span><span class="go">/dev/null</span><span class="g-Whitespace">  </span><span class="go">0.81s</span><span class="g-Whitespace"> </span><span class="go">user</span><span class="g-Whitespace"> </span><span class="go">0.03s</span><span class="g-Whitespace"> </span><span class="go">system</span><span class="g-Whitespace"> </span><span class="go">100%</span><span class="g-Whitespace"> </span><span class="go">cpu</span><span class="g-Whitespace"> </span><span class="go">0.839</span><span class="g-Whitespace"> </span><span class="go">total</span><span class="g-Whitespace"></span>
 
 <span class="go">That&#39;s</span><span class="g-Whitespace"> </span><span class="go">a</span><span class="g-Whitespace"> </span><span class="go">big</span><span class="g-Whitespace"> </span><span class="go">diff.</span><span class="g-Whitespace"></span>
@@ -118,7 +118,7 @@ be mirrored to gitorious).  In your clone (it doesn&#8217;t need to have
 started with a clone from sodium.resophonic.com, a gitosis one will do).
 First find the interesting branch with <tt class="docutils literal"><span class="pre">ls-remote</span></tt> and <tt class="docutils literal"><span class="pre">grep</span></tt>:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span>ls-remote<span class="g-Whitespace"> </span>git://sodium.resophonic.com/boost<span class="g-Whitespace"> </span>|<span class="g-Whitespace"> </span>grep<span class="g-Whitespace"> </span>cpp<span class="g-Whitespace"></span>
-<span class="go">c65edc0dce094b990b55955ed9dd1ede1885d360</span><span class="g-Whitespace">        </span><span class="go">refs/heads/cpp0x</span><span class="g-Whitespace"></span>
+<span class="mh">c65edc0dce094b990b55955ed9dd1ede1885d360</span><span class="g-Whitespace">        </span><span class="go">refs/heads/cpp0x</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
 <p>And add the remote, specifying the branch:</p>
@@ -139,9 +139,9 @@ First find the interesting branch with <tt class="docutils literal"><span class=
 <p>Check it out and see what has been happening:</p>
 <div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">checkout </span><span class="o">-b </span>my_0x<span class="g-Whitespace"> </span>sodium/cpp0x<span class="g-Whitespace"></span>
 <span class="go">Branch</span><span class="g-Whitespace"> </span><span class="go">my_0x</span><span class="g-Whitespace"> </span><span class="go">set</span><span class="g-Whitespace"> </span><span class="go">up</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">track</span><span class="g-Whitespace"> </span><span class="go">remote</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">refs/remotes/sodium/cpp0x.</span><span class="g-Whitespace"></span>
-<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">a</span><span class="g-Whitespace"> </span><span class="go">new</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="go">&quot;my_0x&quot;</span><span class="g-Whitespace"></span>
+<span class="go">Switched</span><span class="g-Whitespace"> </span><span class="go">to</span><span class="g-Whitespace"> </span><span class="go">a</span><span class="g-Whitespace"> </span><span class="go">new</span><span class="g-Whitespace"> </span><span class="go">branch</span><span class="g-Whitespace"> </span><span class="s2">&quot;my_0x&quot;</span><span class="g-Whitespace"></span>
 <span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">log</span>
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">c65edc0dce094b990b55955ed9dd1ede1885d360</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">c65edc0dce094b990b55955ed9dd1ede1885d360</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">bemandawes</span><span class="g-Whitespace"> </span><span class="go">&lt;bemandawes@b8fc166d-592f-0410-95f2-cb63ce0dd405&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sat</span><span class="g-Whitespace"> </span><span class="go">Feb</span><span class="g-Whitespace"> </span><span class="go">21</span><span class="g-Whitespace"> </span><span class="go">13:31:16</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">+0000</span><span class="g-Whitespace"></span>
 
@@ -149,11 +149,11 @@ First find the interesting branch with <tt class="docutils literal"><span class=
 
 <span class="g-Whitespace">    </span><span class="go">git-svn-id:</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/branches/cpp0x@51363</span><span class="g-Whitespace"> </span><span class="go">b8fc166d-592f-0410-95f2-cb63ce0dd405</span><span class="g-Whitespace"></span>
 
-<span class="go">commit</span><span class="g-Whitespace"> </span><span class="go">2605f00422d11957b9e1e305a8317cfb88e56d40</span><span class="g-Whitespace"></span>
+<span class="go">commit</span><span class="g-Whitespace"> </span><span class="mh">2605f00422d11957b9e1e305a8317cfb88e56d40</span><span class="g-Whitespace"></span>
 <span class="go">Author:</span><span class="g-Whitespace"> </span><span class="go">bemandawes</span><span class="g-Whitespace"> </span><span class="go">&lt;bemandawes@b8fc166d-592f-0410-95f2-cb63ce0dd405&gt;</span><span class="g-Whitespace"></span>
 <span class="go">Date:</span><span class="g-Whitespace">   </span><span class="go">Sat</span><span class="g-Whitespace"> </span><span class="go">Feb</span><span class="g-Whitespace"> </span><span class="go">21</span><span class="g-Whitespace"> </span><span class="go">12:29:29</span><span class="g-Whitespace"> </span><span class="go">2009</span><span class="g-Whitespace"> </span><span class="go">+0000</span><span class="g-Whitespace"></span>
 
-<span class="g-Whitespace">    </span><span class="go">Both</span><span class="g-Whitespace"> </span><span class="go">regular</span><span class="g-Whitespace"> </span><span class="go">and</span><span class="g-Whitespace"> </span><span class="go">&#39;all&#39;</span><span class="g-Whitespace"> </span><span class="go">tests</span><span class="g-Whitespace"> </span><span class="go">passing</span><span class="g-Whitespace"></span>
+<span class="g-Whitespace">    </span><span class="go">Both</span><span class="g-Whitespace"> </span><span class="go">regular</span><span class="g-Whitespace"> </span><span class="go">and</span><span class="g-Whitespace"> </span><span class="s1">&#39;all&#39;</span><span class="g-Whitespace"> </span><span class="go">tests</span><span class="g-Whitespace"> </span><span class="go">passing</span><span class="g-Whitespace"></span>
 
 <span class="g-Whitespace">    </span><span class="go">git-svn-id:</span><span class="g-Whitespace"> </span><span class="go">http://svn.boost.org/svn/boost/branches/cpp0x@51362</span><span class="g-Whitespace"> </span><span class="go">b8fc166d-592f-0410-95f2-cb63ce0dd405</span><span class="g-Whitespace"></span>
 <span class="go">...</span><span class="g-Whitespace"></span>
@@ -188,7 +188,7 @@ stuff available to the world.  You make a branch of upstream svn:</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="about_the_mirror.html" title="How this was all set up"
+          <a href="ryppl/index.html" title="Ryppl: a prototype"
              >next</a> |</li>
         <li class="right" >
           <a href="svn_equivs.html" title="SVN Command equivalents"
@@ -200,7 +200,7 @@ stuff available to the world.  You make a branch of upstream svn:</p>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, troy d. straszheim --  Version 5e668397803dafad780072a3d58c174cb5bf7624, Sun, 15 Nov 2009.
+      &copy; Copyright 2009, troy d. straszheim --  Version f13725bd970f99e7d5eff2da02fb76c1d28a123c, Sun, 15 Nov 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
     </div>
   </body>
