@@ -104,7 +104,7 @@ Add the submodule
 
 Now add the git submodule to the superproject::
 
-  % git submodule add git://gitorious.org/ryppl/python.git libs/python
+  % git submodule add git://gitorious.org/ryppl/python.git libs/python <-- git://, not git@ 
   Initialized empty Git repository in /tmp/src/libs/python/.git/
   remote: Counting objects: 714, done.
   remote: Compressing objects: 100% (581/581), done.
@@ -410,3 +410,5 @@ clone of the superproject::
   To git@gitorious.org:ryppl/straszheims-ryppl.git
      eaa3aca..bda6ca8  HEAD -> master
   
+Now, my working mixture of various versions of projects within and
+outside of boost are available to anyone who has the git URL above.

@@ -175,7 +175,7 @@ submodule:</p>
 <div class="section" id="add-the-submodule">
 <h3>Add the submodule<a class="headerlink" href="#add-the-submodule" title="Permalink to this headline">¶</a></h3>
 <p>Now add the git submodule to the superproject:</p>
-<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">submodule add </span><span class="ow">git://gitorious.org/ryppl/python.git</span><span class="g-Whitespace"> </span>libs/python<span class="g-Whitespace"></span>
+<div class="highlight-git_shell"><div class="highlight"><pre><span class="k">% git</span><span class="g-Whitespace"> </span><span class="gd">submodule add </span><span class="ow">git://gitorious.org/ryppl/python.git</span><span class="g-Whitespace"> </span>libs/python<span class="g-Whitespace"> </span><span class="gp">&lt;-- git://, not git@</span><span class="g-Whitespace"></span>
 <span class="go">Initialized</span><span class="g-Whitespace"> </span><span class="go">empty</span><span class="g-Whitespace"> </span><span class="go">Git</span><span class="g-Whitespace"> </span><span class="go">repository</span><span class="g-Whitespace"> </span><span class="go">in</span><span class="g-Whitespace"> </span><span class="go">/tmp/src/libs/python/.git/</span><span class="g-Whitespace"></span>
 <span class="go">remote:</span><span class="g-Whitespace"> </span><span class="go">Counting</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">714,</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
 <span class="go">remote:</span><span class="g-Whitespace"> </span><span class="go">Compressing</span><span class="g-Whitespace"> </span><span class="go">objects:</span><span class="g-Whitespace"> </span><span class="go">100%</span><span class="g-Whitespace"> </span><span class="go">(581/581),</span><span class="g-Whitespace"> </span><span class="go">done.</span><span class="g-Whitespace"></span>
@@ -480,6 +480,8 @@ clone of the superproject:</p>
 <span class="g-Whitespace">   </span><span class="mh">eaa3aca..bda6ca8</span><span class="g-Whitespace">  </span><span class="go">HEAD</span><span class="g-Whitespace"> </span><span class="go">-&gt;</span><span class="g-Whitespace"> </span><span class="go">master</span><span class="g-Whitespace"></span>
 </pre></div>
 </div>
+<p>Now, my working mixture of various versions of projects within and
+outside of boost are available to anyone who has the git URL above.</p>
 </div>
 </div>
 
@@ -509,7 +511,7 @@ clone of the superproject:</p>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, troy d. straszheim --  Version 1ff235ebceb90d3c24165bbdc29fc97d371b4405, Sat, 28 Nov 2009.
+      &copy; Copyright 2009, troy d. straszheim --  Version 94a750f06c89e79e26c8af2c385103e506be8196, Sat, 28 Nov 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
     </div>
   </body>
