@@ -7,8 +7,8 @@ It's *Ryppl* pronounced "ripple".  Currently the *mainline* of ryppl
 contains a reorganized ``boost.cmake 1.41.0``.  Projects *wave* and
 *python* have been "modularized", ie they are not contained in the
 ryppl subdirectory but are brought in via git submodules. Three useful
-sandbox projects have been added, as modules: **chrono**, **process**,
-and **fiber**.  
+sandbox projects have been added, as modules: *chrono*, *process*,
+and *fiber*.  
 
 For experimentation purposes, the repository **straszheims-python**
 contains Straszheim's boost.python branch, containing a number of new
