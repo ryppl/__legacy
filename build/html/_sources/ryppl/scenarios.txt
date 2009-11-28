@@ -410,4 +410,3 @@ clone of the superproject::
   To git@gitorious.org:ryppl/straszheims-ryppl.git
      eaa3aca..bda6ca8  HEAD -> master
   
-

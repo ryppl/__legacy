@@ -77,10 +77,19 @@
   <div class="section" id="ryppl-a-prototype">
 <h1>Ryppl: a prototype<a class="headerlink" href="#ryppl-a-prototype" title="Permalink to this headline">¶</a></h1>
 <p>It&#8217;s <em>Ryppl</em> pronounced &#8220;ripple&#8221;.  Currently the <em>mainline</em> of ryppl
-contains a reorganized boost.cmake 1.41.0.  The only released project
-that has been separated from the main release is <strong>wave</strong>.  Three
+contains a reorganized <tt class="docutils literal"><span class="pre">boost.cmake</span> <span class="pre">1.41.0</span></tt>.  Projects <em>wave</em> and
+<em>python</em> have been &#8220;modularized&#8221;, ie they are not contained in the
+ryppl subdirectory but are brought in via git submodules. Three useful
 sandbox projects have been added, as modules: <strong>chrono</strong>, <strong>process</strong>,
 and <strong>fiber</strong>.</p>
+<p>For experimentation purposes, the repository <strong>straszheims-python</strong>
+contains Straszheim&#8217;s boost.python branch, containing a number of new
+features and bugfixes.  The respository <strong>straszheims-ryppl</strong> contains
+a clone of ryppl with the submodules updated to use
+<strong>straszheims-python</strong>.</p>
+<p>These repositories are all to be found in
+<a class="reference external" href="http://gitorious.org/ryppl">http://gitorious.org/ryppl</a>.  This documentation is in repository
+<tt class="docutils literal"><span class="pre">doc</span></tt>.</p>
 <p class="rubric">Contents</p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="gettingstarted.html">Getting started</a><ul>
@@ -140,7 +149,7 @@ and <strong>fiber</strong>.</p>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, troy d. straszheim --  Version f13725bd970f99e7d5eff2da02fb76c1d28a123c, Sun, 15 Nov 2009.
+      &copy; Copyright 2009, troy d. straszheim --  Version 340ad3e478cf5705a2577be7e085d92cb6a62d3b, Sat, 28 Nov 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
     </div>
   </body>
