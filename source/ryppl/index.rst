@@ -26,6 +26,7 @@ http://gitorious.org/ryppl.  This documentation is in repository
    :maxdepth: 3
 
    gettingstarted
+   highlevelscenarios
    scenarios
 
 
