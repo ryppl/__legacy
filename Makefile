@@ -75,5 +75,5 @@ linkcheck:
 	      "or in build/linkcheck/output.txt."
 
 deploy:
-	rsync -va --delete build/html/ sodium.resophonic.com:/var/www/htdocs/boost-git/
+	rsync -va --delete build/html/ flourine.resophonic.com:/var/www/www.ryppl.org/
 
