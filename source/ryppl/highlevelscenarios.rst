@@ -26,8 +26,8 @@ This configuration of dependencies should be enough to uncover many of the edge 
 *libC*, *libD*, and *libX* are ryppl library projects.
 
 
-Set Up Specifics
-----------------
+Specifics of Setup
+------------------
 
 The developer of *libA* has a .ryppl file to his project at the top level::
 
@@ -76,4 +76,74 @@ and simply execute::
 Events
 ------
 
-Now we'll look at a number of things that might happen.
+Now we'll look at a number of things that might happen.  A set of
+changes to be applied will be referred to here as a “patch,” even if
+not expressed or completely expressible as a patch file.
+
+Developer Update
+::::::::::::::::
+
+Library developer releases a patch.  
+
+Direct Developer Update
+.......................
+
+*libA* is patched.
+
+* Patches must be classified so that users can choose which category
+  of patches to apply automatically, e.g. “critical update,” “alpha,”
+  “cosmetic,” “major version upgrade,” etc.
+
+* Users must also be able to explicitly select patches to apply,
+  preferably by name.
+
+Indirect Developer Update
+.........................
+
+*libX* is patched.
+
+User Update
+:::::::::::
+
+The developer of *proj* patches one of the libraries on which *proj*
+depends.  Requirements:
+
+* change will be checked into user's repo
+* change persists there until merged upstream
+* in the meantime developer can continue to update 
+  all dependencies until there is no clean merge
+* when there is no clean merge, several options are available:
+
+  - revert
+  - developer resolves merge.  **Question:** what happens to resulting
+    patch?
+  - *other options?*
+
+
+Direct User Update
+..................
+
+User patches *libA*
+
+
+Indirect User Update
+....................
+
+User patches *libX*
+
+Upstream Merge
+::::::::::::::
+
+Library developer merges and releases a user update.
+
+Direct Upstream Merge
+.....................
+
+*libA* is patched
+
+Indirect Upstream Merge
+.......................
+
+*libX* is patched
+
+
