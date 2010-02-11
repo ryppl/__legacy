@@ -18,13 +18,17 @@ This configuration of dependencies should be enough to uncover many of the edge 
    "libA" -> "libC"
    "libA" -> "libX"
    "libB" -> "libX"
-   "libB" -> "libD"
    "proj" -> "libA"
    "proj" -> "libB"
+
    
 *proj* is a project that might not be hosted at ryppl. *libA*, *libB*,
-*libC*, *libD*, and *libX* are ryppl library projects.
+*libC*, and *libX* are ryppl library projects.
 
+.. Admonition:: Question
+
+   Can we simplify the diagram without losing important cases by
+   adding an arc from *proj* to *libX* and dropping *libB* altogether?
 
 Specifics of Setup
 ------------------
@@ -43,7 +47,7 @@ This specifies a dependency on a version of libX numbered 1.0 through
 
 *libB* has a similar .ryppl file::
 
-  depends libX:2.0-2.5,3.0 libD
+  depends libX:2.0-2.5,3.0
 
 The person developing *proj* does:
 
@@ -51,8 +55,7 @@ The person developing *proj* does:
 
   ~/proj% ryppl get libA libB
 
-This will pull down the latest release of *libA*, *libB*, *libC* and
-*libD*, and version 2.2 of *libX*, since it's the latest version
+This will pull down the latest release of *libA*, *libB*, and *libC* and version 2.2 of *libX*, since it's the latest version
 compatible with both the latest *libA* and *libB*.
 
 Alternatively, the developer of *proj* can have his own .ryppl file::
@@ -63,15 +66,16 @@ and simply execute::
 
   ~/proj% ryppl
 
-.. admonition:: Question
+In case of conflicts,where the latest *libA* and *libB* are not
+compatible with any common version of *libX*, the user should be offered options
 
-   In a case like this one, if the latest *libA* and *libB* are not
-   compatible with any common version of *libX*, what should happen?
+* Abort
+* Look for earlier versions of *libA* and *libB* that are compatible
+* Fall back to a guess about a compatible *libX*
 
-   * Error?
-   * Warning?
-   * Look for earlier versions of *libA* and *libB* that are compatible?
-   * Fall back to a guess about a compatible *libX*?
+The default assumption should be that later versions don't break
+backward-compatibility, so a project that depends on v2.0 of *libX*
+will also work with v3.0.
 
 Events
 ------
@@ -83,67 +87,59 @@ not expressed or completely expressible as a patch file.
 Developer Update
 ::::::::::::::::
 
-Library developer releases a patch.  
+Library developer propagates a patch “downstream” (from library
+dependency to dependent project).  Propagation can either be 
 
-Direct Developer Update
-.......................
+* a **release**, where a patch becomes part of one or more named
+  categories of updates (e.g. “critical update,” “beta,” “version
+  upgrade,” etc.) known as a *release branch* that can be subscribed
+  to by users and automatically applied.
 
-*libA* is patched.
+* a **downstream test request**, where specific users are asked to try
+  a patch, but it is not “released” for general consumption.  The
+  patch gets its own name and is not (yet) part of a release branch.
 
-* Patches must be classified so that users can choose which category
-  of patches to apply automatically, e.g. “critical update,” “alpha,”
-  “cosmetic,” “major version upgrade,” etc.
+Downstream patch propagation will cause some automatic source merging
+when downstream subscribers.  Some of the (likely) working tree states being
+employed by users may be known to the upstream developer, e.g. the
+HEADs of any release branches are likely candidates.  
 
-* Users must also be able to explicitly select patches to apply,
-  preferably by name.
+*Ideally* we'd like to (optionally) automatically test compatibility
+of any patch with these known downstream states at two levels—a test
+for a clean merge or a full regression test—but these don't seem like
+“priority 1” features.  
 
-Indirect Developer Update
-.........................
-
-*libX* is patched.
+Regardless, downstream merges will sometimes fail, or fail to work.
+In these cases, it is crucial that downstream users' working tree
+states are restored.  Such failures should be automatically reported
+upstream in a way that allows the upstream developer to correct them.
 
 User Update
 :::::::::::
 
 The developer of *proj* patches one of the libraries on which *proj*
-depends.  Requirements:
+depends.  
 
-* change will be checked into user's repo
-* change persists there until merged upstream
-* in the meantime developer can continue to update 
-  all dependencies until there is no clean merge
-* when there is no clean merge, several options are available:
+The change will be checked into the user's repository, and persists
+there until integrated upstream.  Upstream integration works as
+follows:
 
-  - revert
-  - developer resolves merge.  **Question:** what happens to resulting
-    patch?
-  - *other options?*
+1. Ryppl locates the nearest ancestor of user's working state that
+   exists in developer's repo and creates a patch branch there.
 
+2. Ryppl applies patch to patch branch
 
-Direct User Update
-..................
+3. Ryppl switches user to patch branch and rebases any other user
+   changes.
 
-User patches *libA*
+This should all happen without modification of user's patch.  
 
+If developer wants to make modifications before merging back into a
+release branch, she is free to do so, but this should be done as
+follow-up checkins on the patch branch, and requests for a
+pull+update+test should be sent automatically to user.
 
-Indirect User Update
-....................
-
-User patches *libX*
-
-Upstream Merge
-::::::::::::::
-
-Library developer merges and releases a user update.
-
-Direct Upstream Merge
-.....................
-
-*libA* is patched
-
-Indirect Upstream Merge
-.......................
-
-*libX* is patched
-
+Merge to release branch should similarly automatically notify user,
+with the option for automatic or manual switching of user's working
+tree state to the release branch.
 
