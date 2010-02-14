@@ -40,7 +40,7 @@ show_sphinx = False
 master_doc = 'index'
 
 # General information about the project.
-project = u'Hacking Boost via Git'
+project = u'The Ryppl distributed C++ development environment'
 gitcmd = 'git log -n1 --pretty=format:%cD'.split()
 print gitcmd
 
@@ -51,6 +51,8 @@ dochash = subprocess.Popen('git log -n1 --pretty=format:%H'.split(),
 copyright.version = "BLAMMO"
 
 copyright = u'2009, troy d. straszheim -- ' + ' Version ' + dochash + ", " + ' '.join(lastmod.split(' ')[:4])
+
+# + ' the license for this document is &lt;a href="http://creativecommons.org/licenses/by-nc-nd/3.0/"&gt;by-nc-nd&lt;/a&gt;.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -115,14 +117,14 @@ html_theme_path = ['.']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = 'Gitting boost'
+html_title = 'Ryppl'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = 'alt.boost.png'
+html_logo = 'ryppl.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32

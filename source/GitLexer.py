@@ -22,6 +22,7 @@ class GitCmdLineLexer(RegexLexer):
          (r'/[\w\./]+', Name.Variable),
          (r'git', Text),
          (r'% git', Keyword),
+         (r'$ git', Keyword),
          (r'"[^"]+"', Literal.String.Double),
          (r"'[^']+'", Literal.String.Single),
          (r'\*', Operator),

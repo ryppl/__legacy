@@ -2,19 +2,8 @@
 
 .. _contents:
 
-Hacking Boost via Git
-=====================
-
-This is not a proposal to switch main source control for boost away
-from subversion to git.  In the meantime, this evolving document
-intends to
-
-* provide a demonstration of the system and a "try it out" process for
-  the curious
-* propose a superior alternative to current sandbox/vault practice
-* establish best practices for those who are already hacking boost via
-  git
-* serve as a reference point for discussion and experimentation
+Distributed C++ development with Ryppl
+======================================
 
 .. rubric:: Highly recommended reading:
 
@@ -32,24 +21,15 @@ Thanks to the folks on freenode's #git:
   <http://www.youtube.com/watch?v=j45cs5_nY2k>`_ Johannes Schindelin's
   Google Tech Talk.  Good for beginners.
 
-.. rubric:: IRC
-
-``#alt.boost`` on freenode.  
-
 Contents
 ========
 
 .. toctree::
    :maxdepth: 3
 
-   setup
-   development
-   subversion
-   svn_equivs
-   various_howtos
    ryppl/index
-   about_the_mirror
-      
+   walkthrough
+   svn_equivs
 
 
 

@@ -16,7 +16,7 @@ body {
 /*    letter-spacing: -0.01em;*/
     line-height: 140%;
     text-align: center;
-    background-color: #4a6484;
+    background-color: #345782;
 /*    background-color:#dddddd;*/
     color: black;
     padding: 0;
@@ -32,7 +32,7 @@ div.documentwrapper {
 }
 
 div.document {
-    background-color: white;
+    background-color: #fcfcfc;
     text-align: left;
     background-image: url(contents.png);
     background-repeat: repeat-x;
@@ -50,15 +50,14 @@ div.body {
 
 div.related {
     font-size: 1em;
-    background-color: #4a6484;
+    background-color: #345782;
     color: white;
 }
 
 div.related ul {
     height: 2em;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    background-color: #4a6484;
+    border-bottom: 1px solid #051931;
+    background-color: #345782;
     color: white;
 }
 
@@ -103,8 +102,8 @@ div.sphinxsidebar h3, div.sphinxsidebar h4 {
     font-size: 1em;
     padding: 0.1em 0 0.1em 0.5em;
     color: white;
-    border: 1px solid #a0a4aa;
-    background-color: #4a6484;
+    border: 1px solid #103050;
+    background-color: #345782;
 }
 
 div.sphinxsidebar h3 a {
@@ -123,7 +122,7 @@ div.sphinxsidebar ul ul {
 }
 
 div.footer {
-    background-color: #4a6484;
+    background-color: #345782;
     color: #eeeeee;
     padding: 3px 8px 3px 0;
     clear: both;
@@ -306,7 +305,7 @@ div.warning p.admonition-title {
     color: white;
     border-bottom: 1px solid #a0a4aa;
     font-weight: bold;
-    background-color: #4a6484;
+    background-color: #345782;
 }
 
 div.admonition-todo p.first {
