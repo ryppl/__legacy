@@ -10,67 +10,38 @@ Clone the superproject
 
 ::
 
-  git clone git://gitorious.org/ryppl/ryppl.git src
+  git clone git://gitorious.org/ryppl/boost.git src
 
-This will clone the ryppl *superproject* down to directory ``src``.
-Have a look at the contents.  Most of boost is there, but:
+This will clone the rypplized boost *superproject* down to directory
+``src``.  Have a look at the contents.  Most of boost is there, but:
 
 * There is no toplevel ``boost`` directory, where one normally finds
   boosts' header files.
 
 * There is a toplevel directory ``include``... but it is empty.
 
-* Under ``libs``, there are empty subdirectories ``wave``,
-  ``process``, ``chrono`` and ``fiber``. ::
-
-    % ls -l libs/wave libs/chrono libs/process libs/fiber
-    libs/chrono:
-    total 0
-    
-    libs/fiber:
-    total 0
-    
-    libs/process:
-    total 0
-    
-    libs/wave:
-    total 0
-    
-* Other than those four, each project (each one directory) under
-  ``libs/`` contains a directory ``include/boost`` inside which are
-  headers specific to this project, e.g. for *smart_ptr*::
-
-    % ls libs/smart_ptr/include/boost 
-    enable_shared_from_this.hpp
-    make_shared.hpp scoped_array.hpp scoped_ptr.hpp shared_array.hpp
-    shared_ptr.hpp smart_ptr/ smart_ptr.hpp
-
-  Note that headers are not required to have any particular layout
+* Under ``libs``, all subdirectories are empty.
 
 * In the toplevel there is a file ``.gitmodules`` that maps local
   directories to remote git repositories::
 
-    [submodule "libs/wave"]
-          path = libs/wave
-          url = git://gitorious.org/ryppl/wave.git
-    [submodule "libs/chrono"]
-          path = libs/chrono
-          url = git://gitorious.org/ryppl/chrono.git
-    [submodule "libs/process"]
-          path = libs/process
-          url = git://gitorious.org/ryppl/process.git
-    [submodule "libs/fiber"]
-          path = libs/fiber
-          url = git://gitorious.org/ryppl/fiber.git
+    [submodule "libs/accumulators"]
+    	path = libs/accumulators
+    	url = git://gitorious.org/boost/accumulators.git
+    [submodule "libs/algorithm"]
+    	path = libs/algorithm
+    	url = git://gitorious.org/boost/algorithm.git
+    etc
     
 * The command ``git submodule status`` gives the commits at which each
   submodule should be cloned::
 
     % git submodule status
-    -6d205b973e41c226eba838ef125d5a14f508e173 libs/chrono
-    -413d393f7aaea99c85d8db7bd93e06b99465e84c libs/fiber
-    -d0698203f19bf30518f58ce8058dca496dba8ecf libs/process
-    -f1e2aa9ad7743beaf11296e4f7d6f960814a86b7 libs/wave
+    -10ac085df521b4b294afa074e296252fabd1735b libs/accumulators
+    -08578dcec8e5be7365e83107cae6f9240e215ed3 libs/algorithm
+    -d037b2069c9cce96f019b02a631a51a47970bc02 libs/any
+    -795ab423fecb41dba2e4e6a8be6ee8089d78136b libs/array
+    etc
 
 Initialize and update the submodules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -78,64 +49,25 @@ Initialize and update the submodules
 Issue the command ``git submodule init``::
 
   % git submodule init
-  Submodule 'libs/chrono' (git://gitorious.org/ryppl/chrono.git) registered for path 'libs/chrono'
-  Submodule 'libs/fiber' (git://gitorious.org/ryppl/fiber.git) registered for path 'libs/fiber'
-  Submodule 'libs/process' (git://gitorious.org/ryppl/process.git) registered for path 'libs/process'
-  Submodule 'libs/wave' (git://gitorious.org/ryppl/wave.git) registered for path 'libs/wave'
+  etc
 
-Notice that the *submodule status* has not changed::
-
-  % git submodule status
-  -6d205b973e41c226eba838ef125d5a14f508e173 libs/chrono
-  -413d393f7aaea99c85d8db7bd93e06b99465e84c libs/fiber
-  -d0698203f19bf30518f58ce8058dca496dba8ecf libs/process
-  -f1e2aa9ad7743beaf11296e4f7d6f960814a86b7 libs/wave
-
-Now update the submodules::
+Notice at this point that the *submodule status* has not changed.Now
+update the submodules::
 
   % git submodule update
-  Initialized empty Git repository in /tmp/src/libs/chrono/.git/
-  remote: Counting objects: 65, done.
-  remote: Compressing objects: 100% (56/56), done.
-  remote: Total 65 (delta 16), reused 0 (delta 0)
-  Receiving objects: 100% (65/65), 79.53 KiB, done.
-  Resolving deltas: 100% (16/16), done.
-  Submodule path 'libs/chrono': checked out '6d205b973e41c226eba838ef125d5a14f508e173'
-  Initialized empty Git repository in /tmp/src/libs/fiber/.git/
-  remote: Counting objects: 103, done.
-  remote: Compressing objects: 100% (100/100), done.
-  remote: Total 103 (delta 34), reused 0 (delta 0)
-  Receiving objects: 100% (103/103), 61.92 KiB, done.
-  Resolving deltas: 100% (34/34), done.
-  Submodule path 'libs/fiber': checked out '413d393f7aaea99c85d8db7bd93e06b99465e84c'
-  Initialized empty Git repository in /tmp/src/libs/process/.git/
-  remote: Counting objects: 128, done.
-  Receiving objects: 100% (128/128), 100.10 KiB, done.g objects:  93% (120/128)   
-  Resolving deltas: 100% (40/40), done.g deltas:   0% (0/40)   
-  remote: Compressing objects: 100% (87/87), done.
-  remote: Total 128 (delta 40), reused 120 (delta 38)
-  Submodule path 'libs/process': checked out 'd0698203f19bf30518f58ce8058dca496dba8ecf'
-  Initialized empty Git repository in /tmp/src/libs/wave/.git/
-  remote: Counting objects: 469, done.
-  remote: Compressing objects: 100% (222/222), done.
-  remote: Total 469 (delta 233), reused 469 (delta 233)
-  Receiving objects: 100% (469/469), 530.36 KiB | 256 KiB/s, done.
-  Resolving deltas: 100% (233/233), done.
-  Submodule path 'libs/wave': checked out 'f1e2aa9ad7743beaf11296e4f7d6f960814a86b7'
   
-That's a lot of output... all that has happened is that a git checkout
-of each submodule has been done to its corresponding directory inside
-the superproject, and that the checkout has been done at a specific
-commit.
+There will be alot of output...  a git checkout of each submodule has
+been done to its corresponding directory inside the superproject, and
+that the checkout has been done at a specific commit.
 
 Now notice that the git submodule status has changed::
 
   % git submodule status
-  6d205b973e41c226eba838ef125d5a14f508e173 libs/chrono (heads/master)
-  413d393f7aaea99c85d8db7bd93e06b99465e84c libs/fiber (heads/master)
-  d0698203f19bf30518f58ce8058dca496dba8ecf libs/process (heads/master)
-  f1e2aa9ad7743beaf11296e4f7d6f960814a86b7 libs/wave (heads/master)
-
+  6dce83c277d48644fac187799876799eb66c97a2 cmake (heads/master)
+  0628a7a2d999bbbd62fd9877922c057f5f056114 src/accumulators (remotes/origin/1.41.0)
+  5cec8044c5408fadee71110194027b0e99b44721 src/algorithm (remotes/origin/1.41.0)
+  d58030ef644dc992db31fc2bd6fe3a985468eb4b src/any (remotes/origin/1.41.0)
+  
 The minus sign to the left of the hash has disappeared, and a branch
 (in parenthesis) has appeared on the right.
 
@@ -239,8 +171,9 @@ Build
 
 Now you can build::
 
-  % make boost_fiber
-  Scanning dependencies of target boost_fiber-mt-static-debug
-  [  0%] Building CXX object libs/fiber/src/CMakeFiles/boost_fiber-mt-static-debug.dir/auto_reset_event.cpp.o
-  [  0%] Building CXX object libs/fiber/src/CMakeFiles/boost_fiber-mt-static-debug.dir/condition.cpp.o
-
+  % make boost_system
+  Scanning dependencies of target boost_system-mt-static-debug
+  Building CXX object src/system/src/CMakeFiles/boost_system-mt-static-debug.dir/error_code.cpp.o
+  Linking CXX static library ../../../lib/libboost_system-mt-d.a
+  Built target boost_system-mt-static-debug
+  

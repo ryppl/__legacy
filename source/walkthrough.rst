@@ -318,9 +318,9 @@ You can just commit this, but let's check some stuff first.  ``git submodule sta
 The plus means that the head of the currently checked out submodule
 doesn't match what is in the index, and ``submodule summary`` shows::
 
-  $ git submodule summary
-* src/python 8d3d698...d6e0e56 (1):
-  > Dummy commit... demonstrating ryppl
+    $ git submodule summary
+  * src/python 8d3d698...d6e0e56 (1):
+    > Dummy commit... demonstrating ryppl
 
 specifically what the new commits are.  Now you'd commit and push the
 modifications to the superproject::
