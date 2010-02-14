@@ -8,8 +8,8 @@ In this section we're trying to address the different situations that
 need to be handled by this system, not just for library developers,
 but for end-users, integrators, etc.
 
-The Diamond
------------
+Example Dependencies
+--------------------
 
 This configuration of dependencies should be enough to uncover many of the edge cases.
 
