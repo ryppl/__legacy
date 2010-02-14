@@ -1,106 +1,10 @@
 .. highlight:: git_shell
 
-Walkthrough
------------
-
-Install git
-^^^^^^^^^^^
-
-Add details.
-
-Install python
-^^^^^^^^^^^^^^
-
-Required modules are ``subprocess``, ``sys``, ``re``, ``os``, and
-``optparse``.
-
-Set up ryppl
-^^^^^^^^^^^^
-
-Clone the repository containing ryppl scripts::
-
-  git clone git://gitorious.org/ryppl/bin ryppl-bins
-
-in the directory ``ryppl-bins`` you will find an executable shell
-script called ``git-ryppl``.  Put this on your path somewhere.
-
-At this point you should be able to execute ``git ryppl version`` and
-see something like ``Ryppl version 0.0a``.
-
-
-Clone the ryppl superproject
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This is the rypplized boost
-
-::
-
-   git clone git://gitorious.org/ryppl/boost.git src
-
-Now you've got an empty project with dirs :file:`cmake/` and
-:file:`src/`.  File :file`.gitmodules` shows the mapping from local
-directory to remote repository,::
-
-  [submodule "src/accumulators"]
-          path = src/accumulators
-          url = git://gitorious.org/boost/accumulators.git
-  [submodule "src/algorithm"]
-          path = src/algorithm
-          url = git://gitorious.org/boost/algorithm.git
-  (etc)
-
-And ``git submodule status`` shows that nothing has been checked out,
-
-::
-
-  -6dce83c277d48644fac187799876799eb66c97a2 cmake
-  -0628a7a2d999bbbd62fd9877922c057f5f056114 src/accumulators
-  -5cec8044c5408fadee71110194027b0e99b44721 src/algorithm
-  ...
-
-the leading minus sign says they're not checked out.  
-
-Now execute ``git submodule init``, you'll see this::
-
-  Submodule 'cmake' (git://gitorious.org/ryppl/cmake.git) registered for path 'cmake'
-  Submodule 'src/accumulators' (git://gitorious.org/boost/accumulators.git) registered for path 'src/accumulators'
-  Submodule 'src/algorithm' (git://gitorious.org/boost/algorithm.git) registered for path 'src/algorithm'
-  ...
-  
-Now update the project locally with,::
-
-  $ git submodule update
-  Initialized empty Git repository in /root/fleh/src/cmake/.git/
-  remote: Counting objects: 263, done.
-  remote: Compressing objects: 100% (177/177), done.
-  remote: Total 263 (delta 85), reused 232 (delta 66)
-  Receiving objects: 100% (263/263), 566.58 KiB | 277 KiB/s, done.
-  Resolving deltas: 100% (85/85), done.
-  Submodule path 'cmake': checked out '6dce83c277d48644fac187799876799eb66c97a2'
-  Initialized empty Git repository in /root/fleh/src/src/accumulators/.git/
-  remote: Counting objects: 176, done.
-  remote: Compressing objects: 100% (91/91), done.
-  remote: Total 176 (delta 95), reused 154 (delta 82)
-  Receiving objects: 100% (176/176), 154.93 KiB, done.
-  Resolving deltas: 100% (95/95), done.
-  Submodule path 'src/accumulators': checked out '0628a7a2d999bbbd62fd9877922c057f5f056114'
-  ...
-  Initialized empty Git repository in /root/fleh/src/src/xpressive/.git/
-  remote: Counting objects: 277, done.
-  remote: Compressing objects: 100% (178/178), done.
-  remote: Total 277 (delta 109), reused 255 (delta 96)
-  Receiving objects: 100% (277/277), 284.56 KiB | 294 KiB/s, done.
-  Resolving deltas: 100% (109/109), done.
-  Submodule path 'src/xpressive': checked out '64d71d9e873b4d0abbab2c9c089e3cefc960a706'
-   
-Now your checkout is populated with source, ready to build.
-
 Scenario:  I want to work on a library
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We want to make modifications to project boost.python, with the
 intention of eventually making a merge request to the project's owner.
-This one is kind of longwinded and needs automation, I would think.
 
 .. warning:: Do these steps in order!!!
 
@@ -117,6 +21,11 @@ http://gitorious.org/~straszheim/ryppl/straszheims-ryppl
 
 Using the same procedure as above, clone the python project.  The
 clone button is on `this page <http://gitorious.org/boost/python>`_.
+
+.. rubric:: Clone the metaproject to the local machine
+
+See :ref:`getting_started`, using the url of your clone on gitorious.
+The following steps will take place inside the local clone.
 
 .. rubric:: Remove the old submodule
 
@@ -339,16 +248,6 @@ modifications to the superproject::
 Now, you send email with your ryppl repository... when others check it
 out and then ``submodule init`` and ``submodule update`` they get your
 modifications to the python project.
-
-Various howtos
---------------
-
-Synchronize actual submodule clones to contents of :file:`gitmodules`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Commit modifications to :file:`.gitmodules`, rm the entry from
-:file:`.git/config`, *rm the submodule directory from src/* then
-``submodule init`` and ``submodule update``.  
 
 
 

@@ -49,18 +49,24 @@ Initialize and update the submodules
 Issue the command ``git submodule init``::
 
   % git submodule init
-  etc
-
+  Submodule 'libs/accumulators' (git://gitorious.org/boost/accumulators.git) registered for path 'libs/accumulators'
+  Submodule 'libs/algorithm' (git://gitorious.org/boost/algorithm.git) registered for path 'libs/algorithm'
+  Submodule 'libs/any' (git://gitorious.org/boost/any.git) registered for path 'libs/any'
+  Submodule 'libs/array' (git://gitorious.org/boost/array.git) registered for path 'libs/array'
+  [etc]  
 Notice at this point that the *submodule status* has not changed.Now
 update the submodules::
 
   % git submodule update
+  Initialized empty Git repository in /tmp/boost/cmake/.git/
+  remote: Counting objects: 263, done.
+  [etc]
   
 There will be alot of output...  a git checkout of each submodule has
 been done to its corresponding directory inside the superproject, and
 that the checkout has been done at a specific commit.
 
-Now notice that the git submodule status has changed::
+Now notice that the git submodule status now *has* changed::
 
   % git submodule status
   6dce83c277d48644fac187799876799eb66c97a2 cmake (heads/master)

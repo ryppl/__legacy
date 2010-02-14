@@ -5,6 +5,15 @@
 Distributed C++ development with Ryppl
 ======================================
 
+.. toctree::
+   :maxdepth: 3
+
+   gettingstarted
+   modifying_the_python_lib
+   highlevelscenarios
+   svn_equivs
+   various_howtos
+
 .. rubric:: Highly recommended reading:
 
 Thanks to the folks on freenode's #git:
@@ -21,15 +30,13 @@ Thanks to the folks on freenode's #git:
   <http://www.youtube.com/watch?v=j45cs5_nY2k>`_ Johannes Schindelin's
   Google Tech Talk.  Good for beginners.
 
-Contents
-========
+.. rubric:: Good Links on submodules
 
-.. toctree::
-   :maxdepth: 3
-
-   ryppl/index
-   walkthrough
-   svn_equivs
+* http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html
+* http://woss.name/blog/2008/4/9/using-git-submodules-to-track-plugins.html
+* http://git.or.cz/gitwiki/GitSubmoduleTutorial
+* http://gaarai.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
+* http://progit.org/book/ch6-6.html
 
 
 
