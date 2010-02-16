@@ -54,6 +54,7 @@ Issue the command ``git submodule init``::
   Submodule 'libs/any' (git://gitorious.org/boost/any.git) registered for path 'libs/any'
   Submodule 'libs/array' (git://gitorious.org/boost/array.git) registered for path 'libs/array'
   [etc]  
+
 Notice at this point that the *submodule status* has not changed.Now
 update the submodules::
 
