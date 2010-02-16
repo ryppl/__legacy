@@ -14,31 +14,6 @@ Distributed C++ development with Ryppl
    svn_equivs
    various_howtos
 
-.. rubric:: Highly recommended reading:
-
-Thanks to the folks on freenode's #git:
-
-* `Git from the bottom up <http://ftp.newartisans.com/pub/git.from.bottom.up.pdf>`_ (See also the links at the end of this document).
-* `Git for Computer Scientists <http://eagain.net/articles/git-for-computer-scientists/>`_
-* `Git home page <http://git-scm.com>`_
-
-.. rubric:: YouTube:
-
-* `Linus Torvalds on Git <http://www.youtube.com/watch?v=4XpnKHJAok8>`_ the now famous Google
-  Tech Talk.  A must-watch.
-* `Contributing with Git
-  <http://www.youtube.com/watch?v=j45cs5_nY2k>`_ Johannes Schindelin's
-  Google Tech Talk.  Good for beginners.
-
-.. rubric:: Good Links on submodules
-
-* http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html
-* http://woss.name/blog/2008/4/9/using-git-submodules-to-track-plugins.html
-* http://git.or.cz/gitwiki/GitSubmoduleTutorial
-* http://gaarai.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
-* http://progit.org/book/ch6-6.html
-
-
 
 About this documentation
 ========================
@@ -53,4 +28,32 @@ This documentation is written in `reStructuredText
 
 Because this neither official boost nor currently proposed.  It is a
 separate effort that proceeds independently of upstream boost.
+
+
+Learning about Git
+==================
+
+* `Pro Git <http://progit.org/book>`_
+* `Git from the bottom up <http://ftp.newartisans.com/pub/git.from.bottom.up.pdf>`_ (See also the links at the end of this document).
+* `Git for Computer Scientists <http://eagain.net/articles/git-for-computer-scientists/>`_
+* `Git home page <http://git-scm.com>`_
+
+Videos
+------
+
+* `Linus Torvalds on Git <http://www.youtube.com/watch?v=4XpnKHJAok8>`_ the now famous Google
+  Tech Talk.  A must-watch.
+* `Contributing with Git
+  <http://www.youtube.com/watch?v=j45cs5_nY2k>`_ Johannes Schindelin's
+  Google Tech Talk.  Good for beginners.
+
+Information on Git Submodules
+-----------------------------
+
+* http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html
+* http://woss.name/blog/2008/4/9/using-git-submodules-to-track-plugins.html
+* http://git.or.cz/gitwiki/GitSubmoduleTutorial
+* http://gaarai.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
+* http://progit.org/book/ch6-6.html
+
 
