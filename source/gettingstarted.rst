@@ -5,15 +5,25 @@
 Getting started
 ---------------
 
-Clone the superproject
-^^^^^^^^^^^^^^^^^^^^^^
+Boost is organized in Git as a “superproject” containing `submodules
+<http://progit.org/book/ch6-6.html>`_, each of which corresponds to an
+individual Boost library.  A **submodule** is a *reference* to a
+commit in an *independent* Git repository.  The submodule is used by
+Git to clone the independent repository below the superproject's root
+directory, and check out the referenced commit.
+
+Clone the Boost superproject
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
   git clone git://gitorious.org/ryppl/boost.git src
 
-This will clone the rypplized boost *superproject* down to directory
-``src``.  Have a look at the contents.  Most of boost is there, but:
+This will clone the rypplized boost *superproject* and place the
+result in directory ``src``.  Have a look at the contents.  Most of
+boost is there, but:
+
+.. Using “src” here doesn't feel right; too generic.  Maybe “boost-src?”
 
 * There is no toplevel ``boost`` directory, where one normally finds
   boosts' header files.
@@ -22,7 +32,7 @@ This will clone the rypplized boost *superproject* down to directory
 
 * Under ``libs``, all subdirectories are empty.
 
-* In the toplevel there is a file ``.gitmodules`` that maps local
+* In the ``src`` there is a file ``.gitmodules`` that maps local
   directories to remote git repositories::
 
     [submodule "libs/accumulators"]
@@ -34,14 +44,16 @@ This will clone the rypplized boost *superproject* down to directory
     etc
     
 * The command ``git submodule status`` gives the commits at which each
-  submodule should be cloned::
+  submodule should be cloned:
+
+.. parsed-literal::
 
     % git submodule status
     -10ac085df521b4b294afa074e296252fabd1735b libs/accumulators
     -08578dcec8e5be7365e83107cae6f9240e215ed3 libs/algorithm
     -d037b2069c9cce96f019b02a631a51a47970bc02 libs/any
     -795ab423fecb41dba2e4e6a8be6ee8089d78136b libs/array
-    etc
+    *etc…*
 
 Initialize and update the submodules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -58,6 +70,10 @@ Issue the command ``git submodule init``::
 Notice at this point that the *submodule status* has not changed.Now
 update the submodules::
 
+.. Why does the reader care that the submodule status hasn't changed?
+.. I don't think we want to be teaching Git in this document, do you?
+.. Why don't we just do “git submodule update --init”?
+
   % git submodule update
   Initialized empty Git repository in /tmp/boost/cmake/.git/
   remote: Counting objects: 263, done.
@@ -66,6 +82,8 @@ update the submodules::
 There will be alot of output...  a git checkout of each submodule has
 been done to its corresponding directory inside the superproject, and
 that the checkout has been done at a specific commit.
+
+.. “that” above makes the sentence grammatically confusing.
 
 Now notice that the git submodule status now *has* changed::
 

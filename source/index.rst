@@ -24,6 +24,8 @@ This documentation is written in `reStructuredText
 ``boost-git-docs`` branch of the git repository at
 ``git://sodium.resophonic.com/boost_cookbook``.  
 
+.. I think the above information is outdated.  Please fix.
+
 .. rubric:: Why alt dot boost?
 
 Because this neither official boost nor currently proposed.  It is a
