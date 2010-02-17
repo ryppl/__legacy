@@ -8,26 +8,52 @@ intention of eventually making a merge request to the project's owner.
 
 .. warning:: Do these steps in order!!!
 
-.. rubric:: Clone the metaproject on gitorious
 
-Make a clone of ryppl up on gitorious, using the "Clone this
-repository on gitorious" link on `ryppl's gitorious page
-<http://gitorious.org/ryppl/ryppl>`_.  Later this will contain a
+.. I think this is an abuse of “rubric.”  Google “define:rubric” to
+.. see what I mean.  These should be regular sections, or ordered
+.. lists, or something.
+
+.. rubric:: Clone the Boost superproject on Gitorious
+
+
+.. I cleaned up the below as best I could, but you need to get rid of
+.. spurious clones on Gitorious before I really know what to do with
+.. it.  Please do that and check the paragraph over to make sure it
+.. makes sense.
+
+Make a clone of boost on gitorious, using the "Clone this repository
+on gitorious" link on `ryppl's gitorious page
+<http://gitorious.org/ryppl/boost>`_.  Later this will contain a
 modified submodule pointing to our clone of python, which we will
-create later.  I have called mine *straszheims-ryppl*, here:
+create later.  The other Boost library submodules will continue to
+refer to their standard “official” locations.  I have called mine
+*straszheims-ryppl*, here:
 http://gitorious.org/~straszheim/ryppl/straszheims-ryppl
 
-.. rubric:: Clone the project on gitorious
+.. rubric:: Clone the Boost.Python project on gitorious
 
-Using the same procedure as above, clone the python project.  The
+Using the same procedure as .above, clone the python project.  The
 clone button is on `this page <http://gitorious.org/boost/python>`_.
 
-.. rubric:: Clone the metaproject to the local machine
+
+.. rubric:: Clone your Boost clone the local
+   machine
+
+.. I think this maybe should be the 2nd step.  That way, we're dealing
+.. just with superproject clones and then we move on to the
+.. subproject.
 
 See :ref:`getting_started`, using the url of your clone on gitorious.
+.. That sentence should be made clearer, but it may be best just to
+.. repeat the instructions here so the poor reader doesn't have to
+.. bounce around with hyperlinks.
 The following steps will take place inside the local clone.
 
 .. rubric:: Remove the old submodule
+
+.. The following steps look **waaaay** too complicated.  We need to
+.. find a way to make “point the python submodule at your clone” one
+.. reasonably digestible step.
 
 Remove these lines from :file:`.gitmodules`::
 
