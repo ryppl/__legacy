@@ -20,8 +20,8 @@ Clone the Boost superproject
   git clone git://gitorious.org/ryppl/boost.git src
 
 This will clone the rypplized boost *superproject* and place the
-result in directory ``src``.  Have a look at the contents.  Most of
-boost is there, but:
+result in the top-level workspace directory ``src/``.  Have a look at
+the contents.  Most of boost is there, but:
 
 .. Using “src” here doesn't feel right; too generic.  Maybe “boost-src?”
 
@@ -102,16 +102,29 @@ Also, the submodule directories now contain code::
   CMakeLists.txt  build/  example/  index.htm  test/
   README.txt      doc/    include/  source/
   
-Now you have a **ryppl** workspace nearly ready to build.
+Now you have a Boost workspace nearly ready to build.
+
+.. Used to say “ryppl workspace.”  I think that's confusing, implying
+.. this procedure is more generic than it actually is.  A project with
+.. no ryppl dependencies might not need any submodules, for example.
 
 Run cmake and generate forwarding headers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Generate makefiles with *cmake* in the standard way.  I like to make a
-subdirectory ``build/`` of my clone and run cmake in there, so that I
-can always tell which build corresponds to which clone.  This
-directory has already been added to ``.gitignore``, so git won't be
-distracted by all those new buildfiles::
+Generate makefiles with *cmake* in the standard way.  
+.. I think we should say “configure with cmake” instead.  This does
+.. more than simply generating makefiles, right?
+I like to make a
+subdirectory ``build/`` of my workspace and run cmake in there, so
+that I can always tell which build corresponds to which workspace.
+.. That is confusingly phrased: 1. The reader has no concept of why
+.. there might be multiple workspaces 2. What happens if I run cmake
+.. without the subdirectory?  Don't I still get build results
+.. associated with the workspace?  This path has already been added to
+``.gitignore``, so all those new buildfiles won't look to git like
+they need to be added to the project:
+
+.. parsed-literal::
 
   % mkdir build
   % cd build
@@ -119,7 +132,7 @@ distracted by all those new buildfiles::
   -- The C compiler identification is GNU
   -- The CXX compiler identification is GNU
 
-  [ etc ]
+  *[ etc ]*
 
   -- 
   -- Reading boost project directories (per BUILD_PROJECTS) 
@@ -127,7 +140,7 @@ distracted by all those new buildfiles::
   -- + preprocessor
   -- + concept_check
 
-  [ etc... note that 'chrono', 'process', etc appear in this list ]
+  *[ etc… note that 'chrono', 'process', etc appear in this list ]*
 
   -- + wave
   -- 
@@ -140,9 +153,13 @@ distracted by all those new buildfiles::
   -- Generating done
   -- Build files have been written to: /tmp/src/build
 
-The last step is to generate forwarding headers.  This techinque is
+The last step is to generate forwarding headers.  This technique is
 borrowed from the smart guys at Trolltech ``Qt`` toolkit.  Make the
-target **genheaders**::
+target **genheaders**:
+
+.. You need to explain where these headers go and what they do.
+
+.. parsed-literal::
 
   % make genheaders
   Scanning dependencies of target genheaders
@@ -154,7 +171,7 @@ target **genheaders**::
                     smart_ptr:  59
                  accumulators:  81
 
-                     [etc etc]
+                     *[etc etc]*
 
                    scope_exit:  1
                           mpl:  1041
@@ -202,3 +219,5 @@ Now you can build::
   Linking CXX static library ../../../lib/libboost_system-mt-d.a
   Built target boost_system-mt-static-debug
   
+
+.. How do I test my library?
