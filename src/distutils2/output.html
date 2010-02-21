@@ -1,0 +1,1869 @@
+
+<HTML>
+    <HEAD>
+	<TITLE> CloneDigger Report </TITLE>
+	<script type="text/javascript">
+	function unhide(divID) {
+	    var item = document.getElementById(divID);
+	    if (item) {
+		item.className=(item.className=='hidden')?'unhidden':'hidden';
+	    }
+	}
+</script>
+
+<style type="text/css">
+.hidden { display: none; }
+.unhidden { display: block; }
+.preformatted {
+ 	border: 1px dashed #3c78b5;
+    font-size: 11px;
+	font-family: Courier;
+    margin: 10px;
+	line-height: 13px;
+}
+.preformattedHeader {
+    background-color: #f0f0f0;
+ 	border-bottom: 1px dashed #3c78b5;
+    padding: 3px;
+	text-align: center;
+}
+.preformattedContent {
+    background-color: #f0f0f0;
+    padding: 3px;
+}
+<!--
+<div class="preformatted"><div class="preformattedContent">
+<pre>Clone Digger
+</pre>
+</div></div>
+-->
+
+</style>
+
+    </HEAD>
+    <BODY>
+    
+    
+    <P>Source files: 28</P>
+	<a href = "javascript:unhide('files');">Click here to show/hide file names</a><div id="files" class="hidden"><P><B>Source files:</B><BR>__init__.py, <BR>archive_util.py, <BR>bcppcompiler.py, <BR>ccompiler.py, <BR>cmd.py, <BR>config.py, <BR>core.py, <BR>cygwinccompiler.py, <BR>debug.py, <BR>dep_util.py, <BR>dir_util.py, <BR>dist.py, <BR>emxccompiler.py, <BR>errors.py, <BR>extension.py, <BR>fancy_getopt.py, <BR>file_util.py, <BR>filelist.py, <BR>log.py, <BR>msvc9compiler.py, <BR>msvccompiler.py, <BR>spawn.py, <BR>sysconfig.py, <BR>text_file.py, <BR>unixccompiler.py, <BR>util.py, <BR>version.py, <BR>versionpredicate.py</P></div>
+	<P>Clones detected: 70</P>
+	<P>697 of 4650 lines are duplicates (14.99%) </P>
+<P>
+<B>Parameters<BR> </B>
+clustering_threshold = 10<BR>
+distance_threshold = 5<BR>
+size_threshold = 5<BR>
+hashing_depth = 1<BR>
+clusterize_using_hash = False<BR>
+clusterize_using_dcup = False<BR>
+</P> 
+	
+    <B>Time elapsed</B><BR>Construction of AST : 4.14 seconds<BR>
+Building statement hash : 0.09 seconds<BR>
+Building patterns : 3.79 seconds<BR>
+Marking similar statements : 3.88 seconds<BR>
+Finding similar sequences of statements : 1.76 seconds<BR>
+Refining candidates : 4.27 seconds<BR>
+ Total time: 17.93<BR>
+ Started at: Wed Jan 27 13:27:55 2010<BR>
+ Finished at: Wed Jan 27 13:28:10 2010
+    <P><B>Clone # 1</B><BR>Distance between two fragments = 0 <BR>Clone size = 22<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 316</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 413</TD></TR><TR>
+<TD>
+def object_filenames(self, source_filenames, strip_dir=0, output_dir=''):<BR>
+    if output_dir is None:<BR>
+        output_dir = ''<BR>
+    obj_names = []<BR>
+    for src_name in source_filenames:<BR>
+        base, ext = os.path.splitext(src_name)<BR>
+        base = os.path.splitdrive(base)[1]<BR>
+        base = base[os.path.isabs(base):]<BR>
+        if ext not in self.src_extensions:<BR>
+            raise CompileError(("Don't know how to compile %s") % (src_name))<BR>
+        if strip_dir:<BR>
+            base = os.path.basename(base)<BR>
+        if ext in self._rc_extensions:<BR>
+            obj_names.append(os.path.join(output_dir, (base) + (self.res_extension)))<BR>
+        elif ext in self._mc_extensions:<BR>
+            obj_names.append(os.path.join(output_dir, (base) + (self.res_extension)))<BR>
+        else:<BR>
+            obj_names.append(os.path.join(output_dir, (base) + (self.obj_extension)))<BR>
+    return obj_names</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+def object_filenames(self, source_filenames, strip_dir=0, output_dir=''):<BR>
+    if output_dir is None:<BR>
+        output_dir = ''<BR>
+    obj_names = []<BR>
+    for src_name in source_filenames:<BR>
+        base, ext = os.path.splitext(src_name)<BR>
+        base = os.path.splitdrive(base)[1]<BR>
+        base = base[os.path.isabs(base):]<BR>
+        if ext not in self.src_extensions:<BR>
+            raise CompileError(("Don't know how to compile %s") % (src_name))<BR>
+        if strip_dir:<BR>
+            base = os.path.basename(base)<BR>
+        if ext in self._rc_extensions:<BR>
+            obj_names.append(os.path.join(output_dir, (base) + (self.res_extension)))<BR>
+        elif ext in self._mc_extensions:<BR>
+            obj_names.append(os.path.join(output_dir, (base) + (self.res_extension)))<BR>
+        else:<BR>
+            obj_names.append(os.path.join(output_dir, (base) + (self.obj_extension)))<BR>
+    return obj_names</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 2</B><BR>Distance between two fragments = 4 <BR>Clone size = 18<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 438</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 529</TD></TR><TR>
+<TD>
+<span style="font-family: monospace;">&nbsp; def&nbsp; create_static_lib<span style="color:rgb(255,0,0);">&nbsp; </span>(self,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; objects,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; output_libname,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; output_dir=None,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; debug=0,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; target_lang=None):<BR>
+<BR>
+&nbsp; &nbsp; if&nbsp; not&nbsp; self.initialized:<span style="color:rgb(255,0,0);"></span>&nbsp; self.initialize()<BR>
+&nbsp; &nbsp; (objects,&nbsp; output_dir)&nbsp; =&nbsp; self._fix_object_args<span style="color:rgb(255,0,0);">&nbsp; </span>(objects,&nbsp; output_dir)<BR>
+&nbsp; &nbsp; output_filename&nbsp; =&nbsp; <span style="color:rgb(255,0,0);">\<BR>
+&nbsp; &nbsp; &nbsp; </span>self.library_filename<span style="color:rgb(255,0,0);">&nbsp; (output_libname,</span>&nbsp; output_dir=output_dir)<BR>
+<BR>
+&nbsp; &nbsp; if&nbsp; self._need_link<span style="color:rgb(255,0,0);">&nbsp; </span>(objects,&nbsp; output_filename):<BR>
+&nbsp; &nbsp; &nbsp; lib_args&nbsp; =&nbsp; objects&nbsp; +&nbsp; ['/OUT:'&nbsp; +&nbsp; output_filename]<BR>
+&nbsp; &nbsp; &nbsp; if&nbsp; debug:<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; pass&nbsp; <span style="color:rgb(255,0,0);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>#&nbsp; XXX&nbsp; what&nbsp; goes&nbsp; here?<BR>
+&nbsp; &nbsp; &nbsp; try:<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; self.spawn<span style="color:rgb(255,0,0);">&nbsp; </span>([self.lib]&nbsp; +&nbsp; lib_args)<BR>
+&nbsp; &nbsp; &nbsp; except&nbsp; DistutilsExecError,&nbsp; msg:<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; raise&nbsp; LibError<span style="color:rgb(255,0,0);">,&nbsp; msg<BR>
+</span><BR>
+&nbsp; &nbsp; else:<BR>
+&nbsp; &nbsp; &nbsp; log.debug("skipping&nbsp; %s&nbsp; (up-to-date)",&nbsp; output_filename)<span style="color:rgb(255,0,0);"></span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="font-family: monospace;">&nbsp; def&nbsp; create_static_lib<span style="color:rgb(255,0,0);"></span>(self,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; objects,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; output_libname,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; output_dir=None,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; debug=0,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; target_lang=None):<BR>
+<BR>
+&nbsp; &nbsp; if&nbsp; not&nbsp; self.initialized:<span style="color:rgb(255,0,0);"><BR>
+&nbsp; &nbsp; </span>&nbsp; self.initialize()<BR>
+&nbsp; &nbsp; (objects,&nbsp; output_dir)&nbsp; =&nbsp; self._fix_object_args<span style="color:rgb(255,0,0);"></span>(objects,&nbsp; output_dir)<BR>
+&nbsp; &nbsp; output_filename&nbsp; =&nbsp; <span style="color:rgb(255,0,0);"></span>self.library_filename<span style="color:rgb(255,0,0);">(output_libname,<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>&nbsp; output_dir=output_dir)<BR>
+<BR>
+&nbsp; &nbsp; if&nbsp; self._need_link<span style="color:rgb(255,0,0);"></span>(objects,&nbsp; output_filename):<BR>
+&nbsp; &nbsp; &nbsp; lib_args&nbsp; =&nbsp; objects&nbsp; +&nbsp; ['/OUT:'&nbsp; +&nbsp; output_filename]<BR>
+&nbsp; &nbsp; &nbsp; if&nbsp; debug:<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; pass&nbsp; <span style="color:rgb(255,0,0);"></span>#&nbsp; XXX&nbsp; what&nbsp; goes&nbsp; here?<BR>
+&nbsp; &nbsp; &nbsp; try:<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; self.spawn<span style="color:rgb(255,0,0);"></span>([self.lib]&nbsp; +&nbsp; lib_args)<BR>
+&nbsp; &nbsp; &nbsp; except&nbsp; DistutilsExecError,&nbsp; msg:<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; raise&nbsp; LibError<span style="color:rgb(255,0,0);">(msg)</span><BR>
+&nbsp; &nbsp; else:<BR>
+&nbsp; &nbsp; &nbsp; log.debug("skipping&nbsp; %s&nbsp; (up-to-date)",&nbsp; output_filename)<span style="color:rgb(255,0,0);"></span></span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 3</B><BR>Distance between two fragments = 4 <BR>Clone size = 17<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 548</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 691</TD></TR><TR>
+<TD>
+def library_dir_option(self, dir):<BR>
+    return ('/LIBPATH:') + (dir)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+def library_dir_option(self, dir):<BR>
+    return ('/LIBPATH:') + (dir)</TD>
+</TR>
+<TR>
+<TD>
+<span style="font-family: monospace;">def&nbsp; runtime_library_dir_option<span style="color:rgb(255,0,0);">&nbsp; </span>(self,&nbsp; dir):<BR>
+&nbsp; raise&nbsp; DistutilsPlatformError<span style="color:rgb(255,0,0);">,&nbsp; \</span><BR>
+&nbsp; &nbsp; "don't&nbsp; know&nbsp; how&nbsp; to&nbsp; set&nbsp; runtime&nbsp; library&nbsp; search&nbsp; path&nbsp; for&nbsp; MSVC++"<span style="color:rgb(255,0,0);"></span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="font-family: monospace;">def&nbsp; runtime_library_dir_option<span style="color:rgb(255,0,0);"></span>(self,&nbsp; dir):<BR>
+&nbsp; raise&nbsp; DistutilsPlatformError<span style="color:rgb(255,0,0);">(</span><BR>
+&nbsp; &nbsp; "don't&nbsp; know&nbsp; how&nbsp; to&nbsp; set&nbsp; runtime&nbsp; library&nbsp; search&nbsp; path&nbsp; for&nbsp; MSVC++"<span style="color:rgb(255,0,0);">)</span></span></TD>
+</TR>
+<TR>
+<TD>
+def library_option(self, lib):<BR>
+    return self.library_filename(lib)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+def library_option(self, lib):<BR>
+    return self.library_filename(lib)</TD>
+</TR>
+<TR>
+<TD>
+def find_library_file(self, dirs, lib, debug=0):<BR>
+    if debug:<BR>
+        try_names = [(lib) + ('_d'), lib]<BR>
+    else:<BR>
+        try_names = [lib]<BR>
+    for dir in dirs:<BR>
+        for name in try_names:<BR>
+            libfile = os.path.join(dir, self.library_filename(name))<BR>
+            if os.path.exists(libfile):<BR>
+                return libfile<BR>
+    else:<BR>
+        return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+def find_library_file(self, dirs, lib, debug=0):<BR>
+    if debug:<BR>
+        try_names = [(lib) + ('_d'), lib]<BR>
+    else:<BR>
+        try_names = [lib]<BR>
+    for dir in dirs:<BR>
+        for name in try_names:<BR>
+            libfile = os.path.join(dir, self.library_filename(name))<BR>
+            if os.path.exists(libfile):<BR>
+                return libfile<BR>
+    else:<BR>
+        return None</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 4</B><BR>Distance between two fragments = 0 <BR>Clone size = 16<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "emxccompiler.py"<BR>The first line is 159</TD><TD></TD><TD>Source file "cygwinccompiler.py"<BR>The first line is 235</TD></TR><TR>
+<TD>
+if not debug:<BR>
+    extra_preargs.append('-s')</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if not debug:<BR>
+    extra_preargs.append('-s')</TD>
+</TR>
+<TR>
+<TD>
+UnixCCompiler.link(self, target_desc, objects, output_filename, output_dir, libraries, library_dirs, runtime_library_dirs, None, debug, extra_preargs, extra_postargs, build_temp, target_lang)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+UnixCCompiler.link(self, target_desc, objects, output_filename, output_dir, libraries, library_dirs, runtime_library_dirs, None, debug, extra_preargs, extra_postargs, build_temp, target_lang)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 5</B><BR>Distance between two fragments = 2 <BR>Clone size = 15<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 436</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 376</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);">output_dir</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">output_dir</span> = self.<span style="color: rgb(255, 0, 0);">output_dir</span><BR>
+elif not isinstance(<span style="color: rgb(255, 0, 0);">output_dir</span>, str):<BR>
+    raise TypeError, "'output_dir' must be a string or None"</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);">outdir</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">outdir</span> = self.<span style="color: rgb(255, 0, 0);">output_dir</span><BR>
+elif not isinstance(<span style="color: rgb(255, 0, 0);">outdir</span>, str):<BR>
+    raise TypeError, "'output_dir' must be a string or None"</TD>
+</TR>
+<TR>
+<TD>
+if macros is None:<BR>
+    macros = self.macros<BR>
+elif isinstance(macros, list):<BR>
+    macros = (macros) + ((self.macros) or ([]))<BR>
+else:<BR>
+    raise TypeError, "'macros' (if supplied) must be a list of tuples"</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if macros is None:<BR>
+    macros = self.macros<BR>
+elif isinstance(macros, list):<BR>
+    macros = (macros) + ((self.macros) or ([]))<BR>
+else:<BR>
+    raise TypeError, "'macros' (if supplied) must be a list of tuples"</TD>
+</TR>
+<TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);">include_dirs</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">include_dirs</span> = self.<span style="color: rgb(255, 0, 0);">include_dirs</span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);">include_dirs</span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);">include_dirs</span> = (list(<span style="color: rgb(255, 0, 0);">include_dirs</span>)) + ((self.<span style="color: rgb(255, 0, 0);">include_dirs</span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, "'include_dirs' (if supplied) must be a list of strings"</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);">incdirs</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">incdirs</span> = self.<span style="color: rgb(255, 0, 0);">include_dirs</span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);">incdirs</span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);">incdirs</span> = (list(<span style="color: rgb(255, 0, 0);">incdirs</span>)) + ((self.<span style="color: rgb(255, 0, 0);">include_dirs</span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, "'include_dirs' (if supplied) must be a list of strings"</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 6</B><BR>Distance between two fragments = 0 <BR>Clone size = 14<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 208</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 289</TD></TR><TR>
+<TD>
+compiler_type = 'msvc'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+compiler_type = 'msvc'</TD>
+</TR>
+<TR>
+<TD>
+executables = {}</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+executables = {}</TD>
+</TR>
+<TR>
+<TD>
+_c_extensions = ['.c']</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+_c_extensions = ['.c']</TD>
+</TR>
+<TR>
+<TD>
+_cpp_extensions = ['.cc', '.cpp', '.cxx']</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+_cpp_extensions = ['.cc', '.cpp', '.cxx']</TD>
+</TR>
+<TR>
+<TD>
+_rc_extensions = ['.rc']</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+_rc_extensions = ['.rc']</TD>
+</TR>
+<TR>
+<TD>
+_mc_extensions = ['.mc']</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+_mc_extensions = ['.mc']</TD>
+</TR>
+<TR>
+<TD>
+src_extensions = (((_c_extensions) + (_cpp_extensions)) + (_rc_extensions)) + (_mc_extensions)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+src_extensions = (((_c_extensions) + (_cpp_extensions)) + (_rc_extensions)) + (_mc_extensions)</TD>
+</TR>
+<TR>
+<TD>
+res_extension = '.res'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+res_extension = '.res'</TD>
+</TR>
+<TR>
+<TD>
+obj_extension = '.obj'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+obj_extension = '.obj'</TD>
+</TR>
+<TR>
+<TD>
+static_lib_extension = '.lib'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+static_lib_extension = '.lib'</TD>
+</TR>
+<TR>
+<TD>
+shared_lib_extension = '.dll'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+shared_lib_extension = '.dll'</TD>
+</TR>
+<TR>
+<TD>
+static_lib_format = shared_lib_format = '%s%s'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+static_lib_format = shared_lib_format = '%s%s'</TD>
+</TR>
+<TR>
+<TD>
+exe_extension = '.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+exe_extension = '.exe'</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 7</B><BR>Distance between two fragments = 4 <BR>Clone size = 12<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 446</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 153</TD></TR><TR>
+<TD>
+objects, output_dir = self._fix_object_args(objects, output_dir)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+objects, output_dir = self._fix_object_args(objects, output_dir)</TD>
+</TR>
+<TR>
+<TD>
+output_filename = self.library_filename(output_libname, output_dir=output_dir)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+output_filename = self.library_filename(output_libname, output_dir=output_dir)</TD>
+</TR>
+<TR>
+<TD>
+if self._need_link(objects, output_filename):<BR>
+    lib_args = (<span style="color: rgb(255, 0, 0);">objects</span>) + (<span style="color: rgb(255, 0, 0);">[('/OUT:') + (output_filename)]</span>)<BR>
+    if debug:<BR>
+        pass<BR>
+    try:<BR>
+        self.spawn(([self.lib]) + (lib_args))<BR>
+    except DistutilsExecError, msg:<BR>
+        raise LibError, msg<BR>
+else:<BR>
+    log.debug('skipping %s (up-to-date)', output_filename)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if self._need_link(objects, output_filename):<BR>
+    lib_args = (<span style="color: rgb(255, 0, 0);">[output_filename, '/u']</span>) + (<span style="color: rgb(255, 0, 0);">objects</span>)<BR>
+    if debug:<BR>
+        pass<BR>
+    try:<BR>
+        self.spawn(([self.lib]) + (lib_args))<BR>
+    except DistutilsExecError, msg:<BR>
+        raise LibError, msg<BR>
+else:<BR>
+    log.debug('skipping %s (up-to-date)', output_filename)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 8</B><BR>Distance between two fragments = 0 <BR>Clone size = 12<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 496</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 587</TD></TR><TR>
+<TD>
+if target_desc == CCompiler.EXECUTABLE:<BR>
+    if debug:<BR>
+        ldflags = self.ldflags_shared_debug[1:]<BR>
+    else:<BR>
+        ldflags = self.ldflags_shared[1:]<BR>
+else:<BR>
+    if debug:<BR>
+        ldflags = self.ldflags_shared_debug<BR>
+    else:<BR>
+        ldflags = self.ldflags_shared</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if target_desc == CCompiler.EXECUTABLE:<BR>
+    if debug:<BR>
+        ldflags = self.ldflags_shared_debug[1:]<BR>
+    else:<BR>
+        ldflags = self.ldflags_shared[1:]<BR>
+else:<BR>
+    if debug:<BR>
+        ldflags = self.ldflags_shared_debug<BR>
+    else:<BR>
+        ldflags = self.ldflags_shared</TD>
+</TR>
+<TR>
+<TD>
+export_opts = []</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+export_opts = []</TD>
+</TR>
+<TR>
+<TD>
+for sym in (export_symbols) or ([]):<BR>
+    export_opts.append(('/EXPORT:') + (sym))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+for sym in (export_symbols) or ([]):<BR>
+    export_opts.append(('/EXPORT:') + (sym))</TD>
+</TR>
+<TR>
+<TD>
+ld_args = ((((ldflags) + (lib_opts)) + (export_opts)) + (objects)) + ([('/OUT:') + (output_filename)])</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+ld_args = ((((ldflags) + (lib_opts)) + (export_opts)) + (objects)) + ([('/OUT:') + (output_filename)])</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 9</B><BR>Distance between two fragments = 0 <BR>Clone size = 11<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 162</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 169</TD></TR><TR>
+<TD>
+if i == -1:<BR>
+    return 6</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if i == -1:<BR>
+    return 6</TD>
+</TR>
+<TR>
+<TD>
+i = (i) + (len(prefix))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+i = (i) + (len(prefix))</TD>
+</TR>
+<TR>
+<TD>
+s, rest = sys.version[i:].split(' ', 1)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+s, rest = sys.version[i:].split(' ', 1)</TD>
+</TR>
+<TR>
+<TD>
+majorVersion = (int(s[:-2])) - (6)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+majorVersion = (int(s[:-2])) - (6)</TD>
+</TR>
+<TR>
+<TD>
+minorVersion = (int(s[2:3])) / (10.0)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+minorVersion = (int(s[2:3])) / (10.0)</TD>
+</TR>
+<TR>
+<TD>
+if majorVersion == 6:<BR>
+    minorVersion = 0</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if majorVersion == 6:<BR>
+    minorVersion = 0</TD>
+</TR>
+<TR>
+<TD>
+if majorVersion >= 6:<BR>
+    return (majorVersion) + (minorVersion)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if majorVersion >= 6:<BR>
+    return (majorVersion) + (minorVersion)</TD>
+</TR>
+<TR>
+<TD>
+return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+return None</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 10</B><BR>Distance between two fragments = 2 <BR>Clone size = 10<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "archive_util.py"<BR>The first line is 39</TD><TD></TD><TD>Source file "archive_util.py"<BR>The first line is 27</TD></TR><TR>
+<TD>
+def <span style="color: rgb(255, 0, 0);">_get_uid</span>(name):<BR>
+    if (<span style="color: rgb(255, 0, 0);">getpwnam</span> is None) or (name is None):<BR>
+        return None<BR>
+    try:<BR>
+        result = <span style="color: rgb(255, 0, 0);">getpwnam</span>(name)<BR>
+    except KeyError:<BR>
+        result = None<BR>
+    if result is not None:<BR>
+        return result[2]<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+def <span style="color: rgb(255, 0, 0);">_get_gid</span>(name):<BR>
+    if (<span style="color: rgb(255, 0, 0);">getgrnam</span> is None) or (name is None):<BR>
+        return None<BR>
+    try:<BR>
+        result = <span style="color: rgb(255, 0, 0);">getgrnam</span>(name)<BR>
+    except KeyError:<BR>
+        result = None<BR>
+    if result is not None:<BR>
+        return result[2]<BR>
+    return None</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 11</B><BR>Distance between two fragments = 0 <BR>Clone size = 9<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 527</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 289</TD></TR><TR>
+<TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+</TR>
+<TR>
+<TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+</TR>
+<TR>
+<TD>
+try:<BR>
+    self.spawn(([self.linker]) + (ld_args))<BR>
+except DistutilsExecError, msg:<BR>
+    raise LinkError, msg</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    self.spawn(([self.linker]) + (ld_args))<BR>
+except DistutilsExecError, msg:<BR>
+    raise LinkError, msg</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 12</B><BR>Distance between two fragments = 4 <BR>Clone size = 9<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 527</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 629</TD></TR><TR>
+<TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+</TR>
+<TR>
+<TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+</TR>
+<TR>
+<TD>
+<span style="font-family: monospace;">try:<BR>
+&nbsp; self.spawn<span style="color:rgb(255,0,0);">&nbsp; </span>([self.linker]&nbsp; +&nbsp; ld_args)<BR>
+except&nbsp; DistutilsExecError,&nbsp; msg:<BR>
+&nbsp; raise&nbsp; LinkError<span style="color:rgb(255,0,0);">,&nbsp; </span>msg<span style="color:rgb(255,0,0);"></span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="font-family: monospace;">try:<BR>
+&nbsp; self.spawn<span style="color:rgb(255,0,0);"></span>([self.linker]&nbsp; +&nbsp; ld_args)<BR>
+except&nbsp; DistutilsExecError,&nbsp; msg:<BR>
+&nbsp; raise&nbsp; LinkError<span style="color:rgb(255,0,0);">(</span>msg<span style="color:rgb(255,0,0);">)</span></span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 13</B><BR>Distance between two fragments = 2 <BR>Clone size = 9<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 138</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 146</TD></TR><TR>
+<TD>
+p = 'Software\\Microsoft\\NET Framework Setup\\Product'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+p = 'Software\\Microsoft\\NET Framework Setup\\Product'</TD>
+</TR>
+<TR>
+<TD>
+for base in HKEYS:<BR>
+    try:<BR>
+        h = RegOpenKeyEx(base, p)<BR>
+    except RegError:<BR>
+        continue<BR>
+    key = RegEnumKey(h, 0)<BR>
+    d = <span style="color: rgb(255, 0, 0);">read_values</span>(base, ('%s\\%s') % ((p, key)))<BR>
+    self.macros['$(FrameworkVersion)'] = d['version']</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+for base in HKEYS:<BR>
+    try:<BR>
+        h = RegOpenKeyEx(base, p)<BR>
+    except RegError:<BR>
+        continue<BR>
+    key = RegEnumKey(h, 0)<BR>
+    d = <span style="color: rgb(255, 0, 0);">Reg.get_value</span>(base, ('%s\\%s') % ((p, key)))<BR>
+    self.macros['$(FrameworkVersion)'] = d['version']</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 14</B><BR>Distance between two fragments = 0 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "dist.py"<BR>The first line is 758</TD><TD></TD><TD>Source file "dist.py"<BR>The first line is 723</TD></TR><TR>
+<TD>
+std_commands = distutils.command.__all__</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+std_commands = distutils.command.__all__</TD>
+</TR>
+<TR>
+<TD>
+is_std = {}</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+is_std = {}</TD>
+</TR>
+<TR>
+<TD>
+for cmd in std_commands:<BR>
+    is_std[cmd] = 1</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+for cmd in std_commands:<BR>
+    is_std[cmd] = 1</TD>
+</TR>
+<TR>
+<TD>
+extra_commands = []</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+extra_commands = []</TD>
+</TR>
+<TR>
+<TD>
+for cmd in self.cmdclass.keys():<BR>
+    if not is_std.get(cmd):<BR>
+        extra_commands.append(cmd)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+for cmd in self.cmdclass.keys():<BR>
+    if not is_std.get(cmd):<BR>
+        extra_commands.append(cmd)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 15</B><BR>Distance between two fragments = 3 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 499</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 491</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);">runtime_library_dirs</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">runtime_library_dirs</span> = self.<span style="color: rgb(255, 0, 0);">runtime_library_dirs</span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);">runtime_library_dirs</span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);">runtime_library_dirs</span> = (list(<span style="color: rgb(255, 0, 0);">runtime_library_dirs</span>)) + ((self.<span style="color: rgb(255, 0, 0);">runtime_library_dirs</span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">("'runtime_library_dirs' (if supplied) ") + ('must be a list of strings')</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);">library_dirs</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">library_dirs</span> = self.<span style="color: rgb(255, 0, 0);">library_dirs</span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);">library_dirs</span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);">library_dirs</span> = (list(<span style="color: rgb(255, 0, 0);">library_dirs</span>)) + ((self.<span style="color: rgb(255, 0, 0);">library_dirs</span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'library_dirs' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 16</B><BR>Distance between two fragments = 3 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 499</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 448</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">("'runtime_library_dirs' (if supplied) ") + ('must be a list of strings')</span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'include_dirs' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 17</B><BR>Distance between two fragments = 3 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 483</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 499</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);">libraries</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">libraries</span> = self.<span style="color: rgb(255, 0, 0);">libraries</span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);">libraries</span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);">libraries</span> = (list(<span style="color: rgb(255, 0, 0);">libraries</span>)) + ((self.<span style="color: rgb(255, 0, 0);">libraries</span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'libraries' (if supplied) must be a list of strings"</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">("'runtime_library_dirs' (if supplied) ") + ('must be a list of strings')</span></span></span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 18</B><BR>Distance between two fragments = 4 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 499</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 388</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">runtime_library_dirs</span></span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">("'runtime_library_dirs' (if supplied) ") + ('must be a list of strings')</span></span></span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'include_dirs' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 19</B><BR>Distance between two fragments = 2 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 98</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 105</TD></TR><TR>
+<TD>
+def convert_mbcs(s):<BR>
+    <span style="color: rgb(255, 0, 0);">enc</span> = getattr(s, <span style="color: rgb(255, 0, 0);">'encode'</span>, None)<BR>
+    if <span style="color: rgb(255, 0, 0);">enc</span> is not None:<BR>
+        try:<BR>
+            s = <span style="color: rgb(255, 0, 0);">enc</span>('mbcs')<BR>
+        except UnicodeError:<BR>
+            pass<BR>
+    return s</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+def convert_mbcs(s):<BR>
+    <span style="color: rgb(255, 0, 0);">dec</span> = getattr(s, <span style="color: rgb(255, 0, 0);">'decode'</span>, None)<BR>
+    if <span style="color: rgb(255, 0, 0);">dec</span> is not None:<BR>
+        try:<BR>
+            s = <span style="color: rgb(255, 0, 0);">dec</span>('mbcs')<BR>
+        except UnicodeError:<BR>
+            pass<BR>
+    return s</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 20</B><BR>Distance between two fragments = 0 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 484</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 576</TD></TR><TR>
+<TD>
+if runtime_library_dirs:<BR>
+    self.warn(("I don't know what to do with 'runtime_library_dirs': ") + (str(runtime_library_dirs)))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if runtime_library_dirs:<BR>
+    self.warn(("I don't know what to do with 'runtime_library_dirs': ") + (str(runtime_library_dirs)))</TD>
+</TR>
+<TR>
+<TD>
+lib_opts = gen_lib_options(self, library_dirs, runtime_library_dirs, libraries)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+lib_opts = gen_lib_options(self, library_dirs, runtime_library_dirs, libraries)</TD>
+</TR>
+<TR>
+<TD>
+if output_dir is not None:<BR>
+    output_filename = os.path.join(output_dir, output_filename)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if output_dir is not None:<BR>
+    output_filename = os.path.join(output_dir, output_filename)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 21</B><BR>Distance between two fragments = 1 <BR>Clone size = 8<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 354</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 85</TD></TR><TR>
+<TD>
+macros, objects, extra_postargs, pp_opts, build = self._setup_compile(output_dir, macros, include_dirs, sources, depends, extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+macros, objects, extra_postargs, pp_opts, build = self._setup_compile(output_dir, macros, include_dirs, sources, depends, extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+compile_opts = (extra_preargs) or ([])</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+compile_opts = (extra_preargs) or ([])</TD>
+</TR>
+<TR>
+<TD>
+compile_opts.append(<span style="color: rgb(255, 0, 0);">'/c'</span>)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+compile_opts.append(<span style="color: rgb(255, 0, 0);">'-c'</span>)</TD>
+</TR>
+<TR>
+<TD>
+if debug:<BR>
+    compile_opts.extend(self.compile_options_debug)<BR>
+else:<BR>
+    compile_opts.extend(self.compile_options)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if debug:<BR>
+    compile_opts.extend(self.compile_options_debug)<BR>
+else:<BR>
+    compile_opts.extend(self.compile_options)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 22</B><BR>Distance between two fragments = 4 <BR>Clone size = 7<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "filelist.py"<BR>The first line is 162</TD><TD></TD><TD>Source file "filelist.py"<BR>The first line is 153</TD></TR><TR>
+<TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);">'recursive-exclude %s %s'</span>) % ((dir, ' '.join(patterns))))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);">'recursive-include %s %s'</span>) % ((dir, ' '.join(patterns))))</TD>
+</TR>
+<TR>
+<TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">exclude_pattern</span>(pattern, prefix=dir):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">"warning: no previously-included files matching '%s' found under directory '%s'"</span>, pattern, dir)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">include_pattern</span>(pattern, prefix=dir):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">("warning: no files found matching '%s' ") + ("under directory '%s'")</span>, pattern, dir)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 23</B><BR>Distance between two fragments = 0 <BR>Clone size = 7<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 189</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 183</TD></TR><TR>
+<TD>
+def normalize_and_reduce_paths(paths):<BR>
+    reduced_paths = []<BR>
+    for p in paths:<BR>
+        np = os.path.normpath(p)<BR>
+        if np not in reduced_paths:<BR>
+            reduced_paths.append(np)<BR>
+    return reduced_paths</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+def normalize_and_reduce_paths(paths):<BR>
+    reduced_paths = []<BR>
+    for p in paths:<BR>
+        np = os.path.normpath(p)<BR>
+        if np not in reduced_paths:<BR>
+            reduced_paths.append(np)<BR>
+    return reduced_paths</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 24</B><BR>Distance between two fragments = 0 <BR>Clone size = 7<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "dist.py"<BR>The first line is 770</TD><TD></TD><TD>Source file "dist.py"<BR>The first line is 704</TD></TR><TR>
+<TD>
+klass = self.cmdclass.get(cmd)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+klass = self.cmdclass.get(cmd)</TD>
+</TR>
+<TR>
+<TD>
+if not klass:<BR>
+    klass = self.get_command_class(cmd)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if not klass:<BR>
+    klass = self.get_command_class(cmd)</TD>
+</TR>
+<TR>
+<TD>
+try:<BR>
+    description = klass.description<BR>
+except AttributeError:<BR>
+    description = '(no description available)'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    description = klass.description<BR>
+except AttributeError:<BR>
+    description = '(no description available)'</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 25</B><BR>Distance between two fragments = 2 <BR>Clone size = 7<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "emxccompiler.py"<BR>The first line is 191</TD><TD></TD><TD>Source file "cygwinccompiler.py"<BR>The first line is 254</TD></TR><TR>
+<TD>
+base, ext = os.path.splitext(os.path.normcase(src_name))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+base, ext = os.path.splitext(os.path.normcase(src_name))</TD>
+</TR>
+<TR>
+<TD>
+if ext not in (self.src_extensions) + (<span style="color: rgb(255, 0, 0);">['.rc']</span>):<BR>
+    raise UnknownFileError, ("unknown file type '%s' (from '%s')") % ((ext, src_name))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if ext not in (self.src_extensions) + (<span style="color: rgb(255, 0, 0);">['.rc', '.res']</span>):<BR>
+    raise UnknownFileError, ("unknown file type '%s' (from '%s')") % ((ext, src_name))</TD>
+</TR>
+<TR>
+<TD>
+if strip_dir:<BR>
+    base = os.path.basename(base)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if strip_dir:<BR>
+    base = os.path.basename(base)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 26</B><BR>Distance between two fragments = 2 <BR>Clone size = 7<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "emxccompiler.py"<BR>The first line is 191</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 342</TD></TR><TR>
+<TD>
+base, ext = os.path.splitext(os.path.normcase(src_name))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+base, ext = os.path.splitext(os.path.normcase(src_name))</TD>
+</TR>
+<TR>
+<TD>
+if ext not in (self.src_extensions) + (<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">['.rc']</span></span>):<BR>
+    raise UnknownFileError, ("unknown file type '%s' (from '%s')") % ((ext, src_name))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if ext not in (self.src_extensions) + (<span style="color: rgb(255, 0, 0);">['.rc', '.res']</span>):<BR>
+    raise UnknownFileError, ("unknown file type '%s' (from '%s')") % ((ext, src_name))</TD>
+</TR>
+<TR>
+<TD>
+if strip_dir:<BR>
+    base = os.path.basename(base)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if strip_dir:<BR>
+    base = os.path.basename(base)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 27</B><BR>Distance between two fragments = 0 <BR>Clone size = 7<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "cygwinccompiler.py"<BR>The first line is 254</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 342</TD></TR><TR>
+<TD>
+base, ext = os.path.splitext(os.path.normcase(src_name))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+base, ext = os.path.splitext(os.path.normcase(src_name))</TD>
+</TR>
+<TR>
+<TD>
+if ext not in (self.src_extensions) + (<span style="color: rgb(255, 0, 0);">['.rc', '.res']</span>):<BR>
+    raise UnknownFileError, ("unknown file type '%s' (from '%s')") % ((ext, src_name))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if ext not in (self.src_extensions) + (<span style="color: rgb(255, 0, 0);">['.rc', '.res']</span>):<BR>
+    raise UnknownFileError, ("unknown file type '%s' (from '%s')") % ((ext, src_name))</TD>
+</TR>
+<TR>
+<TD>
+if strip_dir:<BR>
+    base = os.path.basename(base)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if strip_dir:<BR>
+    base = os.path.basename(base)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 28</B><BR>Distance between two fragments = 0 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 408</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 502</TD></TR><TR>
+<TD>
+self.spawn((([self.mc]) + (['-h', h_dir, '-r', rc_dir])) + ([src]))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.spawn((([self.mc]) + (['-h', h_dir, '-r', rc_dir])) + ([src]))</TD>
+</TR>
+<TR>
+<TD>
+base, _ = os.path.splitext(os.path.basename(src))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+base, _ = os.path.splitext(os.path.basename(src))</TD>
+</TR>
+<TR>
+<TD>
+rc_file = os.path.join(rc_dir, (base) + ('.rc'))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+rc_file = os.path.join(rc_dir, (base) + ('.rc'))</TD>
+</TR>
+<TR>
+<TD>
+self.spawn((([self.rc]) + ([('/fo') + (obj)])) + ([rc_file]))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.spawn((([self.rc]) + ([('/fo') + (obj)])) + ([rc_file]))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 29</B><BR>Distance between two fragments = 3 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "dist.py"<BR>The first line is 1230</TD><TD></TD><TD>Source file "dist.py"<BR>The first line is 1211</TD></TR><TR>
+<TD>
+def <span style="color: rgb(255, 0, 0);">get_obsoletes</span>(self):<BR>
+    return (self.<span style="color: rgb(255, 0, 0);">obsoletes</span>) or ([])</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+def <span style="color: rgb(255, 0, 0);">get_requires</span>(self):<BR>
+    return (self.<span style="color: rgb(255, 0, 0);">requires</span>) or ([])</TD>
+</TR>
+<TR>
+<TD>
+def <span style="color: rgb(255, 0, 0);">set_obsoletes</span>(self, value):<BR>
+    import distutils.versionpredicate<BR>
+    for v in value:<BR>
+        distutils.versionpredicate.VersionPredicate(v)<BR>
+    self.<span style="color: rgb(255, 0, 0);">obsoletes</span> = value</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+def <span style="color: rgb(255, 0, 0);">set_requires</span>(self, value):<BR>
+    import distutils.versionpredicate<BR>
+    for v in value:<BR>
+        distutils.versionpredicate.VersionPredicate(v)<BR>
+    self.<span style="color: rgb(255, 0, 0);">requires</span> = value</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 30</B><BR>Distance between two fragments = 4 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvc9compiler.py"<BR>The first line is 544</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 159</TD></TR><TR>
+<TD>
+if debug:<BR>
+    pass</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if debug:<BR>
+    pass</TD>
+</TR>
+<TR>
+<TD>
+<span style="font-family: monospace;">try:<BR>
+&nbsp; self.spawn<span style="color:rgb(255,0,0);"></span>([self.lib]&nbsp; +&nbsp; lib_args)<BR>
+except&nbsp; DistutilsExecError,&nbsp; msg:<BR>
+&nbsp; raise&nbsp; LibError<span style="color:rgb(255,0,0);">(</span>msg<span style="color:rgb(255,0,0);">)</span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="font-family: monospace;">try:<BR>
+&nbsp; self.spawn<span style="color:rgb(255,0,0);">&nbsp; </span>([self.lib]&nbsp; +&nbsp; lib_args)<BR>
+except&nbsp; DistutilsExecError,&nbsp; msg:<BR>
+&nbsp; raise&nbsp; LibError<span style="color:rgb(255,0,0);">,&nbsp; </span>msg<span style="color:rgb(255,0,0);"></span></span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 31</B><BR>Distance between two fragments = 2 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 491</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 483</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'library_dirs' (if supplied) must be a list of strings"</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'libraries' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 32</B><BR>Distance between two fragments = 2 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 491</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 448</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'library_dirs' (if supplied) must be a list of strings"</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'include_dirs' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 33</B><BR>Distance between two fragments = 2 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 483</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 448</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'libraries' (if supplied) must be a list of strings"</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'include_dirs' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 34</B><BR>Distance between two fragments = 3 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 491</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 388</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">library_dirs</span></span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'library_dirs' (if supplied) must be a list of strings"</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'include_dirs' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 35</B><BR>Distance between two fragments = 3 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 483</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 388</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'libraries' (if supplied) must be a list of strings"</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span></span> = self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span><BR>
+elif isinstance(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span></span>, (list, tuple)):<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span></span> = (list(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">incdirs</span></span></span></span>)) + ((self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span></span></span>) or ([]))<BR>
+else:<BR>
+    raise TypeError, <span style="color: rgb(255, 0, 0);">"'include_dirs' (if supplied) must be a list of strings"</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 36</B><BR>Distance between two fragments = 0 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 366</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 462</TD></TR><TR>
+<TD>
+try:<BR>
+    src, ext = build[obj]<BR>
+except KeyError:<BR>
+    continue</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    src, ext = build[obj]<BR>
+except KeyError:<BR>
+    continue</TD>
+</TR>
+<TR>
+<TD>
+if debug:<BR>
+    src = os.path.abspath(src)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if debug:<BR>
+    src = os.path.abspath(src)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 37</B><BR>Distance between two fragments = 2 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 82</TD><TD></TD><TD>Source file "msvccompiler.py"<BR>The first line is 62</TD></TR><TR>
+<TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+</TR>
+<TR>
+<TD>
+<span style="color: rgb(255, 0, 0);">d</span> = <span style="color: rgb(255, 0, 0);">{}</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="color: rgb(255, 0, 0);">L</span> = <span style="color: rgb(255, 0, 0);">[]</span></TD>
+</TR>
+<TR>
+<TD>
+i = 0</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+i = 0</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 38</B><BR>Distance between two fragments = 0 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 82</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 88</TD></TR><TR>
+<TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+</TR>
+<TR>
+<TD>
+<span style="color: rgb(255, 0, 0);">d</span> = <span style="color: rgb(255, 0, 0);">{}</span></TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+d = {}</TD>
+</TR>
+<TR>
+<TD>
+i = 0</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+i = 0</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 39</B><BR>Distance between two fragments = 2 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 82</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 67</TD></TR><TR>
+<TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+</TR>
+<TR>
+<TD>
+<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">d</span></span> = <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">{}</span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="color: rgb(255, 0, 0);">L</span> = <span style="color: rgb(255, 0, 0);">[]</span></TD>
+</TR>
+<TR>
+<TD>
+i = 0</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+i = 0</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 40</B><BR>Distance between two fragments = 2 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 62</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 88</TD></TR><TR>
+<TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+</TR>
+<TR>
+<TD>
+<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">L</span></span> = <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">[]</span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="color: rgb(255, 0, 0);">d</span> = <span style="color: rgb(255, 0, 0);">{}</span></TD>
+</TR>
+<TR>
+<TD>
+i = 0</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+i = 0</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 41</B><BR>Distance between two fragments = 0 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 62</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 67</TD></TR><TR>
+<TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+</TR>
+<TR>
+<TD>
+<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">L</span></span> = <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">[]</span></span></TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+<span style="color: rgb(255, 0, 0);">L</span> = <span style="color: rgb(255, 0, 0);">[]</span></TD>
+</TR>
+<TR>
+<TD>
+i = 0</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+i = 0</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 42</B><BR>Distance between two fragments = 2 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvc9compiler.py"<BR>The first line is 88</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 67</TD></TR><TR>
+<TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    handle = RegOpenKeyEx(base, key)<BR>
+except RegError:<BR>
+    return None</TD>
+</TR>
+<TR>
+<TD>
+<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">d</span></span> = <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">{}</span></span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">L</span></span> = <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">[]</span></span></TD>
+</TR>
+<TR>
+<TD>
+i = 0</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+i = 0</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 43</B><BR>Distance between two fragments = 4 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 89</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 95</TD></TR><TR>
+<TD>
+try:<BR>
+    name, value, type = RegEnumValue(handle, i)<BR>
+except RegError:<BR>
+    break</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    name, value, type = RegEnumValue(handle, i)<BR>
+except RegError:<BR>
+    break</TD>
+</TR>
+<TR>
+<TD>
+name = name.lower()</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+name = name.lower()</TD>
+</TR>
+<TR>
+<TD>
+d[<span style="color: rgb(255, 0, 0);">convert_mbcs</span>(name)] = <span style="color: rgb(255, 0, 0);">convert_mbcs</span>(value)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+d[<span style="color: rgb(255, 0, 0);">cls.convert_mbcs</span>(name)] = <span style="color: rgb(255, 0, 0);">cls.convert_mbcs</span>(value)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 44</B><BR>Distance between two fragments = 3 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "ccompiler.py"<BR>The first line is 789</TD><TD></TD><TD>Source file "ccompiler.py"<BR>The first line is 787</TD></TR><TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);">include_dirs</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">include_dirs</span> = []</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);">includes</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">includes</span> = []</TD>
+</TR>
+<TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);">libraries</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">libraries</span> = []</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_dirs</span></span> = []</TD>
+</TR>
+<TR>
+<TD>
+if <span style="color: rgb(255, 0, 0);">library_dirs</span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);">library_dirs</span> = []</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span> is None:<BR>
+    <span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">libraries</span></span> = []</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 45</B><BR>Distance between two fragments = 3 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "bcppcompiler.py"<BR>The first line is 286</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 627</TD></TR><TR>
+<TD>
+ld_args.<span style="color: rgb(255, 0, 0);">extend</span>(<span style="color: rgb(255, 0, 0);">resources</span>)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+ld_args.<span style="color: rgb(255, 0, 0);">append</span>(<span style="color: rgb(255, 0, 0);">('/MANIFESTFILE:') + (temp_manifest)</span>)</TD>
+</TR>
+<TR>
+<TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+</TR>
+<TR>
+<TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 46</B><BR>Distance between two fragments = 0 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 566</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 324</TD></TR><TR>
+<TD>
+for dir in dirs:<BR>
+    for name in try_names:<BR>
+        libfile = os.path.join(dir, self.library_filename(name))<BR>
+        if os.path.exists(libfile):<BR>
+            return libfile<BR>
+else:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+for dir in dirs:<BR>
+    for name in try_names:<BR>
+        libfile = os.path.join(dir, self.library_filename(name))<BR>
+        if os.path.exists(libfile):<BR>
+            return libfile<BR>
+else:<BR>
+    return None</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 47</B><BR>Distance between two fragments = 0 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvc9compiler.py"<BR>The first line is 709</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 324</TD></TR><TR>
+<TD>
+for dir in dirs:<BR>
+    for name in try_names:<BR>
+        libfile = os.path.join(dir, self.library_filename(name))<BR>
+        if os.path.exists(libfile):<BR>
+            return libfile<BR>
+else:<BR>
+    return None</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+for dir in dirs:<BR>
+    for name in try_names:<BR>
+        libfile = os.path.join(dir, self.library_filename(name))<BR>
+        if os.path.exists(libfile):<BR>
+            return libfile<BR>
+else:<BR>
+    return None</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 48</B><BR>Distance between two fragments = 4 <BR>Clone size = 6<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "emxccompiler.py"<BR>The first line is 34</TD><TD></TD><TD>Source file "cygwinccompiler.py"<BR>The first line is 87</TD></TR><TR>
+<TD>
+compiler_type = <span style="color: rgb(255, 0, 0);">'emx'</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+compiler_type = <span style="color: rgb(255, 0, 0);">'cygwin'</span></TD>
+</TR>
+<TR>
+<TD>
+obj_extension = <span style="color: rgb(255, 0, 0);">'.obj'</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+obj_extension = <span style="color: rgb(255, 0, 0);">'.o'</span></TD>
+</TR>
+<TR>
+<TD>
+static_lib_extension = <span style="color: rgb(255, 0, 0);">'.lib'</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+static_lib_extension = <span style="color: rgb(255, 0, 0);">'.a'</span></TD>
+</TR>
+<TR>
+<TD>
+shared_lib_extension = '.dll'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+shared_lib_extension = '.dll'</TD>
+</TR>
+<TR>
+<TD>
+static_lib_format = <span style="color: rgb(255, 0, 0);">'%s%s'</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+static_lib_format = <span style="color: rgb(255, 0, 0);">'lib%s%s'</span></TD>
+</TR>
+<TR>
+<TD>
+shared_lib_format = '%s%s'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+shared_lib_format = '%s%s'</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 49</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 358</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 454</TD></TR><TR>
+<TD>
+compile_opts = (extra_preargs) or ([])</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+compile_opts = (extra_preargs) or ([])</TD>
+</TR>
+<TR>
+<TD>
+compile_opts.append(<span style="color: rgb(255, 0, 0);">'/c'</span>)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+compile_opts.append('/c')</TD>
+</TR>
+<TR>
+<TD>
+if debug:<BR>
+    compile_opts.extend(self.compile_options_debug)<BR>
+else:<BR>
+    compile_opts.extend(self.compile_options)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if debug:<BR>
+    compile_opts.extend(self.compile_options_debug)<BR>
+else:<BR>
+    compile_opts.extend(self.compile_options)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 50</B><BR>Distance between two fragments = 1 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvc9compiler.py"<BR>The first line is 454</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 88</TD></TR><TR>
+<TD>
+compile_opts = (extra_preargs) or ([])</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+compile_opts = (extra_preargs) or ([])</TD>
+</TR>
+<TR>
+<TD>
+compile_opts.append(<span style="color: rgb(255, 0, 0);">'/c'</span>)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+compile_opts.append(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">'-c'</span></span>)</TD>
+</TR>
+<TR>
+<TD>
+if debug:<BR>
+    compile_opts.extend(self.compile_options_debug)<BR>
+else:<BR>
+    compile_opts.extend(self.compile_options)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if debug:<BR>
+    compile_opts.extend(self.compile_options_debug)<BR>
+else:<BR>
+    compile_opts.extend(self.compile_options)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 51</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 257</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 340</TD></TR><TR>
+<TD>
+self.cc = 'cl.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.cc = 'cl.exe'</TD>
+</TR>
+<TR>
+<TD>
+self.linker = 'link.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.linker = 'link.exe'</TD>
+</TR>
+<TR>
+<TD>
+self.lib = 'lib.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.lib = 'lib.exe'</TD>
+</TR>
+<TR>
+<TD>
+self.rc = 'rc.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.rc = 'rc.exe'</TD>
+</TR>
+<TR>
+<TD>
+self.mc = 'mc.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mc = 'mc.exe'</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 52</B><BR>Distance between two fragments = 4 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "filelist.py"<BR>The first line is 145</TD><TD></TD><TD>Source file "filelist.py"<BR>The first line is 138</TD></TR><TR>
+<TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);">'global-exclude '</span>) + (' '.join(patterns)))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);">'global-include '</span>) + (' '.join(patterns)))</TD>
+</TR>
+<TR>
+<TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">exclude_pattern</span>(pattern, anchor=0):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">"warning: no previously-included files matching '%s' found anywhere in distribution"</span>, pattern)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">include_pattern</span>(pattern, anchor=0):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">("warning: no files found matching '%s' ") + ('anywhere in distribution')</span>, pattern)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 53</B><BR>Distance between two fragments = 3 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "filelist.py"<BR>The first line is 145</TD><TD></TD><TD>Source file "filelist.py"<BR>The first line is 131</TD></TR><TR>
+<TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">'global-exclude '</span></span>) + (' '.join(patterns)))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);">'exclude '</span>) + (' '.join(patterns)))</TD>
+</TR>
+<TR>
+<TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">exclude_pattern</span>(pattern, anchor=<span style="color: rgb(255, 0, 0);">0</span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">"warning: no previously-included files matching '%s' found anywhere in distribution"</span>, pattern)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+for pattern in patterns:<BR>
+    if not self.exclude_pattern(pattern, anchor=<span style="color: rgb(255, 0, 0);">1</span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">"warning: no previously-included files found matching '%s'"</span>, pattern)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 54</B><BR>Distance between two fragments = 4 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "filelist.py"<BR>The first line is 145</TD><TD></TD><TD>Source file "filelist.py"<BR>The first line is 124</TD></TR><TR>
+<TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">'global-exclude '</span></span></span>) + (' '.join(patterns)))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);">'include '</span>) + (' '.join(patterns)))</TD>
+</TR>
+<TR>
+<TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">exclude_pattern</span></span>(pattern, anchor=<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">0</span></span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">"warning: no previously-included files matching '%s' found anywhere in distribution"</span>, pattern)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">include_pattern</span>(pattern, anchor=<span style="color: rgb(255, 0, 0);">1</span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);">"warning: no files found matching '%s'"</span>, pattern)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 55</B><BR>Distance between two fragments = 4 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "filelist.py"<BR>The first line is 138</TD><TD></TD><TD>Source file "filelist.py"<BR>The first line is 124</TD></TR><TR>
+<TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">'global-include '</span></span>) + (' '.join(patterns)))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">'include '</span></span>) + (' '.join(patterns)))</TD>
+</TR>
+<TR>
+<TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">include_pattern</span>(pattern, anchor=<span style="color: rgb(255, 0, 0);">0</span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">("warning: no files found matching '%s' ") + ('anywhere in distribution')</span></span>, pattern)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">include_pattern</span>(pattern, anchor=<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">1</span></span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">"warning: no files found matching '%s'"</span></span>, pattern)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 56</B><BR>Distance between two fragments = 3 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "filelist.py"<BR>The first line is 131</TD><TD></TD><TD>Source file "filelist.py"<BR>The first line is 124</TD></TR><TR>
+<TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">'exclude '</span></span>) + (' '.join(patterns)))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+self.debug_print((<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">'include '</span></span></span>) + (' '.join(patterns)))</TD>
+</TR>
+<TR>
+<TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);">exclude_pattern</span>(pattern, anchor=<span style="color: rgb(255, 0, 0);">1</span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">"warning: no previously-included files found matching '%s'"</span></span>, pattern)</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+for pattern in patterns:<BR>
+    if not self.<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">include_pattern</span></span>(pattern, anchor=<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">1</span></span>):<BR>
+        log.warn(<span style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">"warning: no files found matching '%s'"</span></span>, pattern)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 57</B><BR>Distance between two fragments = 2 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "core.py"<BR>The first line is 142</TD><TD></TD><TD>Source file "core.py"<BR>The first line is 127</TD></TR><TR>
+<TD>
+if DEBUG:<BR>
+    print <span style="color: rgb(255, 0, 0);">'options (after parsing command line):'</span><BR>
+    dist.dump_option_dicts()</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if DEBUG:<BR>
+    print <span style="color: rgb(255, 0, 0);">'options (after parsing config files):'</span><BR>
+    dist.dump_option_dicts()</TD>
+</TR>
+<TR>
+<TD>
+if _setup_stop_after == <span style="color: rgb(255, 0, 0);">'commandline'</span>:<BR>
+    return dist</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+if _setup_stop_after == <span style="color: rgb(255, 0, 0);">'config'</span>:<BR>
+    return dist</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 58</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "emxccompiler.py"<BR>The first line is 86</TD><TD></TD><TD>Source file "cygwinccompiler.py"<BR>The first line is 163</TD></TR><TR>
+<TD>
+try:<BR>
+    self.spawn((((self.compiler_so) + (cc_args)) + ([src, '-o', obj])) + (extra_postargs))<BR>
+except DistutilsExecError, msg:<BR>
+    raise CompileError, msg</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    self.spawn((((self.compiler_so) + (cc_args)) + ([src, '-o', obj])) + (extra_postargs))<BR>
+except DistutilsExecError, msg:<BR>
+    raise CompileError, msg</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 59</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 69</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 74</TD></TR><TR>
+<TD>
+try:<BR>
+    k = RegEnumKey(handle, i)<BR>
+except RegError:<BR>
+    break</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    k = RegEnumKey(handle, i)<BR>
+except RegError:<BR>
+    break</TD>
+</TR>
+<TR>
+<TD>
+L.append(k)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+L.append(k)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 60</B><BR>Distance between two fragments = 2 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "unixccompiler.py"<BR>The first line is 82</TD><TD></TD><TD>Source file "unixccompiler.py"<BR>The first line is 69</TD></TR><TR>
+<TD>
+try:<BR>
+    index = compiler_so.index(<span style="color: rgb(255, 0, 0);">'-isysroot'</span>)<BR>
+    compiler_so[index:(index) + (2)]<BR>
+except ValueError:<BR>
+    <span style="color: rgb(255, 0, 0);">pass</span></TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+try:<BR>
+    index = compiler_so.index(<span style="color: rgb(255, 0, 0);">'-arch'</span>)<BR>
+    compiler_so[index:(index) + (2)]<BR>
+except ValueError:<BR>
+    <span style="color: rgb(255, 0, 0);">break</span></TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 61</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "unixccompiler.py"<BR>The first line is 154</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 376</TD></TR><TR>
+<TD>
+if extra_preargs:<BR>
+    pp_args[:0] = extra_preargs</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_preargs:<BR>
+    pp_args[:0] = extra_preargs</TD>
+</TR>
+<TR>
+<TD>
+if extra_postargs:<BR>
+    pp_args.extend(extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_postargs:<BR>
+    pp_args.extend(extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+pp_args.append(source)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+pp_args.append(source)</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 62</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "unixccompiler.py"<BR>The first line is 229</TD><TD></TD><TD>Source file "msvccompiler.py"<BR>The first line is 527</TD></TR><TR>
+<TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+</TR>
+<TR>
+<TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 63</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "unixccompiler.py"<BR>The first line is 229</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 289</TD></TR><TR>
+<TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+</TR>
+<TR>
+<TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 64</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "unixccompiler.py"<BR>The first line is 229</TD><TD></TD><TD>Source file "msvc9compiler.py"<BR>The first line is 629</TD></TR><TR>
+<TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_preargs:<BR>
+    ld_args[:0] = extra_preargs</TD>
+</TR>
+<TR>
+<TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+if extra_postargs:<BR>
+    ld_args.extend(extra_postargs)</TD>
+</TR>
+<TR>
+<TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mkpath(os.path.dirname(output_filename))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 65</B><BR>Distance between two fragments = 4 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "file_util.py"<BR>The first line is 43</TD><TD></TD><TD>Source file "file_util.py"<BR>The first line is 31</TD></TR><TR>
+<TD>
+try:<BR>
+    <span style="color: rgb(255, 0, 0);">fdst</span> = open(<span style="color: rgb(255, 0, 0);">dst</span>, <span style="color: rgb(255, 0, 0);">'wb'</span>)<BR>
+except os.error, errno, errstr:<BR>
+    raise DistutilsFileError((<span style="color: rgb(255, 0, 0);">"could not create '%s': %s"</span>) % ((<span style="color: rgb(255, 0, 0);">dst</span>, errstr)))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+try:<BR>
+    <span style="color: rgb(255, 0, 0);">fsrc</span> = open(<span style="color: rgb(255, 0, 0);">src</span>, <span style="color: rgb(255, 0, 0);">'rb'</span>)<BR>
+except os.error, errno, errstr:<BR>
+    raise DistutilsFileError((<span style="color: rgb(255, 0, 0);">"could not open '%s': %s"</span>) % ((<span style="color: rgb(255, 0, 0);">src</span>, errstr)))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 66</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvc9compiler.py"<BR>The first line is 372</TD><TD></TD><TD>Source file "msvccompiler.py"<BR>The first line is 271</TD></TR><TR>
+<TD>
+self.cc = self.find_exe('cl.exe')</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.cc = self.find_exe('cl.exe')</TD>
+</TR>
+<TR>
+<TD>
+self.linker = self.find_exe('link.exe')</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.linker = self.find_exe('link.exe')</TD>
+</TR>
+<TR>
+<TD>
+self.lib = self.find_exe('lib.exe')</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.lib = self.find_exe('lib.exe')</TD>
+</TR>
+<TR>
+<TD>
+self.rc = self.find_exe('rc.exe')</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.rc = self.find_exe('rc.exe')</TD>
+</TR>
+<TR>
+<TD>
+self.mc = self.find_exe('mc.exe')</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+self.mc = self.find_exe('mc.exe')</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 67</B><BR>Distance between two fragments = 4 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "file_util.py"<BR>The first line is 59</TD><TD></TD><TD>Source file "file_util.py"<BR>The first line is 37</TD></TR><TR>
+<TD>
+try:<BR>
+    <span style="color: rgb(255, 0, 0);">fdst</span>.<span style="color: rgb(255, 0, 0);">write</span>(<span style="color: rgb(255, 0, 0);">buf</span>)<BR>
+except <span style="color: rgb(255, 0, 0);">os</span>.error, errno, errstr:<BR>
+    raise DistutilsFileError((<span style="color: rgb(255, 0, 0);">"could not write to '%s': %s"</span>) % ((<span style="color: rgb(255, 0, 0);">dst</span>, errstr)))</TD>
+<TD style="width: 10px;" BGCOLOR=RED> </TD><TD>
+try:<BR>
+    <span style="color: rgb(255, 0, 0);">os</span>.<span style="color: rgb(255, 0, 0);">unlink</span>(<span style="color: rgb(255, 0, 0);">dst</span>)<BR>
+except <span style="color: rgb(255, 0, 0);">os</span>.error, errno, errstr:<BR>
+    raise DistutilsFileError((<span style="color: rgb(255, 0, 0);">"could not delete '%s': %s"</span>) % ((<span style="color: rgb(255, 0, 0);">dst</span>, errstr)))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 68</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "spawn.py"<BR>The first line is 87</TD><TD></TD><TD>Source file "spawn.py"<BR>The first line is 68</TD></TR><TR>
+<TD>
+try:<BR>
+    rc = os.spawnv(os.P_WAIT, executable, cmd)<BR>
+except OSError, exc:<BR>
+    raise DistutilsExecError, ("command '%s' failed: %s") % ((cmd[0], exc[-1]))</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+try:<BR>
+    rc = os.spawnv(os.P_WAIT, executable, cmd)<BR>
+except OSError, exc:<BR>
+    raise DistutilsExecError, ("command '%s' failed: %s") % ((cmd[0], exc[-1]))</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 69</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvccompiler.py"<BR>The first line is 228</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 46</TD></TR><TR>
+<TD>
+obj_extension = '.obj'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+obj_extension = '.obj'</TD>
+</TR>
+<TR>
+<TD>
+static_lib_extension = '.lib'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+static_lib_extension = '.lib'</TD>
+</TR>
+<TR>
+<TD>
+shared_lib_extension = '.dll'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+shared_lib_extension = '.dll'</TD>
+</TR>
+<TR>
+<TD>
+static_lib_format = shared_lib_format = '%s%s'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+static_lib_format = shared_lib_format = '%s%s'</TD>
+</TR>
+<TR>
+<TD>
+exe_extension = '.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+exe_extension = '.exe'</TD>
+</TR>
+</TABLE> </P> <HR><BR>
+<P><B>Clone # 70</B><BR>Distance between two fragments = 0 <BR>Clone size = 5<TABLE NOWRAP WIDTH=100% BORDER=1><TD>Source file "msvc9compiler.py"<BR>The first line is 309</TD><TD></TD><TD>Source file "bcppcompiler.py"<BR>The first line is 46</TD></TR><TR>
+<TD>
+obj_extension = '.obj'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+obj_extension = '.obj'</TD>
+</TR>
+<TR>
+<TD>
+static_lib_extension = '.lib'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+static_lib_extension = '.lib'</TD>
+</TR>
+<TR>
+<TD>
+shared_lib_extension = '.dll'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+shared_lib_extension = '.dll'</TD>
+</TR>
+<TR>
+<TD>
+static_lib_format = shared_lib_format = '%s%s'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+static_lib_format = shared_lib_format = '%s%s'</TD>
+</TR>
+<TR>
+<TD>
+exe_extension = '.exe'</TD>
+<TD style="width: 10px;" BGCOLOR=AQUA> </TD><TD>
+exe_extension = '.exe'</TD>
+</TR>
+</TABLE> </P> <HR>
+    
+    
+    <HR>
+    Clone Digger is aimed to find software clones in Python and Java programs. It is provided under the GPL license and can be downloaded from the site <a href="http://clonedigger.sourceforge.net">http://clonedigger.sourceforge.net</a>
+    </BODY>
+</HTML>
