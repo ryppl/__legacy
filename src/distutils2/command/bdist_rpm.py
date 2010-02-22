@@ -11,7 +11,7 @@ import string
 
 from distutils2.core import Command
 from distutils2.debug import DEBUG
-from distutils2.file_util import write_file
+from distutils2.util import write_file
 from distutils2.errors import (DistutilsOptionError, DistutilsPlatformError,
                               DistutilsFileError, DistutilsExecError)
 from distutils2 import log

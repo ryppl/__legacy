@@ -12,9 +12,9 @@ import re
 from distutils2.errors import (CompileError, LinkError, UnknownFileError,
                               DistutilsPlatformError, DistutilsModuleError)
 from distutils2.spawn import spawn
-from distutils2.file_util import move_file
 from distutils2.util import split_quoted, execute, newer_group
 from distutils2 import log
+from shutil import move
 
 try:
     import sysconfig
@@ -929,7 +929,9 @@ main (int argc, char **argv) {
         spawn(cmd, dry_run=self.dry_run)
 
     def move_file(self, src, dst):
-        return move_file(src, dst, dry_run=self.dry_run)
+        if self.dry_run:
+            return # XXX log ?
+        return move(src, dst)
 
     def mkpath(self, name, mode=0777):
         name = os.path.normpath(name)

@@ -16,7 +16,7 @@ from distutils2 import log
 from distutils2.core import Command
 from distutils2.debug import DEBUG
 from distutils2.errors import DistutilsPlatformError
-from distutils2.file_util import write_file
+from distutils2.util import write_file
 from distutils2.util import convert_path, change_root, get_platform
 from distutils2.errors import DistutilsOptionError
 

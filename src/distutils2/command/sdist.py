@@ -16,7 +16,7 @@ except ImportError:
     from distutils2._backport.shutil import get_archive_formats
 
 from distutils2.core import Command
-from distutils2 import file_util
+from distutils2 import util
 from distutils2.text_file import TextFile
 from distutils2.errors import (DistutilsPlatformError, DistutilsOptionError,
                               DistutilsTemplateError)
@@ -390,7 +390,7 @@ class sdist(Command):
         by 'add_defaults()' and 'read_template()') to the manifest file
         named by 'self.manifest'.
         """
-        self.execute(file_util.write_file,
+        self.execute(util.write_file,
                      (self.manifest, self.filelist.files),
                      "writing manifest file '%s'" % self.manifest)
 

@@ -8,11 +8,11 @@ __revision__ = "$Id: cmd.py 75192 2009-10-02 23:49:48Z tarek.ziade $"
 
 import sys, os, re
 from distutils2.errors import DistutilsOptionError
-from distutils2 import util, file_util
+from distutils2 import util
 from distutils2 import log
 
 # XXX see if we want to backport this
-from distutils2._backport.shutil import copytree
+from distutils2._backport.shutil import copytree, copyfile, move
 
 try:
     from shutil import make_archive
@@ -373,13 +373,13 @@ class Command:
         """Copy a file respecting verbose, dry-run and force flags.  (The
         former two default to whatever is in the Distribution object, and
         the latter defaults to false for commands that don't define it.)"""
-
-        return file_util.copy_file(
-            infile, outfile,
-            preserve_mode, preserve_times,
-            not self.force,
-            link,
-            dry_run=self.dry_run)
+        if self.dry_run:
+            # XXX add a comment
+            return
+        if os.path.isdir(outfile):
+            outfile = os.path.join(outfile, os.path.split(infile)[-1])
+        copyfile(infile, outfile)
+        return outfile, None  # XXX
 
     def copy_tree(self, infile, outfile,
                    preserve_mode=1, preserve_times=1, preserve_symlinks=0,
@@ -391,11 +391,13 @@ class Command:
             return # see if we want to display something
         return copytree(infile, outfile, preserve_symlinks)
 
-    def move_file (self, src, dst, level=1):
+    def move_file(self, src, dst, level=1):
         """Move a file respectin dry-run flag."""
-        return file_util.move_file(src, dst, dry_run = self.dry_run)
+        if self.dry_run:
+            return # XXX log ?
+        return move(src, dst)
 
-    def spawn (self, cmd, search_path=1, level=1):
+    def spawn(self, cmd, search_path=1, level=1):
         """Spawn an external command respecting dry-run flag."""
         from distutils2.spawn import spawn
         spawn(cmd, search_path, dry_run= self.dry_run)
