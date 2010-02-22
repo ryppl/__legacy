@@ -1,7 +1,7 @@
 """Tests for distutils.filelist."""
 from os.path import join
 import unittest2
-from test.test_support import captured_stdout
+from distutils2.tests import captured_stdout
 
 from distutils2.filelist import glob_to_re, FileList
 from distutils2 import debug

@@ -8,8 +8,8 @@ try:
 except ImportError:
     from distutils2._backport import sysconfig
 
-from test.test_support import check_warnings, run_unittest
-from test.test_support import captured_stdout
+from distutils2.tests import check_warnings, run_unittest
+from distutils2.tests import captured_stdout
 
 from distutils2 import cygwinccompiler
 from distutils2.cygwinccompiler import (CygwinCCompiler, check_config_h,

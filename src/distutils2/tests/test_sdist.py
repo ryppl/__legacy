@@ -24,8 +24,8 @@ import sys
 import tempfile
 import warnings
 
-from test.test_support import check_warnings
-from test.test_support import captured_stdout
+from distutils2.tests import check_warnings
+from distutils2.tests import captured_stdout
 
 from distutils2.command.sdist import sdist
 from distutils2.command.sdist import show_formats

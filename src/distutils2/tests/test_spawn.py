@@ -2,7 +2,7 @@
 import unittest2
 import os
 import time
-from test.test_support import captured_stdout
+from distutils2.tests import captured_stdout
 
 from distutils2.spawn import _nt_quote_args
 from distutils2.spawn import spawn, find_executable

@@ -1,7 +1,7 @@
 """Tests for distutils.ccompiler."""
 import os
 import unittest2
-from test.test_support import captured_stdout
+from distutils2.tests import captured_stdout
 
 from distutils2.ccompiler import (gen_lib_options, CCompiler,
                                  get_default_compiler, customize_compiler)

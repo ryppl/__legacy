@@ -11,7 +11,7 @@ import textwrap
 from distutils2.dist import Distribution, fix_help_options, DistributionMetadata
 from distutils2.cmd import Command
 import distutils2.dist
-from test.test_support import TESTFN, captured_stdout
+from distutils2.tests import TESTFN, captured_stdout
 from distutils2.tests import support
 
 class test_dist(Command):
