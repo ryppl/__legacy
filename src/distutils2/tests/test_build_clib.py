@@ -120,7 +120,7 @@ class BuildCLibTestCase(support.TempdirManager,
         # before we run the command, we want to make sure
         # all commands are present on the system
         # by creating a compiler and checking its executables
-        from distutils2.ccompiler import new_compiler, customize_compiler
+        from distutils2.compiler.ccompiler import new_compiler, customize_compiler
 
         compiler = new_compiler()
         customize_compiler(compiler)

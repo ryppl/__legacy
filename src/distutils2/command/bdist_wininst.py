@@ -318,7 +318,7 @@ class bdist_wininst (Command):
     # get_installer_filename()
 
     def get_exe_bytes (self):
-        from distutils2.msvccompiler import get_build_version
+        from distutils2.compiler.msvccompiler import get_build_version
         # If a target-version other than the current version has been
         # specified, then using the MSVC version from *this* build is no good.
         # Without actually finding and executing the target version and parsing

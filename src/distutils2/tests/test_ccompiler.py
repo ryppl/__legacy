@@ -3,7 +3,7 @@ import os
 import unittest2
 from distutils2.tests import captured_stdout
 
-from distutils2.ccompiler import (gen_lib_options, CCompiler,
+from distutils2.compiler.ccompiler import (gen_lib_options, CCompiler,
                                  get_default_compiler, customize_compiler)
 from distutils2 import debug
 from distutils2.tests import support

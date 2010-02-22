@@ -19,7 +19,7 @@ import os, sys
 from types import StringType, NoneType
 
 from distutils2.dep_util import newer
-from distutils2.ccompiler import \
+from distutils2.compiler.ccompiler import \
      CCompiler, gen_preprocess_options, gen_lib_options
 from distutils2.errors import \
      DistutilsExecError, CompileError, LibError, LinkError

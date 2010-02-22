@@ -11,8 +11,8 @@ except ImportError:
 from distutils2.tests import check_warnings, run_unittest
 from distutils2.tests import captured_stdout
 
-from distutils2 import cygwinccompiler
-from distutils2.cygwinccompiler import (CygwinCCompiler, check_config_h,
+from distutils2.compiler import cygwinccompiler
+from distutils2.compiler.cygwinccompiler import (CygwinCCompiler, check_config_h,
                                        CONFIG_H_OK, CONFIG_H_NOTOK,
                                        CONFIG_H_UNCERTAIN, get_versions,
                                        get_msvcr, RE_VERSION)

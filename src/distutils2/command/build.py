@@ -11,7 +11,7 @@ from distutils2.core import Command
 from distutils2.errors import DistutilsOptionError
 
 def show_compilers():
-    from distutils2.ccompiler import show_compilers
+    from distutils2.compiler.ccompiler import show_compilers
     show_compilers()
 
 class build(Command):

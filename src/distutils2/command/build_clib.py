@@ -19,11 +19,11 @@ __revision__ = "$Id: build_clib.py 77704 2010-01-23 09:23:15Z tarek.ziade $"
 import os
 from distutils2.core import Command
 from distutils2.errors import DistutilsSetupError
-from distutils2.ccompiler import customize_compiler
+from distutils2.compiler.ccompiler import customize_compiler
 from distutils2 import log
 
 def show_compilers():
-    from distutils2.ccompiler import show_compilers
+    from distutils2.compiler.ccompiler import show_compilers
     show_compilers()
 
 
@@ -97,7 +97,7 @@ class build_clib(Command):
             return
 
         # Yech -- this is cut 'n pasted from build_ext.py!
-        from distutils2.ccompiler import new_compiler
+        from distutils2.compiler.ccompiler import new_compiler
         self.compiler = new_compiler(compiler=self.compiler,
                                      dry_run=self.dry_run,
                                      force=self.force)

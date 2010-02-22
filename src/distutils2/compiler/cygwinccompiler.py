@@ -53,7 +53,7 @@ import copy
 import re
 from warnings import warn
 
-from distutils2.unixccompiler import UnixCCompiler
+from distutils2.compiler.unixccompiler import UnixCCompiler
 from distutils2.file_util import write_file
 from distutils2.errors import DistutilsExecError, CompileError, UnknownFileError
 from distutils2.util import get_compiler_versions

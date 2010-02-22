@@ -7,7 +7,7 @@ import warnings
 from distutils2.tests import check_warnings, run_unittest
 from distutils2.tests import captured_stdout
 
-from distutils2.emxccompiler import get_versions
+from distutils2.compiler.emxccompiler import get_versions
 from distutils2.util import get_compiler_versions
 from distutils2.tests import support
 

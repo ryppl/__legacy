@@ -12,7 +12,7 @@ from warnings import warn
 from distutils2.util import get_platform
 from distutils2.core import Command
 from distutils2.errors import *
-from distutils2.ccompiler import customize_compiler
+from distutils2.compiler.ccompiler import customize_compiler
 from distutils2.dep_util import newer_group
 from distutils2.extension import Extension
 from distutils2 import log
@@ -40,7 +40,7 @@ extension_name_re = re.compile \
 
 
 def show_compilers ():
-    from distutils2.ccompiler import show_compilers
+    from distutils2.compiler.ccompiler import show_compilers
     show_compilers()
 
 
@@ -321,7 +321,7 @@ class build_ext(Command):
                 self.rpath.append(user_lib)
 
     def run(self):
-        from distutils2.ccompiler import new_compiler
+        from distutils2.compiler.ccompiler import new_compiler
 
         # 'self.extensions', as supplied by setup.py, is a list of
         # Extension instances.  See the documentation for Extension (in

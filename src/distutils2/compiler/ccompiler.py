@@ -1041,7 +1041,7 @@ def new_compiler(plat=None, compiler=None, verbose=0, dry_run=0, force=0):
         raise DistutilsPlatformError, msg
 
     try:
-        module_name = "distutils2." + module_name
+        module_name = "distutils2.compiler." + module_name
         __import__ (module_name)
         module = sys.modules[module_name]
         klass = vars(module)[class_name]

@@ -21,7 +21,7 @@ import re
 
 from distutils2.errors import (DistutilsExecError, DistutilsPlatformError,
                               CompileError, LibError, LinkError)
-from distutils2.ccompiler import CCompiler, gen_lib_options
+from distutils2.compiler.ccompiler import CCompiler, gen_lib_options
 from distutils2 import log
 from distutils2.util import get_platform
 
