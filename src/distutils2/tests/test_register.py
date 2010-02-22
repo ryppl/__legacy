@@ -7,7 +7,7 @@ import getpass
 import urllib2
 import warnings
 
-from test.test_support import check_warnings
+from distutils2.tests import check_warnings
 
 from distutils2.command import register as register_module
 from distutils2.command.register import register

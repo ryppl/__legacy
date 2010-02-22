@@ -4,8 +4,10 @@ import tempfile
 import shutil
 from StringIO import StringIO
 import warnings
-from test.test_support import check_warnings
-from test.test_support import captured_stdout
+
+import distutils2.tests
+from distutils2.tests import check_warnings
+from distutils2.tests import captured_stdout
 
 from distutils2.core import Extension, Distribution
 from distutils2.command.build_ext import build_ext
@@ -19,7 +21,6 @@ except ImportError:
     from distutils2._backport import sysconfig
 
 import unittest2
-from test import test_support
 
 # http://bugs.python.org/issue4373
 # Don't load the xx module more than once.
@@ -62,7 +63,7 @@ class BuildExtTestCase(support.TempdirManager,
         cmd.build_temp = self.tmp_dir
 
         old_stdout = sys.stdout
-        if not test_support.verbose:
+        if not distutils2.tests.verbose:
             # silence compiler output
             sys.stdout = StringIO()
         try:
@@ -91,7 +92,7 @@ class BuildExtTestCase(support.TempdirManager,
 
     def tearDown(self):
         # Get everything back to normal
-        test_support.unload('xx')
+        distutils2.tests.unload('xx')
         sys.path = self.sys_path[0]
         sys.path[:] = self.sys_path[1]
         if sys.version > "2.6":
@@ -429,11 +430,11 @@ class BuildExtTestCase(support.TempdirManager,
 def test_suite():
     src = _get_source_filename()
     if not os.path.exists(src):
-        if test_support.verbose:
+        if distutils2.tests.verbose:
             print ('test_build_ext: Cannot find source code (test'
                    ' must run in python build dir)')
         return unittest2.TestSuite()
     else: return unittest2.makeSuite(BuildExtTestCase)
 
 if __name__ == '__main__':
-    test_support.run_unittest(test_suite())
+    distsutils2.tests.run_unittest(test_suite())

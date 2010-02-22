@@ -17,7 +17,7 @@ except ImportError:
                                                 _INSTALL_SCHEMES,
                                                 get_config_var, get_path)
 
-from test.test_support import captured_stdout
+from distutils2.tests import captured_stdout
 
 from distutils2.command.install import install
 from distutils2.command import install as install_module

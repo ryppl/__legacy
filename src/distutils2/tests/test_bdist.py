@@ -5,7 +5,7 @@ import os
 import tempfile
 import shutil
 
-from test.test_support import run_unittest
+from distutils2.tests import run_unittest
 
 from distutils2.core import Distribution
 from distutils2.command.bdist import bdist

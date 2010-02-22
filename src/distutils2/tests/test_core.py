@@ -5,8 +5,7 @@ import distutils2.core
 import os
 import shutil
 import sys
-import test.test_support
-from test.test_support import captured_stdout
+from distutils2.tests import captured_stdout
 import unittest2
 from distutils2.tests import support
 
@@ -45,13 +44,13 @@ class CoreTestCase(support.EnvironGuard, unittest2.TestCase):
         super(CoreTestCase, self).tearDown()
 
     def cleanup_testfn(self):
-        path = test.test_support.TESTFN
+        path = distutils2.tests.TESTFN
         if os.path.isfile(path):
             os.remove(path)
         elif os.path.isdir(path):
             shutil.rmtree(path)
 
-    def write_setup(self, text, path=test.test_support.TESTFN):
+    def write_setup(self, text, path=distutils2.tests.TESTFN):
         open(path, "w").write(text)
         return path
 
@@ -69,8 +68,8 @@ class CoreTestCase(support.EnvironGuard, unittest2.TestCase):
         cwd = os.getcwd()
 
         # Create a directory and write the setup.py file there:
-        os.mkdir(test.test_support.TESTFN)
-        setup_py = os.path.join(test.test_support.TESTFN, "setup.py")
+        os.mkdir(distutils2.tests.TESTFN)
+        setup_py = os.path.join(distutils2.tests.TESTFN, "setup.py")
         distutils2.core.run_setup(
             self.write_setup(setup_prints_cwd, path=setup_py))
 

@@ -11,7 +11,7 @@ try:
 except ImportError:
     zlib = None
 
-from test.test_support import run_unittest
+from distutils2.tests import run_unittest
 
 from distutils2.core import Distribution
 from distutils2.command.bdist_dumb import bdist_dumb

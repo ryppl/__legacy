@@ -1,7 +1,7 @@
 """Tests for distutils.cmd."""
 import unittest2
 import os
-from test.test_support import captured_stdout, run_unittest
+from distutils2.tests import captured_stdout, run_unittest
 
 from distutils2.cmd import Command
 from distutils2.dist import Distribution

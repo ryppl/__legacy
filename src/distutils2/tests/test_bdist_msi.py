@@ -2,7 +2,7 @@
 import unittest2
 import sys
 
-from test.test_support import run_unittest
+from distutils2.tests import run_unittest
 
 from distutils2.tests import support
 
