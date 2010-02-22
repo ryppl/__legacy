@@ -13,9 +13,11 @@ try:
 except ImportError:
     from distutils2._backport import sysconfig
     from distutils2._backport.sysconfig import (get_scheme_names,
-                                                _CONFIG_VARS,
+                                                get_config_vars,
                                                 _INSTALL_SCHEMES,
                                                 get_config_var, get_path)
+
+    _CONFIG_VARS=get_config_vars()
 
 from distutils2.tests import captured_stdout
 
@@ -86,7 +88,7 @@ class InstallTestCase(support.TempdirManager,
         if sys.version < '2.6':
             return
 
-        # preparing the environement for the test
+        # preparing the environment for the test
         self.old_user_base = get_config_var('userbase')
         self.old_user_site = get_path('purelib', '%s_user' % os.name)
         self.tmpdir = self.mkdtemp()
