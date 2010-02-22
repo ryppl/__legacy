@@ -1,8 +1,6 @@
 """Tests for distutils.
 
-The tests for distutils are defined in the distutils.tests package;
-the test_suite() function there returns a test suite that's ready to
-be run.
+The tests for distutils2 are defined in the distutils2.tests package;
 """
 
 import distutils2.tests
