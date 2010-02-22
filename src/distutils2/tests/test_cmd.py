@@ -3,10 +3,10 @@ import unittest
 import os
 from test.test_support import captured_stdout, run_unittest
 
-from distutils.cmd import Command
-from distutils.dist import Distribution
-from distutils.errors import DistutilsOptionError
-from distutils import debug
+from distutils2.cmd import Command
+from distutils2.dist import Distribution
+from distutils2.errors import DistutilsOptionError
+from distutils2 import debug
 
 class MyCmd(Command):
     def initialize_options(self):

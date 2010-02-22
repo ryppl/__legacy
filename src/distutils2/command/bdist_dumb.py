@@ -10,11 +10,11 @@ import os
 
 from sysconfig import get_python_version
 
-from distutils.util import get_platform
-from distutils.core import Command
-from distutils.dir_util import remove_tree, ensure_relative
-from distutils.errors import DistutilsPlatformError
-from distutils import log
+from distutils2.util import get_platform
+from distutils2.core import Command
+from distutils2.dir_util import remove_tree, ensure_relative
+from distutils2.errors import DistutilsPlatformError
+from distutils2 import log
 
 class bdist_dumb (Command):
 

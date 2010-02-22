@@ -24,10 +24,10 @@ __revision__ = "$Id: emxccompiler.py 76956 2009-12-21 01:22:46Z tarek.ziade $"
 import os, sys, copy
 from warnings import warn
 
-from distutils.unixccompiler import UnixCCompiler
-from distutils.file_util import write_file
-from distutils.errors import DistutilsExecError, CompileError, UnknownFileError
-from distutils.util import get_compiler_versions
+from distutils2.unixccompiler import UnixCCompiler
+from distutils2.file_util import write_file
+from distutils2.errors import DistutilsExecError, CompileError, UnknownFileError
+from distutils2.util import get_compiler_versions
 
 class EMXCCompiler (UnixCCompiler):
 
@@ -261,7 +261,7 @@ def check_config_h():
     # XXX since this function also checks sys.version, it's not strictly a
     # "pyconfig.h" check -- should probably be renamed...
 
-    from distutils import sysconfig
+    from distutils2 import sysconfig
     import string
     # if sys.version contains GCC then python was compiled with
     # GCC, and the pyconfig.h file should be OK

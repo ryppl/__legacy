@@ -9,7 +9,7 @@ __revision__ = "$Id: archive_util.py 75659 2009-10-24 13:29:44Z tarek.ziade $"
 
 from warnings import warn
 import shutil
-from distutils.log import _global_log as logger
+from distutils2.log import _global_log as logger
 
 _DEPRECATION_MSG = '%(name)s is deprecated in favor of shutil.%(name)s'
 
@@ -36,7 +36,7 @@ def make_zipfile(base_name, base_dir, verbose=0, dry_run=0):
     except shutil.ExecError, e:
         # make sure we return the old exception
         # so existing code is not impacted
-        from distutils.errors import DistutilsExecError
+        from distutils2.errors import DistutilsExecError
         raise DistutilsExecError(e.msg)
 
 ARCHIVE_FORMATS = shutil._ARCHIVE_FORMATS

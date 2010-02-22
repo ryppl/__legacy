@@ -3,7 +3,7 @@ import sys
 import unittest
 import sysconfig
 
-from distutils.unixccompiler import UnixCCompiler
+from distutils2.unixccompiler import UnixCCompiler
 
 class UnixCCompilerTestCase(unittest.TestCase):
 

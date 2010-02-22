@@ -10,10 +10,10 @@ import urlparse
 import cStringIO as StringIO
 from hashlib import md5
 
-from distutils.errors import DistutilsOptionError
-from distutils.core import PyPIRCCommand
-from distutils.spawn import spawn
-from distutils import log
+from distutils2.errors import DistutilsOptionError
+from distutils2.core import PyPIRCCommand
+from distutils2.spawn import spawn
+from distutils2 import log
 
 class upload(PyPIRCCommand):
 

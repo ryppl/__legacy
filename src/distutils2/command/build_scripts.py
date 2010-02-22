@@ -6,10 +6,10 @@ __revision__ = "$Id: build_scripts.py 77704 2010-01-23 09:23:15Z tarek.ziade $"
 
 import os, re
 from stat import ST_MODE
-from distutils.core import Command
-from distutils.dep_util import newer
-from distutils.util import convert_path
-from distutils import log
+from distutils2.core import Command
+from distutils2.dep_util import newer
+from distutils2.util import convert_path
+from distutils2 import log
 
 # check if Python is called on the first line with this expression
 first_line_re = re.compile('^#!.*python[0-9.]*([ \t].*)?$')

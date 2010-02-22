@@ -9,13 +9,13 @@ import os
 
 from sysconfig import get_config_vars, get_paths, get_path, get_config_var
 
-from distutils import log
-from distutils.core import Command
-from distutils.debug import DEBUG
-from distutils.errors import DistutilsPlatformError
-from distutils.file_util import write_file
-from distutils.util import convert_path, change_root, get_platform
-from distutils.errors import DistutilsOptionError
+from distutils2 import log
+from distutils2.core import Command
+from distutils2.debug import DEBUG
+from distutils2.errors import DistutilsPlatformError
+from distutils2.file_util import write_file
+from distutils2.util import convert_path, change_root, get_platform
+from distutils2.errors import DistutilsOptionError
 
 # kept for backward compat, will be removed in 3.2
 if sys.version < "2.2":
@@ -403,7 +403,7 @@ class install(Command):
         """Dumps the list of user options."""
         if not DEBUG:
             return
-        from distutils.fancy_getopt import longopt_xlate
+        from distutils2.fancy_getopt import longopt_xlate
         log.debug(msg + ":")
         for opt in self.user_options:
             opt_name = opt[0]

@@ -8,12 +8,12 @@ __revision__ = "$Id: util.py 77761 2010-01-26 22:46:15Z tarek.ziade $"
 
 import sys, os, string, re
 
-from distutils.errors import DistutilsPlatformError
-from distutils.dep_util import newer
-from distutils.spawn import spawn, find_executable
-from distutils import log
-from distutils.version import LooseVersion
-from distutils.errors import DistutilsByteCompileError
+from distutils2.errors import DistutilsPlatformError
+from distutils2.dep_util import newer
+from distutils2.spawn import spawn, find_executable
+from distutils2 import log
+from distutils2.version import LooseVersion
+from distutils2.errors import DistutilsByteCompileError
 
 try:
     _sysconfig = __import__('sysconfig')  # from the standard lib

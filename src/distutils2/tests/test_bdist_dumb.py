@@ -13,9 +13,9 @@ except ImportError:
 
 from test.test_support import run_unittest
 
-from distutils.core import Distribution
-from distutils.command.bdist_dumb import bdist_dumb
-from distutils.tests import support
+from distutils2.core import Distribution
+from distutils2.command.bdist_dumb import bdist_dumb
+from distutils2.tests import support
 
 SETUP_PY = """\
 from distutils.core import setup

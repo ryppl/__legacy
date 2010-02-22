@@ -11,8 +11,8 @@ __revision__ = "$Id: spawn.py 73147 2009-06-02 15:58:43Z tarek.ziade $"
 import sys
 import os
 
-from distutils.errors import DistutilsPlatformError, DistutilsExecError
-from distutils import log
+from distutils2.errors import DistutilsPlatformError, DistutilsExecError
+from distutils2 import log
 
 def spawn(cmd, search_path=1, verbose=0, dry_run=0):
     """Run another program, specified as a command list 'cmd', in a new process.

@@ -8,9 +8,9 @@ __revision__ = "$Id: filelist.py 75196 2009-10-03 00:07:35Z tarek.ziade $"
 
 import os, re
 import fnmatch
-from distutils.util import convert_path
-from distutils.errors import DistutilsTemplateError, DistutilsInternalError
-from distutils import log
+from distutils2.util import convert_path
+from distutils2.errors import DistutilsTemplateError, DistutilsInternalError
+from distutils2 import log
 
 class FileList:
     """A list of files built by on exploring the filesystem and filtered by
@@ -43,7 +43,7 @@ class FileList:
         """Print 'msg' to stdout if the global DEBUG (taken from the
         DISTUTILS_DEBUG environment variable) flag is true.
         """
-        from distutils.debug import DEBUG
+        from distutils2.debug import DEBUG
         if DEBUG:
             print msg
 

@@ -3,10 +3,10 @@ import os
 import unittest
 from test.test_support import captured_stdout
 
-from distutils.ccompiler import (gen_lib_options, CCompiler,
+from distutils2.ccompiler import (gen_lib_options, CCompiler,
                                  get_default_compiler, customize_compiler)
-from distutils import debug
-from distutils.tests import support
+from distutils2 import debug
+from distutils2.tests import support
 
 class FakeCompiler(object):
     def library_dir_option(self, dir):

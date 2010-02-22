@@ -11,20 +11,20 @@ from glob import glob
 from warnings import warn
 from shutil import get_archive_formats
 
-from distutils.core import Command
-from distutils import dir_util, dep_util, file_util, archive_util
-from distutils.text_file import TextFile
-from distutils.errors import (DistutilsPlatformError, DistutilsOptionError,
+from distutils2.core import Command
+from distutils2 import dir_util, dep_util, file_util, archive_util
+from distutils2.text_file import TextFile
+from distutils2.errors import (DistutilsPlatformError, DistutilsOptionError,
                               DistutilsTemplateError)
-from distutils.filelist import FileList
-from distutils import log
-from distutils.util import convert_path
+from distutils2.filelist import FileList
+from distutils2 import log
+from distutils2.util import convert_path
 
 def show_formats():
     """Print all possible values for the 'formats' option (used by
     the "--help-formats" command-line option).
     """
-    from distutils.fancy_getopt import FancyGetopt
+    from distutils2.fancy_getopt import FancyGetopt
     formats = []
     for name, desc in get_archive_formats():
         formats.append(("formats=" + name, None, desc))

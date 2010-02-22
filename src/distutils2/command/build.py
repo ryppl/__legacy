@@ -6,12 +6,12 @@ __revision__ = "$Id: build.py 77761 2010-01-26 22:46:15Z tarek.ziade $"
 
 import sys, os
 
-from distutils.util import get_platform
-from distutils.core import Command
-from distutils.errors import DistutilsOptionError
+from distutils2.util import get_platform
+from distutils2.core import Command
+from distutils2.errors import DistutilsOptionError
 
 def show_compilers():
-    from distutils.ccompiler import show_compilers
+    from distutils2.ccompiler import show_compilers
     show_compilers()
 
 class build(Command):

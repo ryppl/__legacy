@@ -8,13 +8,13 @@ import sysconfig
 from test.test_support import check_warnings, run_unittest
 from test.test_support import captured_stdout
 
-from distutils import cygwinccompiler
-from distutils.cygwinccompiler import (CygwinCCompiler, check_config_h,
+from distutils2 import cygwinccompiler
+from distutils2.cygwinccompiler import (CygwinCCompiler, check_config_h,
                                        CONFIG_H_OK, CONFIG_H_NOTOK,
                                        CONFIG_H_UNCERTAIN, get_versions,
                                        get_msvcr, RE_VERSION)
-from distutils.util import get_compiler_versions
-from distutils.tests import support
+from distutils2.util import get_compiler_versions
+from distutils2.tests import support
 
 class CygwinCCompilerTestCase(support.TempdirManager,
                               unittest.TestCase):

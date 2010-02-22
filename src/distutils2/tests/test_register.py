@@ -9,13 +9,13 @@ import warnings
 
 from test.test_support import check_warnings
 
-from distutils.command import register as register_module
-from distutils.command.register import register
-from distutils.core import Distribution
-from distutils.errors import DistutilsSetupError
+from distutils2.command import register as register_module
+from distutils2.command.register import register
+from distutils2.core import Distribution
+from distutils2.errors import DistutilsSetupError
 
-from distutils.tests import support
-from distutils.tests.test_config import PYPIRC, PyPIRCCommandTestCase
+from distutils2.tests import support
+from distutils2.tests.test_config import PYPIRC, PyPIRCCommandTestCase
 
 PYPIRC_NOPASSWORD = """\
 [distutils]

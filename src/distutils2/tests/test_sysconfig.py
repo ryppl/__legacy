@@ -4,8 +4,8 @@ import test
 import unittest
 import shutil
 
-from distutils import sysconfig
-from distutils.tests import support
+from distutils2 import sysconfig
+from distutils2.tests import support
 from test.test_support import TESTFN
 
 class SysconfigTestCase(support.EnvironGuard,

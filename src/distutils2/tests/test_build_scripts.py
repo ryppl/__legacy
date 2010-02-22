@@ -3,11 +3,11 @@
 import os
 import unittest
 
-from distutils.command.build_scripts import build_scripts
-from distutils.core import Distribution
+from distutils2.command.build_scripts import build_scripts
+from distutils2.core import Distribution
 import sysconfig
 
-from distutils.tests import support
+from distutils2.tests import support
 
 
 class BuildScriptsTestCase(support.TempdirManager,

@@ -3,9 +3,9 @@ import unittest
 import os
 import sys
 
-from distutils.command.config import dump_file, config
-from distutils.tests import support
-from distutils import log
+from distutils2.command.config import dump_file, config
+from distutils2.tests import support
+from distutils2 import log
 
 class ConfigTestCase(support.LoggingSilencer,
                      support.TempdirManager,

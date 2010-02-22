@@ -7,9 +7,9 @@ Implements the Distutils 'clean' command."""
 __revision__ = "$Id: clean.py 70886 2009-03-31 20:50:59Z tarek.ziade $"
 
 import os
-from distutils.core import Command
-from distutils.dir_util import remove_tree
-from distutils import log
+from distutils2.core import Command
+from distutils2.dir_util import remove_tree
+from distutils2 import log
 
 class clean(Command):
 

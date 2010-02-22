@@ -3,9 +3,9 @@ import unittest
 import os
 import time
 
-from distutils.dep_util import newer, newer_pairwise, newer_group
-from distutils.errors import DistutilsFileError
-from distutils.tests import support
+from distutils2.dep_util import newer, newer_pairwise, newer_group
+from distutils2.errors import DistutilsFileError
+from distutils2.tests import support
 
 class DepUtilTestCase(support.TempdirManager, unittest.TestCase):
 

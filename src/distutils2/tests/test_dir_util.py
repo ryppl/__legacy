@@ -3,11 +3,11 @@ import unittest
 import os
 import shutil
 
-from distutils.dir_util import (mkpath, remove_tree, create_tree, copy_tree,
+from distutils2.dir_util import (mkpath, remove_tree, create_tree, copy_tree,
                                 ensure_relative)
 
-from distutils import log
-from distutils.tests import support
+from distutils2 import log
+from distutils2.tests import support
 
 class DirUtilTestCase(support.TempdirManager, unittest.TestCase):
 

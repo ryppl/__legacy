@@ -13,8 +13,8 @@ import urlparse
 import StringIO
 from warnings import warn
 
-from distutils.core import PyPIRCCommand
-from distutils import log
+from distutils2.core import PyPIRCCommand
+from distutils2 import log
 
 class register(PyPIRCCommand):
 

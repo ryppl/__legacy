@@ -1,9 +1,9 @@
 """Tests for distutils.command.check."""
 import unittest
 
-from distutils.command.check import check, HAS_DOCUTILS
-from distutils.tests import support
-from distutils.errors import DistutilsSetupError
+from distutils2.command.check import check, HAS_DOCUTILS
+from distutils2.tests import support
+from distutils2.errors import DistutilsSetupError
 
 class CheckTestCase(support.LoggingSilencer,
                     support.TempdirManager,

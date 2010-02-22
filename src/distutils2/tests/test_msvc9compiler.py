@@ -3,8 +3,8 @@ import sys
 import unittest
 import os
 
-from distutils.errors import DistutilsPlatformError
-from distutils.tests import support
+from distutils2.errors import DistutilsPlatformError
+from distutils2.tests import support
 
 _MANIFEST = """\
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -68,15 +68,15 @@ class msvc9compilerTestCase(support.TempdirManager,
         # makes sure query_vcvarsall throws
         # a DistutilsPlatformError if the compiler
         # is not found
-        from distutils.msvccompiler import get_build_version
+        from distutils2.msvccompiler import get_build_version
         if get_build_version() < 8.0:
             # this test is only for MSVC8.0 or above
             return
-        from distutils.msvc9compiler import query_vcvarsall
+        from distutils2.msvc9compiler import query_vcvarsall
         def _find_vcvarsall(version):
             return None
 
-        from distutils import msvc9compiler
+        from distutils2 import msvc9compiler
         old_find_vcvarsall = msvc9compiler.find_vcvarsall
         msvc9compiler.find_vcvarsall = _find_vcvarsall
         try:
@@ -86,12 +86,12 @@ class msvc9compilerTestCase(support.TempdirManager,
             msvc9compiler.find_vcvarsall = old_find_vcvarsall
 
     def test_reg_class(self):
-        from distutils.msvccompiler import get_build_version
+        from distutils2.msvccompiler import get_build_version
         if get_build_version() < 8.0:
             # this test is only for MSVC8.0 or above
             return
 
-        from distutils.msvc9compiler import Reg
+        from distutils2.msvc9compiler import Reg
         self.assertRaises(KeyError, Reg.get_value, 'xxx', 'xxx')
 
         # looking for values that should exist on all
@@ -109,7 +109,7 @@ class msvc9compilerTestCase(support.TempdirManager,
         self.assertTrue('Desktop' in keys)
 
     def test_remove_visual_c_ref(self):
-        from distutils.msvc9compiler import MSVCCompiler
+        from distutils2.msvc9compiler import MSVCCompiler
         tempdir = self.mkdtemp()
         manifest = os.path.join(tempdir, 'manifest')
         f = open(manifest, 'w')

@@ -3,8 +3,8 @@ from os.path import join
 import unittest
 from test.test_support import captured_stdout
 
-from distutils.filelist import glob_to_re, FileList
-from distutils import debug
+from distutils2.filelist import glob_to_re, FileList
+from distutils2 import debug
 
 MANIFEST_IN = """\
 include ok

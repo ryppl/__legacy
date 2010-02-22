@@ -5,12 +5,12 @@ import unittest
 import tempfile
 import shutil
 
-from distutils.core import PyPIRCCommand
-from distutils.core import Distribution
-from distutils.log import set_threshold
-from distutils.log import WARN
+from distutils2.core import PyPIRCCommand
+from distutils2.core import Distribution
+from distutils2.log import set_threshold
+from distutils2.log import WARN
 
-from distutils.tests import support
+from distutils2.tests import support
 
 PYPIRC = """\
 [distutils]

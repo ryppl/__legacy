@@ -3,7 +3,7 @@ __revision__ = "$Id: test_archive_util.py 75659 2009-10-24 13:29:44Z tarek.ziade
 
 import unittest
 import warnings
-from distutils.archive_util import (check_archive_formats, make_archive,
+from distutils2.archive_util import (check_archive_formats, make_archive,
                                     make_tarball, make_zipfile)
 from test.test_support import check_warnings
 

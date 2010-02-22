@@ -4,8 +4,8 @@ __revision__ = "$Id$"
 import sys
 import os
 
-from distutils.core import setup
-from distutils.command.sdist import sdist
+from distutils2.core import setup
+from distutils2.command.sdist import sdist
 
 VERSION = '1.0a1'
 

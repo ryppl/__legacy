@@ -5,8 +5,8 @@ Utility functions for manipulating directories and directory trees."""
 __revision__ = "$Id: dir_util.py 76956 2009-12-21 01:22:46Z tarek.ziade $"
 
 import os
-from distutils.errors import DistutilsFileError, DistutilsInternalError
-from distutils import log
+from distutils2.errors import DistutilsFileError, DistutilsInternalError
+from distutils2 import log
 
 # cache for by mkpath() -- in addition to cheapening redundant calls,
 # eliminates redundant "creating /foo/bar/baz" messages in dry-run mode
@@ -119,7 +119,7 @@ def copy_tree(src, dst, preserve_mode=1, preserve_times=1,
     (the default), the destination of the symlink will be copied.
     'update' and 'verbose' are the same as for 'copy_file'.
     """
-    from distutils.file_util import copy_file
+    from distutils2.file_util import copy_file
 
     if not dry_run and not os.path.isdir(src):
         raise DistutilsFileError, \
@@ -179,7 +179,7 @@ def remove_tree(directory, verbose=1, dry_run=0):
     Any errors are ignored (apart from being reported to stdout if 'verbose'
     is true).
     """
-    from distutils.util import grok_environment_error
+    from distutils2.util import grok_environment_error
     global _path_created
 
     if verbose >= 1:

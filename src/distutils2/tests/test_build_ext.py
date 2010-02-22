@@ -7,12 +7,12 @@ import warnings
 from test.test_support import check_warnings
 from test.test_support import captured_stdout
 
-from distutils.core import Extension, Distribution
-from distutils.command.build_ext import build_ext
+from distutils2.core import Extension, Distribution
+from distutils2.command.build_ext import build_ext
 import sysconfig
-from distutils.tests import support
-from distutils.extension import Extension
-from distutils.errors import (UnknownFileError, DistutilsSetupError,
+from distutils2.tests import support
+from distutils2.extension import Extension
+from distutils2.errors import (UnknownFileError, DistutilsSetupError,
                               CompileError)
 
 import unittest
@@ -41,7 +41,7 @@ class BuildExtTestCase(support.TempdirManager,
             import site
             self.old_user_base = site.USER_BASE
             site.USER_BASE = self.mkdtemp()
-            from distutils.command import build_ext
+            from distutils2.command import build_ext
             build_ext.USER_BASE = site.USER_BASE
 
     def test_build_ext(self):
@@ -94,7 +94,7 @@ class BuildExtTestCase(support.TempdirManager,
         if sys.version > "2.6":
             import site
             site.USER_BASE = self.old_user_base
-            from distutils.command import build_ext
+            from distutils2.command import build_ext
             build_ext.USER_BASE = self.old_user_base
 
         super(BuildExtTestCase, self).tearDown()

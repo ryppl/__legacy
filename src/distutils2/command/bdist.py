@@ -7,15 +7,15 @@ __revision__ = "$Id: bdist.py 77761 2010-01-26 22:46:15Z tarek.ziade $"
 
 import os
 
-from distutils.util import get_platform
-from distutils.core import Command
-from distutils.errors import DistutilsPlatformError, DistutilsOptionError
+from distutils2.util import get_platform
+from distutils2.core import Command
+from distutils2.errors import DistutilsPlatformError, DistutilsOptionError
 
 
 def show_formats():
     """Print list of available formats (arguments to "--format" option).
     """
-    from distutils.fancy_getopt import FancyGetopt
+    from distutils2.fancy_getopt import FancyGetopt
     formats = []
     for format in bdist.format_commands:
         formats.append(("formats=" + format, None,

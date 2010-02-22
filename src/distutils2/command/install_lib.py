@@ -8,8 +8,8 @@ __revision__ = "$Id: install_lib.py 75671 2009-10-24 15:51:30Z tarek.ziade $"
 import os
 import sys
 
-from distutils.core import Command
-from distutils.errors import DistutilsOptionError
+from distutils2.core import Command
+from distutils2.errors import DistutilsOptionError
 
 
 # Extension for Python source files.
@@ -124,7 +124,7 @@ class install_lib(Command):
             self.warn('byte-compiling is disabled, skipping.')
             return
 
-        from distutils.util import byte_compile
+        from distutils2.util import byte_compile
 
         # Get the "--root" directory supplied to the "install" command,
         # and use it as a prefix to strip off the purported filename

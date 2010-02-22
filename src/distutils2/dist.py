@@ -14,12 +14,12 @@ try:
 except ImportError:
     warnings = None
 
-from distutils.errors import (DistutilsOptionError, DistutilsArgError,
+from distutils2.errors import (DistutilsOptionError, DistutilsArgError,
                               DistutilsModuleError, DistutilsClassError)
-from distutils.fancy_getopt import FancyGetopt, translate_longopt
-from distutils.util import check_environ, strtobool, rfc822_escape
-from distutils import log
-from distutils.debug import DEBUG
+from distutils2.fancy_getopt import FancyGetopt, translate_longopt
+from distutils2.util import check_environ, strtobool, rfc822_escape
+from distutils2 import log
+from distutils2.debug import DEBUG
 
 # Encoding used for the PKG-INFO files
 PKG_INFO_ENCODING = 'utf-8'
@@ -508,7 +508,7 @@ Common commands: (see '--help-commands' for more)
         None if the user asked for help on this command.
         """
         # late import because of mutual dependence between these modules
-        from distutils.cmd import Command
+        from distutils2.cmd import Command
 
         # Pull the current command from the head of the command line
         command = args[0]
@@ -619,8 +619,8 @@ Common commands: (see '--help-commands' for more)
         in 'commands'.
         """
         # late import because of mutual dependence between these modules
-        from distutils.core import gen_usage
-        from distutils.cmd import Command
+        from distutils2.core import gen_usage
+        from distutils2.cmd import Command
 
         if global_options:
             if display_options:
@@ -660,7 +660,7 @@ Common commands: (see '--help-commands' for more)
         line, display the requested info and return true; else return
         false.
         """
-        from distutils.core import gen_usage
+        from distutils2.core import gen_usage
 
         # User just wants a list of commands -- we'll print it out and stop
         # processing now (ie. if they ran "setup --help-commands foo bar",
@@ -714,13 +714,13 @@ Common commands: (see '--help-commands' for more)
     def print_commands(self):
         """Print out a help message listing all available commands with a
         description of each.  The list is divided into "standard commands"
-        (listed in distutils.command.__all__) and "extra commands"
+        (listed in distutils2.command.__all__) and "extra commands"
         (mentioned in self.cmdclass, but not a standard command).  The
         descriptions come from the command class attribute
         'description'.
         """
-        import distutils.command
-        std_commands = distutils.command.__all__
+        import distutils2.command
+        std_commands = distutils2.command.__all__
         is_std = {}
         for cmd in std_commands:
             is_std[cmd] = 1
@@ -747,15 +747,15 @@ Common commands: (see '--help-commands' for more)
     def get_command_list(self):
         """Get a list of (command, description) tuples.
         The list is divided into "standard commands" (listed in
-        distutils.command.__all__) and "extra commands" (mentioned in
+        distutils2.command.__all__) and "extra commands" (mentioned in
         self.cmdclass, but not a standard command).  The descriptions come
         from the command class attribute 'description'.
         """
         # Currently this is only used on Mac OS, for the Mac-only GUI
         # Distutils interface (by Jack Jansen)
 
-        import distutils.command
-        std_commands = distutils.command.__all__
+        import distutils2.command
+        std_commands = distutils2.command.__all__
         is_std = {}
         for cmd in std_commands:
             is_std[cmd] = 1
@@ -919,7 +919,7 @@ Common commands: (see '--help-commands' for more)
 
         Returns the reinitialized command object.
         """
-        from distutils.cmd import Command
+        from distutils2.cmd import Command
         if not isinstance(command, Command):
             command_name = command
             command = self.get_command_obj(command_name)
@@ -1212,9 +1212,9 @@ class DistributionMetadata:
         return self.requires or []
 
     def set_requires(self, value):
-        import distutils.versionpredicate
+        import distutils2.versionpredicate
         for v in value:
-            distutils.versionpredicate.VersionPredicate(v)
+            distutils2.versionpredicate.VersionPredicate(v)
         self.requires = value
 
     def get_provides(self):
@@ -1223,17 +1223,17 @@ class DistributionMetadata:
     def set_provides(self, value):
         value = [v.strip() for v in value]
         for v in value:
-            import distutils.versionpredicate
-            distutils.versionpredicate.split_provision(v)
+            import distutils2.versionpredicate
+            distutils2.versionpredicate.split_provision(v)
         self.provides = value
 
     def get_obsoletes(self):
         return self.obsoletes or []
 
     def set_obsoletes(self, value):
-        import distutils.versionpredicate
+        import distutils2.versionpredicate
         for v in value:
-            distutils.versionpredicate.VersionPredicate(v)
+            distutils2.versionpredicate.VersionPredicate(v)
         self.obsoletes = value
 
 def fix_help_options(options):

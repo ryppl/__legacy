@@ -7,7 +7,7 @@ timestamp dependency analysis."""
 __revision__ = "$Id: dep_util.py 76746 2009-12-10 15:29:03Z tarek.ziade $"
 
 import os
-from distutils.errors import DistutilsFileError
+from distutils2.errors import DistutilsFileError
 
 def newer(source, target):
     """Tells if the target is newer than the source.

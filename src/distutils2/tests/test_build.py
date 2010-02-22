@@ -3,8 +3,8 @@ import unittest
 import os
 import sys
 
-from distutils.command.build import build
-from distutils.tests import support
+from distutils2.command.build import build
+from distutils2.tests import support
 from sysconfig import get_platform
 
 class BuildTestCase(support.TempdirManager,

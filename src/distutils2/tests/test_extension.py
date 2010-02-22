@@ -4,8 +4,8 @@ import os
 import warnings
 
 from test.test_support import check_warnings
-from distutils.extension import read_setup_file, Extension
-from distutils.tests.support import capture_warnings
+from distutils2.extension import read_setup_file, Extension
+from distutils2.tests.support import capture_warnings
 
 class ExtensionTestCase(unittest.TestCase):
 

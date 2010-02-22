@@ -9,12 +9,12 @@ import sys
 import os
 import string
 
-from distutils.core import Command
-from distutils.debug import DEBUG
-from distutils.file_util import write_file
-from distutils.errors import (DistutilsOptionError, DistutilsPlatformError,
+from distutils2.core import Command
+from distutils2.debug import DEBUG
+from distutils2.file_util import write_file
+from distutils2.errors import (DistutilsOptionError, DistutilsPlatformError,
                               DistutilsFileError, DistutilsExecError)
-from distutils import log
+from distutils2 import log
 
 class bdist_rpm (Command):
 

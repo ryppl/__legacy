@@ -7,12 +7,12 @@ import shutil
 
 from test.test_support import run_unittest
 
-from distutils.core import Distribution
-from distutils.command.bdist import bdist
-from distutils.tests import support
-from distutils.spawn import find_executable
-from distutils import spawn
-from distutils.errors import DistutilsExecError
+from distutils2.core import Distribution
+from distutils2.command.bdist import bdist
+from distutils2.tests import support
+from distutils2.spawn import find_executable
+from distutils2 import spawn
+from distutils2.errors import DistutilsExecError
 
 class BuildTestCase(support.TempdirManager,
                     unittest.TestCase):

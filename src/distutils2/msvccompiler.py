@@ -14,10 +14,10 @@ import sys
 import os
 import string
 
-from distutils.errors import (DistutilsExecError, DistutilsPlatformError,
+from distutils2.errors import (DistutilsExecError, DistutilsPlatformError,
                               CompileError, LibError, LinkError)
-from distutils.ccompiler import CCompiler, gen_lib_options
-from distutils import log
+from distutils2.ccompiler import CCompiler, gen_lib_options
+from distutils2 import log
 
 _can_read_reg = 0
 try:
@@ -654,6 +654,6 @@ class MSVCCompiler (CCompiler) :
 if get_build_version() >= 8.0:
     log.debug("Importing new compiler from distutils.msvc9compiler")
     OldMSVCCompiler = MSVCCompiler
-    from distutils.msvc9compiler import MSVCCompiler
+    from distutils2.msvc9compiler import MSVCCompiler
     # get_build_architecture not really relevant now we support cross-compile
-    from distutils.msvc9compiler import MacroExpander
+    from distutils2.msvc9compiler import MacroExpander

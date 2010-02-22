@@ -8,8 +8,8 @@ platform-independent data files."""
 __revision__ = "$Id: install_data.py 76849 2009-12-15 06:29:19Z tarek.ziade $"
 
 import os
-from distutils.core import Command
-from distutils.util import change_root, convert_path
+from distutils2.core import Command
+from distutils2.util import change_root, convert_path
 
 class install_data(Command):
 

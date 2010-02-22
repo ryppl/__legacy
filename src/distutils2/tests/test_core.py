@@ -1,21 +1,21 @@
-"""Tests for distutils.core."""
+"""Tests for distutils2.core."""
 
 import StringIO
-import distutils.core
+import distutils2.core
 import os
 import shutil
 import sys
 import test.test_support
 from test.test_support import captured_stdout
 import unittest
-from distutils.tests import support
+from distutils2.tests import support
 
 # setup script that uses __file__
 setup_using___file__ = """\
 
 __file__
 
-from distutils.core import setup
+from distutils2.core import setup
 setup()
 """
 
@@ -24,7 +24,7 @@ setup_prints_cwd = """\
 import os
 print os.getcwd()
 
-from distutils.core import setup
+from distutils2.core import setup
 setup()
 """
 
@@ -58,7 +58,7 @@ class CoreTestCase(support.EnvironGuard, unittest.TestCase):
     def test_run_setup_provides_file(self):
         # Make sure the script can use __file__; if that's missing, the test
         # setup.py script will raise NameError.
-        distutils.core.run_setup(
+        distutils2.core.run_setup(
             self.write_setup(setup_using___file__))
 
     def test_run_setup_uses_current_dir(self):
@@ -71,7 +71,7 @@ class CoreTestCase(support.EnvironGuard, unittest.TestCase):
         # Create a directory and write the setup.py file there:
         os.mkdir(test.test_support.TESTFN)
         setup_py = os.path.join(test.test_support.TESTFN, "setup.py")
-        distutils.core.run_setup(
+        distutils2.core.run_setup(
             self.write_setup(setup_prints_cwd, path=setup_py))
 
         output = sys.stdout.getvalue()
@@ -83,16 +83,16 @@ class CoreTestCase(support.EnvironGuard, unittest.TestCase):
         # this covers the code called when DEBUG is set
         sys.argv = ['setup.py', '--name']
         with captured_stdout() as stdout:
-            distutils.core.setup(name='bar')
+            distutils2.core.setup(name='bar')
         stdout.seek(0)
         self.assertEquals(stdout.read(), 'bar\n')
 
-        distutils.core.DEBUG = True
+        distutils2.core.DEBUG = True
         try:
             with captured_stdout() as stdout:
-                distutils.core.setup(name='bar')
+                distutils2.core.setup(name='bar')
         finally:
-            distutils.core.DEBUG = False
+            distutils2.core.DEBUG = False
         stdout.seek(0)
         wanted = "options (after parsing config files):\n"
         self.assertEquals(stdout.readlines()[0], wanted)

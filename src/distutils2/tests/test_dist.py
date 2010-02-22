@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 
-"""Tests for distutils.dist."""
+"""Tests for distutils2.dist."""
 import os
 import StringIO
 import sys
@@ -8,14 +8,14 @@ import unittest
 import warnings
 import textwrap
 
-from distutils.dist import Distribution, fix_help_options, DistributionMetadata
-from distutils.cmd import Command
-import distutils.dist
+from distutils2.dist import Distribution, fix_help_options, DistributionMetadata
+from distutils2.cmd import Command
+import distutils2.dist
 from test.test_support import TESTFN, captured_stdout
-from distutils.tests import support
+from distutils2.tests import support
 
 class test_dist(Command):
-    """Sample distutils extension command."""
+    """Sample distutils2 extension command."""
 
     user_options = [
         ("sample-option=", "S", "help text"),
@@ -71,31 +71,31 @@ class DistributionTestCase(support.TempdirManager,
             self.create_distribution(files)
         stdout.seek(0)
         self.assertEquals(stdout.read(), '')
-        distutils.dist.DEBUG = True
+        distutils2.dist.DEBUG = True
         try:
             with captured_stdout() as stdout:
                 self.create_distribution(files)
             stdout.seek(0)
             self.assertEquals(stdout.read(), '')
         finally:
-            distutils.dist.DEBUG = False
+            distutils2.dist.DEBUG = False
 
     def test_command_packages_unspecified(self):
         sys.argv.append("build")
         d = self.create_distribution()
-        self.assertEqual(d.get_command_packages(), ["distutils.command"])
+        self.assertEqual(d.get_command_packages(), ["distutils2.command"])
 
     def test_command_packages_cmdline(self):
-        from distutils.tests.test_dist import test_dist
+        from distutils2.tests.test_dist import test_dist
         sys.argv.extend(["--command-packages",
-                         "foo.bar,distutils.tests",
+                         "foo.bar,distutils2.tests",
                          "test_dist",
                          "-Ssometext",
                          ])
         d = self.create_distribution()
         # let's actually try to load our test command:
         self.assertEqual(d.get_command_packages(),
-                         ["distutils.command", "foo.bar", "distutils.tests"])
+                         ["distutils2.command", "foo.bar", "distutils2.tests"])
         cmd = d.get_command_obj("test_dist")
         self.assertTrue(isinstance(cmd, test_dist))
         self.assertEqual(cmd.sample_option, "sometext")
@@ -109,19 +109,19 @@ class DistributionTestCase(support.TempdirManager,
             f.close()
             d = self.create_distribution([TESTFN])
             self.assertEqual(d.get_command_packages(),
-                             ["distutils.command", "foo.bar", "splat"])
+                             ["distutils2.command", "foo.bar", "splat"])
 
             # ensure command line overrides config:
             sys.argv[1:] = ["--command-packages", "spork", "build"]
             d = self.create_distribution([TESTFN])
             self.assertEqual(d.get_command_packages(),
-                             ["distutils.command", "spork"])
+                             ["distutils2.command", "spork"])
 
             # Setting --command-packages to '' should cause the default to
             # be used even if a config file specified something else:
             sys.argv[1:] = ["--command-packages", "", "build"]
             d = self.create_distribution([TESTFN])
-            self.assertEqual(d.get_command_packages(), ["distutils.command"])
+            self.assertEqual(d.get_command_packages(), ["distutils2.command"])
 
         finally:
             os.unlink(TESTFN)
@@ -193,13 +193,13 @@ class DistributionTestCase(support.TempdirManager,
         dist = Distribution()
         self.assertEquals(dist.command_packages, None)
         cmds = dist.get_command_packages()
-        self.assertEquals(cmds, ['distutils.command'])
+        self.assertEquals(cmds, ['distutils2.command'])
         self.assertEquals(dist.command_packages,
-                          ['distutils.command'])
+                          ['distutils2.command'])
 
         dist.command_packages = 'one,two'
         cmds = dist.get_command_packages()
-        self.assertEquals(cmds, ['distutils.command', 'one', 'two'])
+        self.assertEquals(cmds, ['distutils2.command', 'one', 'two'])
 
 
     def test_announce(self):
@@ -218,7 +218,7 @@ class DistributionTestCase(support.TempdirManager,
             user_filename = os.path.join(temp_home, "pydistutils.cfg")
 
         with open(user_filename, 'w') as f:
-            f.write('[distutils]\n')
+            f.write('[distutils2]\n')
 
         def _expander(path):
             return temp_home
@@ -226,10 +226,10 @@ class DistributionTestCase(support.TempdirManager,
         old_expander = os.path.expanduser
         os.path.expanduser = _expander
         try:
-            d = distutils.dist.Distribution()
+            d = distutils2.dist.Distribution()
             all_files = d.find_config_files()
 
-            d = distutils.dist.Distribution(attrs={'script_args':
+            d = distutils2.dist.Distribution(attrs={'script_args':
                                             ['--no-user-cfg']})
             files = d.find_config_files()
         finally:
@@ -392,7 +392,7 @@ class MetadataTestCase(support.TempdirManager, support.EnvironGuard,
                  "version": "1.0",
                  "long_description": long_desc}
 
-        dist = distutils.dist.Distribution(attrs)
+        dist = distutils2.dist.Distribution(attrs)
         meta = self.format_metadata(dist)
         meta = meta.replace('\n' + 8 * ' ', '\n')
         self.assertTrue(long_desc in meta)

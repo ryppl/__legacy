@@ -4,12 +4,12 @@ import sys
 import os
 import unittest
 
-from distutils.command import upload as upload_mod
-from distutils.command.upload import upload
-from distutils.core import Distribution
+from distutils2.command import upload as upload_mod
+from distutils2.command.upload import upload
+from distutils2.core import Distribution
 
-from distutils.tests import support
-from distutils.tests.test_config import PYPIRC, PyPIRCCommandTestCase
+from distutils2.tests import support
+from distutils2.tests.test_config import PYPIRC, PyPIRCCommandTestCase
 
 PYPIRC_LONG_PASSWORD = """\
 [distutils]

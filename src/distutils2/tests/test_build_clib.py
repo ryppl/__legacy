@@ -3,10 +3,10 @@ import unittest
 import os
 import sys
 
-from distutils.command.build_clib import build_clib
-from distutils.errors import DistutilsSetupError
-from distutils.tests import support
-from distutils.spawn import find_executable
+from distutils2.command.build_clib import build_clib
+from distutils2.errors import DistutilsSetupError
+from distutils2.tests import support
+from distutils2.spawn import find_executable
 
 class BuildCLibTestCase(support.TempdirManager,
                         support.LoggingSilencer,
@@ -120,7 +120,7 @@ class BuildCLibTestCase(support.TempdirManager,
         # before we run the command, we want to make sure
         # all commands are present on the system
         # by creating a compiler and checking its executables
-        from distutils.ccompiler import new_compiler, customize_compiler
+        from distutils2.ccompiler import new_compiler, customize_compiler
 
         compiler = new_compiler()
         customize_compiler(compiler)

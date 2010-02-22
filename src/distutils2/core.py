@@ -11,16 +11,16 @@ __revision__ = "$Id: core.py 77704 2010-01-23 09:23:15Z tarek.ziade $"
 import sys
 import os
 
-from distutils.debug import DEBUG
-from distutils.errors import (DistutilsSetupError, DistutilsArgError,
+from distutils2.debug import DEBUG
+from distutils2.errors import (DistutilsSetupError, DistutilsArgError,
                               DistutilsError, CCompilerError)
-from distutils.util import grok_environment_error
+from distutils2.util import grok_environment_error
 
 # Mainly import these so setup scripts can "from distutils.core import" them.
-from distutils.dist import Distribution
-from distutils.cmd import Command
-from distutils.config import PyPIRCCommand
-from distutils.extension import Extension
+from distutils2.dist import Distribution
+from distutils2.cmd import Command
+from distutils2.config import PyPIRCCommand
+from distutils2.extension import Extension
 
 # This is a barebones help message generated displayed when the user
 # runs the setup script with no arguments at all.  More useful help

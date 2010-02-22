@@ -9,13 +9,13 @@ __revision__ = "$Id: build_ext.py 77761 2010-01-26 22:46:15Z tarek.ziade $"
 import sys, os, re
 from warnings import warn
 
-from distutils.util import get_platform
-from distutils.core import Command
-from distutils.errors import *
-from distutils.ccompiler import customize_compiler
-from distutils.dep_util import newer_group
-from distutils.extension import Extension
-from distutils import log
+from distutils2.util import get_platform
+from distutils2.core import Command
+from distutils2.errors import *
+from distutils2.ccompiler import customize_compiler
+from distutils2.dep_util import newer_group
+from distutils2.extension import Extension
+from distutils2 import log
 
 # this keeps compatibility from 2.3 to 2.5
 if sys.version < "2.6":
@@ -26,7 +26,7 @@ else:
     HAS_USER_SITE = True
 
 if os.name == 'nt':
-    from distutils.msvccompiler import get_build_version
+    from distutils2.msvccompiler import get_build_version
     MSVC_VERSION = int(get_build_version())
 
 # An extension name is just a dot-separated list of Python NAMEs (ie.
@@ -36,7 +36,7 @@ extension_name_re = re.compile \
 
 
 def show_compilers ():
-    from distutils.ccompiler import show_compilers
+    from distutils2.ccompiler import show_compilers
     show_compilers()
 
 
@@ -318,7 +318,7 @@ class build_ext(Command):
                 self.rpath.append(user_lib)
 
     def run(self):
-        from distutils.ccompiler import new_compiler
+        from distutils2.ccompiler import new_compiler
 
         # 'self.extensions', as supplied by setup.py, is a list of
         # Extension instances.  See the documentation for Extension (in
@@ -750,7 +750,7 @@ class build_ext(Command):
         # to need it mentioned explicitly, though, so that's what we do.
         # Append '_d' to the python import library on debug builds.
         if sys.platform == "win32":
-            from distutils.msvccompiler import MSVCCompiler
+            from distutils2.msvccompiler import MSVCCompiler
             if not isinstance(self.compiler_obj, MSVCCompiler):
                 template = "python%d%d"
                 if self.debug:

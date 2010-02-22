@@ -1,7 +1,7 @@
 """Tests for distutils.version."""
 import unittest
-from distutils.version import LooseVersion
-from distutils.version import StrictVersion
+from distutils2.version import LooseVersion
+from distutils2.version import StrictVersion
 
 class VersionTestCase(unittest.TestCase):
 

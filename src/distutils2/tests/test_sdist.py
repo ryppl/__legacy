@@ -27,14 +27,14 @@ import warnings
 from test.test_support import check_warnings
 from test.test_support import captured_stdout
 
-from distutils.command.sdist import sdist
-from distutils.command.sdist import show_formats
-from distutils.core import Distribution
-from distutils.tests.test_config import PyPIRCCommandTestCase
-from distutils.errors import DistutilsExecError, DistutilsOptionError
-from distutils.spawn import find_executable
-from distutils.tests import support
-from distutils.log import WARN
+from distutils2.command.sdist import sdist
+from distutils2.command.sdist import show_formats
+from distutils2.core import Distribution
+from distutils2.tests.test_config import PyPIRCCommandTestCase
+from distutils2.errors import DistutilsExecError, DistutilsOptionError
+from distutils2.spawn import find_executable
+from distutils2.tests import support
+from distutils2.log import WARN
 from shutil import get_archive_formats
 
 SETUP_PY = """

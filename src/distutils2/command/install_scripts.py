@@ -8,8 +8,8 @@ Python scripts."""
 __revision__ = "$Id: install_scripts.py 68943 2009-01-25 22:09:10Z tarek.ziade $"
 
 import os
-from distutils.core import Command
-from distutils import log
+from distutils2.core import Command
+from distutils2 import log
 from stat import ST_MODE
 
 class install_scripts (Command):

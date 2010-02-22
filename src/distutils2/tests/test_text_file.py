@@ -1,8 +1,8 @@
 """Tests for distutils.text_file."""
 import os
 import unittest
-from distutils.text_file import TextFile
-from distutils.tests import support
+from distutils2.text_file import TextFile
+from distutils2.tests import support
 
 TEST_DATA = """# test file
 

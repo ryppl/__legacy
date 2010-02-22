@@ -8,7 +8,7 @@ import stat
 import os
 import os.path
 from os.path import splitdrive
-from distutils.spawn import find_executable, spawn
+from distutils2.spawn import find_executable, spawn
 from shutil import (_make_tarball, _make_zipfile, make_archive,
                     register_archive_format, unregister_archive_format,
                     get_archive_formats)

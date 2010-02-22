@@ -11,12 +11,12 @@ from sysconfig import (get_scheme_names, _CONFIG_VARS, _INSTALL_SCHEMES,
 
 from test.test_support import captured_stdout
 
-from distutils.command.install import install
-from distutils.command import install as install_module
-from distutils.core import Distribution
-from distutils.errors import DistutilsOptionError
+from distutils2.command.install import install
+from distutils2.command import install as install_module
+from distutils2.core import Distribution
+from distutils2.errors import DistutilsOptionError
 
-from distutils.tests import support
+from distutils2.tests import support
 
 class InstallTestCase(support.TempdirManager,
                       support.EnvironGuard,

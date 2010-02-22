@@ -1,9 +1,9 @@
-"""Tests harness for distutils.versionpredicate.
+"""Tests harness for distutils2.versionpredicate.
 
 """
 
-import distutils.versionpredicate
+import distutils2.versionpredicate
 import doctest
 
 def test_suite():
-    return doctest.DocTestSuite(distutils.versionpredicate)
+    return doctest.DocTestSuite(distutils2.versionpredicate)

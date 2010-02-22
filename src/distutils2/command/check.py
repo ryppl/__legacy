@@ -4,8 +4,8 @@ Implements the Distutils 'check' command.
 """
 __revision__ = "$Id: check.py 75266 2009-10-05 22:32:48Z andrew.kuchling $"
 
-from distutils.core import Command
-from distutils.errors import DistutilsSetupError
+from distutils2.core import Command
+from distutils2.errors import DistutilsSetupError
 
 try:
     # docutils is installed

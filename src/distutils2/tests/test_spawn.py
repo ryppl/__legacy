@@ -4,10 +4,10 @@ import os
 import time
 from test.test_support import captured_stdout
 
-from distutils.spawn import _nt_quote_args
-from distutils.spawn import spawn, find_executable
-from distutils.errors import DistutilsExecError
-from distutils.tests import support
+from distutils2.spawn import _nt_quote_args
+from distutils2.spawn import spawn, find_executable
+from distutils2.errors import DistutilsExecError
+from distutils2.tests import support
 
 class SpawnTestCase(support.TempdirManager,
                     support.LoggingSilencer,

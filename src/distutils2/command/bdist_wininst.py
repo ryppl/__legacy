@@ -11,11 +11,11 @@ import string
 
 from sysconfig import get_python_version
 
-from distutils.core import Command
-from distutils.dir_util import remove_tree
-from distutils.errors import DistutilsOptionError, DistutilsPlatformError
-from distutils import log
-from distutils.util import get_platform
+from distutils2.core import Command
+from distutils2.dir_util import remove_tree
+from distutils2.errors import DistutilsOptionError, DistutilsPlatformError
+from distutils2 import log
+from distutils2.util import get_platform
 
 class bdist_wininst (Command):
 
@@ -239,9 +239,9 @@ class bdist_wininst (Command):
         title = self.title or self.distribution.get_fullname()
         lines.append("title=%s" % escape(title))
         import time
-        import distutils
-        build_info = "Built %s with distutils-%s" % \
-                     (time.ctime(time.time()), distutils.__version__)
+        import distutils2
+        build_info = "Built %s with distutils2-%s" % \
+                     (time.ctime(time.time()), distutils2.__version__)
         lines.append("build_info=%s" % build_info)
         return string.join(lines, "\n")
 
@@ -317,7 +317,7 @@ class bdist_wininst (Command):
     # get_installer_filename()
 
     def get_exe_bytes (self):
-        from distutils.msvccompiler import get_build_version
+        from distutils2.msvccompiler import get_build_version
         # If a target-version other than the current version has been
         # specified, then using the MSVC version from *this* build is no good.
         # Without actually finding and executing the target version and parsing

@@ -7,9 +7,9 @@ import warnings
 from test.test_support import check_warnings, run_unittest
 from test.test_support import captured_stdout
 
-from distutils.emxccompiler import get_versions
-from distutils.util import get_compiler_versions
-from distutils.tests import support
+from distutils2.emxccompiler import get_versions
+from distutils2.util import get_compiler_versions
+from distutils2.tests import support
 
 class EmxCCompilerTestCase(support.TempdirManager,
                            unittest.TestCase):

@@ -137,11 +137,11 @@ def read_setup_file(filename):
     warnings.warn('distutils.extensions.read_setup_file is deprecated. '
                   'It will be removed in the next Python release.')
     _sysconfig = __import__('sysconfig')
-    from distutils.sysconfig import (expand_makefile_vars,
+    from distutils2.sysconfig import (expand_makefile_vars,
                                      _variable_rx)
 
-    from distutils.text_file import TextFile
-    from distutils.util import split_quoted
+    from distutils2.text_file import TextFile
+    from distutils2.util import split_quoted
 
     # First pass over the file to gather "VAR = VALUE" assignments.
     vars = _sysconfig._parse_makefile(filename)

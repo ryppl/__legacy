@@ -9,14 +9,14 @@ import sys
 import os
 import re
 
-from distutils.errors import (CompileError, LinkError, UnknownFileError,
+from distutils2.errors import (CompileError, LinkError, UnknownFileError,
                               DistutilsPlatformError, DistutilsModuleError)
-from distutils.spawn import spawn
-from distutils.file_util import move_file
-from distutils.dir_util import mkpath
-from distutils.dep_util import newer_group
-from distutils.util import split_quoted, execute
-from distutils import log
+from distutils2.spawn import spawn
+from distutils2.file_util import move_file
+from distutils2.dir_util import mkpath
+from distutils2.dep_util import newer_group
+from distutils2.util import split_quoted, execute
+from distutils2 import log
 
 _sysconfig = __import__('sysconfig')
 
@@ -909,7 +909,7 @@ main (int argc, char **argv) {
         log.debug(msg)
 
     def debug_print(self, msg):
-        from distutils.debug import DEBUG
+        from distutils2.debug import DEBUG
         if DEBUG:
             print msg
 
@@ -997,7 +997,7 @@ def show_compilers():
     # XXX this "knows" that the compiler option it's describing is
     # "--compiler", which just happens to be the case for the three
     # commands that use it.
-    from distutils.fancy_getopt import FancyGetopt
+    from distutils2.fancy_getopt import FancyGetopt
     compilers = []
     for compiler in compiler_class.keys():
         compilers.append(("compiler="+compiler, None,

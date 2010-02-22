@@ -3,9 +3,9 @@ import unittest
 import os
 import shutil
 
-from distutils.file_util import move_file, write_file, copy_file
-from distutils import log
-from distutils.tests import support
+from distutils2.file_util import move_file, write_file, copy_file
+from distutils2 import log
+from distutils2.tests import support
 
 class FileUtilTestCase(support.TempdirManager, unittest.TestCase):
 

@@ -5,11 +5,11 @@ import sys
 import StringIO
 import unittest
 
-from distutils.command.build_py import build_py
-from distutils.core import Distribution
-from distutils.errors import DistutilsFileError
+from distutils2.command.build_py import build_py
+from distutils2.core import Distribution
+from distutils2.errors import DistutilsFileError
 
-from distutils.tests import support
+from distutils2.tests import support
 
 
 class BuildPyTestCase(support.TempdirManager,

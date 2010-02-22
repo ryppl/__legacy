@@ -15,12 +15,12 @@ __revision__ = "$Id: bcppcompiler.py 76956 2009-12-21 01:22:46Z tarek.ziade $"
 
 import os
 
-from distutils.errors import (DistutilsExecError, CompileError, LibError,
+from distutils2.errors import (DistutilsExecError, CompileError, LibError,
                               LinkError, UnknownFileError)
-from distutils.ccompiler import CCompiler, gen_preprocess_options
-from distutils.file_util import write_file
-from distutils.dep_util import newer
-from distutils import log
+from distutils2.ccompiler import CCompiler, gen_preprocess_options
+from distutils2.file_util import write_file
+from distutils2.dep_util import newer
+from distutils2 import log
 
 class BCPPCompiler(CCompiler) :
     """Concrete class that implements an interface to the Borland C/C++

@@ -5,9 +5,9 @@ import tempfile
 from copy import deepcopy
 import warnings
 
-from distutils import log
-from distutils.log import DEBUG, INFO, WARN, ERROR, FATAL
-from distutils.core import Distribution
+from distutils2 import log
+from distutils2.log import DEBUG, INFO, WARN, ERROR, FATAL
+from distutils2.core import Distribution
 
 def capture_warnings(func):
     def _capture_warnings(*args, **kw):

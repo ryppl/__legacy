@@ -4,8 +4,8 @@ import os
 import unittest
 import getpass
 
-from distutils.command.clean import clean
-from distutils.tests import support
+from distutils2.command.clean import clean
+from distutils2.tests import support
 
 class cleanTestCase(support.TempdirManager,
                     support.LoggingSilencer,

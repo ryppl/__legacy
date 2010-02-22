@@ -398,7 +398,7 @@ def _make_tarball(base_name, base_dir, compress="gzip", verbose=0, dry_run=0,
             cmd = [compress, archive_name, compressed_name]
         else:
             cmd = [compress, '-f', archive_name]
-        from distutils.spawn import spawn
+        from distutils2.spawn import spawn
         spawn(cmd, dry_run=dry_run)
         return compressed_name
 
@@ -410,8 +410,8 @@ def _call_external_zip(directory, verbose=False):
         zipoptions = "-r"
     else:
         zipoptions = "-rq"
-    from distutils.errors import DistutilsExecError
-    from distutils.spawn import spawn
+    from distutils2.errors import DistutilsExecError
+    from distutils2.spawn import spawn
     try:
         spawn(["zip", zipoptions, zip_filename, base_dir], dry_run=dry_run)
     except DistutilsExecError:
