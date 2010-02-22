@@ -5,7 +5,8 @@ a package's PKG-INFO metadata."""
 
 
 from distutils2.cmd import Command
-from distutils2 import log, dir_util
+from distutils2 import log
+from distutils2._backport.shutil import rmtree
 import os, sys, re
 
 class install_egg_info(Command):
@@ -32,7 +33,10 @@ class install_egg_info(Command):
     def run(self):
         target = self.target
         if os.path.isdir(target) and not os.path.islink(target):
-            dir_util.remove_tree(target, dry_run=self.dry_run)
+            if self.dry_run:
+                pass # XXX
+            else:
+                rmtree(target)
         elif os.path.exists(target):
             self.execute(os.unlink,(self.target,),"Removing "+target)
         elif not os.path.isdir(self.install_dir):

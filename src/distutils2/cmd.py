@@ -8,7 +8,7 @@ __revision__ = "$Id: cmd.py 75192 2009-10-02 23:49:48Z tarek.ziade $"
 
 import sys, os, re
 from distutils2.errors import DistutilsOptionError
-from distutils2 import util, dir_util, file_util, dep_util
+from distutils2 import util, file_util, dep_util
 from distutils2 import log
 
 # XXX see if we want to backport this

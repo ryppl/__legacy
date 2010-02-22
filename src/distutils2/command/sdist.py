@@ -16,7 +16,7 @@ except ImportError:
     from distutils2._backport.shutil import get_archive_formats
 
 from distutils2.core import Command
-from distutils2 import dir_util, dep_util, file_util
+from distutils2 import dep_util, file_util
 from distutils2.text_file import TextFile
 from distutils2.errors import (DistutilsPlatformError, DistutilsOptionError,
                               DistutilsTemplateError)
