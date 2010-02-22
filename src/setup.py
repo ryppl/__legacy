@@ -6,6 +6,7 @@ import os
 
 from distutils2.core import setup
 from distutils2.command.sdist import sdist
+from distutils2.command.install import install
 
 VERSION = '1.0a1'
 
@@ -14,6 +15,36 @@ try:
     README = f.read()
 finally:
     f.close()
+
+def get_tip_revision(path=os.getcwd()):
+    from mercurial.hg import repository
+    from mercurial.ui import ui
+    from mercurial import node
+    from mercurial.error import RepoError
+    try:
+        repo = repository(ui(), path)
+        tip = repo.changelog.tip()
+        return repo.changelog.rev(tip)
+    except RepoError:
+        return 0
+
+DEV_SUFFIX = '.dev%d' % get_tip_revision('..')
+
+class install_hg(install):
+
+    user_options = install.user_options + [
+            ('dev', None, "Add a dev marker")
+            ]
+
+    def initialize_options(self):
+        install.initialize_options(self)
+        self.dev = 0
+
+    def run(self):
+        if self.dev:
+            self.distribution.metadata.version += DEV_SUFFIX
+        install.run(self)
+
 
 class sdist_hg(sdist):
 
@@ -27,17 +58,8 @@ class sdist_hg(sdist):
 
     def run(self):
         if self.dev:
-            suffix = '.dev%d' % self.get_tip_revision()
-            self.distribution.metadata.version += suffix
+            self.distribution.metadata.version += DEV_SUFFIX
         sdist.run(self)
-
-    def get_tip_revision(self, path=os.getcwd()):
-        from mercurial.hg import repository
-        from mercurial.ui import ui
-        from mercurial import node
-        repo = repository(ui(), path)
-        tip = repo.changelog.tip()
-        return repo.changelog.rev(tip)
 
 setup (name="Distutils2",
        version=VERSION,
@@ -51,7 +73,7 @@ setup (name="Distutils2",
                  'distutils2.command',
                  'distutils2.tests',
                  'distutils2._backport'],
-       cmdclass={'sdist': sdist_hg}
+       cmdclass={'sdist': sdist_hg, 'install': install_hg}
        )
 
 
