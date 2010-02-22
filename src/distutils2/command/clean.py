@@ -7,8 +7,8 @@ Implements the Distutils 'clean' command."""
 __revision__ = "$Id: clean.py 70886 2009-03-31 20:50:59Z tarek.ziade $"
 
 import os
+from shutil import rmtree
 from distutils2.core import Command
-from distutils2.dir_util import remove_tree
 from distutils2 import log
 
 class clean(Command):
@@ -52,7 +52,10 @@ class clean(Command):
         # remove the build/temp.<plat> directory (unless it's already
         # gone)
         if os.path.exists(self.build_temp):
-            remove_tree(self.build_temp, dry_run=self.dry_run)
+            if self.dry_run:
+                log.info('Removing %s' % self.build_temp)
+            else:
+                rmtree(self.build_temp)
         else:
             log.debug("'%s' does not exist -- can't clean it",
                       self.build_temp)
@@ -63,7 +66,10 @@ class clean(Command):
                               self.bdist_base,
                               self.build_scripts):
                 if os.path.exists(directory):
-                    remove_tree(directory, dry_run=self.dry_run)
+                    if self.dry_run:
+                        log.info('Removing %s' % directory)
+                    else:
+                        rmtree(directory)
                 else:
                     log.warn("'%s' does not exist -- can't clean it",
                              directory)

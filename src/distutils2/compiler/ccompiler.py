@@ -13,7 +13,6 @@ from distutils2.errors import (CompileError, LinkError, UnknownFileError,
                               DistutilsPlatformError, DistutilsModuleError)
 from distutils2.spawn import spawn
 from distutils2.file_util import move_file
-from distutils2.dir_util import mkpath
 from distutils2.dep_util import newer_group
 from distutils2.util import split_quoted, execute
 from distutils2 import log
@@ -934,10 +933,14 @@ main (int argc, char **argv) {
         return move_file(src, dst, dry_run=self.dry_run)
 
     def mkpath(self, name, mode=0777):
-        mkpath(name, mode, dry_run=self.dry_run)
-
-
-# class CCompiler
+        name = os.path.normpath(name)
+        if os.path.isdir(name) or name == '':
+            return
+        if self.dry_run:
+            for part in name.split(os.sep):
+                self.log(part)
+            return
+        os.makedirs(name, mode)
 
 
 # Map a sys.platform/os.name ('posix', 'nt') to the default compiler

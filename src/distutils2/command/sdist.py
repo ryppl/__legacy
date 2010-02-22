@@ -9,7 +9,7 @@ import string
 import sys
 from glob import glob
 from warnings import warn
-
+from shutil import rmtree
 try:
     from shutil import get_archive_formats
 except ImportError:
@@ -423,7 +423,7 @@ class sdist(Command):
         # put 'files' there; the 'mkpath()' is just so we don't die
         # if the manifest happens to be empty.
         self.mkpath(base_dir)
-        dir_util.create_tree(base_dir, files, dry_run=self.dry_run)
+        self.create_tree(base_dir, files, dry_run=self.dry_run)
 
         # And walk over the list of files, either making a hard link (if
         # os.link exists) to each one that doesn't already exist in its
@@ -480,10 +480,25 @@ class sdist(Command):
         self.archive_files = archive_files
 
         if not self.keep_temp:
-            dir_util.remove_tree(base_dir, dry_run=self.dry_run)
+            if self.dry_run:
+                log.info('Removing %s' % base_dir)
+            else:
+                rmtree(base_dir)
 
     def get_archive_files(self):
         """Return the list of archive files created when the command
         was run, or None if the command hasn't run yet.
         """
         return self.archive_files
+
+    def create_tree(self, base_dir, files, mode=0777, verbose=1, dry_run=0):
+        need_dir = {}
+        for file in files:
+            need_dir[os.path.join(base_dir, os.path.dirname(file))] = 1
+        need_dirs = need_dir.keys()
+        need_dirs.sort()
+
+        # Now create them
+        for dir in need_dirs:
+            self.mkpath(dir, mode, verbose=verbose, dry_run=dry_run)
+

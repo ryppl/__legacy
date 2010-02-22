@@ -10,6 +10,10 @@ import sys, os, re
 from distutils2.errors import DistutilsOptionError
 from distutils2 import util, dir_util, file_util, dep_util
 from distutils2 import log
+
+# XXX see if we want to backport this
+from distutils2._backport.shutil import copytree
+
 try:
     from shutil import make_archive
 except ImportError:
@@ -352,8 +356,17 @@ class Command:
     def execute(self, func, args, msg=None, level=1):
         util.execute(func, args, msg, dry_run=self.dry_run)
 
-    def mkpath(self, name, mode=0777):
-        dir_util.mkpath(name, mode, dry_run=self.dry_run)
+    def mkpath(self, name, mode=0777, dry_run=None, verbose=0):
+        if dry_run is None:
+            dry_run = self.dry_run
+        name = os.path.normpath(name)
+        if os.path.isdir(name) or name == '':
+            return
+        if dry_run:
+            for part in name.split(os.sep):
+                self.log(part)
+            return
+        os.makedirs(name, mode)
 
     def copy_file(self, infile, outfile,
                    preserve_mode=1, preserve_times=1, link=None, level=1):
@@ -374,11 +387,9 @@ class Command:
         """Copy an entire directory tree respecting verbose, dry-run,
         and force flags.
         """
-        return dir_util.copy_tree(
-            infile, outfile,
-            preserve_mode,preserve_times,preserve_symlinks,
-            not self.force,
-            dry_run=self.dry_run)
+        if self.dry_run:
+            return # see if we want to display something
+        return copytree(infile, outfile, preserve_symlinks)
 
     def move_file (self, src, dst, level=1):
         """Move a file respectin dry-run flag."""

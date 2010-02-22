@@ -13,7 +13,6 @@ try:
 except ImportError:
     from distutils2._backport.sysconfig import get_python_version
 from distutils2.core import Command
-from distutils2.dir_util import remove_tree
 from distutils2.errors import DistutilsOptionError, DistutilsPlatformError
 from distutils2 import log
 from distutils2.util import get_platform
@@ -195,9 +194,10 @@ class bdist_wininst (Command):
         os.remove(arcname)
 
         if not self.keep_temp:
-            remove_tree(self.bdist_dir, dry_run=self.dry_run)
-
-    # run()
+            if self.dry_run:
+                log.info('Removing %s' % self.bdist_dir)
+            else:
+                rmtree(self.bdist_dir)
 
     def get_inidata (self):
         # Return data describing the installation.
