@@ -1,15 +1,18 @@
 """Tests for distutils.command.build."""
-import unittest
+import unittest2
 import os
 import sys
 
 from distutils2.command.build import build
 from distutils2.tests import support
-from sysconfig import get_platform
+try:
+    from sysconfig import get_platform
+except ImportError:
+    from distutils2._backport.sysconfig import get_platform
 
 class BuildTestCase(support.TempdirManager,
                     support.LoggingSilencer,
-                    unittest.TestCase):
+                    unittest2.TestCase):
 
     def test_finalize_options(self):
         pkg_dir, dist = self.create_dist()
@@ -48,7 +51,7 @@ class BuildTestCase(support.TempdirManager,
         self.assertEquals(cmd.executable, os.path.normpath(sys.executable))
 
 def test_suite():
-    return unittest.makeSuite(BuildTestCase)
+    return unittest2.makeSuite(BuildTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

@@ -9,26 +9,29 @@ from test.test_support import captured_stdout
 
 from distutils2.core import Extension, Distribution
 from distutils2.command.build_ext import build_ext
-import sysconfig
 from distutils2.tests import support
 from distutils2.extension import Extension
 from distutils2.errors import (UnknownFileError, DistutilsSetupError,
-                              CompileError)
+                               CompileError)
+try:
+    import sysconfig
+except ImportError:
+    from distutils2._backport import sysconfig
 
-import unittest
+import unittest2
 from test import test_support
 
 # http://bugs.python.org/issue4373
 # Don't load the xx module more than once.
 ALREADY_TESTED = False
+CURDIR = os.path.abspath(os.path.dirname(__file__))
 
 def _get_source_filename():
-    srcdir = sysconfig.get_config_var('srcdir')
-    return os.path.join(srcdir, 'Modules', 'xxmodule.c')
+    return os.path.join(CURDIR, 'xxmodule.c')
 
 class BuildExtTestCase(support.TempdirManager,
                        support.LoggingSilencer,
-                       unittest.TestCase):
+                       unittest2.TestCase):
     def setUp(self):
         # Create a simple test environment
         # Note that we're making changes to sys.path
@@ -105,7 +108,11 @@ class BuildExtTestCase(support.TempdirManager,
         old = sys.platform
 
         sys.platform = 'sunos' # fooling finalize_options
-        from sysconfig import _CONFIG_VARS
+        try:
+            from sysconfig import _CONFIG_VARS
+        except ImportError:
+            from distutils2._backport.sysconfig import _CONFIG_VARS
+
         old_var = _CONFIG_VARS.get('Py_ENABLE_SHARED')
         _CONFIG_VARS['Py_ENABLE_SHARED'] = 1
         try:
@@ -425,8 +432,8 @@ def test_suite():
         if test_support.verbose:
             print ('test_build_ext: Cannot find source code (test'
                    ' must run in python build dir)')
-        return unittest.TestSuite()
-    else: return unittest.makeSuite(BuildExtTestCase)
+        return unittest2.TestSuite()
+    else: return unittest2.makeSuite(BuildExtTestCase)
 
 if __name__ == '__main__':
     test_support.run_unittest(test_suite())

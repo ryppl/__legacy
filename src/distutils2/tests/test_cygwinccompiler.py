@@ -1,9 +1,12 @@
 """Tests for distutils.cygwinccompiler."""
-import unittest
+import unittest2
 import sys
 import os
 import warnings
-import sysconfig
+try:
+    import sysconfig
+except ImportError:
+    from distutils2._backport import sysconfig
 
 from test.test_support import check_warnings, run_unittest
 from test.test_support import captured_stdout
@@ -17,7 +20,7 @@ from distutils2.util import get_compiler_versions
 from distutils2.tests import support
 
 class CygwinCCompilerTestCase(support.TempdirManager,
-                              unittest.TestCase):
+                              unittest2.TestCase):
 
     def setUp(self):
         super(CygwinCCompilerTestCase, self).setUp()
@@ -105,7 +108,7 @@ class CygwinCCompilerTestCase(support.TempdirManager,
             self.assertEquals(len(w.warnings), 2)
 
 def test_suite():
-    return unittest.makeSuite(CygwinCCompilerTestCase)
+    return unittest2.makeSuite(CygwinCCompilerTestCase)
 
 if __name__ == '__main__':
     run_unittest(test_suite())

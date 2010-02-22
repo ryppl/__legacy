@@ -4,7 +4,7 @@
 import os
 import StringIO
 import sys
-import unittest
+import unittest2
 import warnings
 import textwrap
 
@@ -40,7 +40,7 @@ class TestDistribution(Distribution):
 class DistributionTestCase(support.TempdirManager,
                            support.LoggingSilencer,
                            support.EnvironGuard,
-                           unittest.TestCase):
+                           unittest2.TestCase):
 
     def setUp(self):
         super(DistributionTestCase, self).setUp()
@@ -240,7 +240,7 @@ class DistributionTestCase(support.TempdirManager,
 
 
 class MetadataTestCase(support.TempdirManager, support.EnvironGuard,
-                       unittest.TestCase):
+                       unittest2.TestCase):
 
     def setUp(self):
         super(MetadataTestCase, self).setUp()
@@ -425,10 +425,10 @@ class MetadataTestCase(support.TempdirManager, support.EnvironGuard,
         self.assertEquals(metadata.requires, ['foo'])
 
 def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(DistributionTestCase))
-    suite.addTest(unittest.makeSuite(MetadataTestCase))
+    suite = unittest2.TestSuite()
+    suite.addTest(unittest2.makeSuite(DistributionTestCase))
+    suite.addTest(unittest2.makeSuite(MetadataTestCase))
     return suite
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

@@ -1,5 +1,5 @@
 """Tests for distutils.command.check."""
-import unittest
+import unittest2
 
 from distutils2.command.check import check, HAS_DOCUTILS
 from distutils2.tests import support
@@ -7,7 +7,7 @@ from distutils2.errors import DistutilsSetupError
 
 class CheckTestCase(support.LoggingSilencer,
                     support.TempdirManager,
-                    unittest.TestCase):
+                    unittest2.TestCase):
 
     def _run(self, metadata=None, **options):
         if metadata is None:
@@ -92,7 +92,7 @@ class CheckTestCase(support.LoggingSilencer,
                                  'restructuredtext': 1})
 
 def test_suite():
-    return unittest.makeSuite(CheckTestCase)
+    return unittest2.makeSuite(CheckTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

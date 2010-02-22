@@ -1,5 +1,5 @@
 """Tests for distutils.command.build_clib."""
-import unittest
+import unittest2
 import os
 import sys
 
@@ -10,7 +10,7 @@ from distutils2.spawn import find_executable
 
 class BuildCLibTestCase(support.TempdirManager,
                         support.LoggingSilencer,
-                        unittest.TestCase):
+                        unittest2.TestCase):
 
     def test_check_library_dist(self):
         pkg_dir, dist = self.create_dist()
@@ -137,7 +137,7 @@ class BuildCLibTestCase(support.TempdirManager,
         self.assertTrue('libfoo.a' in os.listdir(build_temp))
 
 def test_suite():
-    return unittest.makeSuite(BuildCLibTestCase)
+    return unittest2.makeSuite(BuildCLibTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

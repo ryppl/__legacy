@@ -1,12 +1,11 @@
 """Tests for distutils.util."""
 import os
 import sys
-import unittest
+import unittest2
 from copy import copy
 from StringIO import StringIO
 import subprocess
 
-from sysconfig import get_config_vars, get_platform
 from distutils2.errors import DistutilsPlatformError, DistutilsByteCompileError
 from distutils2.util import (convert_path, change_root,
                             check_environ, split_quoted, strtobool,
@@ -31,7 +30,7 @@ class FakePopen(object):
             self.stdout = StringIO(exes[self.cmd])
             self.stderr = StringIO()
 
-class UtilTestCase(support.EnvironGuard, unittest.TestCase):
+class UtilTestCase(support.EnvironGuard, unittest2.TestCase):
 
     def setUp(self):
         super(UtilTestCase, self).setUp()
@@ -89,13 +88,6 @@ class UtilTestCase(support.EnvironGuard, unittest.TestCase):
 
     def _get_uname(self):
         return self._uname
-
-    def test_get_platform(self):
-        platform = util.get_platform()
-        self.assertEquals(platform, get_platform())
-        util.set_platform('MyOwnPlatform')
-        self.assertEquals('MyOwnPlatform', util.get_platform())
-        util.set_platform(platform)
 
     def test_convert_path(self):
         # linux/mac
@@ -161,22 +153,6 @@ class UtilTestCase(support.EnvironGuard, unittest.TestCase):
                           change_root, 'c:\\root', 'its\\here')
 
         # XXX platforms to be covered: os2, mac
-
-    def test_check_environ(self):
-        util._environ_checked = 0
-        if 'HOME' in os.environ:
-            del os.environ['HOME']
-
-        # posix without HOME
-        if os.name == 'posix':  # this test won't run on windows
-            check_environ()
-            import pwd
-            self.assertEquals(os.environ['HOME'], pwd.getpwuid(os.getuid())[5])
-        else:
-            check_environ()
-
-        self.assertEquals(os.environ['PLAT'], get_platform())
-        self.assertEquals(util._environ_checked, 1)
 
     def test_split_quoted(self):
         self.assertEquals(split_quoted('""one"" "two" \'three\' \\four'),
@@ -274,7 +250,7 @@ class UtilTestCase(support.EnvironGuard, unittest.TestCase):
             sys.dont_write_bytecode = old_dont_write_bytecode
 
 def test_suite():
-    return unittest.makeSuite(UtilTestCase)
+    return unittest2.makeSuite(UtilTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

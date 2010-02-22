@@ -2,7 +2,7 @@
 # -*- encoding: utf8 -*-
 import sys
 import os
-import unittest
+import unittest2
 import getpass
 import urllib2
 import warnings
@@ -251,7 +251,7 @@ class RegisterTestCase(PyPIRCCommandTestCase):
             self.assertEquals(len(w.warnings), 1)
 
 def test_suite():
-    return unittest.makeSuite(RegisterTestCase)
+    return unittest2.makeSuite(RegisterTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

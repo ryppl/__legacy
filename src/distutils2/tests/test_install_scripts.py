@@ -1,7 +1,7 @@
 """Tests for distutils.command.install_scripts."""
 
 import os
-import unittest
+import unittest2
 
 from distutils2.command.install_scripts import install_scripts
 from distutils2.core import Distribution
@@ -11,7 +11,7 @@ from distutils2.tests import support
 
 class InstallScriptsTestCase(support.TempdirManager,
                              support.LoggingSilencer,
-                             unittest.TestCase):
+                             unittest2.TestCase):
 
     def test_default_settings(self):
         dist = Distribution()
@@ -73,7 +73,7 @@ class InstallScriptsTestCase(support.TempdirManager,
 
 
 def test_suite():
-    return unittest.makeSuite(InstallScriptsTestCase)
+    return unittest2.makeSuite(InstallScriptsTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

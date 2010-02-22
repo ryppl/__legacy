@@ -1,18 +1,21 @@
 """Tests for distutils.command.build_scripts."""
 
 import os
-import unittest
+import unittest2
 
 from distutils2.command.build_scripts import build_scripts
 from distutils2.core import Distribution
-import sysconfig
+try:
+    import sysconfig
+except ImportError:
+    from distutils2._backport import sysconfig
 
 from distutils2.tests import support
 
 
 class BuildScriptsTestCase(support.TempdirManager,
                            support.LoggingSilencer,
-                           unittest.TestCase):
+                           unittest2.TestCase):
 
     def test_default_settings(self):
         cmd = self.get_build_scripts_cmd("/foo/bar", [])
@@ -103,7 +106,7 @@ class BuildScriptsTestCase(support.TempdirManager,
             self.assertTrue(name in built)
 
 def test_suite():
-    return unittest.makeSuite(BuildScriptsTestCase)
+    return unittest2.makeSuite(BuildScriptsTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

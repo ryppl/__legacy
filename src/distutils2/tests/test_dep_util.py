@@ -1,5 +1,5 @@
 """Tests for distutils.dep_util."""
-import unittest
+import unittest2
 import os
 import time
 
@@ -7,7 +7,7 @@ from distutils2.dep_util import newer, newer_pairwise, newer_group
 from distutils2.errors import DistutilsFileError
 from distutils2.tests import support
 
-class DepUtilTestCase(support.TempdirManager, unittest.TestCase):
+class DepUtilTestCase(support.TempdirManager, unittest2.TestCase):
 
     def test_newer(self):
 
@@ -74,7 +74,7 @@ class DepUtilTestCase(support.TempdirManager, unittest.TestCase):
 
 
 def test_suite():
-    return unittest.makeSuite(DepUtilTestCase)
+    return unittest2.makeSuite(DepUtilTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

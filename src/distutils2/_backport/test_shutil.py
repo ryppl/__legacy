@@ -1,6 +1,6 @@
 # Copyright (C) 2003 Python Software Foundation
 
-import unittest
+import unittest2
 import shutil
 import tempfile
 import sys
@@ -38,7 +38,7 @@ try:
 except ImportError:
     ZIP_SUPPORT = find_executable('zip')
 
-class TestShutil(unittest.TestCase):
+class TestShutil(unittest2.TestCase):
 
     def setUp(self):
         super(TestShutil, self).setUp()
@@ -337,7 +337,7 @@ class TestShutil(unittest.TestCase):
                 shutil.rmtree(TESTFN, ignore_errors=True)
                 shutil.rmtree(TESTFN2, ignore_errors=True)
 
-    @unittest.skipUnless(zlib, "requires zlib")
+    @unittest2.skipUnless(zlib, "requires zlib")
     def test_make_tarball(self):
         # creating something to tar
         tmpdir = self.mkdtemp()
@@ -347,7 +347,7 @@ class TestShutil(unittest.TestCase):
         self.write_file([tmpdir, 'sub', 'file3'], 'xxx')
 
         tmpdir2 = self.mkdtemp()
-        unittest.skipUnless(splitdrive(tmpdir)[0] == splitdrive(tmpdir2)[0],
+        unittest2.skipUnless(splitdrive(tmpdir)[0] == splitdrive(tmpdir2)[0],
                             "source and target should be on same drive")
 
         base_name = os.path.join(tmpdir2, 'archive')
@@ -398,8 +398,8 @@ class TestShutil(unittest.TestCase):
         base_name = os.path.join(tmpdir2, 'archive')
         return tmpdir, tmpdir2, base_name
 
-    @unittest.skipUnless(zlib, "Requires zlib")
-    @unittest.skipUnless(find_executable('tar') and find_executable('gzip'),
+    @unittest2.skipUnless(zlib, "Requires zlib")
+    @unittest2.skipUnless(find_executable('tar') and find_executable('gzip'),
                          'Need the tar command to run')
     def test_tarfile_vs_tar(self):
         tmpdir, tmpdir2, base_name =  self._create_files()
@@ -453,7 +453,7 @@ class TestShutil(unittest.TestCase):
         tarball = base_name + '.tar'
         self.assertTrue(os.path.exists(tarball))
 
-    @unittest.skipUnless(find_executable('compress'),
+    @unittest2.skipUnless(find_executable('compress'),
                          'The compress program is required')
     def test_compress_deprecated(self):
         tmpdir, tmpdir2, base_name =  self._create_files()
@@ -487,8 +487,8 @@ class TestShutil(unittest.TestCase):
         self.assertTrue(not os.path.exists(tarball))
         self.assertEquals(len(w.warnings), 1)
 
-    @unittest.skipUnless(zlib, "Requires zlib")
-    @unittest.skipUnless(ZIP_SUPPORT, 'Need zip support to run')
+    @unittest2.skipUnless(zlib, "Requires zlib")
+    @unittest2.skipUnless(ZIP_SUPPORT, 'Need zip support to run')
     def test_make_zipfile(self):
         # creating something to tar
         tmpdir = self.mkdtemp()
@@ -508,7 +508,7 @@ class TestShutil(unittest.TestCase):
         base_name = os.path.join(tmpdir, 'archive')
         self.assertRaises(ValueError, make_archive, base_name, 'xxx')
 
-    @unittest.skipUnless(zlib, "Requires zlib")
+    @unittest2.skipUnless(zlib, "Requires zlib")
     def test_make_archive_owner_group(self):
         # testing make_archive with owner and group, with various combinations
         # this works even if there's not gid/uid support
@@ -535,8 +535,8 @@ class TestShutil(unittest.TestCase):
                            owner='kjhkjhkjg', group='oihohoh')
         self.assertTrue(os.path.exists(res))
 
-    @unittest.skipUnless(zlib, "Requires zlib")
-    @unittest.skipUnless(UID_GID_SUPPORT, "Requires grp and pwd support")
+    @unittest2.skipUnless(zlib, "Requires zlib")
+    @unittest2.skipUnless(UID_GID_SUPPORT, "Requires grp and pwd support")
     def test_tarfile_root_owner(self):
         tmpdir, tmpdir2, base_name =  self._create_files()
         old_dir = os.getcwd()
@@ -593,7 +593,7 @@ class TestShutil(unittest.TestCase):
         self.assertNotIn('xxx', formats)
 
 
-class TestMove(unittest.TestCase):
+class TestMove(unittest2.TestCase):
 
     def setUp(self):
         filename = "foo"

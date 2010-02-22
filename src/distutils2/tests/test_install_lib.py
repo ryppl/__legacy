@@ -1,7 +1,7 @@
 """Tests for distutils.command.install_data."""
 import sys
 import os
-import unittest
+import unittest2
 
 from distutils2.command.install_lib import install_lib
 from distutils2.extension import Extension
@@ -11,7 +11,7 @@ from distutils2.errors import DistutilsOptionError
 class InstallLibTestCase(support.TempdirManager,
                          support.LoggingSilencer,
                          support.EnvironGuard,
-                         unittest.TestCase):
+                         unittest2.TestCase):
 
     def test_finalize_options(self):
         pkg_dir, dist = self.create_dist()
@@ -31,7 +31,7 @@ class InstallLibTestCase(support.TempdirManager,
         cmd.finalize_options()
         self.assertEquals(cmd.optimize, 2)
 
-    @unittest.skipUnless(not sys.dont_write_bytecode,
+    @unittest2.skipUnless(not sys.dont_write_bytecode,
                          'byte-compile not supported')
     def test_byte_compile(self):
         pkg_dir, dist = self.create_dist()
@@ -95,7 +95,7 @@ class InstallLibTestCase(support.TempdirManager,
         self.assertTrue('byte-compiling is disabled' in self.logs[0][1])
 
 def test_suite():
-    return unittest.makeSuite(InstallLibTestCase)
+    return unittest2.makeSuite(InstallLibTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

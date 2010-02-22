@@ -1,6 +1,6 @@
 """Tests for distutils.ccompiler."""
 import os
-import unittest
+import unittest2
 from test.test_support import captured_stdout
 
 from distutils2.ccompiler import (gen_lib_options, CCompiler,
@@ -21,7 +21,7 @@ class FakeCompiler(object):
     def library_option(self, lib):
         return "-l" + lib
 
-class CCompilerTestCase(support.EnvironGuard, unittest.TestCase):
+class CCompilerTestCase(support.EnvironGuard, unittest2.TestCase):
 
     def test_gen_lib_options(self):
         compiler = FakeCompiler()
@@ -75,7 +75,7 @@ class CCompilerTestCase(support.EnvironGuard, unittest.TestCase):
         self.assertEquals(comp.exes['archiver'], 'my_ar -arflags')
 
 def test_suite():
-    return unittest.makeSuite(CCompilerTestCase)
+    return unittest2.makeSuite(CCompilerTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

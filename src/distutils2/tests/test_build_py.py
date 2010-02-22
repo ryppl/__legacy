@@ -3,7 +3,7 @@
 import os
 import sys
 import StringIO
-import unittest
+import unittest2
 
 from distutils2.command.build_py import build_py
 from distutils2.core import Distribution
@@ -14,7 +14,7 @@ from distutils2.tests import support
 
 class BuildPyTestCase(support.TempdirManager,
                       support.LoggingSilencer,
-                      unittest.TestCase):
+                      unittest2.TestCase):
 
     def test_package_data(self):
         sources = self.mkdtemp()
@@ -107,7 +107,7 @@ class BuildPyTestCase(support.TempdirManager,
         self.assertTrue('byte-compiling is disabled' in self.logs[0][1])
 
 def test_suite():
-    return unittest.makeSuite(BuildPyTestCase)
+    return unittest2.makeSuite(BuildPyTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

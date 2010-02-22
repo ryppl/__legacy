@@ -8,9 +8,10 @@ __revision__ = "$Id: bdist_wininst.py 77761 2010-01-26 22:46:15Z tarek.ziade $"
 import sys
 import os
 import string
-
-from sysconfig import get_python_version
-
+try:
+    from sysconfig import get_python_version
+except ImportError:
+    from distutils2._backport.sysconfig import get_python_version
 from distutils2.core import Command
 from distutils2.dir_util import remove_tree
 from distutils2.errors import DistutilsOptionError, DistutilsPlatformError

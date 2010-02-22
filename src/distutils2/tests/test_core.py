@@ -7,7 +7,7 @@ import shutil
 import sys
 import test.test_support
 from test.test_support import captured_stdout
-import unittest
+import unittest2
 from distutils2.tests import support
 
 # setup script that uses __file__
@@ -29,7 +29,7 @@ setup()
 """
 
 
-class CoreTestCase(support.EnvironGuard, unittest.TestCase):
+class CoreTestCase(support.EnvironGuard, unittest2.TestCase):
 
     def setUp(self):
         super(CoreTestCase, self).setUp()
@@ -98,7 +98,7 @@ class CoreTestCase(support.EnvironGuard, unittest.TestCase):
         self.assertEquals(stdout.readlines()[0], wanted)
 
 def test_suite():
-    return unittest.makeSuite(CoreTestCase)
+    return unittest2.makeSuite(CoreTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

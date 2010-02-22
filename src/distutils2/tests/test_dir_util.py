@@ -1,5 +1,5 @@
 """Tests for distutils.dir_util."""
-import unittest
+import unittest2
 import os
 import shutil
 
@@ -9,7 +9,7 @@ from distutils2.dir_util import (mkpath, remove_tree, create_tree, copy_tree,
 from distutils2 import log
 from distutils2.tests import support
 
-class DirUtilTestCase(support.TempdirManager, unittest.TestCase):
+class DirUtilTestCase(support.TempdirManager, unittest2.TestCase):
 
     def _log(self, msg, *args):
         if len(args) > 0:
@@ -92,7 +92,7 @@ class DirUtilTestCase(support.TempdirManager, unittest.TestCase):
             self.assertEquals(ensure_relative('home\\foo'), 'home\\foo')
 
 def test_suite():
-    return unittest.makeSuite(DirUtilTestCase)
+    return unittest2.makeSuite(DirUtilTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

@@ -1,7 +1,7 @@
 """Tests for distutils.pypirc.pypirc."""
 import sys
 import os
-import unittest
+import unittest2
 import tempfile
 import shutil
 
@@ -50,7 +50,7 @@ password:xxx
 class PyPIRCCommandTestCase(support.TempdirManager,
                             support.LoggingSilencer,
                             support.EnvironGuard,
-                            unittest.TestCase):
+                            unittest2.TestCase):
 
     def setUp(self):
         """Patches the environment."""
@@ -112,7 +112,7 @@ class PyPIRCCommandTestCase(support.TempdirManager,
         self.assertEquals(content, WANTED)
 
 def test_suite():
-    return unittest.makeSuite(PyPIRCCommandTestCase)
+    return unittest2.makeSuite(PyPIRCCommandTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

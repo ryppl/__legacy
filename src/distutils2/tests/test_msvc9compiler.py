@@ -1,6 +1,6 @@
 """Tests for distutils.msvc9compiler."""
 import sys
-import unittest
+import unittest2
 import os
 
 from distutils2.errors import DistutilsPlatformError
@@ -60,9 +60,9 @@ _CLEANED_MANIFEST = """\
   </dependency>
 </assembly>"""
 
-@unittest.skipUnless(sys.platform=="win32", "These tests are only for win32")
+@unittest2.skipUnless(sys.platform=="win32", "These tests are only for win32")
 class msvc9compilerTestCase(support.TempdirManager,
-                            unittest.TestCase):
+                            unittest2.TestCase):
 
     def test_no_compiler(self):
         # makes sure query_vcvarsall throws
@@ -130,7 +130,7 @@ class msvc9compilerTestCase(support.TempdirManager,
 
 
 def test_suite():
-    return unittest.makeSuite(msvc9compilerTestCase)
+    return unittest2.makeSuite(msvc9compilerTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

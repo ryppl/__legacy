@@ -1,7 +1,7 @@
 """Tests for distutils.command.install_data."""
 import sys
 import os
-import unittest
+import unittest2
 import getpass
 
 from distutils2.command.install_data import install_data
@@ -10,7 +10,7 @@ from distutils2.tests import support
 class InstallDataTestCase(support.TempdirManager,
                           support.LoggingSilencer,
                           support.EnvironGuard,
-                          unittest.TestCase):
+                          unittest2.TestCase):
 
     def test_simple_run(self):
         pkg_dir, dist = self.create_dist()
@@ -70,7 +70,7 @@ class InstallDataTestCase(support.TempdirManager,
         self.assertTrue(os.path.exists(os.path.join(inst, rone)))
 
 def test_suite():
-    return unittest.makeSuite(InstallDataTestCase)
+    return unittest2.makeSuite(InstallDataTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

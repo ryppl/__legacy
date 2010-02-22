@@ -345,7 +345,7 @@ Common commands: (see '--help-commands' for more)
         check_environ()
 
         # Where to look for the system-wide Distutils config file
-        sys_dir = os.path.dirname(sys.modules['distutils'].__file__)
+        sys_dir = os.path.dirname(sys.modules['distutils2'].__file__)
 
         # Look for the system config file
         sys_file = os.path.join(sys_dir, "distutils.cfg")
@@ -786,8 +786,8 @@ Common commands: (see '--help-commands' for more)
             if pkgs is None:
                 pkgs = ''
             pkgs = [pkg.strip() for pkg in pkgs.split(',') if pkg != '']
-            if "distutils.command" not in pkgs:
-                pkgs.insert(0, "distutils.command")
+            if "distutils2.command" not in pkgs:
+                pkgs.insert(0, "distutils2.command")
             self.command_packages = pkgs
         return pkgs
 

@@ -1,5 +1,5 @@
 """Tests for distutils.extension."""
-import unittest
+import unittest2
 import os
 import warnings
 
@@ -7,7 +7,7 @@ from test.test_support import check_warnings
 from distutils2.extension import read_setup_file, Extension
 from distutils2.tests.support import capture_warnings
 
-class ExtensionTestCase(unittest.TestCase):
+class ExtensionTestCase(unittest2.TestCase):
 
     @capture_warnings
     def test_read_setup_file(self):
@@ -65,7 +65,7 @@ class ExtensionTestCase(unittest.TestCase):
                           "Unknown Extension options: 'chic'")
 
 def test_suite():
-    return unittest.makeSuite(ExtensionTestCase)
+    return unittest2.makeSuite(ExtensionTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

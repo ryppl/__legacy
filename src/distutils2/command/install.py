@@ -6,8 +6,11 @@ __revision__ = "$Id: install.py 77949 2010-02-03 15:38:12Z tarek.ziade $"
 
 import sys
 import os
-
-from sysconfig import get_config_vars, get_paths, get_path, get_config_var
+try:
+    from sysconfig import get_config_vars, get_paths, get_path, get_config_var
+except ImportError:
+    from distutils2._backport.sysconfig import (get_config_vars, get_paths,
+                                                get_path, get_config_var)
 
 from distutils2 import log
 from distutils2.core import Command

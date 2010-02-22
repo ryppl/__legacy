@@ -1,11 +1,15 @@
 """Tests for distutils.unixccompiler."""
 import sys
-import unittest
-import sysconfig
+import unittest2
+
+try:
+    import sysconfig
+except ImportError:
+    from distutils2._backport import sysconfig
 
 from distutils2.unixccompiler import UnixCCompiler
 
-class UnixCCompilerTestCase(unittest.TestCase):
+class UnixCCompilerTestCase(unittest2.TestCase):
 
     def setUp(self):
         self._backup_platform = sys.platform
@@ -123,7 +127,7 @@ class UnixCCompilerTestCase(unittest.TestCase):
 
 
 def test_suite():
-    return unittest.makeSuite(UnixCCompilerTestCase)
+    return unittest2.makeSuite(UnixCCompilerTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

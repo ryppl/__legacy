@@ -1,7 +1,7 @@
 """Tests for distutils.command.install_headers."""
 import sys
 import os
-import unittest
+import unittest2
 import getpass
 
 from distutils2.command.install_headers import install_headers
@@ -10,7 +10,7 @@ from distutils2.tests import support
 class InstallHeadersTestCase(support.TempdirManager,
                              support.LoggingSilencer,
                              support.EnvironGuard,
-                             unittest.TestCase):
+                             unittest2.TestCase):
 
     def test_simple_run(self):
         # we have two headers
@@ -34,7 +34,7 @@ class InstallHeadersTestCase(support.TempdirManager,
         self.assertEquals(len(cmd.get_outputs()), 2)
 
 def test_suite():
-    return unittest.makeSuite(InstallHeadersTestCase)
+    return unittest2.makeSuite(InstallHeadersTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

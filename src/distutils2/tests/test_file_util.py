@@ -1,5 +1,5 @@
 """Tests for distutils.file_util."""
-import unittest
+import unittest2
 import os
 import shutil
 
@@ -7,7 +7,7 @@ from distutils2.file_util import move_file, write_file, copy_file
 from distutils2 import log
 from distutils2.tests import support
 
-class FileUtilTestCase(support.TempdirManager, unittest.TestCase):
+class FileUtilTestCase(support.TempdirManager, unittest2.TestCase):
 
     def _log(self, msg, *args):
         if len(args) > 0:
@@ -72,7 +72,7 @@ class FileUtilTestCase(support.TempdirManager, unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(dst_dir, 'foo')))
 
 def test_suite():
-    return unittest.makeSuite(FileUtilTestCase)
+    return unittest2.makeSuite(FileUtilTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

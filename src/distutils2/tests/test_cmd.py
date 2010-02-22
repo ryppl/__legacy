@@ -1,5 +1,5 @@
 """Tests for distutils.cmd."""
-import unittest
+import unittest2
 import os
 from test.test_support import captured_stdout, run_unittest
 
@@ -12,7 +12,7 @@ class MyCmd(Command):
     def initialize_options(self):
         pass
 
-class CommandTestCase(unittest.TestCase):
+class CommandTestCase(unittest2.TestCase):
 
     def setUp(self):
         dist = Distribution()
@@ -121,7 +121,7 @@ class CommandTestCase(unittest.TestCase):
             debug.DEBUG = False
 
 def test_suite():
-    return unittest.makeSuite(CommandTestCase)
+    return unittest2.makeSuite(CommandTestCase)
 
 if __name__ == '__main__':
     run_unittest(test_suite())

@@ -10,6 +10,10 @@ from distutils2.core import Command
 from distutils2.dep_util import newer
 from distutils2.util import convert_path
 from distutils2 import log
+try:
+    import sysconfig
+except ImportError:
+    from distutils2._backport import sysconfig
 
 # check if Python is called on the first line with this expression
 first_line_re = re.compile('^#!.*python[0-9.]*([ \t].*)?$')
@@ -56,7 +60,6 @@ class build_scripts (Command):
         ie. starts with "\#!" and contains "python"), then adjust the first
         line to refer to the current Python interpreter as we copy.
         """
-        _sysconfig = __import__('sysconfig')
         self.mkpath(self.build_dir)
         outfiles = []
         for script in self.scripts:
@@ -94,16 +97,16 @@ class build_scripts (Command):
                          self.build_dir)
                 if not self.dry_run:
                     outf = open(outfile, "w")
-                    if not _sysconfig.is_python_build():
+                    if not sysconfig.is_python_build():
                         outf.write("#!%s%s\n" %
                                    (self.executable,
                                     post_interp))
                     else:
                         outf.write("#!%s%s\n" %
                                    (os.path.join(
-                            _sysconfig.get_config_var("BINDIR"),
-                           "python%s%s" % (_sysconfig.get_config_var("VERSION"),
-                                           _sysconfig.get_config_var("EXE"))),
+                            sysconfig.get_config_var("BINDIR"),
+                           "python%s%s" % (sysconfig.get_config_var("VERSION"),
+                                           sysconfig.get_config_var("EXE"))),
                                     post_interp))
                     outf.writelines(f.readlines())
                     outf.close()

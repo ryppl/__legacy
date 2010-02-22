@@ -1,6 +1,6 @@
 """Tests for distutils.command.bdist_rpm."""
 
-import unittest
+import unittest2
 import sys
 import os
 import tempfile
@@ -26,7 +26,7 @@ setup(name='foo', version='0.1', py_modules=['foo'],
 
 class BuildRpmTestCase(support.TempdirManager,
                        support.LoggingSilencer,
-                       unittest.TestCase):
+                       unittest2.TestCase):
 
     def setUp(self):
         super(BuildRpmTestCase, self).setUp()
@@ -121,7 +121,7 @@ class BuildRpmTestCase(support.TempdirManager,
         os.remove(os.path.join(pkg_dir, 'dist', 'foo-0.1-1.noarch.rpm'))
 
 def test_suite():
-    return unittest.makeSuite(BuildRpmTestCase)
+    return unittest2.makeSuite(BuildRpmTestCase)
 
 if __name__ == '__main__':
     run_unittest(test_suite())

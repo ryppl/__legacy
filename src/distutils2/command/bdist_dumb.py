@@ -7,9 +7,10 @@ $exec_prefix)."""
 __revision__ = "$Id: bdist_dumb.py 77761 2010-01-26 22:46:15Z tarek.ziade $"
 
 import os
-
-from sysconfig import get_python_version
-
+try:
+    from sysconfig import get_python_version
+except ImportError:
+    from distutils2._backport.sysconfig import get_python_version
 from distutils2.util import get_platform
 from distutils2.core import Command
 from distutils2.dir_util import remove_tree, ensure_relative

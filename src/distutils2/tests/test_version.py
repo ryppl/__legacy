@@ -1,9 +1,9 @@
 """Tests for distutils.version."""
-import unittest
+import unittest2
 from distutils2.version import LooseVersion
 from distutils2.version import StrictVersion
 
-class VersionTestCase(unittest.TestCase):
+class VersionTestCase(unittest2.TestCase):
 
     def test_prerelease(self):
         version = StrictVersion('1.2.3a1')
@@ -64,7 +64,7 @@ class VersionTestCase(unittest.TestCase):
                               (v1, v2, wanted, res))
 
 def test_suite():
-    return unittest.makeSuite(VersionTestCase)
+    return unittest2.makeSuite(VersionTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

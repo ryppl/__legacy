@@ -8,8 +8,12 @@ __revision__ = "$Id: cmd.py 75192 2009-10-02 23:49:48Z tarek.ziade $"
 
 import sys, os, re
 from distutils2.errors import DistutilsOptionError
-from distutils2 import util, dir_util, file_util, archive_util, dep_util
+from distutils2 import util, dir_util, file_util, dep_util
 from distutils2 import log
+try:
+    from shutil import make_archive
+except ImportError:
+    from distutils2._backport.shutil import make_archive
 
 class Command:
     """Abstract base class for defining command classes, the "worker bees"
@@ -387,9 +391,9 @@ class Command:
 
     def make_archive(self, base_name, format, root_dir=None, base_dir=None,
                      owner=None, group=None):
-        return archive_util.make_archive(base_name, format, root_dir,
-                                         base_dir, dry_run=self.dry_run,
-                                         owner=owner, group=group)
+        return make_archive(base_name, format, root_dir,
+                            base_dir, dry_run=self.dry_run,
+                            owner=owner, group=group)
 
     def make_file(self, infiles, outfile, func, args,
                   exec_msg=None, skip_msg=None, level=1):

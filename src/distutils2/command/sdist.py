@@ -9,10 +9,14 @@ import string
 import sys
 from glob import glob
 from warnings import warn
-from shutil import get_archive_formats
+
+try:
+    from shutil import get_archive_formats
+except ImportError:
+    from distutils2._backport.shutil import get_archive_formats
 
 from distutils2.core import Command
-from distutils2 import dir_util, dep_util, file_util, archive_util
+from distutils2 import dir_util, dep_util, file_util
 from distutils2.text_file import TextFile
 from distutils2.errors import (DistutilsPlatformError, DistutilsOptionError,
                               DistutilsTemplateError)

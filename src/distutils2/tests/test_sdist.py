@@ -1,6 +1,6 @@
 """Tests for distutils.command.sdist."""
 import os
-import unittest
+import unittest2
 import shutil
 import zipfile
 import tarfile
@@ -35,7 +35,10 @@ from distutils2.errors import DistutilsExecError, DistutilsOptionError
 from distutils2.spawn import find_executable
 from distutils2.tests import support
 from distutils2.log import WARN
-from shutil import get_archive_formats
+try:
+    from shutil import get_archive_formats
+except ImportError:
+    from distutils2._backport.shutil import get_archive_formats
 
 SETUP_PY = """
 from distutils.core import setup
@@ -95,7 +98,7 @@ class SDistTestCase(PyPIRCCommandTestCase):
         cmd.warn = _warn
         return dist, cmd
 
-    @unittest.skipUnless(zlib, "requires zlib")
+    @unittest2.skipUnless(zlib, "requires zlib")
     def test_prune_file_list(self):
         # this test creates a package with some vcs dirs in it
         # and launch sdist to make sure they get pruned
@@ -137,7 +140,7 @@ class SDistTestCase(PyPIRCCommandTestCase):
         # making sure everything has been pruned correctly
         self.assertEquals(len(content), 4)
 
-    @unittest.skipUnless(zlib, "requires zlib")
+    @unittest2.skipUnless(zlib, "requires zlib")
     def test_make_distribution(self):
 
         # check if tar and gzip are installed
@@ -174,7 +177,7 @@ class SDistTestCase(PyPIRCCommandTestCase):
         self.assertEquals(result,
                 ['fake-1.0.tar', 'fake-1.0.tar.gz'])
 
-    @unittest.skipUnless(zlib, "requires zlib")
+    @unittest2.skipUnless(zlib, "requires zlib")
     def test_add_defaults(self):
 
         # http://bugs.python.org/issue2279
@@ -236,7 +239,7 @@ class SDistTestCase(PyPIRCCommandTestCase):
         manifest = open(join(self.tmp_dir, 'MANIFEST')).read()
         self.assertEquals(manifest, MANIFEST % {'sep': os.sep})
 
-    @unittest.skipUnless(zlib, "requires zlib")
+    @unittest2.skipUnless(zlib, "requires zlib")
     def test_metadata_check_option(self):
         # testing the `medata-check` option
         dist, cmd = self.get_cmd(metadata={})
@@ -296,8 +299,8 @@ class SDistTestCase(PyPIRCCommandTestCase):
         cmd.formats = 'supazipa'
         self.assertRaises(DistutilsOptionError, cmd.finalize_options)
 
-    @unittest.skipUnless(zlib, "requires zlib")
-    @unittest.skipUnless(UID_GID_SUPPORT, "Requires grp and pwd support")
+    @unittest2.skipUnless(zlib, "requires zlib")
+    @unittest2.skipUnless(UID_GID_SUPPORT, "Requires grp and pwd support")
     def test_make_distribution_owner_group(self):
 
         # check if tar and gzip are installed
@@ -347,7 +350,7 @@ class SDistTestCase(PyPIRCCommandTestCase):
             archive.close()
 
 def test_suite():
-    return unittest.makeSuite(SDistTestCase)
+    return unittest2.makeSuite(SDistTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

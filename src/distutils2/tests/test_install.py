@@ -3,11 +3,19 @@
 import os
 import os.path
 import sys
-import unittest
+import unittest2
 import site
-import sysconfig
-from sysconfig import (get_scheme_names, _CONFIG_VARS, _INSTALL_SCHEMES,
-                       get_config_var, get_path)
+
+try:
+    import sysconfig
+    from sysconfig import (get_scheme_names, _CONFIG_VARS, _INSTALL_SCHEMES,
+                           get_config_var, get_path)
+except ImportError:
+    from distutils2._backport import sysconfig
+    from distutils2._backport.sysconfig import (get_scheme_names,
+                                                _CONFIG_VARS,
+                                                _INSTALL_SCHEMES,
+                                                get_config_var, get_path)
 
 from test.test_support import captured_stdout
 
@@ -21,7 +29,7 @@ from distutils2.tests import support
 class InstallTestCase(support.TempdirManager,
                       support.EnvironGuard,
                       support.LoggingSilencer,
-                      unittest.TestCase):
+                      unittest2.TestCase):
 
     def test_home_installation_scheme(self):
         # This ensure two things:
@@ -212,7 +220,7 @@ class InstallTestCase(support.TempdirManager,
         self.assertTrue(len(self.logs) > old_logs_len)
 
 def test_suite():
-    return unittest.makeSuite(InstallTestCase)
+    return unittest2.makeSuite(InstallTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

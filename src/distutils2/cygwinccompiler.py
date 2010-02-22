@@ -57,6 +57,10 @@ from distutils2.unixccompiler import UnixCCompiler
 from distutils2.file_util import write_file
 from distutils2.errors import DistutilsExecError, CompileError, UnknownFileError
 from distutils2.util import get_compiler_versions
+try:
+    import sysconfig
+except ImportError:
+    from distutils2._backport import sysconfig
 
 def get_msvcr():
     """Include the appropriate MSVC runtime library if Python was built
@@ -336,16 +340,13 @@ def check_config_h():
 
     # XXX since this function also checks sys.version, it's not strictly a
     # "pyconfig.h" check -- should probably be renamed...
-
-    _sysconfig = __import__('sysconfig')
-
     # if sys.version contains GCC then python was compiled with GCC, and the
     # pyconfig.h file should be OK
     if "GCC" in sys.version:
         return CONFIG_H_OK, "sys.version mentions 'GCC'"
 
     # let's see if __GNUC__ is mentioned in python.h
-    fn = _sysconfig.get_config_h_filename()
+    fn = sysconfig.get_config_h_filename()
     try:
         with open(fn) as config_h:
             if "__GNUC__" in config_h.read():

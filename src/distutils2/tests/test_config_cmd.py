@@ -1,5 +1,5 @@
 """Tests for distutils.command.config."""
-import unittest
+import unittest2
 import os
 import sys
 
@@ -9,7 +9,7 @@ from distutils2 import log
 
 class ConfigTestCase(support.LoggingSilencer,
                      support.TempdirManager,
-                     unittest.TestCase):
+                     unittest2.TestCase):
 
     def _info(self, msg, *args):
         for line in msg.splitlines():
@@ -83,7 +83,7 @@ class ConfigTestCase(support.LoggingSilencer,
             self.assertTrue(not os.path.exists(f))
 
 def test_suite():
-    return unittest.makeSuite(ConfigTestCase)
+    return unittest2.makeSuite(ConfigTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

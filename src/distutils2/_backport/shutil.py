@@ -364,7 +364,7 @@ def _make_tarball(base_name, base_dir, compress="gzip", verbose=0, dry_run=0,
 
 
     # creating the tarball
-    import tarfile  # late import so Python build itself doesn't break
+    from distutils2._backport import tarfile
 
     if logger is not None:
         logger.info('Creating tar archive')

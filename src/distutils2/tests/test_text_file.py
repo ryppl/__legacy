@@ -1,6 +1,6 @@
 """Tests for distutils.text_file."""
 import os
-import unittest
+import unittest2
 from distutils2.text_file import TextFile
 from distutils2.tests import support
 
@@ -11,7 +11,7 @@ line 3 \\
   continues on next line
 """
 
-class TextFileTestCase(support.TempdirManager, unittest.TestCase):
+class TextFileTestCase(support.TempdirManager, unittest2.TestCase):
 
     def test_class(self):
         # old tests moved from text_file.__main__
@@ -82,7 +82,7 @@ class TextFileTestCase(support.TempdirManager, unittest.TestCase):
         test_input (6, "join lines with collapsing", in_file, result6)
 
 def test_suite():
-    return unittest.makeSuite(TextFileTestCase)
+    return unittest2.makeSuite(TextFileTestCase)
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="test_suite")
+    unittest2.main(defaultTest="test_suite")

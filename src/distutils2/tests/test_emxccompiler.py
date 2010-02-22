@@ -1,5 +1,5 @@
 """Tests for distutils.emxccompiler."""
-import unittest
+import unittest2
 import sys
 import os
 import warnings
@@ -12,7 +12,7 @@ from distutils2.util import get_compiler_versions
 from distutils2.tests import support
 
 class EmxCCompilerTestCase(support.TempdirManager,
-                           unittest.TestCase):
+                           unittest2.TestCase):
 
     def test_get_version_deprecated(self):
         with check_warnings() as w:
@@ -27,7 +27,7 @@ class EmxCCompilerTestCase(support.TempdirManager,
             self.assertEquals(len(w.warnings), 1)
 
 def test_suite():
-    return unittest.makeSuite(EmxCCompilerTestCase)
+    return unittest2.makeSuite(EmxCCompilerTestCase)
 
 if __name__ == '__main__':
     run_unittest(test_suite())

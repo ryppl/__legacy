@@ -18,7 +18,10 @@ from distutils2.dep_util import newer_group
 from distutils2.util import split_quoted, execute
 from distutils2 import log
 
-_sysconfig = __import__('sysconfig')
+try:
+    import sysconfig
+except ImportError:
+    from distutils2._backport import sysconfig
 
 def customize_compiler(compiler):
     """Do any platform-specific customization of a CCompiler instance.
@@ -28,7 +31,7 @@ def customize_compiler(compiler):
     """
     if compiler.compiler_type == "unix":
         (cc, cxx, opt, cflags, ccshared, ldshared, so_ext, ar, ar_flags) = \
-            _sysconfig.get_config_vars('CC', 'CXX', 'OPT', 'CFLAGS',
+            sysconfig.get_config_vars('CC', 'CXX', 'OPT', 'CFLAGS',
                                        'CCSHARED', 'LDSHARED', 'SO', 'AR',
                                        'ARFLAGS')
 
@@ -56,7 +59,12 @@ def customize_compiler(compiler):
         if 'ARFLAGS' in os.environ:
             archiver = ar + ' ' + os.environ['ARFLAGS']
         else:
-            archiver = ar + ' ' + ar_flags
+            if ar_flags is not None:
+                archiver = ar + ' ' + ar_flags
+            else:
+                # see if its the proper default value
+                # mmm I don't want to backport the makefile
+                archiver = ar + ' rc'
 
         cc_cmd = cc + ' ' + cflags
         compiler.set_executables(
