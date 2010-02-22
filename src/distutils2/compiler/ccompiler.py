@@ -13,8 +13,7 @@ from distutils2.errors import (CompileError, LinkError, UnknownFileError,
                               DistutilsPlatformError, DistutilsModuleError)
 from distutils2.spawn import spawn
 from distutils2.file_util import move_file
-from distutils2.dep_util import newer_group
-from distutils2.util import split_quoted, execute
+from distutils2.util import split_quoted, execute, newer_group
 from distutils2 import log
 
 try:
@@ -523,9 +522,9 @@ class CCompiler:
             return 1
         else:
             if self.dry_run:
-                newer = newer_group (objects, output_file, missing='newer')
+                newer = newer_group(objects, output_file, missing='newer')
             else:
-                newer = newer_group (objects, output_file)
+                newer = newer_group(objects, output_file)
             return newer
 
     def detect_language(self, sources):

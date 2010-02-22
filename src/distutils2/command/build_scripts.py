@@ -7,8 +7,7 @@ __revision__ = "$Id: build_scripts.py 77704 2010-01-23 09:23:15Z tarek.ziade $"
 import os, re
 from stat import ST_MODE
 from distutils2.core import Command
-from distutils2.dep_util import newer
-from distutils2.util import convert_path
+from distutils2.util import convert_path, newer
 from distutils2 import log
 try:
     import sysconfig

@@ -101,7 +101,7 @@ def copy_file(src, dst, preserve_mode=1, preserve_times=1, update=0,
     # changing it (ie. it's not already a hard/soft link to src OR
     # (not update) and (src newer than dst).
 
-    from distutils2.dep_util import newer
+    from distutils2.util import newer
     from stat import ST_ATIME, ST_MTIME, ST_MODE, S_IMODE
 
     if not os.path.isfile(src):

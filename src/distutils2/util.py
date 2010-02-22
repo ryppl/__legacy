@@ -9,7 +9,6 @@ __revision__ = "$Id: util.py 77761 2010-01-26 22:46:15Z tarek.ziade $"
 import sys, os, string, re
 
 from distutils2.errors import DistutilsPlatformError
-from distutils2.dep_util import newer
 from distutils2.spawn import spawn, find_executable
 from distutils2 import log
 from distutils2.version import LooseVersion
@@ -21,6 +20,26 @@ except ImportError:
     from distutils2._backport import sysconfig as _sysconfig
 
 _PLATFORM = None
+
+def newer(source, target):
+    """Tells if the target is newer than the source.
+
+    Return true if 'source' exists and is more recently modified than
+    'target', or if 'source' exists and 'target' doesn't.
+
+    Return false if both exist and 'target' is the same age or younger
+    than 'source'. Raise DistutilsFileError if 'source' does not exist.
+
+    Note that this test is not very accurate: files created in the same second
+    will have the same "age".
+    """
+    if not os.path.exists(source):
+        raise DistutilsFileError("file '%s' does not exist" %
+                                 os.path.abspath(source))
+    if not os.path.exists(target):
+        return True
+
+    return os.stat(source).st_mtime > os.stat(target).st_mtime
 
 def get_platform():
     """Return a string that identifies the current platform.
@@ -480,3 +499,43 @@ def get_compiler_versions():
     ld = _find_ld_version()
     dllwrap = _find_exe_version('dllwrap --version')
     return gcc, ld, dllwrap
+
+def newer_group(sources, target, missing='error'):
+    """Return true if 'target' is out-of-date with respect to any file
+    listed in 'sources'.
+
+    In other words, if 'target' exists and is newer
+    than every file in 'sources', return false; otherwise return true.
+    'missing' controls what we do when a source file is missing; the
+    default ("error") is to blow up with an OSError from inside 'stat()';
+    if it is "ignore", we silently drop any missing source files; if it is
+    "newer", any missing source files make us assume that 'target' is
+    out-of-date (this is handy in "dry-run" mode: it'll make you pretend to
+    carry out commands that wouldn't work because inputs are missing, but
+    that doesn't matter because you're not actually going to run the
+    commands).
+    """
+    # If the target doesn't even exist, then it's definitely out-of-date.
+    if not os.path.exists(target):
+        return True
+
+    # Otherwise we have to find out the hard way: if *any* source file
+    # is more recent than 'target', then 'target' is out-of-date and
+    # we can immediately return true.  If we fall through to the end
+    # of the loop, then 'target' is up-to-date and we return false.
+    target_mtime = os.stat(target).st_mtime
+
+    for source in sources:
+        if not os.path.exists(source):
+            if missing == 'error':      # blow up when we stat() the file
+                pass
+            elif missing == 'ignore':   # missing source dropped from
+                continue                #  target's dependency list
+            elif missing == 'newer':    # missing source means target is
+                return True             #  out-of-date
+
+        if os.stat(source).st_mtime > target_mtime:
+            return True
+
+    return False
+

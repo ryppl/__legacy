@@ -16,13 +16,13 @@ except ImportError:
     from distutils2._backport.shutil import get_archive_formats
 
 from distutils2.core import Command
-from distutils2 import dep_util, file_util
+from distutils2 import file_util
 from distutils2.text_file import TextFile
 from distutils2.errors import (DistutilsPlatformError, DistutilsOptionError,
                               DistutilsTemplateError)
 from distutils2.filelist import FileList
 from distutils2 import log
-from distutils2.util import convert_path
+from distutils2.util import convert_path, newer
 
 def show_formats():
     """Print all possible values for the 'formats' option (used by
@@ -195,7 +195,7 @@ class sdist(Command):
         # manifest; if so, we'll regenerate the manifest.
         template_exists = os.path.isfile(self.template)
         if template_exists:
-            template_newer = dep_util.newer(self.template, self.manifest)
+            template_newer = newer(self.template, self.manifest)
 
         # The contents of the manifest file almost certainly depend on the
         # setup script as well as the manifest template -- so if the setup
@@ -206,8 +206,8 @@ class sdist(Command):
         # can't regenerate the manifest, so we don't.)
         self.debug_print("checking if %s newer than %s" %
                          (self.distribution.script_name, self.manifest))
-        setup_newer = dep_util.newer(self.distribution.script_name,
-                                     self.manifest)
+        setup_newer = newer(self.distribution.script_name,
+                            self.manifest)
 
         # cases:
         #   1) no manifest, template exists: generate manifest

@@ -13,7 +13,7 @@ from distutils2.util import get_platform
 from distutils2.core import Command
 from distutils2.errors import *
 from distutils2.compiler.ccompiler import customize_compiler
-from distutils2.dep_util import newer_group
+from distutils2.util import newer_group
 from distutils2.extension import Extension
 from distutils2 import log
 try:

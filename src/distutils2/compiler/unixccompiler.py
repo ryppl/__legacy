@@ -18,7 +18,7 @@ __revision__ = "$Id: unixccompiler.py 77704 2010-01-23 09:23:15Z tarek.ziade $"
 import os, sys
 from types import StringType, NoneType
 
-from distutils2.dep_util import newer
+from distutils2.util import newer
 from distutils2.compiler.ccompiler import \
      CCompiler, gen_preprocess_options, gen_lib_options
 from distutils2.errors import \
