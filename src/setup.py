@@ -17,10 +17,13 @@ finally:
     f.close()
 
 def get_tip_revision(path=os.getcwd()):
-    from mercurial.hg import repository
-    from mercurial.ui import ui
-    from mercurial import node
-    from mercurial.error import RepoError
+    try:
+        from mercurial.hg import repository
+        from mercurial.ui import ui
+        from mercurial import node
+        from mercurial.error import RepoError
+    except ImportError:
+        return 0
     try:
         repo = repository(ui(), path)
         tip = repo.changelog.tip()
