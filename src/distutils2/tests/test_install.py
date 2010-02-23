@@ -6,18 +6,13 @@ import sys
 import unittest2
 import site
 
-try:
-    import sysconfig
-    from sysconfig import (get_scheme_names, _CONFIG_VARS, _INSTALL_SCHEMES,
-                           get_config_var, get_path)
-except ImportError:
-    from distutils2._backport import sysconfig
-    from distutils2._backport.sysconfig import (get_scheme_names,
-                                                get_config_vars,
-                                                _INSTALL_SCHEMES,
-                                                get_config_var, get_path)
+from distutils2._backport import sysconfig
+from distutils2._backport.sysconfig import (get_scheme_names,
+                                            get_config_vars,
+                                            _SCHEMES,
+                                            get_config_var, get_path)
 
-    _CONFIG_VARS=get_config_vars()
+_CONFIG_VARS = get_config_vars()
 
 from distutils2.tests import captured_stdout
 
@@ -48,23 +43,20 @@ class InstallTestCase(support.TempdirManager,
             build_lib=os.path.join(builddir, "lib"),
             )
 
+        old_posix_prefix = _SCHEMES.get('posix_prefix', 'platinclude')
+        old_posix_home = _SCHEMES.get('posix_home', 'platinclude')
 
+        new_path = '{platbase}/include/python{py_version_short}'
+        _SCHEMES.set('posix_prefix', 'platinclude', new_path)
+        _SCHEMES.set('posix_home', 'platinclude', '{platbase}/include/python')
 
-        posix_prefix = _INSTALL_SCHEMES['posix_prefix']
-        old_posix_prefix = posix_prefix['platinclude']
-        posix_prefix['platinclude'] = \
-                '%(platbase)s/include/python{py_version_short}'
-
-        posix_home = _INSTALL_SCHEMES['posix_home']
-        old_posix_home = posix_home['platinclude']
-        posix_home['platinclude'] = '%(base)s/include/python'
         try:
             cmd = install(dist)
             cmd.home = destination
             cmd.ensure_finalized()
         finally:
-            posix_home['platinclude'] = old_posix_home
-            posix_prefix['platinclude'] = old_posix_prefix
+            _SCHEMES.set('posix_prefix', 'platinclude', old_posix_prefix)
+            _SCHEMES.set('posix_home', 'platinclude', old_posix_home)
 
         self.assertEqual(cmd.install_base, destination)
         self.assertEqual(cmd.install_platbase, destination)
@@ -95,9 +87,8 @@ class InstallTestCase(support.TempdirManager,
         self.user_base = os.path.join(self.tmpdir, 'B')
         self.user_site = os.path.join(self.tmpdir, 'S')
         _CONFIG_VARS['userbase'] = self.user_base
-        scheme = _INSTALL_SCHEMES['%s_user' % os.name]
-        scheme['purelib'] = self.user_site
-
+        scheme = '%s_user' % os.name
+        _SCHEMES.set(scheme, 'purelib', self.user_site)
         def _expanduser(path):
             if path[0] == '~':
                 path = os.path.normpath(self.tmpdir) + path[1:]
@@ -110,7 +101,7 @@ class InstallTestCase(support.TempdirManager,
             self._test_user_site()
         finally:
             _CONFIG_VARS['userbase'] = self.old_user_base
-            scheme['purelib'] = self.old_user_site
+            _SCHEMES.set(scheme, 'purelib', self.old_user_site)
             os.path.expanduser = self.old_expand
 
     def _test_user_site(self):
@@ -202,7 +193,6 @@ class InstallTestCase(support.TempdirManager,
         cmd.root = install_dir
         cmd.record = os.path.join(pkgdir, 'RECORD')
         cmd.ensure_finalized()
-
         cmd.run()
 
         # let's check the RECORD file was created with one

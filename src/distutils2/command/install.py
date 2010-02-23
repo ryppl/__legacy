@@ -6,11 +6,10 @@ __revision__ = "$Id: install.py 77949 2010-02-03 15:38:12Z tarek.ziade $"
 
 import sys
 import os
-try:
-    from sysconfig import get_config_vars, get_paths, get_path, get_config_var
-except ImportError:
-    from distutils2._backport.sysconfig import (get_config_vars, get_paths,
-                                                get_path, get_config_var)
+
+from distutils2._backport import sysconfig
+from distutils2._backport.sysconfig import (get_config_vars, get_paths,
+                                            get_path, get_config_var)
 
 from distutils2 import log
 from distutils2.core import Command
@@ -19,96 +18,6 @@ from distutils2.errors import DistutilsPlatformError
 from distutils2.util import write_file
 from distutils2.util import convert_path, change_root, get_platform
 from distutils2.errors import DistutilsOptionError
-
-# kept for backward compat, will be removed in 3.2
-if sys.version < "2.2":
-    WINDOWS_SCHEME = {
-        'purelib': '$base',
-        'platlib': '$base',
-        'headers': '$base/Include/$dist_name',
-        'scripts': '$base/Scripts',
-        'data'   : '$base',
-    }
-else:
-    WINDOWS_SCHEME = {
-        'purelib': '$base/Lib/site-packages',
-        'platlib': '$base/Lib/site-packages',
-        'headers': '$base/Include/$dist_name',
-        'scripts': '$base/Scripts',
-        'data'   : '$base',
-    }
-
-INSTALL_SCHEMES = {
-    'unix_prefix': {
-        'purelib': '$base/lib/python$py_version_short/site-packages',
-        'platlib': '$platbase/lib/python$py_version_short/site-packages',
-        'headers': '$base/include/python$py_version_short/$dist_name',
-        'scripts': '$base/bin',
-        'data'   : '$base',
-        },
-    'unix_home': {
-        'purelib': '$base/lib/python',
-        'platlib': '$base/lib/python',
-        'headers': '$base/include/python/$dist_name',
-        'scripts': '$base/bin',
-        'data'   : '$base',
-        },
-    'unix_user': {
-        'purelib': '$usersite',
-        'platlib': '$usersite',
-        'headers': '$userbase/include/python$py_version_short/$dist_name',
-        'scripts': '$userbase/bin',
-        'data'   : '$userbase',
-        },
-    'nt': WINDOWS_SCHEME,
-    'nt_user': {
-        'purelib': '$usersite',
-        'platlib': '$usersite',
-        'headers': '$userbase/Python$py_version_nodot/Include/$dist_name',
-        'scripts': '$userbase/Scripts',
-        'data'   : '$userbase',
-        },
-    'mac': {
-        'purelib': '$base/Lib/site-packages',
-        'platlib': '$base/Lib/site-packages',
-        'headers': '$base/Include/$dist_name',
-        'scripts': '$base/Scripts',
-        'data'   : '$base',
-        },
-    'mac_user': {
-        'purelib': '$usersite',
-        'platlib': '$usersite',
-        'headers': '$userbase/$py_version_short/include/$dist_name',
-        'scripts': '$userbase/bin',
-        'data'   : '$userbase',
-        },
-    'os2': {
-        'purelib': '$base/Lib/site-packages',
-        'platlib': '$base/Lib/site-packages',
-        'headers': '$base/Include/$dist_name',
-        'scripts': '$base/Scripts',
-        'data'   : '$base',
-        },
-    'os2_home': {
-        'purelib': '$usersite',
-        'platlib': '$usersite',
-        'headers': '$userbase/include/python$py_version_short/$dist_name',
-        'scripts': '$userbase/bin',
-        'data'   : '$userbase',
-        },
-    }
-
-SCHEME_KEYS = ('purelib', 'platlib', 'headers', 'scripts', 'data')
-# end of backward compat
-
-def _subst_vars(s, local_vars):
-    try:
-        return s % local_vars
-    except KeyError:
-        try:
-            return s % os.environ
-        except KeyError, var:
-            raise AttributeError('%s' % var)
 
 class install(Command):
 
@@ -502,7 +411,8 @@ class install(Command):
             if val is not None:
                 if os.name == 'posix' or os.name == 'nt':
                     val = os.path.expanduser(val)
-                val = _subst_vars(val, self.config_vars)
+                # see if we want to push this work in sysconfig XXX
+                val = sysconfig._subst_vars(val, self.config_vars)
                 setattr(self, attr, val)
 
     def expand_basedirs(self):

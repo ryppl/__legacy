@@ -3,85 +3,37 @@
 """
 import sys
 import os
+import re
 from os.path import pardir, abspath
+from ConfigParser import ConfigParser
 
-_INSTALL_SCHEMES = {
-    'posix_prefix': {
-        'stdlib': '%(base)s/lib/python%(py_version_short)s',
-        'platstdlib': '%(platbase)s/lib/python%(py_version_short)s',
-        'purelib': '%(base)s/lib/python%(py_version_short)s/site-packages',
-        'platlib': '%(platbase)s/lib/python%(py_version_short)s/site-packages',
-        'include': '%(base)s/include/python%(py_version_short)s',
-        'platinclude': '%(platbase)s/include/python%(py_version_short)s',
-        'scripts': '%(base)s/bin',
-        'data': '%(base)s',
-        },
-    'posix_home': {
-        'stdlib': '%(base)s/lib/python',
-        'platstdlib': '%(base)s/lib/python',
-        'purelib': '%(base)s/lib/python',
-        'platlib': '%(base)s/lib/python',
-        'include': '%(base)s/include/python',
-        'platinclude': '%(base)s/include/python',
-        'scripts': '%(base)s/bin',
-        'data'   : '%(base)s',
-        },
-    'nt': {
-        'stdlib': '%(base)s/Lib',
-        'platstdlib': '%(base)s/Lib',
-        'purelib': '%(base)s/Lib/site-packages',
-        'platlib': '%(base)s/Lib/site-packages',
-        'include': '%(base)s/Include',
-        'platinclude': '%(base)s/Include',
-        'scripts': '%(base)s/Scripts',
-        'data'   : '%(base)s',
-        },
-    'os2': {
-        'stdlib': '%(base)s/Lib',
-        'platstdlib': '%(base)s/Lib',
-        'purelib': '%(base)s/Lib/site-packages',
-        'platlib': '%(base)s/Lib/site-packages',
-        'include': '%(base)s/Include',
-        'platinclude': '%(base)s/Include',
-        'scripts': '%(base)s/Scripts',
-        'data'   : '%(base)s',
-        },
-    'os2_home': {
-        'stdlib': '%(userbase)s/lib/python/%(py_version_short)s',
-        'platstdlib': '%(userbase)s/lib/python/%(py_version_short)s',
-        'purelib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
-        'platlib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
-        'include': '%(userbase)s/include/python%(py_version_short)s',
-        'scripts': '%(userbase)s/bin',
-        'data'   : '%(userbase)s',
-        },
-    'nt_user': {
-        'stdlib': '%(userbase)s/Python%(py_version_nodot)s',
-        'platstdlib': '%(userbase)s/Python%(py_version_nodot)s',
-        'purelib': '%(userbase)s/Python%(py_version_nodot)s/site-packages',
-        'platlib': '%(userbase)s/Python%(py_version_nodot)s/site-packages',
-        'include': '%(userbase)s/Python%(py_version_nodot)s/Include',
-        'scripts': '%(userbase)s/Scripts',
-        'data'   : '%(userbase)s',
-        },
-    'posix_user': {
-        'stdlib': '%(userbase)s/lib/python/%(py_version_short)s',
-        'platstdlib': '%(userbase)s/lib/python/%(py_version_short)s',
-        'purelib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
-        'platlib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
-        'include': '%(userbase)s/include/python%(py_version_short)s',
-        'scripts': '%(userbase)s/bin',
-        'data'   : '%(userbase)s',
-        },
-    }
+_PREFIX = os.path.normpath(sys.prefix)
+_EXEC_PREFIX = os.path.normpath(sys.exec_prefix)
 
-_SCHEME_KEYS = ('stdlib', 'platstdlib', 'purelib', 'platlib', 'include',
-                'scripts', 'data')
+# let's read the configuration file
+# XXX _CONFIG_DIR will be set by the Makefile later
+_CONFIG_DIR = os.path.normpath(os.path.dirname(__file__))
+_CONFIG_FILE = os.path.join(_CONFIG_DIR, 'sysconfig.cfg')
+_SCHEMES = ConfigParser()
+_SCHEMES.read(_CONFIG_FILE)
+
+def _expand_globals():
+    globals = _SCHEMES.items('globals')
+    sections = _SCHEMES.sections()
+    for section in sections:
+        if section == 'globals':
+            continue
+        for option, value in globals:
+            if _SCHEMES.has_option(section, option):
+                continue
+            _SCHEMES.set(section, option, value)
+    _SCHEMES.remove_section('globals')
+
+_expand_globals()
+
 _PY_VERSION = sys.version.split()[0]
 _PY_VERSION_SHORT = sys.version[:3]
 _PY_VERSION_SHORT_NO_DOT = _PY_VERSION[0] + _PY_VERSION[2]
-_PREFIX = os.path.normpath(sys.prefix)
-_EXEC_PREFIX = os.path.normpath(sys.exec_prefix)
 _CONFIG_VARS = None
 _USER_BASE = None
 _PROJECT_BASE = abspath(os.path.dirname(sys.executable))
@@ -105,17 +57,21 @@ _PYTHON_BUILD = is_python_build()
 
 if _PYTHON_BUILD:
     for scheme in ('posix_prefix', 'posix_home'):
-        _INSTALL_SCHEMES[scheme]['include'] = '{projectbase}/Include'
-        _INSTALL_SCHEMES[scheme]['platinclude'] = '{srcdir}'
+        _SCHEMES.set(scheme, 'include', '{projectbase}/Include')
+        _SCHEMES.set(scheme, 'platinclude', '{srcdir}')
 
-def _subst_vars(s, local_vars):
-    try:
-        return s % local_vars
-    except KeyError:
-        try:
-            return s % os.environ
-        except KeyError, var:
-            raise AttributeError('%s' % var)
+_VAR_REPL = re.compile(r'\{(.*?)\}')
+
+def _subst_vars(path, local_vars):
+    # simple curly-braces replacement
+    def _replacer(matchobj):
+        name = matchobj.group(1)
+        if name in local_vars:
+            return local_vars[name]
+        elif name in os.environ:
+            return os.environ[name]
+        return matchobj.group(0)
+    return _VAR_REPL.sub(_replacer, path)
 
 def _extend_dict(target_dict, other_dict):
     target_keys = target_dict.keys()
@@ -130,7 +86,7 @@ def _expand_vars(scheme, vars):
         vars = {}
     _extend_dict(vars, get_config_vars())
 
-    for key, value in _INSTALL_SCHEMES[scheme].items():
+    for key, value in _SCHEMES.items(scheme):
         if os.name in ('posix', 'nt'):
             value = os.path.expanduser(value)
         res[key] = os.path.normpath(_subst_vars(value, vars))
@@ -352,13 +308,14 @@ def get_config_h_filename():
 
 def get_scheme_names():
     """Returns a tuple containing the schemes names."""
-    schemes = _INSTALL_SCHEMES.keys()
+    schemes = _SCHEMES.sections()
     schemes.sort()
     return tuple(schemes)
 
 def get_path_names():
     """Returns a tuple containing the paths names."""
-    return _SCHEME_KEYS
+    # xxx see if we want a static list
+    return _SCHEMES.options('posix_prefix')
 
 def get_paths(scheme=_get_default_scheme(), vars=None, expand=True):
     """Returns a mapping containing an install scheme.
@@ -369,7 +326,7 @@ def get_paths(scheme=_get_default_scheme(), vars=None, expand=True):
     if expand:
         return _expand_vars(scheme, vars)
     else:
-        return _INSTALL_SCHEMES[scheme]
+        return dict(_SCHEMES.items(scheme))
 
 def get_path(name, scheme=_get_default_scheme(), vars=None, expand=True):
     """Returns a path corresponding to the scheme.

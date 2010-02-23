@@ -14,10 +14,7 @@ from distutils2 import log
 from distutils2.version import LooseVersion
 from distutils2.errors import DistutilsByteCompileError
 
-try:
-    _sysconfig = __import__('sysconfig')  # from the standard lib
-except ImportError:
-    from distutils2._backport import sysconfig as _sysconfig
+from distutils2._backport import sysconfig as _sysconfig
 
 _PLATFORM = None
 

@@ -14,7 +14,7 @@ from test.test_support import run_unittest, TESTFN
 
 import distutils2._backport.sysconfig
 from distutils2._backport.sysconfig import (get_paths, get_platform, get_config_vars,
-                       get_path, get_path_names, _INSTALL_SCHEMES,
+                       get_path, get_path_names,
                        _get_default_scheme, _expand_vars,
                        get_scheme_names)
 
@@ -85,9 +85,6 @@ class TestSysConfig(unittest2.TestCase):
         elif os.path.isdir(path):
             shutil.rmtree(path)
 
-    def test_get_path_names(self):
-        self.assertEquals(get_path_names(), distutils2._backport.sysconfig._SCHEME_KEYS)
-
     def test_get_paths(self):
         scheme = get_paths()
         default_scheme = _get_default_scheme()
@@ -97,12 +94,6 @@ class TestSysConfig(unittest2.TestCase):
         scheme = scheme.items()
         scheme.sort()
         self.assertEquals(scheme, wanted)
-
-    def test_get_path(self):
-        # xxx make real tests here
-        for scheme in _INSTALL_SCHEMES:
-            for name in _INSTALL_SCHEMES[scheme]:
-                res = get_path(name, scheme)
 
     def test_get_config_vars(self):
         cvars = get_config_vars()
