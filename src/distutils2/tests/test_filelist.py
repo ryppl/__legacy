@@ -65,17 +65,13 @@ class FileListTestCase(unittest2.TestCase):
 
     def test_debug_print(self):
         file_list = FileList()
-        with captured_stdout() as stdout:
-            file_list.debug_print('xxx')
-        stdout.seek(0)
-        self.assertEquals(stdout.read(), '')
+        __, stdout = captured_stdout(file_list.debug_print, 'xxx')
+        self.assertEquals(stdout, '')
 
         debug.DEBUG = True
         try:
-            with captured_stdout() as stdout:
-                file_list.debug_print('xxx')
-            stdout.seek(0)
-            self.assertEquals(stdout.read(), 'xxx\n')
+            __, stdout = captured_stdout(file_list.debug_print, 'xxx')
+            self.assertEquals(stdout, 'xxx\n')
         finally:
             debug.DEBUG = False
 

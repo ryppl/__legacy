@@ -53,11 +53,11 @@ class InstallTestCase(support.TempdirManager,
         posix_prefix = _INSTALL_SCHEMES['posix_prefix']
         old_posix_prefix = posix_prefix['platinclude']
         posix_prefix['platinclude'] = \
-                '{platbase}/include/python{py_version_short}'
+                '%(platbase)s/include/python{py_version_short}'
 
         posix_home = _INSTALL_SCHEMES['posix_home']
         old_posix_home = posix_home['platinclude']
-        posix_home['platinclude'] = '{base}/include/python'
+        posix_home['platinclude'] = '%(base)s/include/python'
         try:
             cmd = install(dist)
             cmd.home = destination
@@ -207,16 +207,18 @@ class InstallTestCase(support.TempdirManager,
 
         # let's check the RECORD file was created with one
         # line (the egg info file)
-        with open(cmd.record) as f:
+        f = open(cmd.record)
+        try:
             self.assertEquals(len(f.readlines()), 1)
+        finally:
+            f.close()
 
     def _test_debug_mode(self):
         # this covers the code called when DEBUG is set
         old_logs_len = len(self.logs)
         install_module.DEBUG = True
         try:
-            with captured_stdout() as stdout:
-                self.test_record()
+            __, stdout = captured_stdout(self.test_record)
         finally:
             install_module.DEBUG = False
         self.assertTrue(len(self.logs) > old_logs_len)

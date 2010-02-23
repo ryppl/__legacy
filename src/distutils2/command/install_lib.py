@@ -120,7 +120,7 @@ class install_lib(Command):
         return outfiles
 
     def byte_compile(self, files):
-        if sys.dont_write_bytecode:
+        if hasattr(sys, 'dont_write_bytecode') and sys.dont_write_bytecode:
             self.warn('byte-compiling is disabled, skipping.')
             return
 

@@ -11,12 +11,10 @@ distutils.command.tests package, since command identification is done
 by import rather than matching pre-defined names.
 
 """
-
 import os
 import sys
 import warnings
 import unittest2
-import contextlib
 
 from test.test_support import TESTFN    # use TESTFN from stdlib/test_support.
 
@@ -66,7 +64,7 @@ def _run_suite(suite):
         else:
             err = "errors occurred; run in verbose mode for details"
         raise TestFailed(err)
-    
+
 
 def run_unittest(*classes):
     """Run tests from unittest2.TestCase-derived classes.
@@ -86,7 +84,7 @@ def run_unittest(*classes):
         else:
             suite.addTest(unittest2.makeSuite(cls))
     _run_suite(suite)
-    
+
 
 def reap_children():
     """Use this function at the end of test_main() whenever sub-processes
@@ -110,49 +108,16 @@ def reap_children():
             except:
                 break
 
-@contextlib.contextmanager
-def captured_output(stream_name):
-    """Run the 'with' statement body using a StringIO object in place of a
-    specific attribute on the sys module.
-    Example use (with 'stream_name=stdout')::
-
-       with captured_stdout() as s:
-           print "hello"
-       assert s.getvalue() == "hello"
-    """
+def captured_stdout(func, *args, **kw):
     import StringIO
-    orig_stdout = getattr(sys, stream_name)
-    setattr(sys, stream_name, StringIO.StringIO())
+    orig_stdout = getattr(sys, 'stdout')
+    setattr(sys, 'stdout', StringIO.StringIO())
     try:
-        yield getattr(sys, stream_name)
+        res = func(*args, **kw)
+        sys.stdout.seek(0)
+        return res, sys.stdout.read()
     finally:
-        setattr(sys, stream_name, orig_stdout)
-
-def captured_stdout():
-    return captured_output("stdout")
-
-class WarningsRecorder(object):
-    """Convenience wrapper for the warnings list returned on
-       entry to the warnings.catch_warnings() context manager.
-    """
-    def __init__(self, warnings_list):
-        self.warnings = warnings_list
-
-    def __getattr__(self, attr):
-        if self.warnings:
-            return getattr(self.warnings[-1], attr)
-        elif attr in warnings.WarningMessage._WARNING_DETAILS:
-            return None
-        raise AttributeError("%r has no attribute %r" % (self, attr))
-
-    def reset(self):
-        del self.warnings[:]
-
-@contextlib.contextmanager
-def check_warnings():
-    with warnings.catch_warnings(record=True) as w:
-        yield WarningsRecorder(w)
-
+        setattr(sys, 'stdout', orig_stdout)
 
 def unload(name):
     try:

@@ -109,9 +109,13 @@ class Extension:
                  ):
         if not isinstance(name, str):
             raise AssertionError("'name' must be a string")
-        if not (isinstance(sources, list) and
-                all(isinstance(v, str) for v in sources)):
+
+        if not isinstance(sources, list):
             raise AssertionError("'sources' must be a list of strings")
+
+        for v in sources:
+            if not isinstance(v, str):
+                raise AssertionError("'sources' must be a list of strings")
 
         self.name = name
         self.sources = sources

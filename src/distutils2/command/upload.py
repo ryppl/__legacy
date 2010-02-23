@@ -8,7 +8,10 @@ from urllib2 import urlopen, Request, HTTPError
 from base64 import standard_b64encode
 import urlparse
 import cStringIO as StringIO
-from hashlib import md5
+try:
+    from hashlib import md5
+except ImportError:
+    from md5 import md5
 
 from distutils2.errors import DistutilsOptionError
 from distutils2.core import PyPIRCCommand

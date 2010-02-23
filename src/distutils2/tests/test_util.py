@@ -239,6 +239,8 @@ class UtilTestCase(support.EnvironGuard, unittest2.TestCase):
         res = get_compiler_versions()
         self.assertEquals(res[2], None)
 
+    @unittest2.skipUnless(hasattr(sys, 'dont_write_bytecode'),
+                          'no dont_write_bytecode support')
     def test_dont_write_bytecode(self):
         # makes sure byte_compile raise a DistutilsError
         # if sys.dont_write_bytecode is True

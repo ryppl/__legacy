@@ -372,7 +372,7 @@ class build_py(Command):
                 self.build_module(module, module_file, package)
 
     def byte_compile(self, files):
-        if sys.dont_write_bytecode:
+        if hasattr(sys, 'dont_write_bytecode') and sys.dont_write_bytecode:
             self.warn('byte-compiling is disabled, skipping.')
             return
 

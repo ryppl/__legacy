@@ -24,7 +24,6 @@ import sys
 import tempfile
 import warnings
 
-from distutils2.tests import check_warnings
 from distutils2.tests import captured_stdout
 
 from distutils2.command.sdist import sdist
@@ -260,21 +259,13 @@ class SDistTestCase(PyPIRCCommandTestCase):
         warnings = self.get_logs(WARN)
         self.assertEquals(len(warnings), 0)
 
-    def test_check_metadata_deprecated(self):
-        # makes sure make_metadata is deprecated
-        dist, cmd = self.get_cmd()
-        with check_warnings() as w:
-            warnings.simplefilter("always")
-            cmd.check_metadata()
-            self.assertEquals(len(w.warnings), 1)
 
     def test_show_formats(self):
-        with captured_stdout() as stdout:
-            show_formats()
+        __, stdout = captured_stdout(show_formats)
 
         # the output should be a header line + one line per format
         num_formats = len(get_archive_formats())
-        output = [line for line in stdout.getvalue().split('\n')
+        output = [line for line in stdout.split('\n')
                   if line.strip().startswith('--formats=')]
         self.assertEquals(len(output), num_formats)
 

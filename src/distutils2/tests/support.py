@@ -9,13 +9,6 @@ from distutils2 import log
 from distutils2.log import DEBUG, INFO, WARN, ERROR, FATAL
 from distutils2.core import Distribution
 
-def capture_warnings(func):
-    def _capture_warnings(*args, **kw):
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            return func(*args, **kw)
-    return _capture_warnings
-
 class LoggingSilencer(object):
 
     def setUp(self):

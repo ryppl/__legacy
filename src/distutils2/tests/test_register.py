@@ -7,8 +7,6 @@ import getpass
 import urllib2
 import warnings
 
-from distutils2.tests import check_warnings
-
 from distutils2.command import register as register_module
 from distutils2.command.register import register
 from distutils2.core import Distribution
@@ -241,14 +239,6 @@ class RegisterTestCase(PyPIRCCommandTestCase):
             cmd.run()
         finally:
             del register_module.raw_input
-
-    def test_check_metadata_deprecated(self):
-        # makes sure make_metadata is deprecated
-        cmd = self._get_cmd()
-        with check_warnings() as w:
-            warnings.simplefilter("always")
-            cmd.check_metadata()
-            self.assertEquals(len(w.warnings), 1)
 
 def test_suite():
     return unittest2.makeSuite(RegisterTestCase)

@@ -60,10 +60,11 @@ _CLEANED_MANIFEST = """\
   </dependency>
 </assembly>"""
 
-@unittest2.skipUnless(sys.platform=="win32", "These tests are only for win32")
+
 class msvc9compilerTestCase(support.TempdirManager,
                             unittest2.TestCase):
 
+    @unittest2.skipUnless(sys.platform=="win32", "These tests are only for win32")
     def test_no_compiler(self):
         # makes sure query_vcvarsall throws
         # a DistutilsPlatformError if the compiler
@@ -85,6 +86,7 @@ class msvc9compilerTestCase(support.TempdirManager,
         finally:
             msvc9compiler.find_vcvarsall = old_find_vcvarsall
 
+    @unittest2.skipUnless(sys.platform=="win32", "These tests are only for win32")
     def test_reg_class(self):
         from distutils2.msvccompiler import get_build_version
         if get_build_version() < 8.0:
@@ -108,6 +110,7 @@ class msvc9compilerTestCase(support.TempdirManager,
         keys = Reg.read_keys(HKCU, r'Control Panel')
         self.assertTrue('Desktop' in keys)
 
+    @unittest2.skipUnless(sys.platform=="win32", "These tests are only for win32")
     def test_remove_visual_c_ref(self):
         from distutils2.msvc9compiler import MSVCCompiler
         tempdir = self.mkdtemp()

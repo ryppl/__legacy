@@ -60,23 +60,22 @@ class DistributionTestCase(support.TempdirManager,
         return d
 
     def test_debug_mode(self):
-        with open(TESTFN, "w") as f:
+        f = open(TESTFN, "w")
+        try:
             f.write("[global]")
             f.write("command_packages = foo.bar, splat")
+        finally:
+            f.close()
 
         files = [TESTFN]
         sys.argv.append("build")
 
-        with captured_stdout() as stdout:
-            self.create_distribution(files)
-        stdout.seek(0)
-        self.assertEquals(stdout.read(), '')
+        __, stdout = captured_stdout(self.create_distribution, files)
+        self.assertEquals(stdout, '')
         distutils2.dist.DEBUG = True
         try:
-            with captured_stdout() as stdout:
-                self.create_distribution(files)
-            stdout.seek(0)
-            self.assertEquals(stdout.read(), '')
+            __, stdout = captured_stdout(self.create_distribution, files)
+            self.assertEquals(stdout, '')
         finally:
             distutils2.dist.DEBUG = False
 
@@ -217,8 +216,11 @@ class DistributionTestCase(support.TempdirManager,
         else:
             user_filename = os.path.join(temp_home, "pydistutils.cfg")
 
-        with open(user_filename, 'w') as f:
+        f = open(user_filename, 'w')
+        try:
             f.write('[distutils2]\n')
+        finally:
+            f.close()
 
         def _expander(path):
             return temp_home
@@ -375,10 +377,8 @@ class MetadataTestCase(support.TempdirManager, support.EnvironGuard,
         sys.argv = []
         dist.help = 1
         dist.script_name = 'setup.py'
-        with captured_stdout() as s:
-            dist.parse_command_line()
-
-        output = [line for line in s.getvalue().split('\n')
+        __, stdout = captured_stdout(dist.parse_command_line)
+        output = [line for line in stdout.split('\n')
                   if line.strip() != '']
         self.assertTrue(len(output) > 0)
 

@@ -7,71 +7,71 @@ from os.path import pardir, abspath
 
 _INSTALL_SCHEMES = {
     'posix_prefix': {
-        'stdlib': '{base}/lib/python{py_version_short}',
-        'platstdlib': '{platbase}/lib/python{py_version_short}',
-        'purelib': '{base}/lib/python{py_version_short}/site-packages',
-        'platlib': '{platbase}/lib/python{py_version_short}/site-packages',
-        'include': '{base}/include/python{py_version_short}',
-        'platinclude': '{platbase}/include/python{py_version_short}',
-        'scripts': '{base}/bin',
-        'data': '{base}',
+        'stdlib': '%(base)s/lib/python%(py_version_short)s',
+        'platstdlib': '%(platbase)s/lib/python%(py_version_short)s',
+        'purelib': '%(base)s/lib/python%(py_version_short)s/site-packages',
+        'platlib': '%(platbase)s/lib/python%(py_version_short)s/site-packages',
+        'include': '%(base)s/include/python%(py_version_short)s',
+        'platinclude': '%(platbase)s/include/python%(py_version_short)s',
+        'scripts': '%(base)s/bin',
+        'data': '%(base)s',
         },
     'posix_home': {
-        'stdlib': '{base}/lib/python',
-        'platstdlib': '{base}/lib/python',
-        'purelib': '{base}/lib/python',
-        'platlib': '{base}/lib/python',
-        'include': '{base}/include/python',
-        'platinclude': '{base}/include/python',
-        'scripts': '{base}/bin',
-        'data'   : '{base}',
+        'stdlib': '%(base)s/lib/python',
+        'platstdlib': '%(base)s/lib/python',
+        'purelib': '%(base)s/lib/python',
+        'platlib': '%(base)s/lib/python',
+        'include': '%(base)s/include/python',
+        'platinclude': '%(base)s/include/python',
+        'scripts': '%(base)s/bin',
+        'data'   : '%(base)s',
         },
     'nt': {
-        'stdlib': '{base}/Lib',
-        'platstdlib': '{base}/Lib',
-        'purelib': '{base}/Lib/site-packages',
-        'platlib': '{base}/Lib/site-packages',
-        'include': '{base}/Include',
-        'platinclude': '{base}/Include',
-        'scripts': '{base}/Scripts',
-        'data'   : '{base}',
+        'stdlib': '%(base)s/Lib',
+        'platstdlib': '%(base)s/Lib',
+        'purelib': '%(base)s/Lib/site-packages',
+        'platlib': '%(base)s/Lib/site-packages',
+        'include': '%(base)s/Include',
+        'platinclude': '%(base)s/Include',
+        'scripts': '%(base)s/Scripts',
+        'data'   : '%(base)s',
         },
     'os2': {
-        'stdlib': '{base}/Lib',
-        'platstdlib': '{base}/Lib',
-        'purelib': '{base}/Lib/site-packages',
-        'platlib': '{base}/Lib/site-packages',
-        'include': '{base}/Include',
-        'platinclude': '{base}/Include',
-        'scripts': '{base}/Scripts',
-        'data'   : '{base}',
+        'stdlib': '%(base)s/Lib',
+        'platstdlib': '%(base)s/Lib',
+        'purelib': '%(base)s/Lib/site-packages',
+        'platlib': '%(base)s/Lib/site-packages',
+        'include': '%(base)s/Include',
+        'platinclude': '%(base)s/Include',
+        'scripts': '%(base)s/Scripts',
+        'data'   : '%(base)s',
         },
     'os2_home': {
-        'stdlib': '{userbase}/lib/python/{py_version_short}',
-        'platstdlib': '{userbase}/lib/python/{py_version_short}',
-        'purelib': '{userbase}/lib/python/{py_version_short}/site-packages',
-        'platlib': '{userbase}/lib/python/{py_version_short}/site-packages',
-        'include': '{userbase}/include/python{py_version_short}',
-        'scripts': '{userbase}/bin',
-        'data'   : '{userbase}',
+        'stdlib': '%(userbase)s/lib/python/%(py_version_short)s',
+        'platstdlib': '%(userbase)s/lib/python/%(py_version_short)s',
+        'purelib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
+        'platlib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
+        'include': '%(userbase)s/include/python%(py_version_short)s',
+        'scripts': '%(userbase)s/bin',
+        'data'   : '%(userbase)s',
         },
     'nt_user': {
-        'stdlib': '{userbase}/Python{py_version_nodot}',
-        'platstdlib': '{userbase}/Python{py_version_nodot}',
-        'purelib': '{userbase}/Python{py_version_nodot}/site-packages',
-        'platlib': '{userbase}/Python{py_version_nodot}/site-packages',
-        'include': '{userbase}/Python{py_version_nodot}/Include',
-        'scripts': '{userbase}/Scripts',
-        'data'   : '{userbase}',
+        'stdlib': '%(userbase)s/Python%(py_version_nodot)s',
+        'platstdlib': '%(userbase)s/Python%(py_version_nodot)s',
+        'purelib': '%(userbase)s/Python%(py_version_nodot)s/site-packages',
+        'platlib': '%(userbase)s/Python%(py_version_nodot)s/site-packages',
+        'include': '%(userbase)s/Python%(py_version_nodot)s/Include',
+        'scripts': '%(userbase)s/Scripts',
+        'data'   : '%(userbase)s',
         },
     'posix_user': {
-        'stdlib': '{userbase}/lib/python/{py_version_short}',
-        'platstdlib': '{userbase}/lib/python/{py_version_short}',
-        'purelib': '{userbase}/lib/python/{py_version_short}/site-packages',
-        'platlib': '{userbase}/lib/python/{py_version_short}/site-packages',
-        'include': '{userbase}/include/python{py_version_short}',
-        'scripts': '{userbase}/bin',
-        'data'   : '{userbase}',
+        'stdlib': '%(userbase)s/lib/python/%(py_version_short)s',
+        'platstdlib': '%(userbase)s/lib/python/%(py_version_short)s',
+        'purelib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
+        'platlib': '%(userbase)s/lib/python/%(py_version_short)s/site-packages',
+        'include': '%(userbase)s/include/python%(py_version_short)s',
+        'scripts': '%(userbase)s/bin',
+        'data'   : '%(userbase)s',
         },
     }
 
@@ -110,12 +110,12 @@ if _PYTHON_BUILD:
 
 def _subst_vars(s, local_vars):
     try:
-        return s.format(**local_vars)
+        return s % local_vars
     except KeyError:
         try:
-            return s.format(**os.environ)
+            return s % os.environ
         except KeyError, var:
-            raise AttributeError('{%s}' % var)
+            raise AttributeError('%s' % var)
 
 def _extend_dict(target_dict, other_dict):
     target_keys = target_dict.keys()
@@ -150,9 +150,15 @@ def _getuserbase():
     # what about 'os2emx', 'riscos' ?
     if os.name == "nt":
         base = os.environ.get("APPDATA") or "~"
-        return env_base if env_base else joinuser(base, "Python")
+        if env_base:
+            return env_base
+        else:
+            return joinuser(base, "Python")
 
-    return env_base if env_base else joinuser("~", ".local")
+    if env_base:
+        return env_base
+    else:
+        return joinuser("~", ".local")
 
 
 def _parse_makefile(filename, vars=None):
@@ -174,8 +180,11 @@ def _parse_makefile(filename, vars=None):
     done = {}
     notdone = {}
 
-    with open(filename) as f:
+    f = open(filename)
+    try:
         lines = f.readlines()
+    finally:
+        f.close()
 
     for line in lines:
         if line.startswith('#') or line.strip() == '':

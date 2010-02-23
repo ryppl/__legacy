@@ -6,11 +6,11 @@ from distutils2.tests import run_unittest
 
 from distutils2.tests import support
 
-@unittest2.skipUnless(sys.platform=="win32", "These tests are only for win32")
 class BDistMSITestCase(support.TempdirManager,
                        support.LoggingSilencer,
                        unittest2.TestCase):
 
+    @unittest2.skipUnless(sys.platform=="win32", "These tests are only for win32")
     def test_minial(self):
         # minimal test XXX need more tests
         from distutils2.command.bdist_msi import bdist_msi

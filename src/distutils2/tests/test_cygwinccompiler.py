@@ -8,7 +8,7 @@ try:
 except ImportError:
     from distutils2._backport import sysconfig
 
-from distutils2.tests import check_warnings, run_unittest
+from distutils2.tests import run_unittest
 from distutils2.tests import captured_stdout
 
 from distutils2.compiler import cygwinccompiler
@@ -92,20 +92,6 @@ class CygwinCCompilerTestCase(support.TempdirManager,
                        '[MSC v.1999 32 bits (Intel)]')
         self.assertRaises(ValueError, get_msvcr)
 
-
-    def test_get_version_deprecated(self):
-        with check_warnings() as w:
-            warnings.simplefilter("always")
-            # make sure get_compiler_versions and get_versions
-            # returns the same thing
-            self.assertEquals(get_compiler_versions(), get_versions())
-            # make sure using get_version() generated a warning
-            self.assertEquals(len(w.warnings), 1)
-            # make sure any usage of RE_VERSION will also
-            # generate a warning, but till works
-            version = RE_VERSION.search('1.2').group(1)
-            self.assertEquals(version, '1.2')
-            self.assertEquals(len(w.warnings), 2)
 
 def test_suite():
     return unittest2.makeSuite(CygwinCCompilerTestCase)

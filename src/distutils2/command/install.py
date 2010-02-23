@@ -103,12 +103,12 @@ SCHEME_KEYS = ('purelib', 'platlib', 'headers', 'scripts', 'data')
 
 def _subst_vars(s, local_vars):
     try:
-        return s.format(**local_vars)
+        return s % local_vars
     except KeyError:
         try:
-            return s.format(**os.environ)
+            return s % os.environ
         except KeyError, var:
-            raise AttributeError('{%s}' % var)
+            raise AttributeError('%s' % var)
 
 class install(Command):
 
@@ -502,10 +502,7 @@ class install(Command):
             if val is not None:
                 if os.name == 'posix' or os.name == 'nt':
                     val = os.path.expanduser(val)
-                try:
-                    val = _subst_vars(val, self.config_vars)
-                except:
-                    import pdb; pdb.set_trace()
+                val = _subst_vars(val, self.config_vars)
                 setattr(self, attr, val)
 
     def expand_basedirs(self):

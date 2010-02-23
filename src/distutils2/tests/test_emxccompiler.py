@@ -4,7 +4,7 @@ import sys
 import os
 import warnings
 
-from distutils2.tests import check_warnings, run_unittest
+from distutils2.tests import run_unittest
 from distutils2.tests import captured_stdout
 
 from distutils2.compiler.emxccompiler import get_versions
@@ -14,17 +14,7 @@ from distutils2.tests import support
 class EmxCCompilerTestCase(support.TempdirManager,
                            unittest2.TestCase):
 
-    def test_get_version_deprecated(self):
-        with check_warnings() as w:
-            warnings.simplefilter("always")
-            # make sure get_compiler_versions and get_versions
-            # returns the same gcc
-            gcc, ld, dllwrap = get_compiler_versions()
-            emx_gcc, emx_ld = get_versions()
-            self.assertEquals(gcc, emx_gcc)
-
-            # make sure using get_version() generated a warning
-            self.assertEquals(len(w.warnings), 1)
+    pass
 
 def test_suite():
     return unittest2.makeSuite(EmxCCompilerTestCase)

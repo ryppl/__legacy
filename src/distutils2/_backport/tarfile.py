@@ -53,6 +53,9 @@ import copy
 import re
 import operator
 
+if not hasattr(os, 'SEEK_SET'):
+    os.SEEK_SET = 0
+
 if sys.platform == 'mac':
     # This module needs work for MacOS9, especially in the area of pathname
     # handling. In many places it is assumed a simple substitution of / by the
@@ -1532,7 +1535,10 @@ class TarFile(object):
             if hasattr(fileobj, "mode"):
                 self._mode = fileobj.mode
             self._extfileobj = True
-        self.name = os.path.abspath(name) if name else None
+        if name:
+            self.name = os.path.abspath(name)
+        else:
+            self.name = None
         self.fileobj = fileobj
 
         # Init attributes.
@@ -1935,7 +1941,11 @@ class TarFile(object):
                 print "%d-%02d-%02d %02d:%02d:%02d" \
                       % time.localtime(tarinfo.mtime)[:6],
 
-            print tarinfo.name + ("/" if tarinfo.isdir() else ""),
+            if tarinfo.isdir():
+                sep = "/"
+            else:
+                sep = ""
+            print tarinfo.name + (sep),
 
             if verbose:
                 if tarinfo.issym():

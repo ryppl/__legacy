@@ -335,7 +335,7 @@ def byte_compile(py_files, optimize=0, force=0, prefix=None, base_dir=None,
     it set to None.
     """
     # nothing is done if sys.dont_write_bytecode is True
-    if sys.dont_write_bytecode:
+    if hasattr(sys, 'dont_write_bytecode') and sys.dont_write_bytecode:
         raise DistutilsByteCompileError('byte-compiling is disabled.')
 
     # First, if the caller didn't force us into direct or indirect mode,
