@@ -9,14 +9,16 @@ import sys
 import os
 import shutil
 from copy import copy, deepcopy
+from ConfigParser import ConfigParser
 
 from test.test_support import run_unittest, TESTFN
 
 import distutils2._backport.sysconfig
-from distutils2._backport.sysconfig import (get_paths, get_platform, get_config_vars,
+from distutils2._backport.sysconfig import (get_paths, get_platform,
+                        get_config_vars, _expand_globals,
                        get_path, get_path_names,
                        _get_default_scheme, _expand_vars,
-                       get_scheme_names)
+                       get_scheme_names, _CONFIG_FILE)
 
 class TestSysConfig(unittest2.TestCase):
 
@@ -229,6 +231,19 @@ class TestSysConfig(unittest2.TestCase):
                   'posix_prefix', 'posix_user')
         self.assertEquals(get_scheme_names(), wanted)
 
+    def test_expand_globals(self):
+
+        config = ConfigParser()
+        config.add_section('globals')
+        config.set('globals', 'foo', 'ok')
+        config.add_section('posix')
+        config.set('posix', 'config', '/etc')
+        config.set('posix', 'more', '{config}/ok')
+
+        _expand_globals(config)
+
+        self.assertEquals(config.get('posix', 'foo'), 'ok')
+        self.assertEquals(config.get('posix', 'more'), '/etc/ok')
 
 def test_suite():
     return unittest2.makeSuite(TestSysConfig)

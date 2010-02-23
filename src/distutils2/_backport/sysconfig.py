@@ -16,20 +16,33 @@ _CONFIG_DIR = os.path.normpath(os.path.dirname(__file__))
 _CONFIG_FILE = os.path.join(_CONFIG_DIR, 'sysconfig.cfg')
 _SCHEMES = ConfigParser()
 _SCHEMES.read(_CONFIG_FILE)
+_VAR_REPL = re.compile(r'\{(.*?)\}')
 
-def _expand_globals():
-    globals = _SCHEMES.items('globals')
-    sections = _SCHEMES.sections()
+def _expand_globals(config):
+    globals = config.items('globals')
+    sections = config.sections()
     for section in sections:
         if section == 'globals':
             continue
         for option, value in globals:
-            if _SCHEMES.has_option(section, option):
+            if config.has_option(section, option):
                 continue
-            _SCHEMES.set(section, option, value)
-    _SCHEMES.remove_section('globals')
+            config.set(section, option, value)
+    config.remove_section('globals')
 
-_expand_globals()
+    # now expanding local variables defined in the cfg file
+    #
+    for section in config.sections():
+        variables = dict(config.items(section))
+        def _replacer(matchobj):
+            name = matchobj.group(1)
+            if name in variables:
+                return variables[name]
+            return matchobj.group(0)
+        for option, value in config.items(section):
+            config.set(section, option, _VAR_REPL.sub(_replacer, value))
+
+_expand_globals(_SCHEMES)
 
 _PY_VERSION = sys.version.split()[0]
 _PY_VERSION_SHORT = sys.version[:3]
@@ -60,7 +73,6 @@ if _PYTHON_BUILD:
         _SCHEMES.set(scheme, 'include', '{projectbase}/Include')
         _SCHEMES.set(scheme, 'platinclude', '{srcdir}')
 
-_VAR_REPL = re.compile(r'\{(.*?)\}')
 
 def _subst_vars(path, local_vars):
     # simple curly-braces replacement
