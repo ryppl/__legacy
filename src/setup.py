@@ -61,6 +61,10 @@ class sdist_hg(sdist):
             self.distribution.metadata.version += DEV_SUFFIX
         sdist.run(self)
 
+setup_kwargs = {}
+if sys.version < '2.6':
+    kwargs['scripts'] = 'distutils2/mkpkg.py'
+
 setup (name="Distutils2",
        version=VERSION,
        description="Python Distribution Utilities",
@@ -73,7 +77,8 @@ setup (name="Distutils2",
                  'distutils2.command',
                  'distutils2.tests',
                  'distutils2._backport'],
-       cmdclass={'sdist': sdist_hg, 'install': install_hg}
+       cmdclass={'sdist': sdist_hg, 'install': install_hg},
+       **setup_kwargs
        )
 
 
