@@ -17,7 +17,7 @@ import distutils2._backport.sysconfig
 from distutils2._backport.sysconfig import (get_paths, get_platform,
                         get_config_vars, _expand_globals,
                        get_path, get_path_names,
-                       _get_default_scheme, _expand_vars,
+                       _get_default_scheme, _subst_vars, _expand_vars,
                        get_scheme_names, _CONFIG_FILE)
 
 class TestSysConfig(unittest2.TestCase):
@@ -86,6 +86,10 @@ class TestSysConfig(unittest2.TestCase):
             os.remove(path)
         elif os.path.isdir(path):
             shutil.rmtree(path)
+
+    def test_var_expansion_pattern(self):
+        """Assert that the {curly brace token} expansion pattern counts the second { as part of the substitution key in expressions like {{something}."""
+        self.failUnlessEqual(_subst_vars('thing{{stuffvar}', {'{stuffvar': 'stuff'}), 'thingstuff')
 
     def test_get_paths(self):
         scheme = get_paths()

@@ -75,7 +75,11 @@ if _PYTHON_BUILD:
 
 
 def _subst_vars(path, local_vars):
-    # simple curly-braces replacement
+    """In the string `path`, replace tokens like {some.thing} with the corresponding value from the map `local_vars`.
+    
+    If there is no corresponding value, leave the token unchanged.
+    
+    """
     def _replacer(matchobj):
         name = matchobj.group(1)
         if name in local_vars:
