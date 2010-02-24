@@ -212,7 +212,7 @@ The information that the developer is concerned with:
 * Position in the source tree
 * Key used in referencing it
 
-The information the downstream packager (rpm/deb/sysadmin) cares about are:
+The information the downstream packager (RPM/deb/sysadmin) cares about are:
 * Position when installed
 * Key used in referencing it
 
@@ -290,7 +290,7 @@ of the source tree (the location of ``setup.cfg``). Forward slashes
 
 :"*": is a glob that matches any characters within a file or directory
 name
-:"**": is a recursive glob that matches any characters within a file
+:"**": is a recursive glob that matches any (or no) characters within a file
 or directory name as well as a forward slash (thus an arbitrarily deep
 number of directories)
 
@@ -384,56 +384,61 @@ file that is used by the app at runtime as {doc} when it should be marked as
 The resource_variables file can be changed to define different locations for
 all apps on a system.  This should usually be done once in a systemwide file
 for the distribution.  Changing this again may require the system packager to
-rebuild all their python modules to change the file location.  There is API in
-pkgutils to allow adding categories to the resource_variables file from
+rebuild all their Python modules to change the file location.  There is API in
+pkgutil to allow adding categories to the resource_variables file from
 a script that should be used instead of trying to edit the file with raw text
 processing.
 
 API
 ===
 
-pkgutils.open
+pkgutil.open
 -------------
 
 Returns a file object for the resource.
 
 ::
 
-  pkgutils.open('STRING_NAME_FOR_PACKAGE', 'filename/with/path/relative/to/the/source/package/directory')
+  pkgutil.open('STRING_NAME_FOR_PACKAGE', 'filename/with/path/relative/to/the/source/package/directory')
   Example:
-  pkgutils.open('mailman', 'database/schemas/blah.schema')
+  pkgutil.open('mailman', 'database/schemas/blah.schema')
   <open file '/usr/share/mailman/schemas/blah.schema', mode 'r' at 0x7f938e325d78>
 
 * First argument is the string name for a python package.
 * Second argument is the directory path relative to the python package's directory.
 * At install (or build) time we create a metadata file that maps from the source tree files to the files in their installed locations on the filesystem.
-* pkgutil.open() consults the metadata file to decide where to find the resource. If the metadata file is not found (as in a package before the egg is built), open()  falls back to traversing the given relative path starting from the root of the calling package (using __name__).
+* pkgutil.open() consults the metadata file to decide where to find the resource. If the metadata file is not found (as in a package before the egg is built), open() falls back to traversing the given relative path starting from the root of the calling package (using __name__).
 * pkgutil.open() calls from nested packages aren't a problem because, after all, we pass the desired 'module_name' to start from as the first arg.
 
 * ? Do we still need this? Default behavior:  alongside the package files (if the real-installed-locations metadata file does not exist). Or if the package is installed without any resource_variables specified. ?</>?
 
-pkgutils.filename
+Open issues
+~~~~~~~~~~~
+
+* setup.cfg is in the distribution, not in the module. Thus, in the unbuilt-egg case, how can we find the distro when all we have is a module name? It would be nice to not need an equivalent of ``setup.py develop``.
+
+pkgutil.filename
 -----------------
 
 Returns a resource's filename with the full path.
 
 ::
 
-  pkgutils.filename('STRING_NAME_FOR_PACKAGE', 'filename/with/path/relative/to/the/source/package/directory')
+  pkgutil.filename('STRING_NAME_FOR_PACKAGE', 'filename/with/path/relative/to/the/source/package/directory')
   Example:
-  pkgutils.filename('mailman', 'database/schemas/blah.schema')
+  pkgutil.filename('mailman', 'database/schemas/blah.schema')
   '/usr/share/mailman/schemas/blah.schema'
 
-pkgutils.add_category
+pkgutil.add_category
 ---------------------
 
 Adds a new category to the resource variables filename.
 
 ::
 
-  pkgutils.add_category('CATEGORY', 'LOCATION')
+  pkgutil.add_category('CATEGORY', 'LOCATION')
   Example:
-  pkgutils.add_category('lockdir', '{statedir}/lock')
+  pkgutil.add_category('lockdir', '{statedir}/lock')
 
 Using the API allows the parser to protect from adding duplicate categories.
 
