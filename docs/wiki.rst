@@ -4,36 +4,59 @@ PyCon packaging sprint
 
 .. contents::
 
-We sprinted on Distutils2 at the US Pycon 2010 sessions.  This is one of the
-results of that work.
+We sprinted on Distutils2 at the US Pycon 2010 sessions.  This is one
+of the results of that work.
 
-Distutils is used by both developers and packagers
+Distutils is used by both developers and packagers.
 
-:developers: People who work on writing code in python.  The code may be
-    distributed as an sdist or a variety of binary versions.  The developer
-    presently uses setup.py to tell distutils how to build the sdist and
-    binary packages.
+:developers: People who write code in python.  The code may be
+    distributed as an sdist or a variety of binary versions.  The
+    developer presently uses setup.py to tell distutils how to build
+    the sdist and binary packages.
 :packagers: People who package sdists into binary packages for a Linux
-    distribution. (Is there an equivalent role for people who make Windows binary packages?)
+    distribution. (Is there an equivalent role for people who make
+    Windows binary packages? Or do developers generally do that for
+    their own packages?)
 
 ----------------------
 Problems for packagers
 ----------------------
 
-We want to solve these issues for Linux distribution packages without negatively impacting Windows, OS X, or pure-python (i.e. easy_install/pip/virtualenv) installs.
-Typical issues when creating deb/rpm:
+We identified specific problems packagers face when creating deb/rpm:
 
-- want to lay out files across the filesystem in a FHS-compliant way: *this document reflects a possible PEP to fix this*
-- get rid of ez_setup.py - *not using setuptools fixes this*
-- breakages using ez_setup => Some setup.py scripts import ez_setup.  ez_setup requires a specific version of setuptools but doesn't actually need it -- lesser versions work fine. *not using setuptools fixes this*
-- Requires that are for a specific version (or range) because of bugs (not API change/features) but the distro packages have backported the fixes needed to an earlier version: *this is out of scope for now*
-- differences between distribution names of packages e.g. "what are the packages of NumPy called?" - *this is out of scope for now*
-- Egg version (specified in a Require section in setup.py) doesn't match the distro package version https://www.redhat.com/archives/fedora-python-devel-list/2008-June/msg00002.html - *out of scope for Python to solve*
+The problem this document is intended to solve: **want to lay out files across the filesystem in a FHS-compliant way**
+
+Problems that are fixed simply by not using setuptools:
+
+- get rid of ez_setup.py
+
+- breakages using ez_setup => Some setup.py scripts import ez_setup.
+  ez_setup requires a specific version of setuptools but doesn't
+  actually need it -- lesser versions work fine.
+
+Problems that are out of scope, at least for now:
+
+- Requires that are for a specific version (or range) because of bugs
+  (not API change/features) but the distro packages have backported
+  the fixes needed to an earlier version:
+
+- differences between distribution names of packages e.g. "what are
+  the packages of NumPy called?"
+
+- Egg version (specified in a Require section in setup.py) doesn't
+  match the distro package version
+  https://www.redhat.com/archives/fedora-python-devel-list/2008-June/msg00002.html
+
+We want to solve these issues for Linux distribution packages without
+negatively impacting Windows, OS X, or pure-python
+(i.e. easy_install/pip/virtualenv) installs.
 
 Example problem with current distutils
 ======================================
 
-In http://docs.python.org/distutils/setupscript.html#installing-additional-files there is this example of supplying an initscript within a setup.py::
+In
+http://docs.python.org/distutils/setupscript.html#installing-additional-files
+there is this example of supplying an initscript within a setup.py::
 
     setup(...,
           data_files=[('bitmaps', ['bm/b1.gif', 'bm/b2.gif']),
@@ -43,22 +66,38 @@ In http://docs.python.org/distutils/setupscript.html#installing-additional-files
 
 This suffers from several problems:
 
-1. The file hardcodes "/etc/init.d" as the directory for installation of the initscript.  However, this varies between different Linux distributions.  The above example assumes SysV init, but isn't correct for systems using Upstart (the initscripts are likely to need to be different for this case).  Even within systems using SysV init, the content of the script can vary between different distributions
-2. The FHS mandates that configuration files go below /etc, but on a Windows box that's meaningless.
-3. The file is a python script: if we want to extract data from it, we have to either run it, or be somehow parsed; we would need to sandbox.  We would prefer a declarative minilanguage for specifying this data.
+1. The file hardcodes "/etc/init.d" as the directory for installation
+   of the initscript.  However, this varies between different Linux
+   distributions.  The above example assumes SysV init, but isn't
+   correct for systems using Upstart (the initscripts are likely to
+   need to be different for this case).  Even within systems using
+   SysV init, the content of the script can vary between different
+   distributions
+
+2. The FHS mandates that configuration files go below /etc, but on a
+   Windows box that's meaningless.
+
+3. The file is a python script: if we want to extract data from it, we
+   have to either run it, or somehow parse it; we would need to
+   sandbox.  We would prefer a declarative minilanguage for specifying
+   this data.
 
 Similarly: documentation files, .h files (e.g. NumPy)
 
 We want a system that:
-1. is easy for developers, doesn't require an "install" or "build" phase during the edit/test development loop in a working copy
-2. supports both FHS-compliant scattering across the filesystem hierarchy, and Windows, and virtualenv-style trees.
+
+1. is easy for developers, does not require an "install" or "build"
+   phase during the edit/test development loop in a working copy
+
+2. supports both FHS-compliant scattering across the filesystem
+   hierarchy, and Windows, and virtualenv-style trees.
 
 -----------------------
 Problems for Developers
 -----------------------
 
-Package lists in multiple places
-================================
+Package/file lists in multiple places
+=====================================
 
 * MANIFEST
 * MANIFEST.in
@@ -67,66 +106,107 @@ Package lists in multiple places
 * setup.py::packages
 * setup.py::scripts
 
-Replace all of these with one or two lists in setup.cfg.  One list is for runtime files (python code, resource files) and another is for files that belong in the sdist but are not wanted for runtime.
+Replace all of these with settings in ``setup.cfg`` to specify runtime
+files (python code, resource files) and files that belong in the sdist
+but are not wanted for runtime.
 
 No idea where Linux distros want files
 ======================================
 
-Sometimes programmers want to do the right thing for people wanting to package their programs in Linux distributions but they don't know where they belong.  Making matters worse, the files can go in different places on different Linux distributions or on Windows and MacOS.  Placing the files in the wrong place can lead to errors at runtime, for instance, if the file needs to be writable by the module but it's placed on a read-only filesystem.
+Sometimes programmers want to do the right thing for people wanting to
+package their programs in Linux distributions, but they don't know
+where they belong.  Making matters worse, the files can go in
+different places on different Linux distributions or on Windows and
+MacOS.  Placing the files in the wrong place can lead to errors at
+runtime, for instance, if the file needs to be writable by the module
+but it's placed on a read-only filesystem.
 
-This PEP attempts to deal with this by categorizing files so developers can properly mark what properties their files need and using an API to access the files, abstracting the different file locations on different platforms.
+This PEP attempts to deal with this by categorizing files so
+developers can properly mark what properties their files need and
+using an API to access the files, abstracting the different file
+locations on different platforms.
 
 Hard to extend the build commands
 =================================
 
 * distutils documentation is very poor
-* distutils build commands are classes with special method names -- why not simple functions?
+
+* distutils build commands are classes with special method names --
+  why not simple functions?
+
 * how do you extend the data allowed to be set in entries setup()?
-* build commands sometimes need to act on the same arguments.  No way to pass these between them right now.
+
+* build commands sometimes need to act on the same arguments.  No way
+  to pass these between them right now.
 
 
 -----------------------------------
 Proposed solution for placing files
 -----------------------------------
 
-This solution attempts to make several pieces of building nad installing
-better.  It merges the many file lists into a single file, simpliies (or
-eliminates) the need for the setup.py, and allows packagers to place resource
-files in locations appropriate to their distribution.
+This solution attempts to make several pieces of building and
+installing better.  It merges the many file lists into a single file,
+simplifies (or eliminates the need for) setup.py, and allows packagers
+to place resource files in locations appropriate to their
+distribution.
 
 This solution comes in three pieces:
 
-1. A file that maps the files to their categories
-2. A file that maps the categories to a position on the filesystem
-3. An API to access resources from code
+1. A ``resources`` section in ``setup.cfg`` that maps resource files
+   to their categories (and optionally subdirectory prefixes within
+   those categories)
+
+2. A ``sysconfig.cfg`` file at the system Python level that maps
+   categories to a position on the filesystem
+
+3. A simple ``pkgutil.open()`` API to access resources from code
 
 Rationale
 =========
 
-1. The evidence (from `__file__` usage) is strong that package devs want to think in terms of paths in their local dev tree. They don't want to worry about categorizing their static files etc.
+1. The evidence (from ``__file__`` usage) is strong that package devs
+   want to think in terms of paths within their local dev tree. They
+   don't want to worry about categorizing or finding their static
+   files elsewhere.
 
-2. Package devs are much more likely to use an API that makes them think less and type less.
+2. Package devs are more likely to use an API that makes them think
+   less and type less.
 
-3. Package devs are much more likely to accept patches from packagers if that patch only touches a single .cfg file, rather than touching every single pkgutil.open call throughout their code.
+3. Package devs are more likely to accept patches from packagers if
+   that patch only touches a single .cfg file, rather than touching
+   every single ``pkgutil.open()`` call throughout their code.
 
-Therefore, the pkgutil.open call should only specify a path relative to the python package root (which the package dev thinks about). setup.cfg uses globs to categorize those files into the types above: forward-thinking package devs can write this, or packagers can do it for them.
+Therefore, the ``pkgutil.open()`` call should accept a simple path
+relative to the package/distribution root. The ``resources`` section
+in ``setup.cfg`` uses globs to categorize those files:
+forward-thinking package devs can write this section, or packagers can
+do it for them and submit patches.
 
 
-"resource_variables" section in setup.cfg
-========================================
+"resources" section in setup.cfg
+================================
 
-The setup.py file has many sections that need to list files.  We plan to
-remove those lists to the setup.cfg.  The resource_variables section replaces
-the package_data sections of the script with more richness.
+The setup.py file has many sections that need to list files. We plan
+to remove those lists to ``setup.cfg``. The ``resources`` section of
+``setup.cfg`` replaces the current ``package_data``, ``data_files``,
+and ``extra_files`` options in ``setup.py``.
 
-There are three pieces of information that are needed for resource files:
+There are three pieces of information that are needed for resource
+files:
 
-* Position in the source tree (e.g. 'mailman/database/schemas/schema.cfg', 'mywidget/jquery.js')
-* Position when installed (e.g. '/etc/mailman/database/schemas/schema.cfg', '/usr/share/mywidget-1.1/javascript/jquery.js')
-* Key used when referencing the resource from code (We have a scheme to use
-  the same key as the installed source tree)
+1. Position in the source tree
+   (e.g. 'mailman/database/schemas/schema.cfg', 'mywidget/jquery.js')
 
-Each of these can be thought of as a namespace.
+* Position when installed
+  (e.g. '/etc/mailman/database/schemas/schema.cfg',
+  '/usr/share/mywidget-1.1/javascript/jquery.js'). For simple
+  virtualenv-style installations, this may well be the same as (1).
+
+* Key used when referencing the resource from code. Ideally, this
+  could be the same as (1), but because of difficulties in finding
+  "distribution root" at runtime from a ``pkgutil.open()`` call, it
+  will instead have to be a combination of "module name" and "path
+  relative to module", similar to what ``pkg_resources`` does.
 
 The information that the developer is concerned with:
 * Position in the source tree
@@ -163,8 +243,7 @@ We have a source tree with the following files::
       api/
         toc.txt
 
-Here's where we want the files to end up in a typical Linux Distribution
-
+Here's where we want the files to end up in a typical Linux distribution:
 
 ==  ====================================  ===================================================================================================
 ##  Relative path in source tree          Final full installed path
@@ -181,23 +260,23 @@ Here's where we want the files to end up in a typical Linux Distribution
                                           /etc/mailman/hmm/some/path/bar/my.cfg + 
                                           emit a warning
 10  mailman/foo/some/path/other.cfg       /etc/mailman/some/path/other.cfg
-11  some-new-semantic.txt                 /var/funky/mailman/some-new-semantic.txt
+11  some-new-semantic.sns                 /var/funky/mailman/some-new-semantic.sns
 ==  ====================================  ===================================================================================================
 
-The numbers in the above placements are referenced below
+The numbers in the above placements are referenced below.
 
 setup.cfg
 ~~~~~~~~~
 
-The setup.cfg file let's the packager mark what categories the files belong
-to.  These are drawn from the types of files that the FHS and GNU coding
-standards define::
+The setup.cfg file allows the developer and/or packager to mark what
+categories the files belong to.  These are drawn from the types of
+files that the FHS and GNU coding standards define::
 
-  [resource_variables]
-  # glob                     category to place in     placement from above table
+  [resources]
+  # path glob                   category                placement from above table
 
-  mailman/database/schemas/*  = {data}/schemas          # 1
-  **/*.tpl                    = {data}/templates        # 2, 3  # does NOT flatten folder structure in destination
+  mailman/database/schemas/*  = {appdata}/schemas          # 1
+  **/*.tpl                    = {appdata}/templates        # 2, 3  # does NOT flatten folder structure in destination
   developer-docs/**/*.txt     = {doc}                   # 5, 6
   README                      = {doc}                   # 7
   mailman/etc/*               = {config}                # 8
@@ -205,92 +284,87 @@ standards define::
   mailman/foo/**/*.cfg        = {config}/hmm            # 9, 10
   some-new-semantic.txt       = {funky-crazy-category}  # 11
 
-The glob definitions are relative paths that match files from the topdir of
-the source tree.
+The glob definitions are relative paths that match files from the top
+of the source tree (the location of ``setup.cfg``). Forward slashes
+(only) are used as path separator.
 
-The "category to place in" both categorize what the files are and helps show
-where they will be installed in the filesystem.  This must start with
-a {category}.  This allows operating system vendors  and system administrators
-to define where in the filesystem the files are placed.
+:"*": is a glob that matches any characters within a file or directory
+name
+:"**": is a recursive glob that matches any characters within a file
+or directory name as well as a forward slash (thus an arbitrarily deep
+number of directories)
 
-distutils2 provides a default list of {categories} that the developer should
-pick from.  These are listed in the resource_variables section.  A developer
-can create a new category if they feel that none of the existing categories
-cover it.  The new categories should be proposed for addition to distutils2
-and packagers are free to define a place on the filesystem where they belong
-via the resource_variables on their system.
+The "category" value both categorizes the files and allows for placing
+them in a more fine-grained subdirectory within a category. This value
+must begin with a {category}; raw absolute or relative paths are not
+allowed.
 
-Each glob begins at the top of the source tree. This is necessary for two reasons: one source tree could contain multiple packages so we need to specify which one we are refering to and we may want to include files that are not in a package.
+The full Python 3 string interpolation language is not supported, only
+simple {category} substitutions. The {category} is looked up in a
+system-level Python ``sysconfig.cfg`` file, where operating system
+vendors and system administrators can define where in the filesystem
+various types of files are placed. The category paths will generally
+include a {distribution.name} variable, to isolate one package's files
+of a given type from other packages.
 
-:"*": is a glob character that matches any characters within a file
-:"**": is a recursive glob character that matches any characters within a file
-    and an arbitrarily deep amount of directories.
+As can be seen from the examples above, explicitly-matched directory
+prefixes are stripped from the relative path before it is appended to
+the category location. Glob matches are never stripped (to avoid
+flattening hierarchies and overwriting files). In the
+``mailman/foo/\*\*/\*.cfg`` example, ``mailman/foo`` is removed, but
+not any directories matched by the recursive glob: see entries 9 and
+10 in the example table.
 
-Every category path must begin with a {category}.  This is generally
-expanded to a directory name but it serves to both let the developer
-categorize the file and the packager install the files to a different
-directory.  The {categories} are replaced by paths defined in
-a resource_variables definition.  A sample of these definitions is found next
+sysconfig.cfg
+~~~~~~~~~~~~~
 
-resource_variables
-~~~~~~~~~~~~~~~~~~
-
-These definitions can be found in a system-wide defaults configuration file or
-in an override for a particular package.  They define where on the filesystem
-the resources will actually be installed.  If a category is undefined, it will
-expand to the module's topdir by default.  Here's a sample of how a Linux
-distribution's system file might look::
-
-  [resource_variables]
-  # Configuration directories.  Some of these come straight out of the
-  # configure script.  They are for implementing the other variables, not to
-  # be used directly in resource_variables
-  confdir         = /etc
-  datadir         = /usr/share
-  libdir          = /usr/lib              # or /usr/lib64 on a multilib system
-  statedir        = /var
-  local           = ~/.local/{distribution.name}   # User resource directory
-
-  # These are the useful categories that are sometimes referenced at runtime
-  # and are referenced from pkgutils.open()
-  config          = {confdir}/{distribution.name}  # Configuration files
-  data            = {datadir}/{distribution.name}  # Non-writable data that is independent of architecture (images, many xml/text files)
-  data.arch       = {libdir}/{distribution.name}   # Non-writable data that is different depending on architecture (some binary data formats)
-  data.persistent = {statedir}/lib/{distribution.name}    # Data that the app writes and keeps data that can't just be thrown out (databases)
-  data.disposable = {statedir}/cache/{distribution.name}  # Data that the app writes but can be thrown out and the app will keep working (cache)
-  help            = {datadir}/{distribution.name}  # Note, these help files are used at runtime
-  icon            = {datadir}/pixmaps
-
-  # Non runtime files.  These are valid categories for markingfiles for
-  # install but they should not be referenced by the app at runtime.
-  doc             = {datadir}/doc/{distribution.name} # These type of files are only viewed if the user explicitly opens them with another program
-  info            = {datadir}/info           # GNU info documentation files
-  man             = {datadir}/man            # Man page location
-
-* ?? Did we want to put {distribution.version} in somewhere ??
-
-*TODO* We need to work on a comprehensive standard set of labels.
-
-resource_variables definitions can use {distribution.name}, {distribution.version}.
+This is a system-wide Python configuration file (TODO: can be
+overridden by e.g. virtualenv) that defines where on the filesystem
+resources will actually be installed.  A sample ``sysconfig.cfg`` can
+be found in the ``distutils2`` repository at
+``src/distutils2/_backport/sysconfig.cfg`` [3].
 
 Links
 
 .. [1] Filesystem Hierarchy Standard http://www.pathname.com/fhs/
 .. [2] Rationale from the FHS which makes the distinctions between parts of the filesystem: http://www.pathname.com/fhs/pub/fhs-2.3.html#THEFILESYSTEM
-.. [3] sysconfig module docs: http://docs.python.org/dev/library/sysconfig.html#module-sysconfig
-.. [4] sysconfig module: http://svn.python.org/view/*checkout*/python/trunk/Lib/sysconfig.py?revision=77921&content-type=text/plain&pathrev=77921
-
+.. [3] sample sysconfig.cfg: http://bitbucket.org/tarek/distutils2/src/tip/src/distutils2/_backport/sysconfig.cfg
 
 What happens?
 ~~~~~~~~~~~~~
-As an example, "mailman/database/schemas/blah.schema":
+As an example, ``mailman/database/schemas/blah.schema``:
 
-1. The file `mailman/database/schemas/blah.schema` in the source tree matches `mailman/database/schemas/*` within the `resource_variables` stanza of the setup.cfg, which has right-hand side `{data}/schemas`
-2. The "*" in the left-hand-side matches "blah.schema", so the installation path for the file is mapped to "{data}/schemas/blah.schema"
-3. The label "data" is listed in the [resource_variables] stanza as being installed to "/var/{distribution.name}".  This expands out to: "/var/mailman"
-4. The result is that the source file "mailman/database/schemas/blah.schema" is installed within the rpm/deb to "/var/mailman/schemas/blah.schema"
-5. The source code can still open the file via an API using pkgutil.open('mailman', 'database/schemas/blah.schema') and have the underlying system open it from "/var/mailman/schemas/blah.schema".
+1. The file ``mailman/database/schemas/blah.schema`` in the source
+   tree matches ``mailman/database/schemas/*`` within the
+   ``resources`` stanza of the setup.cfg, which has right-hand side
+   ``{appdata}/schemas``
 
+2. The ``*`` in the left-hand-side matches ``blah.schema``, and the
+   initial ``mailman/database/schemas/`` is stripped, so the
+   installation path for the file is mapped to
+   ``{appdata}/schemas/blah.schema``
+
+3. The label ``appdata`` is listed in the ``sysconfig.cfg`` section
+   for the ``posix_prefix`` installation scheme as installed to
+   ``/usr/share/{distribution.name}``.  This expands out to:
+   ``/usr/share/mailman``
+
+4. The result is that the source file
+   ``mailman/database/schemas/blah.schema`` is installed to
+   ``/var/mailman/schemas/blah.schema``, and this mapping is recorded
+   in a RESOURCES file in the installation metadata for the
+   distribution.
+
+5. The source code can open the file at runtime via the API call
+   ``pkgutil.open('mailman', 'database/schemas/blah.schema')`` (where
+   the first argument is an importable Python package name, and the
+   second is a path relative to the location of that package), and
+   pkgutil will (using the RESOURCES mapping) open it from
+   ``/var/mailman/schemas/blah.schema``.
+
+6. If the package is not installed, and thus has no RESOURCES mapping,
+   ``pkgutil.open('mailman',
+   'database/schemas/blah.schema')``
 
 1. The file `mailman/database/schemas/blah.schema` in the source tree matches `mailman/database/schemas/*` within the data clause of the setup.cfg, so it is treated as having the label `{data}`.
 2. The clause specified a prefix path, so the installation path for the file is mapped to "schemas/blah.schema"
