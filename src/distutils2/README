@@ -8,6 +8,6 @@ The Distutils-SIG web page is also a good starting point:
 
     http://www.python.org/sigs/distutils-sig/
 
-WARNING : Distutils must remain compatible with 2.3
+WARNING: Distutils2 must remain compatible with 2.4
 
 $Id: README 70017 2009-02-27 12:53:34Z tarek.ziade $
