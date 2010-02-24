@@ -1,7 +1,11 @@
-
 import os
-from distutils2.util import rfc822_escape
+import sys
+import platform
+from StringIO import StringIO
 from email import message_from_file
+from tokenize import tokenize, NAME, OP, STRING, ENDMARKER
+
+from distutils2.util import rfc822_escape
 
 # Encoding used for the PKG-INFO files
 PKG_INFO_ENCODING = 'utf-8'
@@ -236,8 +240,156 @@ class DistributionMetadata(object):
         self.obsoletes = value
 
 
+#
+# micro-language for PEP 345 environment markers
+#
+class _Operation(object):
+
+    # restricted set of names
+    names = {'sys.platform': sys.platform,
+             'python_version': '%s.%s' % (sys.version_info[0],
+                                          sys.version_info[1]),
+             'python_full_version': sys.version.split()[0],
+             'os.name': os.name,
+             'platform.version': platform.version,
+             'platform.machine': platform.machine}
+
+    # allowed operators
+    ops = {'==': 'op_equal'}
+
+    def __init__(self):
+        self.left = None
+        self.op = None
+        self.right = None
+
+    def __repr__(self):
+        return '%s %s %s' % (self.left, self.op, self.right)
+
+    def op_equal(self, left, right):
+        return left == right
+
+    def _is_string(self, value):
+        # XXX need to add " as well
+        return value.startswith("'") and value.endswith("'")
+
+    def _convert(self, value):
+        if value in self.names:
+            return self.names[value]
+        return value
+
+    def _check_name(self, value):
+        if value not in self.names:
+            raise TypeError('Not supported "%s"' % value)
+
+    def __call__(self):
+        if self._is_string(self.left):
+            self.left = self.left.strip("'")
+            if self._is_string(self.right):
+                raise TypeError('Cannot compare two strings')
+            else:
+                self._check_name(self.right)
+        else:
+            if self._is_string(self.right):
+                self.right = self.right.strip("'")
+                self._check_name(self.left)
+            else:
+                raise TypeError('Cannot compare two strings')
+
+        if self.op not in self.ops:
+            raise TypeError('Operator not supported "%s"' % self.op)
+
+        left = self._convert(self.left)
+        right = self._convert(self.right)
+        return getattr(self, self.ops[self.op])(left, right)
+
+class _OR(object):
+    def __init__(self, left, right=None):
+        self.left = left
+        self.right = right
+
+    def filled(self):
+        return self.right is not None
+
+    def __repr__(self):
+        return 'OR(%s, %s)' % (repr(self.left), repr(self.right))
+
+    def __call__(self):
+        return self.left() or self.right()
+
+
+class _AND(object):
+    def __init__(self, left, right=None):
+        self.left = left
+        self.right = right
+
+    def filled(self):
+        return self.right is not None
+
+    def __repr__(self):
+        return 'AND(%s, %s)' % (repr(self.left), repr(self.right))
+
+    def __call__(self):
+        return self.left() and self.right()
+
+class _CHAIN(object):
+
+    def __init__(self):
+        self.ops = []
+        self.op_starting = True
+
+    def eat(self, toktype, tokval, rowcol, line, logical_line):
+        if toktype not in (NAME, OP, STRING, ENDMARKER):
+            raise TypeError('Not supported %s' % line)
+
+        if self.op_starting:
+            op = _Operation()
+            if len(self.ops) > 0:
+                last = self.ops[-1]
+                if isinstance(last, (_OR, _AND)) and not last.filled():
+                    last.right = op
+                else:
+                    self.ops.append(op)
+            else:
+                self.ops.append(op)
+            self.op_starting = False
+        else:
+            op = self.ops[-1]
+
+        if (toktype == ENDMARKER or
+            (toktype == NAME and tokval in ('and', 'or'))):
+            if toktype == NAME and tokval == 'and':
+                self.ops.append(_AND(self.ops.pop()))
+            elif toktype == NAME and tokval == 'or':
+                self.ops.append(_OR(self.ops.pop()))
+            self.op_starting = True
+            return
+
+        if isinstance(op, (_OR, _AND)) and op.right is not None:
+            op = op.right
+
+        if toktype in (NAME, STRING) or (toktype == OP and tokval == '.'):
+            if op.op is None:
+                if op.left is None:
+                    op.left = tokval
+                else:
+                    op.left += tokval
+            else:
+                if op.right is None:
+                    op.right = tokval
+                else:
+                    op.right += tokval
+        elif toktype == OP:
+            op.op = tokval
+
+    def result(self):
+        for op in self.ops:
+            if not op():
+                return False
+        return True
+
 def _interpret(marker):
     """Interprets a marker and return a result given the environment."""
-    # XXX
-    return True
+    operations = _CHAIN()
+    tokenize(StringIO(marker).readline, operations.eat)
+    return operations.result()
 
