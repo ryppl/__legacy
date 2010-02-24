@@ -1,6 +1,13 @@
 
+import os
+from distutils2.util import rfc822_escape
+from email import message_from_file
 
-class DistributionMetadata:
+# Encoding used for the PKG-INFO files
+PKG_INFO_ENCODING = 'utf-8'
+
+
+class DistributionMetadata(object):
     """Dummy class to hold the distribution meta-data: name, version,
     author, and so forth.
     """
@@ -227,4 +234,10 @@ class DistributionMetadata:
         for v in value:
             distutils2.versionpredicate.VersionPredicate(v)
         self.obsoletes = value
+
+
+def _interpret(marker):
+    """Interprets a marker and return a result given the environment."""
+    # XXX
+    return True
 

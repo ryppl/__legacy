@@ -7,7 +7,6 @@ being built/installed/distributed.
 __revision__ = "$Id: dist.py 77717 2010-01-24 00:33:32Z tarek.ziade $"
 
 import sys, os, re
-from email import message_from_file
 
 try:
     import warnings
@@ -17,13 +16,10 @@ except ImportError:
 from distutils2.errors import (DistutilsOptionError, DistutilsArgError,
                               DistutilsModuleError, DistutilsClassError)
 from distutils2.fancy_getopt import FancyGetopt, translate_longopt
-from distutils2.util import check_environ, strtobool, rfc822_escape
+from distutils2.util import check_environ, strtobool
 from distutils2 import log
 from distutils2.debug import DEBUG
 from distutils2.metadata import DistributionMetadata
-
-# Encoding used for the PKG-INFO files
-PKG_INFO_ENCODING = 'utf-8'
 
 # Regex to define acceptable Distutils command names.  This is not *quite*
 # the same as a Python NAME -- I don't allow leading underscores.  The fact
