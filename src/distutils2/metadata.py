@@ -243,6 +243,9 @@ class DistributionMetadata(object):
 #
 # micro-language for PEP 345 environment markers
 #
+
+_STR_LIMIT = "'\""
+
 class _Operation(object):
 
     # restricted set of names
@@ -255,7 +258,14 @@ class _Operation(object):
              'platform.machine': platform.machine}
 
     # allowed operators
-    ops = {'==': 'op_equal'}
+    ops = {'==': 'op_equal',
+           '!=': 'op_nonequal',
+           '>': 'op_greater',
+           '>=': 'op_greaterequal',
+           '<': 'op_less',
+           '<=': 'op_lessequal',
+           'in': 'op_in',
+           'not in': 'op_notin'}
 
     def __init__(self):
         self.left = None
@@ -268,32 +278,61 @@ class _Operation(object):
     def op_equal(self, left, right):
         return left == right
 
+    def op_nonequal(self, left, right):
+        return left != right
+
+    def op_greater(self, left, right):
+        return left > right
+
+    def op_greaterequal(self, left, right):
+        return left >= right
+
+    def op_less(self, left, right):
+        return left < right
+
+    def op_lessequal(self, left, right):
+        return left <= right
+
+    def op_in(self, left, right):
+        return left in right
+
+    def op_notin(self, left, right):
+        return left not in right
+
     def _is_string(self, value):
-        # XXX need to add " as well
-        return value.startswith("'") and value.endswith("'")
+        if value is None or len(value) < 2:
+            return False
+        for delimiter in _STR_LIMIT:
+            if value[0] == value[-1] == delimiter:
+                return True
+        return False
+
+    def _is_name(self, value):
+        return value in self.names
 
     def _convert(self, value):
         if value in self.names:
             return self.names[value]
-        return value
+        return value.strip(_STR_LIMIT)
 
     def _check_name(self, value):
         if value not in self.names:
-            raise TypeError('Not supported "%s"' % value)
+            raise NameError(value)
+
+    def _nonsense_op(self):
+        msg = 'This operation is not supported : "%s"' % str(self)
+        raise SyntaxError(msg)
 
     def __call__(self):
+        # make sure we do something useful
         if self._is_string(self.left):
-            self.left = self.left.strip("'")
             if self._is_string(self.right):
-                raise TypeError('Cannot compare two strings')
-            else:
-                self._check_name(self.right)
+                self._nonsense_op()
+            self._check_name(self.right)
         else:
-            if self._is_string(self.right):
-                self.right = self.right.strip("'")
-                self._check_name(self.left)
-            else:
-                raise TypeError('Cannot compare two strings')
+            if not self._is_string(self.right):
+                self._nonsense_op()
+            self._check_name(self.left)
 
         if self.op not in self.ops:
             raise TypeError('Operator not supported "%s"' % self.op)
@@ -339,7 +378,7 @@ class _CHAIN(object):
 
     def eat(self, toktype, tokval, rowcol, line, logical_line):
         if toktype not in (NAME, OP, STRING, ENDMARKER):
-            raise TypeError('Not supported %s' % line)
+            raise SyntaxError('Type not supported "%s"' % tokval)
 
         if self.op_starting:
             op = _Operation()
@@ -367,7 +406,8 @@ class _CHAIN(object):
         if isinstance(op, (_OR, _AND)) and op.right is not None:
             op = op.right
 
-        if toktype in (NAME, STRING) or (toktype == OP and tokval == '.'):
+        if ((toktype in (NAME, STRING) and tokval not in ('in', 'not'))
+            or (toktype == OP and tokval == '.')):
             if op.op is None:
                 if op.left is None:
                     op.left = tokval
@@ -378,8 +418,11 @@ class _CHAIN(object):
                     op.right = tokval
                 else:
                     op.right += tokval
-        elif toktype == OP:
-            op.op = tokval
+        elif toktype == OP or tokval in ('in', 'not'):
+            if tokval == 'in' and op.op == 'not':
+                op.op = 'not in'
+            else:
+                op.op = tokval
 
     def result(self):
         for op in self.ops:
