@@ -77,8 +77,9 @@ class Command:
         # "not defined, check self.distribution's copy", while 0 or 1 mean
         # false and true (duh).  Note that this means figuring out the real
         # value of each flag is a touch complicated -- hence "self._dry_run"
-        # will be handled by __getattr__, below.
-        # XXX This needs to be fixed.
+        # will be handled by a property, below.
+        # XXX This needs to be fixed. [I changed it to a property--does that
+        #     "fix" it?]
         self._dry_run = None
 
         # verbose is largely ignored, but needs to be set for
@@ -102,15 +103,12 @@ class Command:
         self.finalized = 0
 
     # XXX A more explicit way to customize dry_run would be better.
-    def __getattr__(self, attr):
-        if attr == 'dry_run':
-            myval = getattr(self, "_" + attr)
-            if myval is None:
-                return getattr(self.distribution, attr)
-            else:
-                return myval
+    @property
+    def dry_run(self):
+        if self._dry_run is None:
+            return getattr(self.distribution, 'dry_run')
         else:
-            raise AttributeError, attr
+            return self._dry_run
 
     def ensure_finalized(self):
         if not self.finalized:
