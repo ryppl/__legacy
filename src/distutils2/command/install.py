@@ -13,7 +13,6 @@ from distutils2._backport.sysconfig import (get_config_vars, get_paths,
 
 from distutils2 import log
 from distutils2.core import Command
-from distutils2.debug import DEBUG
 from distutils2.errors import DistutilsPlatformError
 from distutils2.util import write_file
 from distutils2.util import convert_path, change_root, get_platform
@@ -256,11 +255,6 @@ class install(Command):
         self.config_vars['base'] = self.install_base
         self.config_vars['platbase'] = self.install_platbase
 
-        if DEBUG:
-            from pprint import pprint
-            print "config vars:"
-            pprint(self.config_vars)
-
         # Expand "~" and configuration variables in the installation
         # directories.
         self.expand_dirs()
@@ -314,8 +308,6 @@ class install(Command):
 
     def dump_dirs(self, msg):
         """Dumps the list of user options."""
-        if not DEBUG:
-            return
         from distutils2.fancy_getopt import longopt_xlate
         log.debug(msg + ":")
         for opt in self.user_options:
@@ -476,7 +468,6 @@ class install(Command):
         home = convert_path(os.path.expanduser("~"))
         for name, path in self.config_vars.iteritems():
             if path.startswith(home) and not os.path.isdir(path):
-                self.debug_print("os.makedirs('%s', 0700)" % path)
                 os.makedirs(path, 0700)
 
     # -- Command execution methods -------------------------------------

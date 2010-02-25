@@ -6,7 +6,6 @@ from distutils2.tests import captured_stdout, run_unittest
 from distutils2.cmd import Command
 from distutils2.dist import Distribution
 from distutils2.errors import DistutilsOptionError
-from distutils2 import debug
 
 class MyCmd(Command):
     def initialize_options(self):
@@ -103,18 +102,6 @@ class CommandTestCase(unittest2.TestCase):
         cmd.ensure_dirname('option1')
         cmd.option2 = 'xxx'
         self.assertRaises(DistutilsOptionError, cmd.ensure_dirname, 'option2')
-
-    def test_debug_print(self):
-        cmd = self.cmd
-        __, stdout = captured_stdout(cmd.debug_print, 'xxx')
-        self.assertEquals(stdout, '')
-
-        debug.DEBUG = True
-        try:
-            __, stdout = captured_stdout(cmd.debug_print, 'xxx')
-            self.assertEquals(stdout, 'xxx\n')
-        finally:
-            debug.DEBUG = False
 
 def test_suite():
     return unittest2.makeSuite(CommandTestCase)

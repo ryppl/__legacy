@@ -10,7 +10,6 @@ import os
 import string
 
 from distutils2.core import Command
-from distutils2.debug import DEBUG
 from distutils2.util import write_file
 from distutils2.errors import (DistutilsOptionError, DistutilsPlatformError,
                               DistutilsFileError, DistutilsExecError)
@@ -267,13 +266,6 @@ class bdist_rpm (Command):
 
 
     def run (self):
-
-        if DEBUG:
-            print "before _get_package_data():"
-            print "vendor =", self.vendor
-            print "packager =", self.packager
-            print "doc_files =", self.doc_files
-            print "changelog =", self.changelog
 
         # make directories
         if self.spec_only:

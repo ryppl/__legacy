@@ -18,7 +18,6 @@ from distutils2.errors import (DistutilsOptionError, DistutilsArgError,
 from distutils2.fancy_getopt import FancyGetopt, translate_longopt
 from distutils2.util import check_environ, strtobool
 from distutils2 import log
-from distutils2.debug import DEBUG
 from distutils2.metadata import DistributionMetadata
 
 # Regex to define acceptable Distutils command names.  This is not *quite*
@@ -359,9 +358,7 @@ Common commands: (see '--help-commands' for more)
         if os.path.isfile(local_file):
             files.append(local_file)
 
-        if DEBUG:
-            self.announce("using config files: %s" % ', '.join(files))
-
+        log.debug("using config files: %s" % ', '.join(files))
         return files
 
     def parse_config_files(self, filenames=None):
@@ -370,13 +367,11 @@ Common commands: (see '--help-commands' for more)
         if filenames is None:
             filenames = self.find_config_files()
 
-        if DEBUG:
-            self.announce("Distribution.parse_config_files():")
+        log.debug("Distribution.parse_config_files():")
 
         parser = ConfigParser()
         for filename in filenames:
-            if DEBUG:
-                self.announce("  reading %s" % filename)
+            log.debug("  reading %s" % filename)
             parser.read(filename)
             for section in parser.sections():
                 options = parser.options(section)
@@ -830,9 +825,8 @@ Common commands: (see '--help-commands' for more)
         """
         cmd_obj = self.command_obj.get(command)
         if not cmd_obj and create:
-            if DEBUG:
-                self.announce("Distribution.get_command_obj(): " \
-                              "creating '%s' command object" % command)
+            log.debug("Distribution.get_command_obj(): " \
+                      "creating '%s' command object" % command)
 
             klass = self.get_command_class(command)
             cmd_obj = self.command_obj[command] = klass(self)
@@ -862,11 +856,10 @@ Common commands: (see '--help-commands' for more)
         if option_dict is None:
             option_dict = self.get_option_dict(command_name)
 
-        if DEBUG:
-            self.announce("  setting options for '%s' command:" % command_name)
+        log.debug("  setting options for '%s' command:" % command_name)
+
         for (option, (source, value)) in option_dict.items():
-            if DEBUG:
-                self.announce("    %s = %s (from %s)" % (option, value,
+            log.debug("    %s = %s (from %s)" % (option, value,
                                                          source))
             try:
                 bool_opts = map(translate_longopt, command_obj.boolean_options)
