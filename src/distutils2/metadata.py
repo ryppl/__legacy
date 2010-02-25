@@ -59,6 +59,7 @@ from email import message_from_file
 from tokenize import tokenize, NAME, OP, STRING, ENDMARKER
 
 from distutils2.util import rfc822_escape
+from distutils2.version import is_valid_predicate
 
 try:
     # docutils is installed
@@ -126,6 +127,8 @@ _ATTR2FIELD = {'metadata_version': 'Metadata-Version',
                'provides': 'Provides',
                'obsoletes': 'Obsoletes',
                }
+
+_PREDICATE_FIELDS = ('Requires-Dist', 'Obsoletes-Dist', 'Provides-Dist')
 
 _LISTFIELDS = ('Platform', 'Classifier', 'Obsoletes',
                'Requires', 'Provides', 'Obsoletes-Dist',
@@ -291,10 +294,11 @@ class DistributionMetadata(object):
     def set_field(self, name, value):
         """Controls then sets a metadata field"""
         name = self._convert_name(name)
-        if name in ('Requires', 'Obsoletes', 'Provides'):
-            # check the values
-            for version in value:
-                distutils2.versionpredicate.VersionPredicate(version)
+        if name in _PREDICATE_FIELDS and value is not None:
+            for v in value:
+                # check that the values are valid predicates
+                if not is_valid_predicate(v.split(';')[0]):
+                    raise ValueError('"%s" is not a valid predicate' % v)
         if name in _LISTFIELDS + _ELEMENTSFIELD:
             if isinstance(value, str):
                 value = value.split(',')

@@ -370,3 +370,11 @@ class VersionPredicate(object):
                 return False
         return True
 
+def is_valid_predicate(predicate):
+    try:
+        VersionPredicate(predicate)
+    except ValueError:
+        return False
+    else:
+        return True
+
