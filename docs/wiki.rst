@@ -415,7 +415,11 @@ Returns a file object for the resource.
 Open issues
 ~~~~~~~~~~~
 
-* setup.cfg is in the distribution, not in the module. Thus, in the unbuilt-egg case, how can we find the distro when all we have is a module name? It would be nice to not need an equivalent of ``setup.py develop``.
+* setup.cfg is in the distribution, not in the module. Thus, in the unbuilt-egg
+case, how can we find the distro when all we have is a module name? It would be
+nice to not need an equivalent of ``setup.py develop``.
+* If sysconfig.cfg lands in Python 2.7, what happens when we run distutils2 in
+  2.4?
 
 pkgutil.filename
 -----------------
