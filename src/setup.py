@@ -7,8 +7,7 @@ import os
 from distutils2.core import setup
 from distutils2.command.sdist import sdist
 from distutils2.command.install import install
-
-VERSION = '1.0a1'
+from distutils2 import __version__
 
 f = open('README.txt')
 try:
