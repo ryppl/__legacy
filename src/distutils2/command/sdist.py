@@ -204,8 +204,6 @@ class sdist(Command):
         # manifest, but there's no template -- which will happen if the
         # developer elects to generate a manifest some other way -- then we
         # can't regenerate the manifest, so we don't.)
-        self.debug_print("checking if %s newer than %s" %
-                         (self.distribution.script_name, self.manifest))
         setup_newer = newer(self.distribution.script_name,
                             self.manifest)
 
@@ -450,7 +448,7 @@ class sdist(Command):
                 dest = os.path.join(base_dir, file)
                 self.copy_file(file, dest, link=link)
 
-        self.distribution.metadata.write_pkg_info(base_dir)
+        self.distribution.metadata.write(os.path.join(base_dir, 'PKG-INFO'))
 
     def make_distribution(self):
         """Create the source distribution(s).  First, we create the release

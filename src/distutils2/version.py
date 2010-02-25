@@ -1,299 +1,380 @@
-#
-# distutils/version.py
-#
-# Implements multiple version numbering conventions for the
-# Python Module Distribution Utilities.
-#
-# $Id: version.py 70642 2009-03-28 00:48:48Z georg.brandl $
-#
+import sys
+import re
 
-"""Provides classes to represent module version numbers (one class for
-each style of version numbering).  There are currently two such classes
-implemented: StrictVersion and LooseVersion.
+class IrrationalVersionError(Exception):
+    """This is an irrational version."""
+    pass
 
-Every version number class implements the following interface:
-  * the 'parse' method takes a string and parses it to some internal
-    representation; if the string is an invalid version number,
-    'parse' raises a ValueError exception
-  * the class constructor takes an optional string argument which,
-    if supplied, is passed to 'parse'
-  * __str__ reconstructs the string that was passed to 'parse' (or
-    an equivalent string -- ie. one that will generate an equivalent
-    version number instance)
-  * __repr__ generates Python code to recreate the version number instance
-  * __cmp__ compares the current instance with either another instance
-    of the same class or a string (which will be parsed to an instance
-    of the same class, thus must follow the same rules)
-"""
+class HugeMajorVersionNumError(IrrationalVersionError):
+    """An irrational version because the major version number is huge
+    (often because a year or date was used).
 
-import string, re
-from types import StringType
-
-class Version:
-    """Abstract base class for version numbering classes.  Just provides
-    constructor (__init__) and reproducer (__repr__), because those
-    seem to be the same for all version numbering classes.
+    See `error_on_huge_major_num` option in `NormalizedVersion` for details.
+    This guard can be disabled by setting that option False.
     """
+    pass
 
-    def __init__ (self, vstring=None):
-        if vstring:
-            self.parse(vstring)
+# A marker used in the second and third parts of the `parts` tuple, for
+# versions that don't have those segments, to sort properly. An example
+# of versions in sort order ('highest' last):
+#   1.0b1                 ((1,0), ('b',1), ('f',))
+#   1.0.dev345            ((1,0), ('f',),  ('dev', 345))
+#   1.0                   ((1,0), ('f',),  ('f',))
+#   1.0.post256.dev345    ((1,0), ('f',),  ('f', 'post', 256, 'dev', 345))
+#   1.0.post345           ((1,0), ('f',),  ('f', 'post', 345, 'f'))
+#                                   ^        ^                 ^
+#   'b' < 'f' ---------------------/         |                 |
+#                                            |                 |
+#   'dev' < 'f' < 'post' -------------------/                  |
+#                                                              |
+#   'dev' < 'f' ----------------------------------------------/
+# Other letters would do, but 'f' for 'final' is kind of nice.
+FINAL_MARKER = ('f',)
 
-    def __repr__ (self):
-        return "%s ('%s')" % (self.__class__.__name__, str(self))
+VERSION_RE = re.compile(r'''
+    ^
+    (?P<version>\d+\.\d+)          # minimum 'N.N'
+    (?P<extraversion>(?:\.\d+)*)   # any number of extra '.N' segments
+    (?:
+        (?P<prerel>[abc]|rc)       # 'a'=alpha, 'b'=beta, 'c'=release candidate
+                                   # 'rc'= alias for release candidate
+        (?P<prerelversion>\d+(?:\.\d+)*)
+    )?
+    (?P<postdev>(\.post(?P<post>\d+))?(\.dev(?P<dev>\d+))?)?
+    $''', re.VERBOSE)
 
+class NormalizedVersion(object):
+    """A rational version.
 
-# Interface for version-number classes -- must be implemented
-# by the following classes (the concrete ones -- Version should
-# be treated as an abstract class).
-#    __init__ (string) - create and take same action as 'parse'
-#                        (string parameter is optional)
-#    parse (string)    - convert a string representation to whatever
-#                        internal representation is appropriate for
-#                        this style of version numbering
-#    __str__ (self)    - convert back to a string; should be very similar
-#                        (if not identical to) the string supplied to parse
-#    __repr__ (self)   - generate Python code to recreate
-#                        the instance
-#    __cmp__ (self, other) - compare two version numbers ('other' may
-#                        be an unparsed version string, or another
-#                        instance of your version class)
+    Good:
+        1.2         # equivalent to "1.2.0"
+        1.2.0
+        1.2a1
+        1.2.3a2
+        1.2.3b1
+        1.2.3c1
+        1.2.3.4
+        TODO: fill this out
 
-
-class StrictVersion (Version):
-
-    """Version numbering for anal retentives and software idealists.
-    Implements the standard interface for version number classes as
-    described above.  A version number consists of two or three
-    dot-separated numeric components, with an optional "pre-release" tag
-    on the end.  The pre-release tag consists of the letter 'a' or 'b'
-    followed by a number.  If the numeric components of two version
-    numbers are equal, then one with a pre-release tag will always
-    be deemed earlier (lesser) than one without.
-
-    The following are valid version numbers (shown in the order that
-    would be obtained by sorting according to the supplied cmp function):
-
-        0.4       0.4.0  (these two are equivalent)
-        0.4.1
-        0.5a1
-        0.5b3
-        0.5
-        0.9.6
-        1.0
-        1.0.4a3
-        1.0.4b1
-        1.0.4
-
-    The following are examples of invalid version numbers:
-
-        1
-        2.7.2.2
-        1.3.a4
-        1.3pl1
-        1.3c4
-
-    The rationale for this version numbering system will be explained
-    in the distutils documentation.
+    Bad:
+        1           # mininum two numbers
+        1.2a        # release level must have a release serial
+        1.2.3b
     """
+    def __init__(self, s, error_on_huge_major_num=True):
+        """Create a NormalizedVersion instance from a version string.
 
-    version_re = re.compile(r'^(\d+) \. (\d+) (\. (\d+))? ([ab](\d+))?$',
-                            re.VERBOSE)
+        @param s {str} The version string.
+        @param error_on_huge_major_num {bool} Whether to consider an
+            apparent use of a year or full date as the major version number
+            an error. Default True. One of the observed patterns on PyPI before
+            the introduction of `NormalizedVersion` was version numbers like this:
+                2009.01.03
+                20040603
+                2005.01
+            This guard is here to strongly encourage the package author to
+            use an alternate version, because a release deployed into PyPI
+            and, e.g. downstream Linux package managers, will forever remove
+            the possibility of using a version number like "1.0" (i.e.
+            where the major number is less than that huge major number).
+        """
+        self._parse(s, error_on_huge_major_num)
 
+    @classmethod
+    def from_parts(cls, version, prerelease=FINAL_MARKER,
+                   devpost=FINAL_MARKER):
+        return cls(cls.parts_to_str((version, prerelease, devpost)))
 
-    def parse (self, vstring):
-        match = self.version_re.match(vstring)
+    def _parse(self, s, error_on_huge_major_num=True):
+        """Parses a string version into parts."""
+        match = VERSION_RE.search(s)
         if not match:
-            raise ValueError, "invalid version number '%s'" % vstring
+            raise IrrationalVersionError(s)
 
-        (major, minor, patch, prerelease, prerelease_num) = \
-            match.group(1, 2, 4, 5, 6)
+        groups = match.groupdict()
+        parts = []
 
-        if patch:
-            self.version = tuple(map(string.atoi, [major, minor, patch]))
+        # main version
+        block = self._parse_numdots(groups['version'], s, False, 2)
+        extraversion = groups.get('extraversion')
+        if extraversion not in ('', None):
+            block += self._parse_numdots(extraversion[1:], s)
+        parts.append(tuple(block))
+
+        # prerelease
+        prerel = groups.get('prerel')
+        if prerel is not None:
+            block = [prerel]
+            block += self._parse_numdots(groups.get('prerelversion'), s,
+                                         pad_zeros_length=1)
+            parts.append(tuple(block))
         else:
-            self.version = tuple(map(string.atoi, [major, minor]) + [0])
+            parts.append(FINAL_MARKER)
 
-        if prerelease:
-            self.prerelease = (prerelease[0], string.atoi(prerelease_num))
+        # postdev
+        if groups.get('postdev'):
+            post = groups.get('post')
+            dev = groups.get('dev')
+            postdev = []
+            if post is not None:
+                postdev.extend([FINAL_MARKER[0], 'post', int(post)])
+                if dev is None:
+                    postdev.append(FINAL_MARKER[0])
+            if dev is not None:
+                postdev.extend(['dev', int(dev)])
+            parts.append(tuple(postdev))
         else:
-            self.prerelease = None
+            parts.append(FINAL_MARKER)
+        self.parts = tuple(parts)
+        if error_on_huge_major_num and self.parts[0][0] > 1980:
+            raise HugeMajorVersionNumError("huge major version number, %r, "
+                "which might cause future problems: %r" % (self.parts[0][0], s))
 
+    def _parse_numdots(self, s, full_ver_str, drop_trailing_zeros=True,
+                       pad_zeros_length=0):
+        """Parse 'N.N.N' sequences, return a list of ints.
 
-    def __str__ (self):
+        @param s {str} 'N.N.N..." sequence to be parsed
+        @param full_ver_str {str} The full version string from which this
+            comes. Used for error strings.
+        @param drop_trailing_zeros {bool} Whether to drop trailing zeros
+            from the returned list. Default True.
+        @param pad_zeros_length {int} The length to which to pad the
+            returned list with zeros, if necessary. Default 0.
+        """
+        nums = []
+        for n in s.split("."):
+            if len(n) > 1 and n[0] == '0':
+                raise IrrationalVersionError("cannot have leading zero in "
+                    "version number segment: '%s' in %r" % (n, full_ver_str))
+            nums.append(int(n))
+        if drop_trailing_zeros:
+            while nums and nums[-1] == 0:
+                nums.pop()
+        while len(nums) < pad_zeros_length:
+            nums.append(0)
+        return nums
 
-        if self.version[2] == 0:
-            vstring = string.join(map(str, self.version[0:2]), '.')
-        else:
-            vstring = string.join(map(str, self.version), '.')
+    def __str__(self):
+        return self.parts_to_str(self.parts)
 
-        if self.prerelease:
-            vstring = vstring + self.prerelease[0] + str(self.prerelease[1])
+    @classmethod
+    def parts_to_str(cls, parts):
+        """Transforms a version expressed in tuple into its string
+        representation."""
+        # XXX This doesn't check for invalid tuples
+        main, prerel, postdev = parts
+        s = '.'.join(str(v) for v in main)
+        if prerel is not FINAL_MARKER:
+            s += prerel[0]
+            s += '.'.join(str(v) for v in prerel[1:])
+        if postdev and postdev is not FINAL_MARKER:
+            if postdev[0] == 'f':
+                postdev = postdev[1:]
+            i = 0
+            while i < len(postdev):
+                if i % 2 == 0:
+                    s += '.'
+                s += str(postdev[i])
+                i += 1
+        return s
 
-        return vstring
+    def __repr__(self):
+        return "%s('%s')" % (self.__class__.__name__, self)
 
+    def _cannot_compare(self, other):
+        raise TypeError("cannot compare %s and %s"
+                % (type(self).__name__, type(other).__name__))
 
-    def __cmp__ (self, other):
-        if isinstance(other, StringType):
-            other = StrictVersion(other)
+    def __eq__(self, other):
+        if not isinstance(other, NormalizedVersion):
+            self._cannot_compare(other)
+        return self.parts == other.parts
 
-        compare = cmp(self.version, other.version)
-        if (compare == 0):              # have to compare prerelease
+    def __lt__(self, other):
+        if not isinstance(other, NormalizedVersion):
+            self._cannot_compare(other)
+        return self.parts < other.parts
 
-            # case 1: neither has prerelease; they're equal
-            # case 2: self has prerelease, other doesn't; other is greater
-            # case 3: self doesn't have prerelease, other does: self is greater
-            # case 4: both have prerelease: must compare them!
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
-            if (not self.prerelease and not other.prerelease):
-                return 0
-            elif (self.prerelease and not other.prerelease):
-                return -1
-            elif (not self.prerelease and other.prerelease):
-                return 1
-            elif (self.prerelease and other.prerelease):
-                return cmp(self.prerelease, other.prerelease)
+    def __gt__(self, other):
+        return not (self.__lt__(other) or self.__eq__(other))
 
-        else:                           # numeric versions don't match --
-            return compare              # prerelease stuff doesn't matter
+    def __le__(self, other):
+        return self.__eq__(other) or self.__lt__(other)
 
+    def __ge__(self, other):
+        return self.__eq__(other) or self.__gt__(other)
 
-# end class StrictVersion
+def suggest_normalized_version(s):
+    """Suggest a normalized version close to the given version string.
 
+    If you have a version string that isn't rational (i.e. NormalizedVersion
+    doesn't like it) then you might be able to get an equivalent (or close)
+    rational version from this function.
 
-# The rules according to Greg Stein:
-# 1) a version number has 1 or more numbers separated by a period or by
-#    sequences of letters. If only periods, then these are compared
-#    left-to-right to determine an ordering.
-# 2) sequences of letters are part of the tuple for comparison and are
-#    compared lexicographically
-# 3) recognize the numeric components may have leading zeroes
-#
-# The LooseVersion class below implements these rules: a version number
-# string is split up into a tuple of integer and string components, and
-# comparison is a simple tuple comparison.  This means that version
-# numbers behave in a predictable and obvious way, but a way that might
-# not necessarily be how people *want* version numbers to behave.  There
-# wouldn't be a problem if people could stick to purely numeric version
-# numbers: just split on period and compare the numbers as tuples.
-# However, people insist on putting letters into their version numbers;
-# the most common purpose seems to be:
-#   - indicating a "pre-release" version
-#     ('alpha', 'beta', 'a', 'b', 'pre', 'p')
-#   - indicating a post-release patch ('p', 'pl', 'patch')
-# but of course this can't cover all version number schemes, and there's
-# no way to know what a programmer means without asking him.
-#
-# The problem is what to do with letters (and other non-numeric
-# characters) in a version number.  The current implementation does the
-# obvious and predictable thing: keep them as strings and compare
-# lexically within a tuple comparison.  This has the desired effect if
-# an appended letter sequence implies something "post-release":
-# eg. "0.99" < "0.99pl14" < "1.0", and "5.001" < "5.001m" < "5.002".
-#
-# However, if letters in a version number imply a pre-release version,
-# the "obvious" thing isn't correct.  Eg. you would expect that
-# "1.5.1" < "1.5.2a2" < "1.5.2", but under the tuple/lexical comparison
-# implemented here, this just isn't so.
-#
-# Two possible solutions come to mind.  The first is to tie the
-# comparison algorithm to a particular set of semantic rules, as has
-# been done in the StrictVersion class above.  This works great as long
-# as everyone can go along with bondage and discipline.  Hopefully a
-# (large) subset of Python module programmers will agree that the
-# particular flavour of bondage and discipline provided by StrictVersion
-# provides enough benefit to be worth using, and will submit their
-# version numbering scheme to its domination.  The free-thinking
-# anarchists in the lot will never give in, though, and something needs
-# to be done to accommodate them.
-#
-# Perhaps a "moderately strict" version class could be implemented that
-# lets almost anything slide (syntactically), and makes some heuristic
-# assumptions about non-digits in version number strings.  This could
-# sink into special-case-hell, though; if I was as talented and
-# idiosyncratic as Larry Wall, I'd go ahead and implement a class that
-# somehow knows that "1.2.1" < "1.2.2a2" < "1.2.2" < "1.2.2pl3", and is
-# just as happy dealing with things like "2g6" and "1.13++".  I don't
-# think I'm smart enough to do it right though.
-#
-# In any case, I've coded the test suite for this module (see
-# ../test/test_version.py) specifically to fail on things like comparing
-# "1.2a2" and "1.2".  That's not because the *code* is doing anything
-# wrong, it's because the simple, obvious design doesn't match my
-# complicated, hairy expectations for real-world version numbers.  It
-# would be a snap to fix the test suite to say, "Yep, LooseVersion does
-# the Right Thing" (ie. the code matches the conception).  But I'd rather
-# have a conception that matches common notions about version numbers.
+    This does a number of simple normalizations to the given string, based
+    on observation of versions currently in use on PyPI. Given a dump of
+    those version during PyCon 2009, 4287 of them:
+    - 2312 (53.93%) match NormalizedVersion without change
+    - with the automatic suggestion
+    - 3474 (81.04%) match when using this suggestion method
 
-class LooseVersion (Version):
-
-    """Version numbering for anarchists and software realists.
-    Implements the standard interface for version number classes as
-    described above.  A version number consists of a series of numbers,
-    separated by either periods or strings of letters.  When comparing
-    version numbers, the numeric components will be compared
-    numerically, and the alphabetic components lexically.  The following
-    are all valid version numbers, in no particular order:
-
-        1.5.1
-        1.5.2b2
-        161
-        3.10a
-        8.02
-        3.4j
-        1996.07.12
-        3.2.pl0
-        3.1.1.6
-        2g6
-        11g
-        0.960923
-        2.2beta29
-        1.13++
-        5.5.kw
-        2.0b1pl0
-
-    In fact, there is no such thing as an invalid version number under
-    this scheme; the rules for comparison are simple and predictable,
-    but may not always give the results you want (for some definition
-    of "want").
+    @param s {str} An irrational version string.
+    @returns A rational version string, or None, if couldn't determine one.
     """
+    try:
+        NormalizedVersion(s)
+        return s   # already rational
+    except IrrationalVersionError:
+        pass
 
-    component_re = re.compile(r'(\d+ | [a-z]+ | \.)', re.VERBOSE)
+    rs = s.lower()
 
-    def __init__ (self, vstring=None):
-        if vstring:
-            self.parse(vstring)
+    # part of this could use maketrans
+    for orig, repl in (('-alpha', 'a'), ('-beta', 'b'), ('alpha', 'a'),
+                       ('beta', 'b'), ('rc', 'c'), ('-final', ''),
+                       ('-pre', 'c'),
+                       ('-release', ''), ('.release', ''), ('-stable', ''),
+                       ('+', '.'), ('_', '.'), (' ', ''), ('.final', ''),
+                       ('final', '')):
+        rs = rs.replace(orig, repl)
+
+    # if something ends with dev or pre, we add a 0
+    rs = re.sub(r"pre$", r"pre0", rs)
+    rs = re.sub(r"dev$", r"dev0", rs)
+
+    # if we have something like "b-2" or "a.2" at the end of the
+    # version, that is pobably beta, alpha, etc
+    # let's remove the dash or dot
+    rs = re.sub(r"([abc|rc])[\-\.](\d+)$", r"\1\2", rs)
+
+    # 1.0-dev-r371 -> 1.0.dev371
+    # 0.1-dev-r79 -> 0.1.dev79
+    rs = re.sub(r"[\-\.](dev)[\-\.]?r?(\d+)$", r".\1\2", rs)
+
+    # Clean: 2.0.a.3, 2.0.b1, 0.9.0~c1
+    rs = re.sub(r"[.~]?([abc])\.?", r"\1", rs)
+
+    # Clean: v0.3, v1.0
+    if rs.startswith('v'):
+        rs = rs[1:]
+
+    # Clean leading '0's on numbers.
+    #TODO: unintended side-effect on, e.g., "2003.05.09"
+    # PyPI stats: 77 (~2%) better
+    rs = re.sub(r"\b0+(\d+)(?!\d)", r"\1", rs)
+
+    # Clean a/b/c with no version. E.g. "1.0a" -> "1.0a0". Setuptools infers
+    # zero.
+    # PyPI stats: 245 (7.56%) better
+    rs = re.sub(r"(\d+[abc])$", r"\g<1>0", rs)
+
+    # the 'dev-rNNN' tag is a dev tag
+    rs = re.sub(r"\.?(dev-r|dev\.r)\.?(\d+)$", r".dev\2", rs)
+
+    # clean the - when used as a pre delimiter
+    rs = re.sub(r"-(a|b|c)(\d+)$", r"\1\2", rs)
+
+    # a terminal "dev" or "devel" can be changed into ".dev0"
+    rs = re.sub(r"[\.\-](dev|devel)$", r".dev0", rs)
+
+    # a terminal "dev" can be changed into ".dev0"
+    rs = re.sub(r"(?![\.\-])dev$", r".dev0", rs)
+
+    # a terminal "final" or "stable" can be removed
+    rs = re.sub(r"(final|stable)$", "", rs)
+
+    # The 'r' and the '-' tags are post release tags
+    #   0.4a1.r10       ->  0.4a1.post10
+    #   0.9.33-17222    ->  0.9.3.post17222
+    #   0.9.33-r17222   ->  0.9.3.post17222
+    rs = re.sub(r"\.?(r|-|-r)\.?(\d+)$", r".post\2", rs)
+
+    # Clean 'r' instead of 'dev' usage:
+    #   0.9.33+r17222   ->  0.9.3.dev17222
+    #   1.0dev123       ->  1.0.dev123
+    #   1.0.git123      ->  1.0.dev123
+    #   1.0.bzr123      ->  1.0.dev123
+    #   0.1a0dev.123    ->  0.1a0.dev123
+    # PyPI stats:  ~150 (~4%) better
+    rs = re.sub(r"\.?(dev|git|bzr)\.?(\d+)$", r".dev\2", rs)
+
+    # Clean '.pre' (normalized from '-pre' above) instead of 'c' usage:
+    #   0.2.pre1        ->  0.2c1
+    #   0.2-c1         ->  0.2c1
+    #   1.0preview123   ->  1.0c123
+    # PyPI stats: ~21 (0.62%) better
+    rs = re.sub(r"\.?(pre|preview|-c)(\d+)$", r"c\g<2>", rs)
 
 
-    def parse (self, vstring):
-        # I've given up on thinking I can reconstruct the version string
-        # from the parsed tuple -- so I just store the string here for
-        # use by __str__
-        self.vstring = vstring
-        components = filter(lambda x: x and x != '.',
-                            self.component_re.split(vstring))
-        for i in range(len(components)):
-            try:
-                components[i] = int(components[i])
-            except ValueError:
-                pass
+    # Tcl/Tk uses "px" for their post release markers
+    rs = re.sub(r"p(\d+)$", r".post\1", rs)
 
-        self.version = components
+    try:
+        NormalizedVersion(rs)
+        return rs   # already rational
+    except IrrationalVersionError:
+        pass
+    return None
 
 
-    def __str__ (self):
-        return self.vstring
+_PREDICATE = re.compile(r"(?i)^\s*([a-z_]\w*(?:\.[a-z_]\w*)*)(.*)")
+_VERSIONS = re.compile(r"^\s*\((.*)\)\s*$")
+_SPLIT_CMP = re.compile(r"^\s*(<=|>=|<|>|!=|==)\s*([^\s,]+)\s*$")
 
+def _split_predicate(predicate):
+    match = _SPLIT_CMP.match(predicate)
+    if match is None:
+        # probably no op, we'll use "=="
+        comp, version = '==', predicate
+    else:
+        comp, version = match.groups()
+    return comp, NormalizedVersion(version)
 
-    def __repr__ (self):
-        return "LooseVersion ('%s')" % str(self)
+class VersionPredicate(object):
+    """Defines a predicate: ProjectName (>ver1,ver2, ..)"""
 
+    _operators = {"<": lambda x, y: x < y,
+                  ">": lambda x, y: x > y,
+                  "<=": lambda x, y: x <= y,
+                  ">=": lambda x, y: x >= y,
+                  "==": lambda x, y: x == y,
+                  "!=": lambda x, y: x != y}
 
-    def __cmp__ (self, other):
-        if isinstance(other, StringType):
-            other = LooseVersion(other)
+    def __init__(self, predicate):
+        predicate = predicate.strip()
+        match = _PREDICATE.match(predicate)
+        if match is None:
+            raise ValueError('Bad predicate "%s"' % predicate)
 
-        return cmp(self.version, other.version)
+        self.name, predicates = match.groups()
+        predicates = predicates.strip()
 
+        predicates = _VERSIONS.match(predicates)
+        if predicates is not None:
+            predicates = predicates.groups()[0]
+            self.predicates = [_split_predicate(pred.strip())
+                               for pred in predicates.split(',')]
+        else:
+            self.predicates = []
 
-# end class LooseVersion
+    def match(self, version):
+        """Check if the provided version matches the predicates."""
+        if isinstance(version, str):
+            version = NormalizedVersion(version)
+        for operator, predicate in self.predicates:
+            if not self._operators[operator](version, predicate):
+                return False
+        return True
+
+def is_valid_predicate(predicate):
+    try:
+        VersionPredicate(predicate)
+    except ValueError:
+        return False
+    else:
+        return True
+

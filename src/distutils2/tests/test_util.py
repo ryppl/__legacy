@@ -14,7 +14,6 @@ from distutils2.util import (convert_path, change_root,
                             byte_compile)
 from distutils2 import util
 from distutils2.tests import support
-from distutils2.version import LooseVersion
 
 class FakePopen(object):
     test_class = None

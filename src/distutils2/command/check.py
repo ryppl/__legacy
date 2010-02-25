@@ -7,30 +7,6 @@ __revision__ = "$Id: check.py 75266 2009-10-05 22:32:48Z andrew.kuchling $"
 from distutils2.core import Command
 from distutils2.errors import DistutilsSetupError
 
-try:
-    # docutils is installed
-    from docutils.utils import Reporter
-    from docutils.parsers.rst import Parser
-    from docutils import frontend
-    from docutils import nodes
-    from StringIO import StringIO
-
-    class SilentReporter(Reporter):
-
-        def __init__(self, source, report_level, halt_level, stream=None,
-                     debug=0, encoding='ascii', error_handler='replace'):
-            self.messages = []
-            Reporter.__init__(self, source, report_level, halt_level, stream,
-                              debug, encoding, error_handler)
-
-        def system_message(self, level, message, *children, **kwargs):
-            self.messages.append((level, message, children, kwargs))
-
-    HAS_DOCUTILS = True
-except ImportError:
-    # docutils is not installed
-    HAS_DOCUTILS = False
-
 class check(Command):
     """This command checks the meta-data of the package.
     """
@@ -65,7 +41,7 @@ class check(Command):
         if self.metadata:
             self.check_metadata()
         if self.restructuredtext:
-            if HAS_DOCUTILS:
+            if self.distribution.metadata.docutils_support:
                 self.check_restructuredtext()
             elif self.strict:
                 raise DistutilsSetupError('The docutils package is needed.')
@@ -83,32 +59,14 @@ class check(Command):
 
         Warns if any are missing.
         """
-        metadata = self.distribution.metadata
-
-        missing = []
-        for attr in ('name', 'version', 'url'):
-            if not (hasattr(metadata, attr) and getattr(metadata, attr)):
-                missing.append(attr)
-
-        if missing:
+        missing, __ = self.distribution.metadata.check()
+        if missing != []:
             self.warn("missing required meta-data: %s"  % ', '.join(missing))
-        if metadata.author:
-            if not metadata.author_email:
-                self.warn("missing meta-data: if 'author' supplied, " +
-                          "'author_email' must be supplied too")
-        elif metadata.maintainer:
-            if not metadata.maintainer_email:
-                self.warn("missing meta-data: if 'maintainer' supplied, " +
-                          "'maintainer_email' must be supplied too")
-        else:
-            self.warn("missing meta-data: either (author and author_email) " +
-                      "or (maintainer and maintainer_email) " +
-                      "must be supplied")
 
     def check_restructuredtext(self):
         """Checks if the long string fields are reST-compliant."""
-        data = self.distribution.get_long_description()
-        for warning in self._check_rst_data(data):
+        missing, warnings = self.distribution.metadata.check()
+        for warning in warnings:
             line = warning[-1].get('line')
             if line is None:
                 warning = warning[1]
@@ -116,28 +74,3 @@ class check(Command):
                 warning = '%s (line %s)' % (warning[1], line)
             self.warn(warning)
 
-    def _check_rst_data(self, data):
-        """Returns warnings when the provided data doesn't compile."""
-        source_path = StringIO()
-        parser = Parser()
-        settings = frontend.OptionParser().get_default_values()
-        settings.tab_width = 4
-        settings.pep_references = None
-        settings.rfc_references = None
-        reporter = SilentReporter(source_path,
-                          settings.report_level,
-                          settings.halt_level,
-                          stream=settings.warning_stream,
-                          debug=settings.debug,
-                          encoding=settings.error_encoding,
-                          error_handler=settings.error_encoding_error_handler)
-
-        document = nodes.document(settings, reporter, source=source_path)
-        document.note_source(source_path, -1)
-        try:
-            parser.parse(data, document)
-        except AttributeError:
-            reporter.messages.append((-1, 'Could not finish the parsing.',
-                                      '', {}))
-
-        return reporter.messages

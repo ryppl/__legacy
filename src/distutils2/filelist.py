@@ -34,14 +34,6 @@ class FileList(object):
     def findall(self, dir=os.curdir):
         self.allfiles = findall(dir)
 
-    def debug_print(self, msg):
-        """Print 'msg' to stdout if the global DEBUG (taken from the
-        DISTUTILS_DEBUG environment variable) flag is true.
-        """
-        from distutils2.debug import DEBUG
-        if DEBUG:
-            print msg
-
     # -- List-like methods ---------------------------------------------
 
     def append(self, item):
@@ -116,28 +108,24 @@ class FileList(object):
         # right number of words on the line for that action -- so we
         # can proceed with minimal error-checking.
         if action == 'include':
-            self.debug_print("include " + ' '.join(patterns))
             for pattern in patterns:
                 if not self.include_pattern(pattern, anchor=1):
                     log.warn("warning: no files found matching '%s'",
                              pattern)
 
         elif action == 'exclude':
-            self.debug_print("exclude " + ' '.join(patterns))
             for pattern in patterns:
                 if not self.exclude_pattern(pattern, anchor=1):
                     log.warn(("warning: no previously-included files "
                               "found matching '%s'"), pattern)
 
         elif action == 'global-include':
-            self.debug_print("global-include " + ' '.join(patterns))
             for pattern in patterns:
                 if not self.include_pattern(pattern, anchor=0):
                     log.warn(("warning: no files found matching '%s' " +
                               "anywhere in distribution"), pattern)
 
         elif action == 'global-exclude':
-            self.debug_print("global-exclude " + ' '.join(patterns))
             for pattern in patterns:
                 if not self.exclude_pattern(pattern, anchor=0):
                     log.warn(("warning: no previously-included files matching "
@@ -145,8 +133,6 @@ class FileList(object):
                              pattern)
 
         elif action == 'recursive-include':
-            self.debug_print("recursive-include %s %s" %
-                             (dir, ' '.join(patterns)))
             for pattern in patterns:
                 if not self.include_pattern(pattern, prefix=dir):
                     log.warn(("warning: no files found matching '%s' " +
@@ -154,8 +140,6 @@ class FileList(object):
                              pattern, dir)
 
         elif action == 'recursive-exclude':
-            self.debug_print("recursive-exclude %s %s" %
-                             (dir, ' '.join(patterns)))
             for pattern in patterns:
                 if not self.exclude_pattern(pattern, prefix=dir):
                     log.warn(("warning: no previously-included files matching "
@@ -163,13 +147,11 @@ class FileList(object):
                              pattern, dir)
 
         elif action == 'graft':
-            self.debug_print("graft " + dir_pattern)
             if not self.include_pattern(None, prefix=dir_pattern):
                 log.warn("warning: no directories found matching '%s'",
                          dir_pattern)
 
         elif action == 'prune':
-            self.debug_print("prune " + dir_pattern)
             if not self.exclude_pattern(None, prefix=dir_pattern):
                 log.warn(("no previously-included directories found " +
                           "matching '%s'"), dir_pattern)
@@ -207,16 +189,12 @@ class FileList(object):
         """
         files_found = 0
         pattern_re = translate_pattern(pattern, anchor, prefix, is_regex)
-        self.debug_print("include_pattern: applying regex r'%s'" %
-                         pattern_re.pattern)
-
         # delayed loading of allfiles list
         if self.allfiles is None:
             self.findall()
 
         for name in self.allfiles:
             if pattern_re.search(name):
-                self.debug_print(" adding " + name)
                 self.files.append(name)
                 files_found = 1
 
@@ -233,11 +211,8 @@ class FileList(object):
         """
         files_found = 0
         pattern_re = translate_pattern(pattern, anchor, prefix, is_regex)
-        self.debug_print("exclude_pattern: applying regex r'%s'" %
-                         pattern_re.pattern)
         for i in range(len(self.files)-1, -1, -1):
             if pattern_re.search(self.files[i]):
-                self.debug_print(" removing " + self.files[i])
                 del self.files[i]
                 files_found = 1
 
