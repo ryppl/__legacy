@@ -73,6 +73,26 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         metadata.read_file(StringIO(content))
         self.assertEquals(metadata['Requires-Dist'], ['bar'])
 
+    def test_description(self):
+        PKG_INFO = os.path.join(os.path.dirname(__file__), 'PKG-INFO')
+        content = open(PKG_INFO).read()
+        content = content % sys.platform
+        metadata = DistributionMetadata()
+        metadata.read_file(StringIO(content))
+
+        # see if we can read the description now
+        DESC = os.path.join(os.path.dirname(__file__), 'LONG_DESC.txt')
+        wanted = open(DESC).read()
+        self.assertEquals(wanted, metadata['Description'])
+
+        # save the file somewhere and make sure we can read it back
+        out = StringIO()
+        metadata.write_file(out)
+        out.seek(0)
+        metadata.read_file(out)
+        self.assertEquals(wanted, metadata['Description'])
+
+
 def test_suite():
     return unittest2.makeSuite(DistributionMetadataTestCase)
 

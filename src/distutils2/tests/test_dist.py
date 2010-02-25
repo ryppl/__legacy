@@ -391,7 +391,7 @@ class MetadataTestCase(support.TempdirManager, support.EnvironGuard,
 
         dist = distutils2.dist.Distribution(attrs)
         meta = self.format_metadata(dist)
-        meta = meta.replace('\n' + 8 * ' ', '\n')
+        meta = meta.replace('\n' + 7 * ' ' + '|', '\n')
         self.assertTrue(long_desc in meta)
 
     def test_read_metadata(self):

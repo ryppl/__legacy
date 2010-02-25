@@ -50,7 +50,7 @@ PEP 345 - Metadata v1.2
 - Obsoletes-Dist (multiple)
 
 """
-
+import re
 import os
 import sys
 import platform
@@ -87,7 +87,7 @@ except ImportError:
 # Encoding used for the PKG-INFO files
 PKG_INFO_ENCODING = 'utf-8'
 
-
+_LINE_PREFIX = re.compile('\n       \|')
 _241_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
                'Summary', 'Description',
                'Keywords', 'Home-page', 'Author', 'Author-email',
@@ -217,6 +217,9 @@ class DistributionMetadata(object):
         value, marker = value.split(';')
         return _interpret(marker), value
 
+    def _remove_line_prefix(self, value):
+        return _LINE_PREFIX.sub('\n', value)
+
     #
     # Public APIs
     #
@@ -278,7 +281,10 @@ class DistributionMetadata(object):
                 self._write_field(fileobject, field, ','.join(values))
                 continue
             if field not in _LISTFIELDS:
+                if field == 'Description':
+                    values = values.replace('\n', '\n       |')
                 values = [values]
+
             for value in values:
                 self._write_field(fileobject, field, value)
 
@@ -294,6 +300,8 @@ class DistributionMetadata(object):
                 value = value.split(',')
         elif name in _UNICODEFIELDS:
             value = self._encode_field(value)
+            if name == 'Description':
+                value = self._remove_line_prefix(value)
         self._fields[name] = value
 
     def get_field(self, name):
