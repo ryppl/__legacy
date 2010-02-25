@@ -12,7 +12,7 @@ from distutils2.util import convert_path
 from distutils2.errors import DistutilsTemplateError, DistutilsInternalError
 from distutils2 import log
 
-class FileList:
+class FileList(object):
     """A list of files built by on exploring the filesystem and filtered by
     applying various patterns to what we find there.
 
@@ -27,14 +27,9 @@ class FileList:
         filtering applied)
     """
 
-    def __init__(self, warn=None, debug_print=None):
-        # ignore argument to FileList, but keep them for backwards
-        # compatibility
+    def __init__(self):
         self.allfiles = None
         self.files = []
-
-    def set_allfiles(self, allfiles):
-        self.allfiles = allfiles
 
     def findall(self, dir=os.curdir):
         self.allfiles = findall(dir)
@@ -252,7 +247,7 @@ class FileList:
 # ----------------------------------------------------------------------
 # Utility functions
 
-def findall(dir = os.curdir):
+def findall(dir=os.curdir):
     """Find all files under 'dir' and return the list of full filenames
     (relative to 'dir').
     """
