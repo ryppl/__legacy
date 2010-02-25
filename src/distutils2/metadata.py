@@ -294,6 +294,9 @@ class DistributionMetadata(object):
     def set_field(self, name, value):
         """Controls then sets a metadata field"""
         name = self._convert_name(name)
+
+        # XXX need to parse the Requires-Python value
+        #
         if name in _PREDICATE_FIELDS and value is not None:
             for v in value:
                 # check that the values are valid predicates
