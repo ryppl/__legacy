@@ -140,10 +140,11 @@ _UNICODEFIELDS = ('Author', 'Maintainer', 'Summary', 'Description')
 class DistributionMetadata(object):
     """Distribution meta-data class (1.0 or 1.2).
     """
-    def __init__(self, path=None):
+    def __init__(self, path=None, platform_dependant=False):
         self._fields = {}
         self.version = None
         self.docutils_support = _HAS_DOCUTILS
+        self.platform_dependant = platform_dependant
         if path is not None:
             self.read(path)
 
@@ -210,6 +211,12 @@ class DistributionMetadata(object):
 
         return reporter.messages
 
+    def _platform(self, value):
+        if not self.platform_dependant or ';' not in value:
+            return True, value
+        value, marker = value.split(';')
+        return _interpret(marker), value
+
     #
     # Public APIs
     #
@@ -233,10 +240,15 @@ class DistributionMetadata(object):
             fields = _345_FIELDS
 
         for field in fields:
-            value = msg[field.lower()]
-            if value is None:
-                continue
-            self.set_field(field, value)
+            if field in _LISTFIELDS:
+                # we can have multiple lines
+                values = msg.get_all(field)
+                self.set_field(field, values)
+            else:
+                # single line
+                value = msg[field]
+                if value is not None:
+                    self.set_field(field, value)
 
         self.version = self._guessmetadata_version()
         self.set_field('Metadata-Version', self.version)
@@ -290,17 +302,30 @@ class DistributionMetadata(object):
         if name not in self._fields:
             return self._default_value(name)
         if name in _UNICODEFIELDS:
-            return self._encode_field(self._fields[name])
+            value = self._fields[name]
+            return self._encode_field(value)
         elif name in _LISTFIELDS:
             value = self._fields[name]
             if value is None:
                 return []
-            return [self._encode_field(v) for v in value]
+            res = []
+            for val in value:
+                valid, val = self._platform(val)
+                if not valid:
+                    continue
+                res.append(self._encode_field(val))
+            return res
+
         elif name in _ELEMENTSFIELD:
-            value = self._fields[name]
+            valid, value = self._platform(self._fields[name])
+            if not valid:
+                return []
             if isinstance(value, str):
                 return value.split(',')
-        return self._fields[name]
+        valid, value = self._platform(self._fields[name])
+        if not valid:
+            return None
+        return value
 
     def check(self):
         """Checks if the metadata are compliant."""
@@ -508,6 +533,7 @@ class _CHAIN(object):
 
 def _interpret(marker):
     """Interprets a marker and return a result given the environment."""
+    marker = marker.strip()
     operations = _CHAIN()
     tokenize(StringIO(marker).readline, operations.eat)
     return operations.result()

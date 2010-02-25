@@ -61,7 +61,17 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         res = res.read()
         f = open(PKG_INFO)
         wanted = f.read()
+        self.assert_('Keywords: keyring,password,crypt' in res)
         f.close()
+
+    def test_metadata_markers(self):
+        # see if we can be platform-aware
+        PKG_INFO = os.path.join(os.path.dirname(__file__), 'PKG-INFO')
+        content = open(PKG_INFO).read()
+        content = content % sys.platform
+        metadata = DistributionMetadata(platform_dependant=True)
+        metadata.read_file(StringIO(content))
+        self.assertEquals(metadata['Requires-Dist'], ['bar'])
 
 def test_suite():
     return unittest2.makeSuite(DistributionMetadataTestCase)
