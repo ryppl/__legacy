@@ -87,9 +87,17 @@ class TestSysConfig(unittest2.TestCase):
         elif os.path.isdir(path):
             shutil.rmtree(path)
 
-    def test_var_expansion_pattern(self):
-        """Assert that the {curly brace token} expansion pattern counts the second { as part of the substitution key in expressions like {{something}."""
-        self.failUnlessEqual(_subst_vars('thing{{stuffvar}', {'{stuffvar': 'stuff'}), 'thingstuff')
+    def test_nested_var_substitution(self):
+        """Assert that the {curly brace token} expansion pattern will replace
+        only the inner {something} on nested expressions like {py{something}} on
+        the first pass.
+
+        We have no plans to make use of this, but it keeps the option open for
+        the future, at the cost only of disallowing { itself as a piece of a
+        substitution key (which would be weird).
+
+        """
+        self.failUnlessEqual(_subst_vars('{py{version}}', {'version': '31'}), '{py31}')
 
     def test_get_paths(self):
         scheme = get_paths()

@@ -16,7 +16,7 @@ _CONFIG_DIR = os.path.normpath(os.path.dirname(__file__))
 _CONFIG_FILE = os.path.join(_CONFIG_DIR, 'sysconfig.cfg')
 _SCHEMES = ConfigParser()
 _SCHEMES.read(_CONFIG_FILE)
-_VAR_REPL = re.compile(r'\{(.*?)\}')
+_VAR_REPL = re.compile(r'\{([^{]*?)\}')
 
 def _expand_globals(config):
     globals = config.items('globals')
