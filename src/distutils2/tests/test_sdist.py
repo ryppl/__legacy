@@ -248,7 +248,7 @@ class SDistTestCase(PyPIRCCommandTestCase):
         cmd.ensure_finalized()
         cmd.run()
         warnings = self.get_logs(WARN)
-        self.assertEquals(len(warnings), 2)
+        self.assertEquals(len(warnings), 1)
 
         # trying with a complete set of metadata
         self.clear_logs()

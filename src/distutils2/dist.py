@@ -28,7 +28,7 @@ from distutils2.metadata import DistributionMetadata
 command_re = re.compile (r'^[a-zA-Z]([a-zA-Z0-9_]*)$')
 
 
-class Distribution:
+class Distribution(object):
     """The core of the Distutils.  Most of the work hiding behind 'setup'
     is really done within a Distribution instance, which farms the work out
     to the Distutils commands specified on the command line.
@@ -145,10 +145,11 @@ Common commands: (see '--help-commands' for more)
         # information here (and enough command-line options) that it's
         # worth it.  Also delegate 'get_XXX()' methods to the 'metadata'
         # object in a sneaky and underhanded (but efficient!) way.
+
         self.metadata = DistributionMetadata()
-        for basename in self.metadata._METHOD_BASENAMES:
-            method_name = "get_" + basename
-            setattr(self, method_name, getattr(self.metadata, method_name))
+        #for basename in self.metadata._METHOD_BASENAMES:
+        #    method_name = "get_" + basename
+        #    setattr(self, method_name, getattr(self.metadata, method_name))
 
         # 'cmdclass' maps command names to class objects, so we
         # can 1) quickly figure out which class to instantiate when
@@ -227,7 +228,7 @@ Common commands: (see '--help-commands' for more)
         # the setup script) to possibly override any or all of these
         # distribution options.
 
-        if attrs:
+        if attrs is not None:
             # Pull out the set of command options and work on them
             # specifically.  Note that this order guarantees that aliased
             # command options will override any supplied redundantly
@@ -240,22 +241,11 @@ Common commands: (see '--help-commands' for more)
                     for (opt, val) in cmd_options.items():
                         opt_dict[opt] = ("setup script", val)
 
-            if 'licence' in attrs:
-                attrs['license'] = attrs['licence']
-                del attrs['licence']
-                msg = "'licence' distribution option is deprecated; use 'license'"
-                if warnings is not None:
-                    warnings.warn(msg)
-                else:
-                    sys.stderr.write(msg + "\n")
-
             # Now work on the rest of the attributes.  Any attribute that's
             # not already defined is invalid!
-            for (key, val) in attrs.items():
-                if hasattr(self.metadata, "set_" + key):
-                    getattr(self.metadata, "set_" + key)(val)
-                elif hasattr(self.metadata, key):
-                    setattr(self.metadata, key, val)
+            for key, val in attrs.items():
+                if self.metadata.is_metadata_field(key):
+                    self.metadata[key] = val
                 elif hasattr(self, key):
                     setattr(self, key, val)
                 else:
@@ -293,6 +283,9 @@ Common commands: (see '--help-commands' for more)
         if dict is None:
             dict = self.command_options[command] = {}
         return dict
+
+    def get_fullname(self):
+        return self.metadata.get_fullname()
 
     def dump_option_dicts(self, header=None, commands=None, indent=""):
         from pprint import pformat
@@ -593,13 +586,15 @@ Common commands: (see '--help-commands' for more)
         instance, analogous to the .finalize_options() method of Command
         objects.
         """
-        for attr in ('keywords', 'platforms'):
-            value = getattr(self.metadata, attr)
-            if value is None:
-                continue
-            if isinstance(value, str):
-                value = [elm.strip() for elm in value.split(',')]
-                setattr(self.metadata, attr, value)
+
+        # XXX conversion -- removed
+        #for attr in ('keywords', 'platforms'):
+        #    value = self.metadata.get_field(attr)
+        #    if value is None:
+        #        continue
+        #    if isinstance(value, str):
+        #        value = [elm.strip() for elm in value.split(',')]
+        #        setattr(self.metadata, attr, value)
 
     def _show_help(self, parser, global_options=1, display_options=1,
                    commands=[]):
@@ -676,11 +671,11 @@ Common commands: (see '--help-commands' for more)
         for option in self.display_options:
             is_display_option[option[0]] = 1
 
-        for (opt, val) in option_order:
+        for opt, val in option_order:
             if val and is_display_option.get(opt):
                 opt = translate_longopt(opt)
-                value = getattr(self.metadata, "get_"+opt)()
-                if opt in ['keywords', 'platforms']:
+                value = self.metadata[opt]
+                if opt in ['keywords', 'platform']:
                     print(','.join(value))
                 elif opt in ('classifiers', 'provides', 'requires',
                              'obsoletes'):

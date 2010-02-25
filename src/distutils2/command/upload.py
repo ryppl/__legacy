@@ -84,14 +84,15 @@ class upload(PyPIRCCommand):
         # register a new release
         content = open(filename,'rb').read()
         meta = self.distribution.metadata
+
         data = {
             # action
             ':action': 'file_upload',
             'protcol_version': '1',
 
             # identify release
-            'name': meta.get_name(),
-            'version': meta.get_version(),
+            'name': meta['Name'],
+            'version': meta['Version'],
 
             # file content
             'content': (os.path.basename(filename),content),
@@ -100,21 +101,23 @@ class upload(PyPIRCCommand):
             'md5_digest': md5(content).hexdigest(),
 
             # additional meta-data
+            # XXX Implement 1.1
             'metadata_version' : '1.0',
-            'summary': meta.get_description(),
-            'home_page': meta.get_url(),
-            'author': meta.get_contact(),
-            'author_email': meta.get_contact_email(),
-            'license': meta.get_licence(),
-            'description': meta.get_long_description(),
-            'keywords': meta.get_keywords(),
-            'platform': meta.get_platforms(),
-            'classifiers': meta.get_classifiers(),
-            'download_url': meta.get_download_url(),
-            # PEP 314
-            'provides': meta.get_provides(),
-            'requires': meta.get_requires(),
-            'obsoletes': meta.get_obsoletes(),
+            'name': meta['Name'],
+            'version': meta['Version'],
+            'summary': meta['Summary'],
+            'home_page': meta['Home-page'],
+            'author': meta['Author'],
+            'author_email': meta['Author-email'],
+            'license': meta['License'],
+            'description': meta['Description'],
+            'keywords': meta['Keywords'],
+            'platform': meta['Platform'],
+            'classifiers': meta['Classifier'],
+            'download_url': meta['Download-URL'],
+            #'provides': meta['Provides'],
+            #'requires': meta['Requires'],
+            #'obsoletes': meta['Obsoletes'],
             }
         comment = ''
         if command == 'bdist_rpm':

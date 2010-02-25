@@ -450,7 +450,7 @@ class sdist(Command):
                 dest = os.path.join(base_dir, file)
                 self.copy_file(file, dest, link=link)
 
-        self.distribution.metadata.write_pkg_info(base_dir)
+        self.distribution.metadata.write(os.path.join(base_dir, 'PKG-INFO'))
 
     def make_distribution(self):
         """Create the source distribution(s).  First, we create the release

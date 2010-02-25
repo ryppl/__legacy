@@ -231,9 +231,10 @@ class install(Command):
         prefix, exec_prefix, srcdir = get_config_vars('prefix', 'exec_prefix',
                                                       'srcdir')
 
-        self.config_vars = {'dist_name': self.distribution.get_name(),
-                            'dist_version': self.distribution.get_version(),
-                            'dist_fullname': self.distribution.get_fullname(),
+        metadata = self.distribution.metadata
+        self.config_vars = {'dist_name': metadata['Name'],
+                            'dist_version': metadata['Version'],
+                            'dist_fullname': metadata.get_fullname(),
                             'py_version': py_version,
                             'py_version_short': py_version[0:3],
                             'py_version_nodot': py_version[0] + py_version[2],
@@ -399,7 +400,7 @@ class install(Command):
         for key, value in scheme.items():
             if key == 'platinclude':
                 key = 'headers'
-                value = os.path.join(value, self.distribution.get_name())
+                value = os.path.join(value, self.distribution.metadata['Name'])
             attrname = 'install_' + key
             if hasattr(self, attrname):
                 if getattr(self, attrname) is None:

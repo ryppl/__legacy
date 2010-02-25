@@ -2,6 +2,7 @@
 import unittest2
 import os
 import sys
+from StringIO import StringIO
 
 from distutils2.metadata import DistributionMetadata, _interpret
 
@@ -48,6 +49,19 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         assert _interpret("'buuuu' not in os.name")
         assert _interpret("'buuuu' not in os.name and '%s' in os.name" \
                             % os_name)
+
+
+    def test_metadata_read_write(self):
+
+        PKG_INFO = os.path.join(os.path.dirname(__file__), 'PKG-INFO')
+        metadata = DistributionMetadata(PKG_INFO)
+        res = StringIO()
+        metadata.write_file(res)
+        res.seek(0)
+        res = res.read()
+        f = open(PKG_INFO)
+        wanted = f.read()
+        f.close()
 
 def test_suite():
     return unittest2.makeSuite(DistributionMetadataTestCase)

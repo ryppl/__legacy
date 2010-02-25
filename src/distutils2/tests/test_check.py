@@ -1,7 +1,8 @@
 """Tests for distutils.command.check."""
 import unittest2
 
-from distutils2.command.check import check, HAS_DOCUTILS
+from distutils2.command.check import check
+from distutils2.metadata import _HAS_DOCUTILS
 from distutils2.tests import support
 from distutils2.errors import DistutilsSetupError
 
@@ -26,14 +27,15 @@ class CheckTestCase(support.LoggingSilencer,
         # by default, check is checking the metadata
         # should have some warnings
         cmd = self._run()
-        self.assertEquals(cmd._warnings, 2)
+        self.assert_(cmd._warnings > 0)
 
         # now let's add the required fields
         # and run it again, to make sure we don't get
         # any warning anymore
         metadata = {'url': 'xxx', 'author': 'xxx',
                     'author_email': 'xxx',
-                    'name': 'xxx', 'version': 'xxx'}
+                    'name': 'xxx', 'version': 'xxx'
+                    }
         cmd = self._run(metadata)
         self.assertEquals(cmd._warnings, 0)
 
@@ -46,7 +48,7 @@ class CheckTestCase(support.LoggingSilencer,
         self.assertEquals(cmd._warnings, 0)
 
     def test_check_document(self):
-        if not HAS_DOCUTILS: # won't test without docutils
+        if not _HAS_DOCUTILS: # won't test without docutils
             return
         pkg_info, dist = self.create_dist()
         cmd = check(dist)
@@ -62,7 +64,7 @@ class CheckTestCase(support.LoggingSilencer,
         self.assertEquals(len(msgs), 0)
 
     def test_check_restructuredtext(self):
-        if not HAS_DOCUTILS: # won't test without docutils
+        if not _HAS_DOCUTILS: # won't test without docutils
             return
         # let's see if it detects broken rest in long_description
         broken_rest = 'title\n===\n\ntest'
