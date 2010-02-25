@@ -6,6 +6,7 @@ import os
 from distutils2.version import NormalizedVersion as V
 from distutils2.version import IrrationalVersionError
 from distutils2.version import suggest_normalized_version as suggest
+from distutils2.version import VersionPredicate
 
 class VersionTestCase(unittest.TestCase):
 
@@ -123,6 +124,31 @@ class VersionTestCase(unittest.TestCase):
         # we want to be able to parse Tcl-TK
         # they us "p1" "p2" for post releases
         self.assertEquals(suggest('1.4p1'), '1.4.post1')
+
+    def test_predicate(self):
+        # VersionPredicate knows how to parse stuff like:
+        #
+        #   Project (>=version, ver2)
+
+        predicates = ('zope.interface (>3.5.0)',
+                      'AnotherProject (3.4)',
+                      'OtherProject (<3.0)',
+                      'NoVersion',
+                      'Hey (>=2.5,<2.7)')
+
+        for predicate in predicates:
+            v = VersionPredicate(predicate)
+
+        assert VersionPredicate('Hey (>=2.5,<2.7)').match('2.6')
+        assert VersionPredicate('Ho').match('2.6')
+        assert not VersionPredicate('Hey (>=2.5,!=2.6,<2.7)').match('2.6')
+        assert VersionPredicate('Ho (<3.0)').match('2.6')
+        assert VersionPredicate('Ho (<3.0,!=2.5)').match('2.6.0')
+        assert not VersionPredicate('Ho (<3.0,!=2.6)').match('2.6.0')
+
+
+        # XXX need to silent the micro version in this case
+        #assert not VersionPredicate('Ho (<3.0,!=2.6)').match('2.6.3')
 
 def test_suite():
     #README = os.path.join(os.path.dirname(__file__), 'README.txt')

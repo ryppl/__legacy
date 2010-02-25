@@ -326,24 +326,47 @@ _VERSIONS = re.compile(r"^\s*\((.*)\)\s*$")
 _SPLIT_CMP = re.compile(r"^\s*(<=|>=|<|>|!=|==)\s*([^\s,]+)\s*$")
 
 def _split_predicate(predicate):
-    match = _SPLIT_CMP(predicate)
+    match = _SPLIT_CMP.match(predicate)
     if match is None:
-        raise ValueError('Bad package restriction syntax: %r' % version)
-    comp, version = res.groups()
+        # probably no op, we'll use "=="
+        comp, version = '==', predicate
+    else:
+        comp, version = match.groups()
     return comp, NormalizedVersion(version)
 
 class VersionPredicate(object):
     """Defines a predicate: ProjectName (>ver1,ver2, ..)"""
+
+    _operators = {"<": lambda x, y: x < y,
+                  ">": lambda x, y: x > y,
+                  "<=": lambda x, y: x <= y,
+                  ">=": lambda x, y: x >= y,
+                  "==": lambda x, y: x == y,
+                  "!=": lambda x, y: x != y}
+
     def __init__(self, predicate):
         predicate = predicate.strip()
         match = _PREDICATE.match(predicate)
         if match is None:
             raise ValueError('Bad predicate "%s"' % predicate)
+
         self.name, predicates = match.groups()
         predicates = predicates.strip()
 
+        predicates = _VERSIONS.match(predicates)
         if predicates is not None:
-            predicates = match.groups()[0]
-            self.versions = [_split_predicate(pred)
-                             for pred in predicates.split(',')]
+            predicates = predicates.groups()[0]
+            self.predicates = [_split_predicate(pred.strip())
+                               for pred in predicates.split(',')]
+        else:
+            self.predicates = []
+
+    def match(self, version):
+        """Check if the provided version matches the predicates."""
+        if isinstance(version, str):
+            version = NormalizedVersion(version)
+        for operator, predicate in self.predicates:
+            if not self._operators[operator](version, predicate):
+                return False
+        return True
 
