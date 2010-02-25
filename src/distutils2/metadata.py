@@ -134,7 +134,7 @@ _LISTFIELDS = ('Platform', 'Classifier', 'Obsoletes',
 
 _ELEMENTSFIELD = ('Keywords',)
 
-_UNICODEFIELDS = ('Author', 'Maintainer')
+_UNICODEFIELDS = ('Author', 'Maintainer', 'Summary', 'Description')
 
 
 class DistributionMetadata(object):
