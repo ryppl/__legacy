@@ -39,16 +39,22 @@ def test_pypi():
     #
     if os.path.exists(INDEX_PICKLE_FILE):
         print "Loading saved pypi data..."
-        with open(INDEX_PICKLE_FILE, 'rb') as f:
+        f = open(INDEX_PICKLE_FILE, 'rb')
+        try:
             package_info = pickle.load(f)
+        finally:
+            f.close()
     else:
         print "Retrieving pypi packages..."
         server = xmlrpclib.Server('http://pypi.python.org/pypi')
         package_info  = server.search({'name': ''})
 
         print "Saving package info..."
-        with open(INDEX_PICKLE_FILE, 'wb') as o:
+        f = open(INDEX_PICKLE_FILE, 'wb')
+        try:
             pickle.dump(package_info, o)
+        finally:
+            f.close()
 
     #
     ## If there's a saved list of the versions from the packages
@@ -60,13 +66,19 @@ def test_pypi():
     versions = []
     if os.path.exists(VERSION_PICKLE_FILE):
         print "Loading saved version info..."
-        with open(VERSION_PICKLE_FILE, 'rb') as f:
+        f = open(VERSION_PICKLE_FILE, 'rb')
+        try:
             versions = pickle.load(f)
+        finally:
+            f.close()
     else:
         print "Extracting and saving version info..."
         versions = [p['version'] for p in package_info]
-        with open(VERSION_PICKLE_FILE, 'wb') as o:
+        o = open(VERSION_PICKLE_FILE, 'wb')
+        try:
             pickle.dump(versions, o)
+        finally:
+            o.close()
 
     total_versions = len(versions)
     matches = 0.00
