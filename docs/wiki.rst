@@ -389,6 +389,23 @@ pkgutil to allow adding categories to the resource_variables file from
 a script that should be used instead of trying to edit the file with raw text
 processing.
 
+Open issues
+===========
+
+* setup.cfg is in the distribution, not in the module. Thus, in the unbuilt-egg
+  case, how can we find the distro when all we have is a module name? It would
+  be nice to not need an equivalent of ``setup.py develop``. Can we just walk up
+  the folder hierarchy from the module until we find a setup.cfg? A setup.cfg is
+  necessary if you use distutils2, is it not?
+* If sysconfig.cfg lands in Python 2.7, what happens when we run distutils2 in
+  2.4?
+* Our new glob-based [resources] section is much more compact (and consistent
+  with other systems, like bash) than the explicit MANIFEST.in directives, but
+  they don't offer some of the old features. Is it okay to lose exclude,
+  global-exclude, and recursive-exclude? What do graft and prune do, and do we
+  cover their behavior? I think we could probably use a [resource:exclude]
+  section with additional exclude globs in it.
+
 API
 ===
 
@@ -411,15 +428,6 @@ Returns a file object for the resource.
 * pkgutil.open() calls from nested packages aren't a problem because, after all, we pass the desired 'module_name' to start from as the first arg.
 
 * ? Do we still need this? Default behavior:  alongside the package files (if the real-installed-locations metadata file does not exist). Or if the package is installed without any resource_variables specified. ?</>?
-
-Open issues
-~~~~~~~~~~~
-
-* setup.cfg is in the distribution, not in the module. Thus, in the unbuilt-egg
-case, how can we find the distro when all we have is a module name? It would be
-nice to not need an equivalent of ``setup.py develop``.
-* If sysconfig.cfg lands in Python 2.7, what happens when we run distutils2 in
-  2.4?
 
 pkgutil.filename
 -----------------
