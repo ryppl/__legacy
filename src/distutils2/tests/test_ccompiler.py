@@ -5,7 +5,6 @@ from distutils2.tests import captured_stdout
 
 from distutils2.compiler.ccompiler import (gen_lib_options, CCompiler,
                                  get_default_compiler, customize_compiler)
-from distutils2 import debug
 from distutils2.tests import support
 
 class FakeCompiler(object):
@@ -33,22 +32,6 @@ class CCompilerTestCase(support.EnvironGuard, unittest2.TestCase):
         wanted = ['-Llib1', '-Llib2', '-cool', '-Rrunlib1', 'found',
                   '-lname2']
         self.assertEquals(opts, wanted)
-
-    def test_debug_print(self):
-
-        class MyCCompiler(CCompiler):
-            executables = {}
-
-        compiler = MyCCompiler()
-        __, stdout = captured_stdout(compiler.debug_print, 'xxx')
-        self.assertEquals(stdout, '')
-
-        debug.DEBUG = True
-        try:
-            __, stdout = captured_stdout(compiler.debug_print, 'xxx')
-            self.assertEquals(stdout, 'xxx\n')
-        finally:
-            debug.DEBUG = False
 
     def test_customize_compiler(self):
 

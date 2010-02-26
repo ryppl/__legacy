@@ -11,7 +11,6 @@ __revision__ = "$Id: core.py 77704 2010-01-23 09:23:15Z tarek.ziade $"
 import sys
 import os
 
-from distutils2.debug import DEBUG
 from distutils2.errors import (DistutilsSetupError, DistutilsArgError,
                               DistutilsError, CCompilerError)
 from distutils2.util import grok_environment_error
@@ -124,10 +123,6 @@ def setup(**attrs):
     # the setup script, but be overridden by the command line.
     dist.parse_config_files()
 
-    if DEBUG:
-        print "options (after parsing config files):"
-        dist.dump_option_dicts()
-
     if _setup_stop_after == "config":
         return dist
 
@@ -138,10 +133,6 @@ def setup(**attrs):
         ok = dist.parse_command_line()
     except DistutilsArgError, msg:
         raise SystemExit, gen_usage(dist.script_name) + "\nerror: %s" % msg
-
-    if DEBUG:
-        print "options (after parsing command line):"
-        dist.dump_option_dicts()
 
     if _setup_stop_after == "commandline":
         return dist
@@ -154,19 +145,11 @@ def setup(**attrs):
             raise SystemExit, "interrupted"
         except (IOError, os.error), exc:
             error = grok_environment_error(exc)
-
-            if DEBUG:
-                sys.stderr.write(error + "\n")
-                raise
-            else:
-                raise SystemExit, error
+            raise SystemExit, error
 
         except (DistutilsError,
                 CCompilerError), msg:
-            if DEBUG:
-                raise
-            else:
-                raise SystemExit, "error: " + str(msg)
+            raise SystemExit, "error: " + str(msg)
 
     return dist
 

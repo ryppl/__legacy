@@ -11,7 +11,6 @@ import sys, os, string, re
 from distutils2.errors import DistutilsPlatformError
 from distutils2.spawn import spawn, find_executable
 from distutils2 import log
-from distutils2.version import LooseVersion
 from distutils2.errors import DistutilsByteCompileError
 
 from distutils2._backport import sysconfig as _sysconfig
@@ -484,13 +483,13 @@ def _find_exe_version(cmd, pattern=_RE_VERSION):
     result = pattern.search(out_string)
     if result is None:
         return None
-    return LooseVersion(result.group(1))
+    return result.group(1)
 
 def get_compiler_versions():
     """Returns a tuple providing the versions of gcc, ld and dllwrap
 
     For each command, if a command is not found, None is returned.
-    Otherwise a LooseVersion instance is returned.
+    Otherwise a string with the version is returned.
     """
     gcc = _find_exe_version('gcc -dumpversion')
     ld = _find_ld_version()

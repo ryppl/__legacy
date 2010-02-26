@@ -78,21 +78,6 @@ class CoreTestCase(support.EnvironGuard, unittest2.TestCase):
             output = output[:-1]
         self.assertEqual(cwd, output)
 
-    def test_debug_mode(self):
-        # this covers the code called when DEBUG is set
-        sys.argv = ['setup.py', '--name']
-        __, stdout = captured_stdout(distutils2.core.setup, name='bar')
-        self.assertEquals(stdout, 'bar\n')
-
-        distutils2.core.DEBUG = True
-        try:
-            __, stdout = captured_stdout(distutils2.core.setup, name='bar')
-        finally:
-            distutils2.core.DEBUG = False
-        wanted = "options (after parsing config files):"
-        lines = stdout.split('\n')
-        self.assertEquals(lines[0], wanted)
-
 def test_suite():
     return unittest2.makeSuite(CoreTestCase)
 

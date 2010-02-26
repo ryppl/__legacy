@@ -7,13 +7,10 @@ used from a setup script as
 
    setup (...)
 """
+__all__ = ['__version__', 'setup']
 
 __revision__ = "$Id: __init__.py 78020 2010-02-06 16:37:32Z benjamin.peterson $"
+__version__ = "1.0a1"
 
-# Distutils version
-#
-# Updated automatically by the Python release process.
-#
-#--start constants--
-__version__ = "2.7a3"
-#--end constants--
+from distutils2.core import setup
+

@@ -189,16 +189,6 @@ class Command:
         """
         log.log(level, msg)
 
-    def debug_print(self, msg):
-        """Print 'msg' to stdout if the global DEBUG (taken from the
-        DISTUTILS_DEBUG environment variable) flag is true.
-        """
-        from distutils2.debug import DEBUG
-        if DEBUG:
-            print msg
-            sys.stdout.flush()
-
-
     # -- Option validation methods -------------------------------------
     # (these are very handy in writing the 'finalize_options()' method)
     #

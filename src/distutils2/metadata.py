@@ -1,3 +1,56 @@
+"""
+==================================================
+Implementation of the Metadata for Python packages
+==================================================
+
+The file format is RFC 822 and there are currently three implementations.
+We only support reading/writing Metadata v1.0 or v1.2. If 1.1 is encountered
+1.1 extra fields will be ignored.
+
+PEP 241 - Metadata v1.0
+=======================
+
+- Metadata-Version
+- Name
+- Version
+- Platform (multiple)
+- Summary
+- Description (optional)
+- Keywords (optional)
+- Home-page (optional)
+- Author  (optional)
+- Author-email (optional)
+- License (optional)
+
+PEP 345 - Metadata v1.2
+=======================
+
+# XXX adding codename ? multiple email rfc232 ?
+
+- Metadata-Version
+- Name
+- Version
+- Platform (multiple)
+- Supported-Platform (multiple)
+- Summary
+- Description (optional) -- changed format
+- Keywords (optional)
+- Home-page (optional)
+- Download-URL
+- Author  (optional)
+- Author-email (optional)
+- Maintainer (optional)
+- Maintainer-email (optional)
+- License (optional)
+- Classifier (multiple) -- see PEP 241
+- Requires-Python
+- Requires-External (multiple)
+- Requires-Dist (multiple)
+- Provides-Dist (multiple)
+- Obsoletes-Dist (multiple)
+
+"""
+import re
 import os
 import sys
 import platform
@@ -6,243 +59,309 @@ from email import message_from_file
 from tokenize import tokenize, NAME, OP, STRING, ENDMARKER
 
 from distutils2.util import rfc822_escape
+from distutils2.version import is_valid_predicate
+
+try:
+    # docutils is installed
+    from docutils.utils import Reporter
+    from docutils.parsers.rst import Parser
+    from docutils import frontend
+    from docutils import nodes
+    from StringIO import StringIO
+
+    class SilentReporter(Reporter):
+
+        def __init__(self, source, report_level, halt_level, stream=None,
+                     debug=0, encoding='ascii', error_handler='replace'):
+            self.messages = []
+            Reporter.__init__(self, source, report_level, halt_level, stream,
+                              debug, encoding, error_handler)
+
+        def system_message(self, level, message, *children, **kwargs):
+            self.messages.append((level, message, children, kwargs))
+
+    _HAS_DOCUTILS = True
+except ImportError:
+    # docutils is not installed
+    _HAS_DOCUTILS = False
 
 # Encoding used for the PKG-INFO files
 PKG_INFO_ENCODING = 'utf-8'
 
+_LINE_PREFIX = re.compile('\n       \|')
+_241_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
+               'Summary', 'Description',
+               'Keywords', 'Home-page', 'Author', 'Author-email',
+               'License')
+
+_345_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
+               'Supported-Platform', 'Summary', 'Description',
+               'Keywords', 'Home-page', 'Author', 'Author-email',
+               'Maintainer', 'Maintainer-email', 'License',
+               'Classifier', 'Download-URL', 'Obsoletes-Dist',
+               'Provides-Dist', 'Requires-Dist', 'Requires-Python',
+               'Requires-External')
+
+_ATTR2FIELD = {'metadata_version': 'Metadata-Version',
+               'name': 'Name',
+               'version': 'Version',
+               'platform': 'Platform',
+               'supported_platform': 'Supported-Platform',
+               'description': 'Summary',
+               'long_description': 'Description',
+               'keywords': 'Keywords',
+               'url': 'Home-page',
+               'author': 'Author',
+               'author_email': 'Author-email',
+               'maintainer': 'Maintainer',
+               'maintainer_email': 'Maintainer-email',
+               'licence': 'License',
+               'classifier': 'Classifier',
+               'download_url': 'Download-URL',
+               'obsoletes_dist': 'Obsoletes-Dist',
+               'provides_dist': 'Provides-Dist',
+               'requires_dist': 'Requires-Dist',
+               'requires_python': 'Requires-Python',
+               'requires_external': 'Requires-External',
+               'requires': 'Requires',
+               'provides': 'Provides',
+               'obsoletes': 'Obsoletes',
+               }
+
+_PREDICATE_FIELDS = ('Requires-Dist', 'Obsoletes-Dist', 'Provides-Dist')
+
+_LISTFIELDS = ('Platform', 'Classifier', 'Obsoletes',
+               'Requires', 'Provides', 'Obsoletes-Dist',
+               'Provides-Dist', 'Requires-Dist', 'Requires-Python',
+               'Requires-External')
+
+_ELEMENTSFIELD = ('Keywords',)
+
+_UNICODEFIELDS = ('Author', 'Maintainer', 'Summary', 'Description')
+
 
 class DistributionMetadata(object):
-    """Dummy class to hold the distribution meta-data: name, version,
-    author, and so forth.
+    """Distribution meta-data class (1.0 or 1.2).
     """
-
-    _METHOD_BASENAMES = ("name", "version", "author", "author_email",
-                         "maintainer", "maintainer_email", "url",
-                         "license", "description", "long_description",
-                         "keywords", "platforms", "fullname", "contact",
-                         "contact_email", "license", "classifiers",
-                         "download_url",
-                         # PEP 314
-                         "provides", "requires", "obsoletes",
-                         )
-
-    def __init__(self, path=None):
+    def __init__(self, path=None, platform_dependant=False):
+        self._fields = {}
+        self.version = None
+        self.docutils_support = _HAS_DOCUTILS
+        self.platform_dependant = platform_dependant
         if path is not None:
-            self.read_pkg_file(open(path))
-        else:
-            self.name = None
-            self.version = None
-            self.author = None
-            self.author_email = None
-            self.maintainer = None
-            self.maintainer_email = None
-            self.url = None
-            self.license = None
-            self.description = None
-            self.long_description = None
-            self.keywords = None
-            self.platforms = None
-            self.classifiers = None
-            self.download_url = None
-            # PEP 314
-            self.provides = None
-            self.requires = None
-            self.obsoletes = None
+            self.read(path)
 
-    def read_pkg_file(self, file):
-        """Reads the metadata values from a file object."""
-        msg = message_from_file(file)
-
-        def _read_field(name):
-            value = msg[name]
-            if value == 'UNKNOWN':
-                return None
-            return value
-
-        def _read_list(name):
-            values = msg.get_all(name, None)
-            if values == []:
-                return None
-            return values
-
-        metadata_version = msg['metadata-version']
-        self.name = _read_field('name')
-        self.version = _read_field('version')
-        self.description = _read_field('summary')
-        # we are filling author only.
-        self.author = _read_field('author')
-        self.maintainer = None
-        self.author_email = _read_field('author-email')
-        self.maintainer_email = None
-        self.url = _read_field('home-page')
-        self.license = _read_field('license')
-
-        if 'download-url' in msg:
-            self.download_url = _read_field('download-url')
-        else:
-            self.download_url = None
-
-        self.long_description = _read_field('description')
-        self.description = _read_field('summary')
-
-        if 'keywords' in msg:
-            self.keywords = _read_field('keywords').split(',')
-
-        self.platforms = _read_list('platform')
-        self.classifiers = _read_list('classifier')
-
-        # PEP 314 - these fields only exist in 1.1
-        if metadata_version == '1.1':
-            self.requires = _read_list('requires')
-            self.provides = _read_list('provides')
-            self.obsoletes = _read_list('obsoletes')
-        else:
-            self.requires = None
-            self.provides = None
-            self.obsoletes = None
-
-    def write_pkg_info(self, base_dir):
-        """Write the PKG-INFO file into the release tree.
-        """
-        pkg_info = open( os.path.join(base_dir, 'PKG-INFO'), 'w')
-        self.write_pkg_file(pkg_info)
-        pkg_info.close()
-
-    def write_pkg_file(self, file):
-        """Write the PKG-INFO format data to a file object.
-        """
-        version = '1.0'
-        if self.provides or self.requires or self.obsoletes:
-            version = '1.1'
-
-        self._write_field(file, 'Metadata-Version', version)
-        self._write_field(file, 'Name', self.get_name())
-        self._write_field(file, 'Version', self.get_version())
-        self._write_field(file, 'Summary', self.get_description())
-        self._write_field(file, 'Home-page', self.get_url())
-        self._write_field(file, 'Author', self.get_contact())
-        self._write_field(file, 'Author-email', self.get_contact_email())
-        self._write_field(file, 'License', self.get_license())
-        if self.download_url:
-            self._write_field(file, 'Download-URL', self.download_url)
-
-        long_desc = rfc822_escape(self.get_long_description())
-        self._write_field(file, 'Description', long_desc)
-
-        keywords = ','.join(self.get_keywords())
-        if keywords:
-            self._write_field(file, 'Keywords', keywords)
-
-        self._write_list(file, 'Platform', self.get_platforms())
-        self._write_list(file, 'Classifier', self.get_classifiers())
-
-        # PEP 314
-        self._write_list(file, 'Requires', self.get_requires())
-        self._write_list(file, 'Provides', self.get_provides())
-        self._write_list(file, 'Obsoletes', self.get_obsoletes())
+    def _guessmetadata_version(self):
+        for field in self._fields:
+            if field in _345_FIELDS and field not in _241_FIELDS:
+                return '1.2'
+        return '1.0'
 
     def _write_field(self, file, name, value):
-        file.write('%s: %s\n' % (name, self._encode_field(value)))
+        file.write('%s: %s\n' % (name, value))
 
     def _write_list (self, file, name, values):
         for value in values:
             self._write_field(file, name, value)
 
     def _encode_field(self, value):
-        if value is None:
-            return None
         if isinstance(value, unicode):
             return value.encode(PKG_INFO_ENCODING)
         return str(value)
 
-    # -- Metadata query methods ----------------------------------------
+    def __getitem__(self, name):
+        return self.get_field(name)
 
-    def get_name(self):
-        return self.name or "UNKNOWN"
+    def __setitem__(self, name, value):
+        return self.set_field(name, value)
 
-    def get_version(self):
-        return self.version or "0.0.0"
+    def _convert_name(self, name):
+        if name in _241_FIELDS + _345_FIELDS:
+            return name
+        name = name.replace('-', '_').lower()
+        if name in _ATTR2FIELD:
+            return _ATTR2FIELD[name]
+        return name
 
+    def _default_value(self, name):
+        if name in _LISTFIELDS + _ELEMENTSFIELD:
+            return []
+        return 'UNKNOWN'
+
+    def _check_rst_data(self, data):
+        """Returns warnings when the provided data doesn't compile."""
+        source_path = StringIO()
+        parser = Parser()
+        settings = frontend.OptionParser().get_default_values()
+        settings.tab_width = 4
+        settings.pep_references = None
+        settings.rfc_references = None
+        reporter = SilentReporter(source_path,
+                          settings.report_level,
+                          settings.halt_level,
+                          stream=settings.warning_stream,
+                          debug=settings.debug,
+                          encoding=settings.error_encoding,
+                          error_handler=settings.error_encoding_error_handler)
+
+        document = nodes.document(settings, reporter, source=source_path)
+        document.note_source(source_path, -1)
+        try:
+            parser.parse(data, document)
+        except AttributeError:
+            reporter.messages.append((-1, 'Could not finish the parsing.',
+                                      '', {}))
+
+        return reporter.messages
+
+    def _platform(self, value):
+        if not self.platform_dependant or ';' not in value:
+            return True, value
+        value, marker = value.split(';')
+        return _interpret(marker), value
+
+    def _remove_line_prefix(self, value):
+        return _LINE_PREFIX.sub('\n', value)
+
+    #
+    # Public APIs
+    #
     def get_fullname(self):
-        return "%s-%s" % (self.get_name(), self.get_version())
+        return '%s-%s' % (self['Name'], self['Version'])
 
-    def get_author(self):
-        return self._encode_field(self.author) or "UNKNOWN"
+    def is_metadata_field(self, name):
+        name = self._convert_name(name)
+        return name in _241_FIELDS + _345_FIELDS
 
-    def get_author_email(self):
-        return self.author_email or "UNKNOWN"
+    def read(self, filepath):
+        self.read_file(open(filepath))
 
-    def get_maintainer(self):
-        return self._encode_field(self.maintainer) or "UNKNOWN"
+    def read_file(self, fileob):
+        """Reads the metadata values from a file object."""
+        msg = message_from_file(fileob)
+        version = msg['metadata-version']
+        if version in ('1.0', '1.1'):
+            fields = _241_FIELDS
+        else:
+            fields = _345_FIELDS
 
-    def get_maintainer_email(self):
-        return self.maintainer_email or "UNKNOWN"
+        for field in fields:
+            if field in _LISTFIELDS:
+                # we can have multiple lines
+                values = msg.get_all(field)
+                self.set_field(field, values)
+            else:
+                # single line
+                value = msg[field]
+                if value is not None:
+                    self.set_field(field, value)
 
-    def get_contact(self):
-        return (self._encode_field(self.maintainer) or
-                self._encode_field(self.author) or "UNKNOWN")
+        self.version = self._guessmetadata_version()
+        self.set_field('Metadata-Version', self.version)
 
-    def get_contact_email(self):
-        return self.maintainer_email or self.author_email or "UNKNOWN"
+    def write(self, filepath):
+        """Write the metadata fields into path.
+        """
+        pkg_info = open(filepath, 'w')
+        try:
+            self.write_file(pkg_info)
+        finally:
+            pkg_info.close()
 
-    def get_url(self):
-        return self.url or "UNKNOWN"
+    def write_file(self, fileobject):
+        """Write the PKG-INFO format data to a file object.
+        """
+        version = self._guessmetadata_version()
+        if 'Metadata-Version' not in self._fields:
+            self['Metadata-Version'] = version
+        if version == '1.0':
+            fields = _241_FIELDS
+        else:
+            fields = _345_FIELDS
+        for field in fields:
+            values = self.get_field(field)
+            if field in _ELEMENTSFIELD:
+                self._write_field(fileobject, field, ','.join(values))
+                continue
+            if field not in _LISTFIELDS:
+                if field == 'Description':
+                    values = values.replace('\n', '\n       |')
+                values = [values]
 
-    def get_license(self):
-        return self.license or "UNKNOWN"
-    get_licence = get_license
+            for value in values:
+                self._write_field(fileobject, field, value)
 
-    def get_description(self):
-        return self._encode_field(self.description) or "UNKNOWN"
+    def set_field(self, name, value):
+        """Controls then sets a metadata field"""
+        name = self._convert_name(name)
 
-    def get_long_description(self):
-        return self._encode_field(self.long_description) or "UNKNOWN"
+        # XXX need to parse the Requires-Python value
+        #
+        if name in _PREDICATE_FIELDS and value is not None:
+            for v in value:
+                # check that the values are valid predicates
+                if not is_valid_predicate(v.split(';')[0]):
+                    raise ValueError('"%s" is not a valid predicate' % v)
+        if name in _LISTFIELDS + _ELEMENTSFIELD:
+            if isinstance(value, str):
+                value = value.split(',')
+        elif name in _UNICODEFIELDS:
+            value = self._encode_field(value)
+            if name == 'Description':
+                value = self._remove_line_prefix(value)
+        self._fields[name] = value
 
-    def get_keywords(self):
-        return self.keywords or []
+    def get_field(self, name):
+        """Gets a metadata field."""
+        name = self._convert_name(name)
+        if name not in self._fields:
+            return self._default_value(name)
+        if name in _UNICODEFIELDS:
+            value = self._fields[name]
+            return self._encode_field(value)
+        elif name in _LISTFIELDS:
+            value = self._fields[name]
+            if value is None:
+                return []
+            res = []
+            for val in value:
+                valid, val = self._platform(val)
+                if not valid:
+                    continue
+                res.append(self._encode_field(val))
+            return res
 
-    def get_platforms(self):
-        return self.platforms or ["UNKNOWN"]
+        elif name in _ELEMENTSFIELD:
+            valid, value = self._platform(self._fields[name])
+            if not valid:
+                return []
+            if isinstance(value, str):
+                return value.split(',')
+        valid, value = self._platform(self._fields[name])
+        if not valid:
+            return None
+        return value
 
-    def get_classifiers(self):
-        return self.classifiers or []
+    def check(self):
+        """Checks if the metadata are compliant."""
+        missing = []
+        for attr in ('Name', 'Version', 'Home-page'):
+            value = self[attr]
+            if value == 'UNKNOWN':
+                missing.append(attr)
 
-    def get_download_url(self):
-        return self.download_url or "UNKNOWN"
-
-    # PEP 314
-    def get_requires(self):
-        return self.requires or []
-
-    def set_requires(self, value):
-        import distutils2.versionpredicate
-        for v in value:
-            distutils2.versionpredicate.VersionPredicate(v)
-        self.requires = value
-
-    def get_provides(self):
-        return self.provides or []
-
-    def set_provides(self, value):
-        value = [v.strip() for v in value]
-        for v in value:
-            import distutils2.versionpredicate
-            distutils2.versionpredicate.split_provision(v)
-        self.provides = value
-
-    def get_obsoletes(self):
-        return self.obsoletes or []
-
-    def set_obsoletes(self, value):
-        import distutils2.versionpredicate
-        for v in value:
-            distutils2.versionpredicate.VersionPredicate(v)
-        self.obsoletes = value
+        if _HAS_DOCUTILS:
+            warnings = self._check_rst_data(self['Description'])
+        else:
+            warnings = []
+        return missing, warnings
 
 
 #
 # micro-language for PEP 345 environment markers
 #
+_STR_LIMIT = "'\""
+
 class _Operation(object):
 
     # restricted set of names
@@ -255,7 +374,14 @@ class _Operation(object):
              'platform.machine': platform.machine}
 
     # allowed operators
-    ops = {'==': 'op_equal'}
+    ops = {'==': 'op_equal',
+           '!=': 'op_nonequal',
+           '>': 'op_greater',
+           '>=': 'op_greaterequal',
+           '<': 'op_less',
+           '<=': 'op_lessequal',
+           'in': 'op_in',
+           'not in': 'op_notin'}
 
     def __init__(self):
         self.left = None
@@ -268,32 +394,61 @@ class _Operation(object):
     def op_equal(self, left, right):
         return left == right
 
+    def op_nonequal(self, left, right):
+        return left != right
+
+    def op_greater(self, left, right):
+        return left > right
+
+    def op_greaterequal(self, left, right):
+        return left >= right
+
+    def op_less(self, left, right):
+        return left < right
+
+    def op_lessequal(self, left, right):
+        return left <= right
+
+    def op_in(self, left, right):
+        return left in right
+
+    def op_notin(self, left, right):
+        return left not in right
+
     def _is_string(self, value):
-        # XXX need to add " as well
-        return value.startswith("'") and value.endswith("'")
+        if value is None or len(value) < 2:
+            return False
+        for delimiter in _STR_LIMIT:
+            if value[0] == value[-1] == delimiter:
+                return True
+        return False
+
+    def _is_name(self, value):
+        return value in self.names
 
     def _convert(self, value):
         if value in self.names:
             return self.names[value]
-        return value
+        return value.strip(_STR_LIMIT)
 
     def _check_name(self, value):
         if value not in self.names:
-            raise TypeError('Not supported "%s"' % value)
+            raise NameError(value)
+
+    def _nonsense_op(self):
+        msg = 'This operation is not supported : "%s"' % str(self)
+        raise SyntaxError(msg)
 
     def __call__(self):
+        # make sure we do something useful
         if self._is_string(self.left):
-            self.left = self.left.strip("'")
             if self._is_string(self.right):
-                raise TypeError('Cannot compare two strings')
-            else:
-                self._check_name(self.right)
+                self._nonsense_op()
+            self._check_name(self.right)
         else:
-            if self._is_string(self.right):
-                self.right = self.right.strip("'")
-                self._check_name(self.left)
-            else:
-                raise TypeError('Cannot compare two strings')
+            if not self._is_string(self.right):
+                self._nonsense_op()
+            self._check_name(self.left)
 
         if self.op not in self.ops:
             raise TypeError('Operator not supported "%s"' % self.op)
@@ -339,7 +494,7 @@ class _CHAIN(object):
 
     def eat(self, toktype, tokval, rowcol, line, logical_line):
         if toktype not in (NAME, OP, STRING, ENDMARKER):
-            raise TypeError('Not supported %s' % line)
+            raise SyntaxError('Type not supported "%s"' % tokval)
 
         if self.op_starting:
             op = _Operation()
@@ -367,7 +522,8 @@ class _CHAIN(object):
         if isinstance(op, (_OR, _AND)) and op.right is not None:
             op = op.right
 
-        if toktype in (NAME, STRING) or (toktype == OP and tokval == '.'):
+        if ((toktype in (NAME, STRING) and tokval not in ('in', 'not'))
+            or (toktype == OP and tokval == '.')):
             if op.op is None:
                 if op.left is None:
                     op.left = tokval
@@ -378,8 +534,11 @@ class _CHAIN(object):
                     op.right = tokval
                 else:
                     op.right += tokval
-        elif toktype == OP:
-            op.op = tokval
+        elif toktype == OP or tokval in ('in', 'not'):
+            if tokval == 'in' and op.op == 'not':
+                op.op = 'not in'
+            else:
+                op.op = tokval
 
     def result(self):
         for op in self.ops:
@@ -389,6 +548,7 @@ class _CHAIN(object):
 
 def _interpret(marker):
     """Interprets a marker and return a result given the environment."""
+    marker = marker.strip()
     operations = _CHAIN()
     tokenize(StringIO(marker).readline, operations.eat)
     return operations.result()
