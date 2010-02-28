@@ -344,6 +344,7 @@ class DistributionMetadata(object):
 
     def check(self):
         """Checks if the metadata are compliant."""
+        # XXX should check the versions (if the file was loaded)
         missing = []
         for attr in ('Name', 'Version', 'Home-page'):
             value = self[attr]
