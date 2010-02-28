@@ -356,6 +356,18 @@ class DistributionMetadata(object):
             warnings = []
         return missing, warnings
 
+    def keys(self):
+        version = self._guessmetadata_version()
+        if version == '1.0':
+            return _241_FIELDS
+        return _345_FIELDS
+
+    def values(self):
+        return [self[key] for key in self.keys()]
+
+    def items(self):
+        return [(key, self[key]) for key in self.keys()]
+
 
 #
 # micro-language for PEP 345 environment markers

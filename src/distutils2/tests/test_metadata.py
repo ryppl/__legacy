@@ -92,6 +92,16 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         metadata.read_file(out)
         self.assertEquals(wanted, metadata['Description'])
 
+    def test_mapper_apis(self):
+        PKG_INFO = os.path.join(os.path.dirname(__file__), 'PKG-INFO')
+        content = open(PKG_INFO).read()
+        content = content % sys.platform
+        metadata = DistributionMetadata()
+        metadata.read_file(StringIO(content))
+        self.assertIn('Version', metadata.keys())
+        self.assertIn('0.5', metadata.values())
+        self.assertIn(('Version', '0.5'), metadata.items())
+
 
 def test_suite():
     return unittest2.makeSuite(DistributionMetadataTestCase)
