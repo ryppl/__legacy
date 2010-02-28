@@ -257,6 +257,10 @@ class TestSysConfig(unittest2.TestCase):
         self.assertEquals(config.get('posix', 'foo'), 'ok')
         self.assertEquals(config.get('posix', 'more'), '/etc/ok')
 
+        # we might not have globals after all
+        # extending again (==no more globals section)
+        _expand_globals(config)
+
 def test_suite():
     return unittest2.makeSuite(TestSysConfig)
 

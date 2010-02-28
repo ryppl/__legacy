@@ -19,7 +19,11 @@ _SCHEMES.read(_CONFIG_FILE)
 _VAR_REPL = re.compile(r'\{([^{]*?)\}')
 
 def _expand_globals(config):
-    globals = config.items('globals')
+    if config.has_section('globals'):
+        globals = config.items('globals')
+    else:
+        globals = tuple()
+
     sections = config.sections()
     for section in sections:
         if section == 'globals':
@@ -76,9 +80,9 @@ if _PYTHON_BUILD:
 
 def _subst_vars(path, local_vars):
     """In the string `path`, replace tokens like {some.thing} with the corresponding value from the map `local_vars`.
-    
+
     If there is no corresponding value, leave the token unchanged.
-    
+
     """
     def _replacer(matchobj):
         name = matchobj.group(1)
