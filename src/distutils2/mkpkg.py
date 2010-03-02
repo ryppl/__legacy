@@ -691,7 +691,7 @@ class SetupClass:
 
 	def loadConfigFile(self):
 		self.config = ConfigParser.RawConfigParser()
-		self.config.read(os.path.expanduser('~/.pygiver'))
+		self.config.read(os.path.expanduser('~/.mkpkgpy'))
 		self.setupData['author'] = self.lookupOption('author')
 		self.setupData['author_email'] = self.lookupOption('author_email')
 
