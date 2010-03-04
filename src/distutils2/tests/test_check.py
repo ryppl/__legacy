@@ -47,22 +47,6 @@ class CheckTestCase(support.LoggingSilencer,
         cmd = self._run(metadata, strict=1)
         self.assertEquals(cmd._warnings, 0)
 
-    def test_check_document(self):
-        if not _HAS_DOCUTILS: # won't test without docutils
-            return
-        pkg_info, dist = self.create_dist()
-        cmd = check(dist)
-
-        # let's see if it detects broken rest
-        broken_rest = 'title\n===\n\ntest'
-        msgs = cmd._check_rst_data(broken_rest)
-        self.assertEquals(len(msgs), 1)
-
-        # and non-broken rest
-        rest = 'title\n=====\n\ntest'
-        msgs = cmd._check_rst_data(rest)
-        self.assertEquals(len(msgs), 0)
-
     def test_check_restructuredtext(self):
         if not _HAS_DOCUTILS: # won't test without docutils
             return
