@@ -375,26 +375,29 @@ class DistributionMetadata(object):
 #
 _STR_LIMIT = "'\""
 
+# allowed operators
+_OPERATORS = {'==': lambda x, y: x == y,
+              '!=': lambda x, y: x != y,
+              '>': lambda x, y: x > y,
+              '>=': lambda x, y: x >= y,
+              '<': lambda x, y: x < y,
+              '<=': lambda x, y: x <= y,
+              'in': lambda x, y: x in y,
+              'not in': lambda x, y: x not in y}
+
+def _operate(operation, x, y):
+    return _OPERATORS[operation](x, y)
+
+# restricted set of names
+_NAMES = {'sys.platform': sys.platform,
+          'python_version': '%s.%s' % (sys.version_info[0],
+                                       sys.version_info[1]),
+          'python_full_version': sys.version.split()[0],
+          'os.name': os.name,
+          'platform.version': platform.version,
+          'platform.machine': platform.machine}
+
 class _Operation(object):
-
-    # restricted set of names
-    names = {'sys.platform': sys.platform,
-             'python_version': '%s.%s' % (sys.version_info[0],
-                                          sys.version_info[1]),
-             'python_full_version': sys.version.split()[0],
-             'os.name': os.name,
-             'platform.version': platform.version,
-             'platform.machine': platform.machine}
-
-    # allowed operators
-    ops = {'==': 'op_equal',
-           '!=': 'op_nonequal',
-           '>': 'op_greater',
-           '>=': 'op_greaterequal',
-           '<': 'op_less',
-           '<=': 'op_lessequal',
-           'in': 'op_in',
-           'not in': 'op_notin'}
 
     def __init__(self):
         self.left = None
@@ -403,30 +406,6 @@ class _Operation(object):
 
     def __repr__(self):
         return '%s %s %s' % (self.left, self.op, self.right)
-
-    def op_equal(self, left, right):
-        return left == right
-
-    def op_nonequal(self, left, right):
-        return left != right
-
-    def op_greater(self, left, right):
-        return left > right
-
-    def op_greaterequal(self, left, right):
-        return left >= right
-
-    def op_less(self, left, right):
-        return left < right
-
-    def op_lessequal(self, left, right):
-        return left <= right
-
-    def op_in(self, left, right):
-        return left in right
-
-    def op_notin(self, left, right):
-        return left not in right
 
     def _is_string(self, value):
         if value is None or len(value) < 2:
@@ -437,15 +416,15 @@ class _Operation(object):
         return False
 
     def _is_name(self, value):
-        return value in self.names
+        return value in _NAMES
 
     def _convert(self, value):
-        if value in self.names:
-            return self.names[value]
+        if value in _NAMES:
+            return _NAMES[value]
         return value.strip(_STR_LIMIT)
 
     def _check_name(self, value):
-        if value not in self.names:
+        if value not in _NAMES:
             raise NameError(value)
 
     def _nonsense_op(self):
@@ -463,12 +442,12 @@ class _Operation(object):
                 self._nonsense_op()
             self._check_name(self.left)
 
-        if self.op not in self.ops:
+        if self.op not in _OPERATORS:
             raise TypeError('Operator not supported "%s"' % self.op)
 
         left = self._convert(self.left)
         right = self._convert(self.right)
-        return getattr(self, self.ops[self.op])(left, right)
+        return _operate(self.op, left, right)
 
 class _OR(object):
     def __init__(self, left, right=None):
