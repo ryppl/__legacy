@@ -85,6 +85,9 @@ except ImportError:
     # docutils is not installed
     _HAS_DOCUTILS = False
 
+# public API of this module
+__all__ = ('DistributionMetadata', 'PKG_INFO_ENCODING')
+
 # Encoding used for the PKG-INFO files
 PKG_INFO_ENCODING = 'utf-8'
 
