@@ -134,6 +134,13 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         metadata.read_file(StringIO(open(PKG_INFO).read()))
         self.assertEquals(metadata['Metadata-Version'], '1.1')
 
+    def test_warnings(self):
+        metadata = DistributionMetadata()
+
+        # this should raise a warning
+        # XXX how to test this on 2.4 ?
+        metadata['Requires-Dist'] = ['Funky (Groovie)']
+
 
 
 def test_suite():

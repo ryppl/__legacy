@@ -93,3 +93,16 @@ class MetadataConflictError(DistutilsError):
 class MetadataUnrecognizedVersionError(DistutilsError):
     """Unknown metadata version number."""
 
+class IrrationalVersionError(Exception):
+    """This is an irrational version."""
+    pass
+
+class HugeMajorVersionNumError(IrrationalVersionError):
+    """An irrational version because the major version number is huge
+    (often because a year or date was used).
+
+    See `error_on_huge_major_num` option in `NormalizedVersion` for details.
+    This guard can be disabled by setting that option False.
+    """
+    pass
+

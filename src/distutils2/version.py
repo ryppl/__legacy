@@ -1,18 +1,7 @@
 import sys
 import re
 
-class IrrationalVersionError(Exception):
-    """This is an irrational version."""
-    pass
-
-class HugeMajorVersionNumError(IrrationalVersionError):
-    """An irrational version because the major version number is huge
-    (often because a year or date was used).
-
-    See `error_on_huge_major_num` option in `NormalizedVersion` for details.
-    This guard can be disabled by setting that option False.
-    """
-    pass
+from distutils2.errors import IrrationalVersionError, HugeMajorVersionNumError
 
 # A marker used in the second and third parts of the `parts` tuple, for
 # versions that don't have those segments, to sort properly. An example
@@ -373,7 +362,7 @@ class VersionPredicate(object):
 def is_valid_predicate(predicate):
     try:
         VersionPredicate(predicate)
-    except ValueError:
+    except (ValueError, IrrationalVersionError):
         return False
     else:
         return True
