@@ -111,6 +111,30 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         self.assertIn('0.5', metadata.values())
         self.assertIn(('Version', '0.5'), metadata.items())
 
+    def test_versions(self):
+        metadata = DistributionMetadata()
+        metadata['Obsoletes'] = 'ok'
+        self.assertEquals(metadata['Metadata-Version'], '1.1')
+
+        del metadata['Obsoletes']
+        metadata['Obsoletes-Dist'] = 'ok'
+        self.assertEquals(metadata['Metadata-Version'], '1.2')
+
+        del metadata['Obsoletes-Dist']
+        metadata['Version'] = '1'
+        self.assertEquals(metadata['Metadata-Version'], '1.0')
+
+        PKG_INFO = os.path.join(os.path.dirname(__file__),
+                                'SETUPTOOLS-PKG-INFO')
+        metadata.read_file(StringIO(open(PKG_INFO).read()))
+        self.assertEquals(metadata['Metadata-Version'], '1.0')
+
+        PKG_INFO = os.path.join(os.path.dirname(__file__),
+                                'SETUPTOOLS-PKG-INFO2')
+        metadata.read_file(StringIO(open(PKG_INFO).read()))
+        self.assertEquals(metadata['Metadata-Version'], '1.1')
+
+
 
 def test_suite():
     return unittest2.makeSuite(DistributionMetadataTestCase)

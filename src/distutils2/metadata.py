@@ -60,6 +60,8 @@ from tokenize import tokenize, NAME, OP, STRING, ENDMARKER
 
 from distutils2.util import rfc822_escape
 from distutils2.version import is_valid_predicate
+from distutils2.errors import (MetadataConflictError,
+                               MetadataUnrecognizedVersionError)
 
 try:
     # docutils is installed
@@ -86,16 +88,29 @@ except ImportError:
     _HAS_DOCUTILS = False
 
 # public API of this module
-__all__ = ('DistributionMetadata', 'PKG_INFO_ENCODING')
+__all__ = ('DistributionMetadata', 'PKG_INFO_ENCODING',
+           'PKG_INFO_PREFERRED_VERSION')
 
 # Encoding used for the PKG-INFO files
 PKG_INFO_ENCODING = 'utf-8'
+
+# preferred version. Hopefully will be changed
+# to 1.2 once PEP 345 is supported everywhere
+PKG_INFO_PREFERRED_VERSION = '1.0'
 
 _LINE_PREFIX = re.compile('\n       \|')
 _241_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
                'Summary', 'Description',
                'Keywords', 'Home-page', 'Author', 'Author-email',
                'License')
+
+_314_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
+               'Supported-Platform', 'Summary', 'Description',
+               'Keywords', 'Home-page', 'Author', 'Author-email',
+               'License', 'Classifier', 'Download-URL', 'Obsoletes',
+               'Provides', 'Requires')
+
+_314_MARKERS = ('Obsoletes', 'Provides', 'Requires')
 
 _345_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
                'Supported-Platform', 'Summary', 'Description',
@@ -104,6 +119,48 @@ _345_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
                'Classifier', 'Download-URL', 'Obsoletes-Dist',
                'Provides-Dist', 'Requires-Dist', 'Requires-Python',
                'Requires-External')
+
+_345_MARKERS = ('Provides-Dist', 'Requires-Dist', 'Requires-Python',
+                'Obsoletes-Dist', 'Requires-External', 'Maintainer',
+                'Maintainer-email')
+
+_ALL_FIELDS = []
+for field in _241_FIELDS + _314_FIELDS + _345_FIELDS:
+    if field in _ALL_FIELDS:
+        continue
+    _ALL_FIELDS.append(field)
+
+def _version2fieldlist(version):
+    if version == '1.0':
+        return _241_FIELDS
+    elif version == '1.1':
+        return _314_FIELDS
+    elif version == '1.2':
+        return _345_FIELDS
+    raise MetadataUnrecognizedVersionError(version)
+
+def _best_version(fields):
+    """Will detect the best version depending on the fields used."""
+    def _has_marker(keys, markers):
+        for marker in markers:
+            if marker in keys:
+                return True
+        return False
+    keys = fields.keys()
+    is_1_1 = _has_marker(keys, _314_MARKERS)
+    is_1_2 = _has_marker(keys, _345_MARKERS)
+    if is_1_1 and is_1_2:
+        raise MetadataConflictError('You used both 1.1 and 1.2 fields')
+
+    # we have the choice, either 1.0, or 1.2
+    #   - 1.0 has a broken Summary field but work with all tools
+    #   - 1.1 is to avoid
+    #   - 1.2 fixes Summary but is not spreaded yet
+    if not is_1_1 and not is_1_2:
+        return PKG_INFO_PREFERRED_VERSION
+    if is_1_1:
+        return '1.1'
+    return '1.2'
 
 _ATTR2FIELD = {'metadata_version': 'Metadata-Version',
                'name': 'Name',
@@ -156,16 +213,14 @@ class DistributionMetadata(object):
             self.read(path)
         self.execution_context = execution_context
 
-    def _guessmetadata_version(self):
-        for field in self._fields:
-            if field in _345_FIELDS and field not in _241_FIELDS:
-                return '1.2'
-        return '1.0'
+    def _set_best_version(self):
+        self.version = _best_version(self._fields)
+        self._fields['Metadata-Version'] = self.version
 
     def _write_field(self, file, name, value):
         file.write('%s: %s\n' % (name, value))
 
-    def _write_list (self, file, name, values):
+    def _write_list(self, file, name, values):
         for value in values:
             self._write_field(file, name, value)
 
@@ -175,13 +230,17 @@ class DistributionMetadata(object):
         return str(value)
 
     def __getitem__(self, name):
-        return self.get_field(name)
+        return self.get(name)
 
     def __setitem__(self, name, value):
-        return self.set_field(name, value)
+        return self.set(name, value)
+
+    def __delitem__(self, name):
+        del self._fields[name]
+        self._set_best_version()
 
     def _convert_name(self, name):
-        if name in _241_FIELDS + _345_FIELDS:
+        if name in _ALL_FIELDS:
             return name
         name = name.replace('-', '_').lower()
         if name in _ATTR2FIELD:
@@ -236,7 +295,7 @@ class DistributionMetadata(object):
 
     def is_metadata_field(self, name):
         name = self._convert_name(name)
-        return name in _241_FIELDS + _345_FIELDS
+        return name in _ALL_FIELDS
 
     def read(self, filepath):
         self.read_file(open(filepath))
@@ -244,25 +303,18 @@ class DistributionMetadata(object):
     def read_file(self, fileob):
         """Reads the metadata values from a file object."""
         msg = message_from_file(fileob)
-        version = msg['metadata-version']
-        if version in ('1.0', '1.1'):
-            fields = _241_FIELDS
-        else:
-            fields = _345_FIELDS
+        self.version = msg['metadata-version']
 
-        for field in fields:
+        for field in _version2fieldlist(self.version):
             if field in _LISTFIELDS:
                 # we can have multiple lines
                 values = msg.get_all(field)
-                self.set_field(field, values)
+                self.set(field, values)
             else:
                 # single line
                 value = msg[field]
                 if value is not None:
-                    self.set_field(field, value)
-
-        self.version = self._guessmetadata_version()
-        self.set_field('Metadata-Version', self.version)
+                    self.set(field, value)
 
     def write(self, filepath):
         """Write the metadata fields into path.
@@ -276,15 +328,9 @@ class DistributionMetadata(object):
     def write_file(self, fileobject):
         """Write the PKG-INFO format data to a file object.
         """
-        version = self._guessmetadata_version()
-        if 'Metadata-Version' not in self._fields:
-            self['Metadata-Version'] = version
-        if version == '1.0':
-            fields = _241_FIELDS
-        else:
-            fields = _345_FIELDS
-        for field in fields:
-            values = self.get_field(field)
+        self._set_best_version()
+        for field in _version2fieldlist(self.version):
+            values = self.get(field)
             if field in _ELEMENTSFIELD:
                 self._write_field(fileobject, field, ','.join(values))
                 continue
@@ -296,7 +342,7 @@ class DistributionMetadata(object):
             for value in values:
                 self._write_field(fileobject, field, value)
 
-    def set_field(self, name, value):
+    def set(self, name, value):
         """Controls then sets a metadata field"""
         name = self._convert_name(name)
 
@@ -315,8 +361,11 @@ class DistributionMetadata(object):
             if name == 'Description':
                 value = self._remove_line_prefix(value)
         self._fields[name] = value
+        # will trigger an error in case the user
+        # tries to set incompatible versions fields
+        self._set_best_version()
 
-    def get_field(self, name):
+    def get(self, name):
         """Gets a metadata field."""
         name = self._convert_name(name)
         if name not in self._fields:
@@ -363,10 +412,7 @@ class DistributionMetadata(object):
         return missing, warnings
 
     def keys(self):
-        version = self._guessmetadata_version()
-        if version == '1.0':
-            return _241_FIELDS
-        return _345_FIELDS
+        return _version2fieldlist(self.version)
 
     def values(self):
         return [self[key] for key in self.keys()]

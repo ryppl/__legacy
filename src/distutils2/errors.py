@@ -86,3 +86,10 @@ class LinkError(CCompilerError):
 
 class UnknownFileError(CCompilerError):
     """Attempt to process an unknown file type."""
+
+class MetadataConflictError(DistutilsError):
+    """Attempt to read or write metadata fields that are conflictual."""
+
+class MetadataUnrecognizedVersionError(DistutilsError):
+    """Unknown metadata version number."""
+
