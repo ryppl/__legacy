@@ -50,6 +50,8 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         assert _interpret("'buuuu' not in os.name and '%s' in os.name" \
                             % os_name)
 
+        # execution context
+        assert _interpret('python_version == "0.1"', {'python_version': '0.1'})
 
     def test_metadata_read_write(self):
 
@@ -72,6 +74,13 @@ class DistributionMetadataTestCase(unittest2.TestCase):
         metadata = DistributionMetadata(platform_dependant=True)
         metadata.read_file(StringIO(content))
         self.assertEquals(metadata['Requires-Dist'], ['bar'])
+
+        # test with context
+        context = {'sys.platform': 'okook'}
+        metadata = DistributionMetadata(platform_dependant=True,
+                                        execution_context=context)
+        metadata.read_file(StringIO(content))
+        self.assertEquals(metadata['Requires-Dist'], ['foo'])
 
     def test_description(self):
         PKG_INFO = os.path.join(os.path.dirname(__file__), 'PKG-INFO')

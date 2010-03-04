@@ -143,13 +143,15 @@ _UNICODEFIELDS = ('Author', 'Maintainer', 'Summary', 'Description')
 class DistributionMetadata(object):
     """Distribution meta-data class (1.0 or 1.2).
     """
-    def __init__(self, path=None, platform_dependant=False):
+    def __init__(self, path=None, platform_dependant=False,
+                 execution_context=None):
         self._fields = {}
         self.version = None
         self.docutils_support = _HAS_DOCUTILS
         self.platform_dependant = platform_dependant
         if path is not None:
             self.read(path)
+        self.execution_context = execution_context
 
     def _guessmetadata_version(self):
         for field in self._fields:
@@ -218,7 +220,7 @@ class DistributionMetadata(object):
         if not self.platform_dependant or ';' not in value:
             return True, value
         value, marker = value.split(';')
-        return _interpret(marker), value
+        return _interpret(marker, self.execution_context), value
 
     def _remove_line_prefix(self, value):
         return _LINE_PREFIX.sub('\n', value)
@@ -388,21 +390,29 @@ _OPERATORS = {'==': lambda x, y: x == y,
 def _operate(operation, x, y):
     return _OPERATORS[operation](x, y)
 
-# restricted set of names
-_NAMES = {'sys.platform': sys.platform,
-          'python_version': '%s.%s' % (sys.version_info[0],
-                                       sys.version_info[1]),
-          'python_full_version': sys.version.split()[0],
-          'os.name': os.name,
-          'platform.version': platform.version,
-          'platform.machine': platform.machine}
+# restricted set of variables
+_VARS = {'sys.platform': sys.platform,
+         'python_version': '%s.%s' % (sys.version_info[0],
+                                      sys.version_info[1]),
+         'python_full_version': sys.version.split()[0],
+         'os.name': os.name,
+         'platform.version': platform.version,
+         'platform.machine': platform.machine}
 
 class _Operation(object):
 
-    def __init__(self):
+    def __init__(self, execution_context=None):
         self.left = None
         self.op = None
         self.right = None
+        if execution_context is None:
+            execution_context = {}
+        self.execution_context = execution_context
+
+    def _get_var(self, name):
+        if name in self.execution_context:
+            return self.execution_context[name]
+        return _VARS[name]
 
     def __repr__(self):
         return '%s %s %s' % (self.left, self.op, self.right)
@@ -416,15 +426,15 @@ class _Operation(object):
         return False
 
     def _is_name(self, value):
-        return value in _NAMES
+        return value in _VARS
 
     def _convert(self, value):
-        if value in _NAMES:
-            return _NAMES[value]
+        if value in _VARS:
+            return self._get_var(value)
         return value.strip(_STR_LIMIT)
 
     def _check_name(self, value):
-        if value not in _NAMES:
+        if value not in _VARS:
             raise NameError(value)
 
     def _nonsense_op(self):
@@ -480,16 +490,17 @@ class _AND(object):
 
 class _CHAIN(object):
 
-    def __init__(self):
+    def __init__(self, execution_context=None):
         self.ops = []
         self.op_starting = True
+        self.execution_context = execution_context
 
     def eat(self, toktype, tokval, rowcol, line, logical_line):
         if toktype not in (NAME, OP, STRING, ENDMARKER):
             raise SyntaxError('Type not supported "%s"' % tokval)
 
         if self.op_starting:
-            op = _Operation()
+            op = _Operation(self.execution_context)
             if len(self.ops) > 0:
                 last = self.ops[-1]
                 if isinstance(last, (_OR, _AND)) and not last.filled():
@@ -538,10 +549,10 @@ class _CHAIN(object):
                 return False
         return True
 
-def _interpret(marker):
+def _interpret(marker, execution_context=None):
     """Interprets a marker and return a result given the environment."""
     marker = marker.strip()
-    operations = _CHAIN()
+    operations = _CHAIN(execution_context)
     tokenize(StringIO(marker).readline, operations.eat)
     return operations.result()
 
