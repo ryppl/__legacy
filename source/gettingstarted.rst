@@ -68,11 +68,13 @@ Issue the command ``git submodule init``::
   [etc]  
 
 Notice at this point that the *submodule status* has not changed.Now
-update the submodules::
+update the submodules:
 
 .. Why does the reader care that the submodule status hasn't changed?
 .. I don't think we want to be teaching Git in this document, do you?
 .. Why don't we just do “git submodule update --init”?
+
+::
 
   % git submodule update
   Initialized empty Git repository in /tmp/boost/cmake/.git/
