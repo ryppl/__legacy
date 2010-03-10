@@ -1,3 +1,4 @@
+
 .. highlight:: git_shell
 
 .. _getting_started:
@@ -17,73 +18,59 @@ Clone the Boost superproject
 
 ::
 
-  git clone git://gitorious.org/ryppl/boost.git src
+  git clone git://gitorious.org/ryppl/boost.git boost-ryppl
 
 This will clone the rypplized boost *superproject* and place the
-result in the top-level workspace directory ``src/``.  Have a look at
+result in the top-level workspace directory ``boost-ryppl/``.  Have a look at
 the contents.  Most of boost is there, but:
 
-.. Using “src” here doesn't feel right; too generic.  Maybe “boost-src?”
-
-* There is no toplevel ``boost`` directory, where one normally finds
-  boosts' header files.
-
-* There is a toplevel directory ``include``... but it is empty.
-
-* Under ``libs``, all subdirectories are empty.
-
-* In the ``src`` there is a file ``.gitmodules`` that maps local
+* In ``boost-ryppl/`` there is a file ``.gitmodules`` that maps local
   directories to remote git repositories::
 
-    [submodule "libs/accumulators"]
-    	path = libs/accumulators
+    [submodule "src/accumulators"]
+    	path = src/accumulators
     	url = git://gitorious.org/boost/accumulators.git
-    [submodule "libs/algorithm"]
-    	path = libs/algorithm
+    [submodule "src/algorithm"]
+    	path = src/algorithm
     	url = git://gitorious.org/boost/algorithm.git
     etc
     
+* Under ``src`` there is an empty subdirectory for each boost library
+
 * The command ``git submodule status`` gives the commits at which each
   submodule should be cloned:
 
 .. parsed-literal::
 
     % git submodule status
-    -10ac085df521b4b294afa074e296252fabd1735b libs/accumulators
-    -08578dcec8e5be7365e83107cae6f9240e215ed3 libs/algorithm
-    -d037b2069c9cce96f019b02a631a51a47970bc02 libs/any
-    -795ab423fecb41dba2e4e6a8be6ee8089d78136b libs/array
+    -10ac085df521b4b294afa074e296252fabd1735b src/accumulators
+    -08578dcec8e5be7365e83107cae6f9240e215ed3 src/algorithm
+    -d037b2069c9cce96f019b02a631a51a47970bc02 src/any
+    -795ab423fecb41dba2e4e6a8be6ee8089d78136b src/array
     *etc…*
 
 Initialize and update the submodules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Issue the command ``git submodule init``::
+Issue the command ``git submodule init --update``:
+
+.. parsed-literal::
 
   % git submodule init
-  Submodule 'libs/accumulators' (git://gitorious.org/boost/accumulators.git) registered for path 'libs/accumulators'
-  Submodule 'libs/algorithm' (git://gitorious.org/boost/algorithm.git) registered for path 'libs/algorithm'
-  Submodule 'libs/any' (git://gitorious.org/boost/any.git) registered for path 'libs/any'
-  Submodule 'libs/array' (git://gitorious.org/boost/array.git) registered for path 'libs/array'
-  [etc]  
+  Submodule 'src/accumulators' (git://gitorious.org/boost/accumulators.git) registered for path 'src/accumulators'
+  Submodule 'src/algorithm' (git://gitorious.org/boost/algorithm.git) registered for path 'src/algorithm'
+  Submodule 'src/any' (git://gitorious.org/boost/any.git) registered for path 'src/any'
+  Submodule 'src/array' (git://gitorious.org/boost/array.git) registered for path 'src/array'
 
-Notice at this point that the *submodule status* has not changed.Now
-update the submodules:
+  *etc…*
 
-.. Why does the reader care that the submodule status hasn't changed?
-.. I don't think we want to be teaching Git in this document, do you?
-.. Why don't we just do “git submodule update --init”?
-
-::
-
-  % git submodule update
   Initialized empty Git repository in /tmp/boost/cmake/.git/
   remote: Counting objects: 263, done.
-  [etc]
+
+  *etc…*
   
-There will be alot of output...  a git checkout of each submodule has
-been done to its corresponding directory inside the superproject, and
-that the checkout has been done at a specific commit.
+There will be alot of output...  Git has checked out each submodule to
+its corresponding directory inside the superproject, and.
 
 .. “that” above makes the sentence grammatically confusing.
 
@@ -100,37 +87,25 @@ The minus sign to the left of the hash has disappeared, and a branch
 
 Also, the submodule directories now contain code::
 
-  % ls libs/process
-  CMakeLists.txt  build/  example/  index.htm  test/
-  README.txt      doc/    include/  source/
-  
-Now you have a Boost workspace nearly ready to build.
+  % ls src/regex
+  CMakeLists.txt	example/	module.cmake	src/
+  build/		include/	performance/	test/
+  doc/		index.html	README.txt	tools/
 
-.. Used to say “ryppl workspace.”  I think that's confusing, implying
-.. this procedure is more generic than it actually is.  A project with
-.. no ryppl dependencies might not need any submodules, for example.
+Now you have a Boost workspace nearly ready to build.
 
 Run cmake and generate forwarding headers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Generate makefiles with *cmake* in the standard way.  
-.. I think we should say “configure with cmake” instead.  This does
-.. more than simply generating makefiles, right?
-I like to make a
-subdirectory ``build/`` of my workspace and run cmake in there, so
-that I can always tell which build corresponds to which workspace.
-.. That is confusingly phrased: 1. The reader has no concept of why
-.. there might be multiple workspaces 2. What happens if I run cmake
-.. without the subdirectory?  Don't I still get build results
-.. associated with the workspace?  This path has already been added to
-``.gitignore``, so all those new buildfiles won't look to git like
-they need to be added to the project:
+Create a build directory outside your source tree and run CMake there.
+This step inspects your system configuration, finding installed
+libraries, tools, etc., and generates appropriate makefiles for Boost:
 
 .. parsed-literal::
 
-  % mkdir build
-  % cd build
-  % cmake ..
+  % mkdir ../build-ryppl
+  % cd ../build-ryppl
+  % cmake ../boost-ryppl
   -- The C compiler identification is GNU
   -- The CXX compiler identification is GNU
 
@@ -153,7 +128,7 @@ they need to be added to the project:
   -- 
   -- Configuring done
   -- Generating done
-  -- Build files have been written to: /tmp/src/build
+  -- Build files have been written to: *absolute-path-to-..*/build-ryppl
 
 The last step is to generate forwarding headers.  This technique is
 borrowed from the smart guys at Trolltech ``Qt`` toolkit.  Make the
@@ -166,8 +141,8 @@ target **genheaders**:
   % make genheaders
   Scanning dependencies of target genheaders
   Generating central header directory
-  Projects located under     :  /tmp/src/libs
-  Fwding headers generated in:  /tmp/src/include
+  Projects located under     :  *absolute-path-to-..*/boost-ryppl
+  Fwding headers generated in:  *absolute-path-to-..*/build-ryppl/include
 
                 serialization:  178
                     smart_ptr:  59
@@ -180,10 +155,11 @@ target **genheaders**:
                        assign:  16
   Built target genheaders
 
-Now you'll notice that a superproject directory ``include/boost``
+
+Now you'll notice that a  directory ``build-ryppl/include``
 exists and is full of headers::
 
-  % ls ../include/boost
+  % ls include/boost
   accumulators/                 multi_array/
   algorithm/                    multi_array.hpp
   aligned_storage.hpp           multi_index/
@@ -199,27 +175,43 @@ And that each file simply forwards to the project from whence it
 came::
 
   % cat ../include/boost/wave.hpp 
-  #include "../../libs/wave/include/boost/wave.hpp"
-
-Note also that the presence of generated files in ``build/`` and
-``include/`` don't worry git::
-
-  % git status
-  # On branch master
-  nothing to commit (working directory clean)
-
-Thanks to the file ``.gitignore``.
+  #include "../../src/wave/include/boost/wave.hpp"
 
 Build
 ^^^^^
 
-Now you can build::
+Now you can build.  To find the names of all available targets, make
+the `help` target:
 
-  % make boost_system
-  Scanning dependencies of target boost_system-mt-static-debug
-  Building CXX object src/system/src/CMakeFiles/boost_system-mt-static-debug.dir/error_code.cpp.o
-  Linking CXX static library ../../../lib/libboost_system-mt-d.a
-  Built target boost_system-mt-static-debug
-  
+.. parsed-literal::
+
+  % make help
+  The following are some of the valid targets for this Makefile:
+  ... all (the default if no target is provided)
+  ... clean
+  ... depend
+  ... edit_cache
+  ... genheaders
+  ... install
+  ... install/local
+  ... install/strip
+  ... list_install_components
+  ... rebuild_cache
+  ... test
+  ... boost_date_time
+  ... boost_date_time-mt-shared
+  ... boost_date_time-mt-shared-debug
+  ... boost_date_time-mt-static
+  ... boost_date_time-mt-static-debug
+  ... boost_thread
+  *etc*
+
+  % make boost_date_time
+  [  0%] Built target boost_date_time-mt-static-debug
+  [  0%] Built target boost_date_time-mt-shared-debug
+  [  0%] Built target boost_date_time-mt-shared
+  [100%] Built target boost_date_time-mt-static
+  [100%] Built target boost_date_time
+    
 
 .. How do I test my library?
