@@ -45,6 +45,7 @@ Development
 * Prepare to hack on a new Ryppl project
 * Publish changes to the world
 * Request that maintainer merge changes
+* Mark a commit as a releasable state
 * Review outstanding merge requests
 * Speculative test requests
   * platform/branch specificity
