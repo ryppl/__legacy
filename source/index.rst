@@ -8,9 +8,9 @@ Distributed C++ development with Ryppl
 .. toctree::
    :maxdepth: 3
 
+   use-cases
    gettingstarted
    modifying_the_python_lib
-   highlevelscenarios
    svn_equivs
    various_howtos
 

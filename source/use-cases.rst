@@ -1,8 +1,8 @@
 
 .. highlight:: git_shell
 
-High-Level Scenarios
-====================
+Use Cases
+=========
 
 In this section we're trying to address the different situations that
 need to be handled by this system, not just for library developers,
@@ -184,7 +184,7 @@ Beman Notes
 -----------
 
 Release Mgr
-...........
+:::::::::::
 
 * Releasability overview (email)
 * Automatically notify maintainers of breakage (email).  Show test /failures/
@@ -193,7 +193,7 @@ Release Mgr
 * Make binaries
 
 Developer
-.........
+:::::::::
 
 * XML Markup and maintainer stored per-library
 * Request speculative testing
@@ -201,12 +201,12 @@ Developer
   * auto-notification of results
 
 Tester
-......
+::::::
 
 * Dead simple slave sign-on
 * Incremental testing
 
 User
-....
+::::
 
 * Summary of releasability criteria for a library.
