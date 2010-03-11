@@ -9,6 +9,7 @@ Distributed C++ development with Ryppl
    :maxdepth: 3
 
    use-cases
+   dependency-management
    gettingstarted
    modifying_the_python_lib
    svn_equivs
