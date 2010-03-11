@@ -22,16 +22,8 @@ About this documentation
 This documentation is written in `reStructuredText
 <http://docutils.sourceforge.net/rst.html>`_ and assembled by `Sphinx
 <http://sphinx.pocoo.org>`_.  You can get the source from the
-``boost-git-docs`` branch of the git repository at
-``git://sodium.resophonic.com/boost_cookbook``.  
-
-.. I think the above information is outdated.  Please fix.
-
-.. rubric:: Why alt dot boost?
-
-Because this neither official boost nor currently proposed.  It is a
-separate effort that proceeds independently of upstream boost.
-
+``master`` branch of the git repository at
+``git://gitorious.org/ryppl/doc.git``.  
 
 Learning about Git
 ==================
@@ -44,8 +36,10 @@ Learning about Git
 Videos
 ------
 
-* `Linus Torvalds on Git <http://www.youtube.com/watch?v=4XpnKHJAok8>`_ the now famous Google
-  Tech Talk.  A must-watch.
+* `Linus Torvalds on Git
+  <http://www.youtube.com/watch?v=4XpnKHJAok8>`_ the now famous Google
+  Tech Talk.  A must-watch, unless you have a thin skin.
+
 * `Contributing with Git
   <http://www.youtube.com/watch?v=j45cs5_nY2k>`_ Johannes Schindelin's
   Google Tech Talk.  Good for beginners.
