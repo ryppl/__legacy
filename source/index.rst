@@ -8,7 +8,7 @@ Distributed C++ development with Ryppl
 .. toctree::
    :maxdepth: 3
 
-   use-cases
+   workflows
    dependency-management
    gettingstarted
    modifying_the_python_lib
