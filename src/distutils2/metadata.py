@@ -1,55 +1,9 @@
 """
-==================================================
 Implementation of the Metadata for Python packages
-==================================================
 
-The file format is RFC 822 and there are currently three implementations.
-We only support reading/writing Metadata v1.0 or v1.2. If 1.1 is encountered
-1.1 extra fields will be ignored.
-
-PEP 241 - Metadata v1.0
-=======================
-
-- Metadata-Version
-- Name
-- Version
-- Platform (multiple)
-- Summary
-- Description (optional)
-- Keywords (optional)
-- Home-page (optional)
-- Author  (optional)
-- Author-email (optional)
-- License (optional)
-
-PEP 345 - Metadata v1.2
-=======================
-
-# XXX adding codename ? multiple email rfc232 ?
-
-- Metadata-Version
-- Name
-- Version
-- Platform (multiple)
-- Supported-Platform (multiple)
-- Summary
-- Description (optional) -- changed format
-- Keywords (optional)
-- Home-page (optional)
-- Download-URL
-- Author  (optional)
-- Author-email (optional)
-- Maintainer (optional)
-- Maintainer-email (optional)
-- License (optional)
-- Classifier (multiple) -- see PEP 241
-- Requires-Python
-- Requires-External (multiple)
-- Requires-Dist (multiple)
-- Provides-Dist (multiple)
-- Obsoletes-Dist (multiple)
-
+Supports all Metadata formats (1.0, 1.1, 1.2).
 """
+
 import re
 import os
 import sys
@@ -60,7 +14,8 @@ from tokenize import tokenize, NAME, OP, STRING, ENDMARKER
 
 from distutils2.log import warn
 from distutils2.util import rfc822_escape
-from distutils2.version import is_valid_predicate
+from distutils2.version import (is_valid_predicate, is_valid_version,
+                                is_valid_versions)
 from distutils2.errors import (MetadataConflictError,
                                MetadataUnrecognizedVersionError)
 
@@ -122,10 +77,11 @@ _345_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
                'Requires-External')
 
 _345_MARKERS = ('Provides-Dist', 'Requires-Dist', 'Requires-Python',
-                'Obsoletes-Dist', 'Requires-External', 'Maintainer',
-                'Maintainer-email')
+        'Obsoletes-Dist', 'Requires-External', 'Maintainer',
+        'Maintainer-email')
 
 _ALL_FIELDS = []
+
 for field in _241_FIELDS + _314_FIELDS + _345_FIELDS:
     if field in _ALL_FIELDS:
         continue
@@ -164,37 +120,37 @@ def _best_version(fields):
     return '1.2'
 
 _ATTR2FIELD = {'metadata_version': 'Metadata-Version',
-               'name': 'Name',
-               'version': 'Version',
-               'platform': 'Platform',
-               'supported_platform': 'Supported-Platform',
-               'description': 'Summary',
-               'long_description': 'Description',
-               'keywords': 'Keywords',
-               'url': 'Home-page',
-               'author': 'Author',
-               'author_email': 'Author-email',
-               'maintainer': 'Maintainer',
-               'maintainer_email': 'Maintainer-email',
-               'licence': 'License',
-               'classifier': 'Classifier',
-               'download_url': 'Download-URL',
-               'obsoletes_dist': 'Obsoletes-Dist',
-               'provides_dist': 'Provides-Dist',
-               'requires_dist': 'Requires-Dist',
-               'requires_python': 'Requires-Python',
-               'requires_external': 'Requires-External',
-               'requires': 'Requires',
-               'provides': 'Provides',
-               'obsoletes': 'Obsoletes',
-               }
+        'name': 'Name',
+        'version': 'Version',
+        'platform': 'Platform',
+        'supported_platform': 'Supported-Platform',
+        'description': 'Summary',
+        'long_description': 'Description',
+        'keywords': 'Keywords',
+        'url': 'Home-page',
+        'author': 'Author',
+        'author_email': 'Author-email',
+        'maintainer': 'Maintainer',
+        'maintainer_email': 'Maintainer-email',
+        'licence': 'License',
+        'classifier': 'Classifier',
+        'download_url': 'Download-URL',
+        'obsoletes_dist': 'Obsoletes-Dist',
+        'provides_dist': 'Provides-Dist',
+        'requires_dist': 'Requires-Dist',
+        'requires_python': 'Requires-Python',
+        'requires_external': 'Requires-External',
+        'requires': 'Requires',
+        'provides': 'Provides',
+        'obsoletes': 'Obsoletes',
+        }
 
 _PREDICATE_FIELDS = ('Requires-Dist', 'Obsoletes-Dist', 'Provides-Dist')
-
+_VERSIONS_FIELDS = ('Requires-Python',)
+_VERSION_FIELDS = ('Version',)
 _LISTFIELDS = ('Platform', 'Classifier', 'Obsoletes',
-               'Requires', 'Provides', 'Obsoletes-Dist',
-               'Provides-Dist', 'Requires-Dist', 'Requires-Python',
-               'Requires-External')
+        'Requires', 'Provides', 'Obsoletes-Dist',
+        'Provides-Dist', 'Requires-Dist', 'Requires-External')
 
 _ELEMENTSFIELD = ('Keywords',)
 
@@ -347,23 +303,37 @@ class DistributionMetadata(object):
         """Controls then sets a metadata field"""
         name = self._convert_name(name)
 
-        # XXX need to parse the Requires-Python value
-        #
+        if (name in _ELEMENTSFIELD + ('Platform',) and
+            not isinstance(value, (list, tuple))):
+            if isinstance(value, str):
+                value = value.split(',')
+            else:
+                value = []
+        elif (name in _LISTFIELDS and
+            not isinstance(value, (list, tuple))):
+            if isinstance(value, str):
+                value = [value]
+            else:
+                value = None
+
         if name in _PREDICATE_FIELDS and value is not None:
             for v in value:
                 # check that the values are valid predicates
                 if not is_valid_predicate(v.split(';')[0]):
                     warn('"%s" is not a valid predicate' % v)
-        if name in _LISTFIELDS + _ELEMENTSFIELD:
-            if isinstance(value, str):
-                value = value.split(',')
-        elif name in _UNICODEFIELDS:
+        elif name in _VERSIONS_FIELDS and value is not None:
+            if not is_valid_versions(value):
+                warn('"%s" is not a valid predicate' % value)
+        elif name in _VERSION_FIELDS and value is not None:
+            if not is_valid_version(value):
+                warn('"%s" is not a valid version' % value)
+
+        if name in _UNICODEFIELDS:
             value = self._encode_field(value)
             if name == 'Description':
                 value = self._remove_line_prefix(value)
+
         self._fields[name] = value
-        # will trigger an error in case the user
-        # tries to set incompatible versions fields
         self._set_best_version()
 
     def get(self, name):

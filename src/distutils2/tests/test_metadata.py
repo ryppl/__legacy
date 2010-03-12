@@ -137,11 +137,53 @@ class DistributionMetadataTestCase(unittest2.TestCase):
     def test_warnings(self):
         metadata = DistributionMetadata()
 
-        # this should raise a warning
-        # XXX how to test this on 2.4 ?
-        metadata['Requires-Dist'] = ['Funky (Groovie)']
+        # these should raise a warning
+        values = (('Requires-Dist', 'Funky (Groovie)'),
+                  ('Requires-Python', '1-4'))
 
+        from distutils2 import metadata as m
+        old = m.warn
+        m.warns = 0
 
+        def _warn(*args):
+            m.warns += 1
+
+        m.warn = _warn
+
+        try:
+            for name, value in values:
+                metadata.set(name, value)
+        finally:
+            m.warn = old
+            res = m.warns
+            del m.warns
+
+        # we should have a certain amount of warnings
+        num_wanted = len(values)
+        self.assertEquals(num_wanted, res)
+
+    def test_multiple_predicates(self):
+        metadata = DistributionMetadata()
+
+        from distutils2 import metadata as m
+        old = m.warn
+        m.warns = 0
+
+        def _warn(*args):
+            m.warns += 1
+
+        # see for "3" instead of "3.0"  ???
+        # its seems like the MINOR VERSION can be omitted
+        m.warn = _warn
+        try:
+            metadata['Requires-Python'] = '>=2.6, <3.0'
+            metadata['Requires-Dist'] = ['Foo (>=2.6, <3.0)']
+        finally:
+            m.warn = old
+            res = m.warns
+            del m.warns
+
+        self.assertEquals(res, 0)
 
 def test_suite():
     return unittest2.makeSuite(DistributionMetadataTestCase)

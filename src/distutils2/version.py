@@ -312,6 +312,7 @@ def suggest_normalized_version(s):
 
 _PREDICATE = re.compile(r"(?i)^\s*([a-z_]\w*(?:\.[a-z_]\w*)*)(.*)")
 _VERSIONS = re.compile(r"^\s*\((.*)\)\s*$")
+_PLAIN_VERSIONS = re.compile(r"^\s*(.*)\s*$")
 _SPLIT_CMP = re.compile(r"^\s*(<=|>=|<|>|!=|==)\s*([^\s,]+)\s*$")
 
 def _split_predicate(predicate):
@@ -322,6 +323,7 @@ def _split_predicate(predicate):
     else:
         comp, version = match.groups()
     return comp, NormalizedVersion(version)
+
 
 class VersionPredicate(object):
     """Defines a predicate: ProjectName (>ver1,ver2, ..)"""
@@ -341,7 +343,6 @@ class VersionPredicate(object):
 
         self.name, predicates = match.groups()
         predicates = predicates.strip()
-
         predicates = _VERSIONS.match(predicates)
         if predicates is not None:
             predicates = predicates.groups()[0]
@@ -359,9 +360,45 @@ class VersionPredicate(object):
                 return False
         return True
 
+class Versions(VersionPredicate):
+    def __init__(self, predicate):
+        predicate = predicate.strip()
+        match = _PLAIN_VERSIONS.match(predicate)
+        if match is None:
+            raise ValueError('Bad predicate "%s"' % predicate)
+        self.name = None
+        predicates = match.groups()[0]
+        self.predicates = [_split_predicate(pred.strip())
+                           for pred in predicates.split(',')]
+
+class Version(VersionPredicate):
+    def __init__(self, predicate):
+        predicate = predicate.strip()
+        match = _PLAIN_VERSIONS.match(predicate)
+        if match is None:
+            raise ValueError('Bad predicate "%s"' % predicate)
+        self.name = None
+        self.predicates = _split_predicate(match.groups()[0])
+
 def is_valid_predicate(predicate):
     try:
         VersionPredicate(predicate)
+    except (ValueError, IrrationalVersionError):
+        return False
+    else:
+        return True
+
+def is_valid_versions(predicate):
+    try:
+        Versions(predicate)
+    except (ValueError, IrrationalVersionError):
+        return False
+    else:
+        return True
+
+def is_valid_version(predicate):
+    try:
+        Version(predicate)
     except (ValueError, IrrationalVersionError):
         return False
     else:
