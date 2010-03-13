@@ -14,6 +14,7 @@ Distributed C++ development with Ryppl
    modifying_the_python_lib
    svn_equivs
    various_howtos
+   design-details
 
 
 About this documentation

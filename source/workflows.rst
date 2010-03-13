@@ -1,7 +1,7 @@
 
 .. highlight:: git_shell
 
-Use Cases
+Workflows
 :::::::::
 
 This section describes cases that need to be handled by this system,
@@ -57,29 +57,128 @@ With testing prior to installation:
    $ ryppl install --test *project1* *project2* *project3*\ …
 
 Development
------------
+===========
 
-* Maintainer stored per project
-* Prepare to hack on an existing Ryppl project
-* Check in changes an existing Ryppl project
-* Prepare to hack on a new Ryppl project
-* Publish changes to the world
-* Request that maintainer merge changes
-* Mark a commit as a releasable state
-* Review outstanding merge requests
-* Speculative test requests
+Things done by software developers.
+
+Getting the Source
+------------------
+
+To get the source for an existing ryppl project, start by pulling the
+code down from the official repository:
+
+.. parsed-literal::
+
+   $ ryppl checkout *project*
+
+that puts the source for *project* in a subdirectory called *project/*
+of your ryppl workspace.  You now have a Git repository in which to
+work.  To commit changes locally, simply use regular Git commands in
+the project subdirectory (or a child).  Most ryppl commands described
+in the Development_ section are documented with the assumption that
+the current directory is the project subdirectory or a child thereof.
+
+If you are a maintainer, ryppl will detect that fact.  Otherwise, most
+likely you will want to create a public repository where you can
+publish your changes.  You can wait until you actually want to
+publish, but you may find that you are more inclined to push changes
+out (and thus create a non-local backup of your work) if the
+repository is already prepared.  See `Publishing Projects`_ for
+details.
+
+Publishing Projects
+-------------------
+
+To make your project visible to the world,
+
+.. parsed-literal::
+
+   $ ryppl publish *project*
+
+Ryppl will dump instructions for creating a public clone of the
+official repository. [#siteclone]_
+
+.. Admonition:: Open Question
+
+   GitHub_ and Gitorious_ don't reveal the push URL unless you have
+   write permission on the repository. Is there some security concern
+   there? Push URLs are easily deduced from the other ones.
+
+.. [#siteclone] If the official repository is hosted on Gitorious_ or
+    GitHub_, these instructions will include directions for cloning
+    the repository on the site itself, which enables some cool
+    tracking features.
+
+.. _Gitorious: http://gitorious.org
+.. _GitHub: http://github.com
+
+Merge Requests
+--------------
+
+To request that a project maintainer merge your changes into the
+project's official repository,
+
+::
+
+  $ ryppl merge-request
+
+will generate an email to the project maintainer containing
+instructions for getting and merging your code, giving you an
+opportunity to edit the message. [#api]_
+
+.. [#api] If the repository host has an API that allows such requests
+   to be generated (e.g. as GitHub_ does), we may eventually use that
+   API where appropriate, but it's not a high priority.
+
+Creating a Release
+------------------
+
+If you are a project maintainer, it is up to you to decide when the
+project can be released.  Releases are created by tagging revisions in
+your Git repository.  To release your current working tree, simply
+
+::
+
+  $ ryppl release
+
+If you are working on a branch other than your mainline (usually
+``master``), you'll create a point release or a pre-release
+(e.g. beta).  You can add an explicit version string, or ryppl will
+attempt to assign one for you.
+
+Request Remote Testing
+----------------------
+
+One of ryppl's most important features is the ability for anyone to
+dedicate testing resources to a project.  That allows testing on
+diverse platforms not controlled by the project maintainer.  To
+request a test of the current working tree state, simply::
+
+  $ ryppl test-request
+
+which will request results from your “usual” set of platforms.
+Options exist to allow more specific requests to be generated for
+specific slaves (or pools thereof).  A very special form of test
+request will cause ryppl to attempt an automatic merge…
+
   - platform/branch specificity
   - auto-notification of results
   - auto-adjustment of “releasable” tag
 
 
-Testing
--------
+Review Outstanding Merge Requests
+---------------------------------
 
-- Incremental testing is absolutely required.
-- Releasability tests combine testing results with expected failure markup.
-- Expected failure markup is stored per-library.
-- Notifications initially via email
+Initially, merge requests can be tracked in the maintainers' own
+personal email systems.  At some point we may want to keep track of
+which merge requests are unhandled, so a maintainer can ask, ::
+
+  $ ryppl show merge-requests
+
+This is a low-priority feature.
+
+Testing
+=======
 
 * Summary of a project's releasability criteria
 * Test these three Ryppl projects
@@ -100,7 +199,7 @@ Testing
       Incremental testing needs research in that case.
 
 Packaging / Release
--------------------
+===================
 
 * Releasability overview (email)
 * Automatically notify maintainers of breakage (email).  Show test /failures/
