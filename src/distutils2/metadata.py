@@ -73,8 +73,8 @@ _345_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
                'Keywords', 'Home-page', 'Author', 'Author-email',
                'Maintainer', 'Maintainer-email', 'License',
                'Classifier', 'Download-URL', 'Obsoletes-Dist',
-               'Provides-Dist', 'Requires-Dist', 'Requires-Python',
-               'Requires-External')
+               'Project-URL', 'Provides-Dist', 'Requires-Dist',
+               'Requires-Python', 'Requires-External')
 
 _345_MARKERS = ('Provides-Dist', 'Requires-Dist', 'Requires-Python',
         'Obsoletes-Dist', 'Requires-External', 'Maintainer',
@@ -124,10 +124,10 @@ _ATTR2FIELD = {'metadata_version': 'Metadata-Version',
         'version': 'Version',
         'platform': 'Platform',
         'supported_platform': 'Supported-Platform',
-        'description': 'Summary',
-        'long_description': 'Description',
+        'summary': 'Summary',
+        'description': 'Description',
         'keywords': 'Keywords',
-        'url': 'Home-page',
+        'home_page': 'Home-page',
         'author': 'Author',
         'author_email': 'Author-email',
         'maintainer': 'Maintainer',
@@ -143,6 +143,7 @@ _ATTR2FIELD = {'metadata_version': 'Metadata-Version',
         'requires': 'Requires',
         'provides': 'Provides',
         'obsoletes': 'Obsoletes',
+        'project_url': 'Project-URL',
         }
 
 _PREDICATE_FIELDS = ('Requires-Dist', 'Obsoletes-Dist', 'Provides-Dist')

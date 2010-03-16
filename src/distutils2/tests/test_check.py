@@ -32,7 +32,7 @@ class CheckTestCase(support.LoggingSilencer,
         # now let's add the required fields
         # and run it again, to make sure we don't get
         # any warning anymore
-        metadata = {'url': 'xxx', 'author': 'xxx',
+        metadata = {'home_page': 'xxx', 'author': 'xxx',
                     'author_email': 'xxx',
                     'name': 'xxx', 'version': 'xxx'
                     }
