@@ -147,15 +147,37 @@ request a test of the current working tree state, simply::
 
   $ ryppl test-request
 
-which will request results from your “usual” set of platforms.
-Options exist to allow more specific requests to be generated for
-specific slaves (or pools thereof).  A very special form of test
-request will cause ryppl to attempt an automatic merge…
+which will request results from your “usual” set of platforms for the
+HEAD of the current working tree.  If you have made changes to the
+current working tree that aren't checked in, you'll be warned first.
+Test result notification emails include a ryppl command-line that the
+maintainer can use to release the tested state.
 
-  - platform/branch specificity
-  - auto-notification of results
-  - auto-adjustment of “releasable” tag
+To test on specific slaves, they can be named on the command-line:
 
+.. parsed-literal::
+
+  $ ryppl test-request --slave=\ *slave1*,\ *slave2*\, …
+
+Test Slave Aliases
+------------------
+
+In ``.ryppl/slave-aliases`` at the project root (and in the user's
+home directory), one can define aliases for test slaves and pools
+thereof.  Each test slave is identified by a unique key that we'll
+generate somehow::
+
+      troymac:      19fa345c9732d5
+      bemanppcmac:  92d831e63b4572
+      davemac:      29831d6eb354c7
+      mac:          troymac, bemanppcmac, davemac, 9a1f3c7923dc
+
+Slaves can be identified either by unique key or by alias.  In the
+example above, ``mac`` is an alias for a pool of four machines,
+presumably all Apple Macs.  Ryppl will choose among these slaves or
+(eventually) distribute the tests among them, based on current
+workload.  The special slave alias ``default`` defines the slaves to
+use when no other slaves are specified.
 
 Review Outstanding Merge Requests
 ---------------------------------
