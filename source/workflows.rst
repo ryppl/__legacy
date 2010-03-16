@@ -121,10 +121,6 @@ will generate an email to the project maintainer containing
 instructions for getting and merging your code, giving you an
 opportunity to edit the message. [#api]_
 
-.. [#api] If the repository host has an API that allows such requests
-   to be generated (e.g. as GitHub_ does), we may eventually use that
-   API where appropriate, but it's not a high priority.
-
 Creating a Release
 ------------------
 
@@ -202,4 +198,13 @@ Packaging / Release
 * Continuous testing of the release branch
 * Make binaries
 
+
+.. [#siteclone] If the official repository is hosted on Gitorious_ or
+    GitHub_, these instructions will include directions for cloning
+    the repository on the site itself, which enables some cool
+    tracking features.
+
+.. [#api] If the repository host has an API that allows such requests
+   to be generated (e.g. as GitHub_ does), we may eventually use that
+   API where appropriate, but it's not a high priority.
 
