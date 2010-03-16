@@ -873,11 +873,11 @@ Status''', required = False)
 
 		fp = open('setup.py', 'w')
 		fp.write('#!/usr/bin/env python\n\n')
-		fp.write('from distutils.core import setup\n\n')
+		fp.write('from distutils2.core import setup\n\n')
 
 		fp.write('from sys import version\n')
 		fp.write('if version < \'2.2.3\':\n')
-		fp.write('    from distutils.dist import DistributionMetadata\n')
+		fp.write('    from distutils2.dist import DistributionMetadata\n')
 		fp.write('    DistributionMetadata.classifiers = None\n')
 		fp.write('    DistributionMetadata.download_url = None\n')
 
