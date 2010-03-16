@@ -104,11 +104,6 @@ official repository. [#siteclone]_
    write permission on the repository. Is there some security concern
    there? Push URLs are easily deduced from the other ones.
 
-.. [#siteclone] If the official repository is hosted on Gitorious_ or
-    GitHub_, these instructions will include directions for cloning
-    the repository on the site itself, which enables some cool
-    tracking features.
-
 .. _Gitorious: http://gitorious.org
 .. _GitHub: http://github.com
 

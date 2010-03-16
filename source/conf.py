@@ -50,7 +50,7 @@ dochash = subprocess.Popen('git log -n1 --pretty=format:%H'.split(),
 
 copyright.version = "BLAMMO"
 
-copyright = u'2009, troy d. straszheim -- ' + ' Version ' + dochash + ", " + ' '.join(lastmod.split(' ')[:4])
+copyright = u'2009-2010, troy d. straszheim and david abrahams -- ' + ' Version ' + dochash + ", " + ' '.join(lastmod.split(' ')[:4])
 
 # + ' the license for this document is &lt;a href="http://creativecommons.org/licenses/by-nc-nd/3.0/"&gt;by-nc-nd&lt;/a&gt;.'
 
