@@ -678,7 +678,7 @@ class SetupClass:
 		self.config = None
 		self.classifierDict = {}
 		self.setupData = {}
-		self.setupData['classifiers'] = self.classifierDict
+		self.setupData['classifier'] = self.classifierDict
 		self.setupData['packages'] = {}
 
 		self.loadConfigFile()
@@ -878,7 +878,7 @@ Status''', required = False)
 		fp.write('from sys import version\n')
 		fp.write('if version < \'2.2.3\':\n')
 		fp.write('    from distutils2.dist import DistributionMetadata\n')
-		fp.write('    DistributionMetadata.classifiers = None\n')
+		fp.write('    DistributionMetadata.classifier = None\n')
 		fp.write('    DistributionMetadata.download_url = None\n')
 
 		fp.write('setup(name = %s,\n' % repr(self.setupData['name']))
@@ -890,9 +890,9 @@ Status''', required = False)
 				% repr(self.setupData['author_email']))
 		if self.setupData['url']:
 			fp.write('        url = %s,\n' % repr(self.setupData['url']))
-		if self.setupData['classifiers']:
-			fp.write('        classifiers = [\n')
-			for classifier in sorted(self.setupData['classifiers'].keys()):
+		if self.setupData['classifier']:
+			fp.write('        classifier = [\n')
+			for classifier in sorted(self.setupData['classifier'].keys()):
 				fp.write('              %s,\n' % repr(classifier))
 			fp.write('           ],\n')
 		if self.setupData['packages']:

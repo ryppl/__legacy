@@ -239,7 +239,7 @@ Your selection [default 1]: ''', log.INFO)
             'description': meta['Description'],
             'keywords': meta['Keywords'],
             'platform': meta['Platform'],
-            'classifiers': meta['Classifier'],
+            'classifier': meta['Classifier'],
             'download_url': meta['Download-URL'],
             #'provides': meta['Provides'],
             #'requires': meta['Requires'],
