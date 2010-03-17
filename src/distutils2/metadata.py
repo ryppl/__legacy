@@ -151,7 +151,8 @@ _VERSIONS_FIELDS = ('Requires-Python',)
 _VERSION_FIELDS = ('Version',)
 _LISTFIELDS = ('Platform', 'Classifier', 'Obsoletes',
         'Requires', 'Provides', 'Obsoletes-Dist',
-        'Provides-Dist', 'Requires-Dist', 'Requires-External')
+        'Provides-Dist', 'Requires-Dist', 'Requires-External',
+        'Project-URL')
 
 _ELEMENTSFIELD = ('Keywords',)
 
