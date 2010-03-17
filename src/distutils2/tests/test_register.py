@@ -240,6 +240,14 @@ class RegisterTestCase(PyPIRCCommandTestCase):
         finally:
             del register_module.raw_input
 
+    def test_register_pep345(self):
+        cmd = self._get_cmd({})
+        cmd.ensure_finalized()
+        cmd.distribution.metadata['Requires-Dist'] = ['lxml']
+        data = cmd.build_post_data('submit')
+        self.assertEquals(data['metadata_version'], '1.2')
+        self.assertEquals(data['requires_dist'], ['lxml'])
+
 def test_suite():
     return unittest2.makeSuite(RegisterTestCase)
 

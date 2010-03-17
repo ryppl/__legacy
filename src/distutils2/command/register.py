@@ -227,8 +227,7 @@ Your selection [default 1]: ''', log.INFO)
         meta = self.distribution.metadata
         data = {
             ':action': action,
-            # XXX implement 1.1
-            'metadata_version' : '1.0',
+            'metadata_version' : meta.version,
             'name': meta['Name'],
             'version': meta['Version'],
             'summary': meta['Summary'],
@@ -241,12 +240,21 @@ Your selection [default 1]: ''', log.INFO)
             'platform': meta['Platform'],
             'classifier': meta['Classifier'],
             'download_url': meta['Download-URL'],
-            #'provides': meta['Provides'],
-            #'requires': meta['Requires'],
-            #'obsoletes': meta['Obsoletes'],
         }
-        #if data['provides'] or data['requires'] or data['obsoletes']:
-        #    data['metadata_version'] = '1.1'
+
+        if meta.version == '1.2':
+            data['requires_dist'] = meta['Requires-Dist']
+            data['requires_python'] = meta['Requires-Python']
+            data['requires_external'] = meta['Requires-External']
+            data['provides_dist'] = meta['Provides-Dist']
+            data['obsoletes_dist'] = meta['Obsoletes-Dist']
+            data['project_url'] = meta['Project-Url']
+
+        elif meta.version == '1.1':
+            data['provides'] = meta['Provides']
+            data['requires'] = meta['Requires']
+            data['obsoletes'] = meta['Obsoletes']
+
         return data
 
     def post_to_server(self, data, auth=None):
@@ -263,8 +271,9 @@ Your selection [default 1]: ''', log.INFO)
         body = StringIO.StringIO()
         for key, value in data.items():
             # handle multiple entries for the same name
-            if type(value) not in (type([]), type( () )):
+            if not isinstance(value, (tuple, list)):
                 value = [value]
+
             for value in value:
                 body.write(sep_boundary)
                 body.write('\nContent-Disposition: form-data; name="%s"'%key)
