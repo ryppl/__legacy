@@ -2,6 +2,11 @@
 
 .. _contents:
 
+
+.. raw:: html
+
+  <a href="http://sourceforge.net/donate/index.php?group_id=311126"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support This Project" /> </a>
+
 Distributed C++ development with Ryppl
 ======================================
 
