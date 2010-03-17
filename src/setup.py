@@ -80,6 +80,7 @@ setup (name="Distutils2",
                  'distutils2.tests',
                  'distutils2._backport'],
        cmdclass={'sdist': sdist_hg, 'install': install_hg},
+       package_data={'distutils2._backport': ['sysconfig.cfg']},
        **setup_kwargs
        )
 
