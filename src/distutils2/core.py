@@ -1,9 +1,9 @@
-"""distutils.core
+"""distutils2.core
 
 The only module that needs to be imported to use the Distutils; provides
 the 'setup' function (which is to be called from the setup script).  Also
 indirectly provides the Distribution and Command classes, although they are
-really defined in distutils.dist and distutils.cmd.
+really defined in distutils2.dist and distutils2.cmd.
 """
 
 __revision__ = "$Id: core.py 77704 2010-01-23 09:23:15Z tarek.ziade $"
@@ -15,7 +15,7 @@ from distutils2.errors import (DistutilsSetupError, DistutilsArgError,
                               DistutilsError, CCompilerError)
 from distutils2.util import grok_environment_error
 
-# Mainly import these so setup scripts can "from distutils.core import" them.
+# Mainly import these so setup scripts can "from distutils2.core import" them.
 from distutils2.dist import Distribution
 from distutils2.cmd import Command
 from distutils2.config import PyPIRCCommand
@@ -76,9 +76,9 @@ def setup(**attrs):
     will be turned into a command class, which is in turn instantiated; any
     class found in 'cmdclass' is used in place of the default, which is
     (for command 'foo_bar') class 'foo_bar' in module
-    'distutils.command.foo_bar'.  The command class must provide a
+    'distutils2.command.foo_bar'.  The command class must provide a
     'user_options' attribute which is a list of option specifiers for
-    'distutils.fancy_getopt'.  Any command-line options between the current
+    'distutils2.fancy_getopt'.  Any command-line options between the current
     and the next command are used to set attributes of the current command
     object.
 
@@ -212,7 +212,7 @@ def run_setup(script_name, script_args=None, stop_after="run"):
 
     if _setup_distribution is None:
         raise RuntimeError, \
-              ("'distutils.core.setup()' was never called -- "
+              ("'distutils2.core.setup()' was never called -- "
                "perhaps '%s' is not a Distutils setup script?") % \
               script_name
 

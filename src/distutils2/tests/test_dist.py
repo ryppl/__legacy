@@ -134,8 +134,8 @@ class DistributionTestCase(support.TempdirManager,
         dist = klass(attrs={'author': u'Mister Café',
                             'name': 'my.package',
                             'maintainer': u'Café Junior',
-                            'description': u'Café torréfié',
-                            'long_description': u'Héhéhé'})
+                            'summary': u'Café torréfié',
+                            'description': u'Héhéhé'})
 
 
         # let's make sure the file can be written
@@ -147,8 +147,8 @@ class DistributionTestCase(support.TempdirManager,
         dist = klass(attrs={'author': 'Mister Cafe',
                             'name': 'my.package',
                             'maintainer': 'Cafe Junior',
-                            'description': 'Cafe torrefie',
-                            'long_description': 'Hehehe'})
+                            'summary': 'Cafe torrefie',
+                            'description': 'Hehehe'})
 
         my_file2 = os.path.join(tmp_dir, 'f2')
         dist.metadata.write_file(open(my_file, 'w'))
@@ -379,26 +379,26 @@ class MetadataTestCase(support.TempdirManager, support.EnvironGuard,
                   if line.strip() != '']
         self.assertTrue(len(output) > 0)
 
-    def test_long_description(self):
-        long_desc = textwrap.dedent("""\
+    def test_description(self):
+        desc = textwrap.dedent("""\
         example::
               We start here
             and continue here
           and end here.""")
         attrs = {"name": "package",
                  "version": "1.0",
-                 "long_description": long_desc}
+                 "description": desc}
 
         dist = distutils2.dist.Distribution(attrs)
         meta = self.format_metadata(dist)
         meta = meta.replace('\n' + 7 * ' ' + '|', '\n')
-        self.assertTrue(long_desc in meta)
+        self.assertTrue(desc in meta)
 
     def test_read_metadata(self):
         attrs = {"name": "package",
                  "version": "1.0",
-                 "long_description": "desc",
-                 "description": "xxx",
+                 "description": "desc",
+                 "summary": "xxx",
                  "download_url": "http://example.com",
                  "keywords": ['one', 'two'],
                  "requires_dist": ['foo']}
@@ -414,7 +414,7 @@ class MetadataTestCase(support.TempdirManager, support.EnvironGuard,
         metadata.read_file(PKG_INFO)
         self.assertEquals(metadata['name'], "package")
         self.assertEquals(metadata['version'], "1.0")
-        self.assertEquals(metadata['description'], "xxx")
+        self.assertEquals(metadata['summary'], "xxx")
         self.assertEquals(metadata['download_url'], 'http://example.com')
         self.assertEquals(metadata['keywords'], ['one', 'two'])
         self.assertEquals(metadata['platform'], [])

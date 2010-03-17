@@ -101,7 +101,7 @@ Common commands: (see '--help-commands' for more)
          "print the long package description"),
         ('platforms', None,
          "print the list of platforms"),
-        ('classifiers', None,
+        ('classifier', None,
          "print the list of classifiers"),
         ('keywords', None,
          "print the list of keywords"),
@@ -672,7 +672,7 @@ Common commands: (see '--help-commands' for more)
                 value = self.metadata[opt]
                 if opt in ['keywords', 'platform']:
                     print(','.join(value))
-                elif opt in ('classifiers', 'provides', 'requires',
+                elif opt in ('classifier', 'provides', 'requires',
                              'obsoletes'):
                     print('\n'.join(value))
                 else:
