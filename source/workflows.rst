@@ -199,10 +199,10 @@ Releasability
 Every project has a file .ryppl/releasability.xml [#xml]_ that
 describes the criteria for a project's releasability in terms of which
 tests pass on particular test slave aliases.  The file format is, at
-least initially, based on the
-`format<https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures.xsd>`
-of `Boost's corresponding
-file<https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures-markup.xml>`
+least initially, based on the `format
+<https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures.xsd>`_
+of `Boost's corresponding file
+<https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures-markup.xml>`_
 
 To summarize a project's releasability criteria, ::
 
