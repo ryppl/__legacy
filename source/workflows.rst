@@ -188,12 +188,28 @@ which merge requests are unhandled, so a maintainer can ask, ::
 
   $ ryppl show merge-requests
 
-This is a low-priority feature.
+[This is a low-priority feature.]
 
 Testing
 =======
 
-* Summary of a project's releasability criteria
+Releasability
+-------------
+
+Every project has a file .ryppl/releasability.xml [#xml]_ that
+describes the criteria for a project's releasability in terms of which
+tests pass on particular test slave aliases.  The file format is, at
+least initially, based on the
+`format<https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures.xsd>`
+of `Boost's corresponding
+file<https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures-markup.xml>`
+
+To summarize a project's releasability criteria, ::
+
+  $ ryppl show release-criteria
+
+[This is a low-priority feature.]
+
 * Test these three Ryppl projects
 * Test these three Ryppl projects and whatever they depend on
 * Test a superproject (like Boost)
@@ -230,3 +246,6 @@ Packaging / Release
    to be generated (e.g. as GitHub_ does), we may eventually use that
    API where appropriate, but it's not a high priority.
 
+.. [#xml] I'm not attached to XML and we could easily allow other
+   formats as well.  XML makes the transition easier for Boost,
+   though.
