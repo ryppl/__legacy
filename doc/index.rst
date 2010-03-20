@@ -66,7 +66,7 @@ Internals and Other Resources
 * `Git from the bottom up <http://ftp.newartisans.com/pub/git.from.bottom.up.pdf>`_ (See also the links at the end of this document).
 * `Git for Computer Scientists <http://eagain.net/articles/git-for-computer-scientists/>`_
 * `Git home page <http://git-scm.com>`_
-* `hub: <http://github.com/defunkt/hub>`_: convenient shorthands for working with `GitHub <http://github.com>`_.
+* `hub <http://github.com/defunkt/hub>`_: convenient shorthands for working with `GitHub <http://github.com>`_.
 
 Information on Git Submodules
 -----------------------------
