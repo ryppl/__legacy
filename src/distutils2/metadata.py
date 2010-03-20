@@ -77,8 +77,8 @@ _345_FIELDS = ('Metadata-Version',  'Name', 'Version', 'Platform',
                'Requires-Python', 'Requires-External')
 
 _345_MARKERS = ('Provides-Dist', 'Requires-Dist', 'Requires-Python',
-        'Obsoletes-Dist', 'Requires-External', 'Maintainer',
-        'Maintainer-email')
+                'Obsoletes-Dist', 'Requires-External', 'Maintainer',
+                'Maintainer-email', 'Project-URL')
 
 _ALL_FIELDS = []
 
