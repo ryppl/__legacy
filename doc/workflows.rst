@@ -137,15 +137,34 @@ If you are working on a branch other than your mainline (usually
 (e.g. beta).  You can add an explicit version string, or ryppl will
 attempt to assign one for you.
 
-Request Remote Testing
-----------------------
+Review Outstanding Merge Requests
+---------------------------------
+
+Initially, merge requests can be tracked in the maintainers' own
+personal email systems.  At some point we may want to keep track of
+which merge requests are unhandled, so a maintainer can ask, ::
+
+  $ ryppl show merge-requests
+
+[This is a low-priority feature.]
+
+Testing
+=======
+
+To test a Ryppl project on the local machine from within its project
+directory, simply::
+
+  $ ryppl test
+
+Remote Testing
+--------------
 
 One of ryppl's most important features is the ability for anyone to
 dedicate testing resources to a project.  That allows testing on
 diverse platforms not controlled by the project maintainer.  To
-request a test of the current working tree state, simply::
+test remotely, simply::
 
-  $ ryppl test-request
+  $ ryppl remote-test 
 
 which will request results from your “usual” set of platforms for the
 HEAD of the current working tree.  If you have made changes to the
@@ -157,7 +176,7 @@ To test on specific slaves, they can be named on the command-line:
 
 .. parsed-literal::
 
-  $ ryppl test-request --slave=\ *slave1*,\ *slave2*\, …
+  $ ryppl remote-test --slave=\ *slave1*,\ *slave2*\, …
 
 Test Slave Aliases
 ------------------
@@ -178,20 +197,6 @@ presumably all Apple Macs.  Ryppl will choose among these slaves or
 (eventually) distribute the tests among them, based on current
 workload.  The special slave alias ``default`` defines the slaves to
 use when no other slaves are specified.
-
-Review Outstanding Merge Requests
----------------------------------
-
-Initially, merge requests can be tracked in the maintainers' own
-personal email systems.  At some point we may want to keep track of
-which merge requests are unhandled, so a maintainer can ask, ::
-
-  $ ryppl show merge-requests
-
-[This is a low-priority feature.]
-
-Testing
-=======
 
 Releasability
 -------------
