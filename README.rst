@@ -111,7 +111,15 @@ Setting up prerequisites
 
    Then you've done something wrong.  The platform string should be `i386-pc-msys`.
 
+<<<<<<< HEAD:README.rst
 7. **Install** GraphViz_.  Use your native package manager or get it
+=======
+<<<<<<< HEAD:README.rst
+7. **Install** GraphViz_.  Use your native package manager or get it
+=======
+7. **Install GraphViz_\ **.  Use your native package manager or get it
+>>>>>>> d05783e2888e9ca99f951706fe04945eb4695d49:README.rst
+>>>>>>> 00bdd92406fc0ad58ac2c28837dbefa1dfad3859:README.rst
    from the GraphViz `download page <http://graphviz.org/Download.php>`_
 
 Building the Docs
