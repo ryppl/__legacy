@@ -153,6 +153,7 @@ _LISTFIELDS = ('Platform', 'Classifier', 'Obsoletes',
         'Requires', 'Provides', 'Obsoletes-Dist',
         'Provides-Dist', 'Requires-Dist', 'Requires-External',
         'Project-URL')
+_LISTTUPLEFIELDS = ('Project-URL',)
 
 _ELEMENTSFIELD = ('Keywords',)
 
@@ -355,7 +356,11 @@ class DistributionMetadata(object):
                 valid, val = self._platform(val)
                 if not valid:
                     continue
-                res.append(self._encode_field(val))
+                if name not in _LISTTUPLEFIELDS:
+                    res.append(self._encode_field(val))
+                else:
+                    # That's for Project-URL
+                    res.append((self._encode_field(val[0]), val[1]))
             return res
 
         elif name in _ELEMENTSFIELD:

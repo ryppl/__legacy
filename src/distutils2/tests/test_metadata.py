@@ -185,6 +185,12 @@ class DistributionMetadataTestCase(unittest2.TestCase):
 
         self.assertEquals(res, 0)
 
+    def test_project_url(self):
+        metadata = DistributionMetadata()
+        metadata['Project-URL'] = [('one', 'http://ok')]
+        self.assertEquals(metadata['Project-URL'],
+                          [('one', 'http://ok')])
+
 def test_suite():
     return unittest2.makeSuite(DistributionMetadataTestCase)
 
