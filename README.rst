@@ -31,7 +31,7 @@ Documentation
 -------------
 
 This rest of this document is a getting-started guide for Ryppl
-developers—the people who will be checking out from this repository
+developers - the people who will be checking out from this repository
 and are working on development of the ryppl project.  
 
 For emergent user-level HTML documentation, see http://www.ryppl.org
