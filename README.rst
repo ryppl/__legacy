@@ -133,4 +133,3 @@ make (or environment) variable ``BUILDDIR``::
 .. _Sphinx: http://sphinx.pocoo.org/
 .. _GNU Make: http://www.gnu.org/software/make/
 .. _GraphViz: http://graphviz.org
-
