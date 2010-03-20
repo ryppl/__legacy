@@ -111,7 +111,7 @@ Setting up prerequisites
 
    Then you've done something wrong.  The platform string should be `i386-pc-msys`.
 
-7. **Install GraphViz_**.  Use your native package manager or get it
+7. **Install GraphViz_\ **.  Use your native package manager or get it
    from the GraphViz `download page <http://graphviz.org/Download.php>`_
 
 Building the Docs
