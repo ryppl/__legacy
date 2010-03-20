@@ -52,11 +52,11 @@ the contents.  Most of boost is there, but:
 Initialize and update the submodules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Issue the command ``git submodule init --update``:
+Issue the command ``git submodule init`` followed by ``git submodule update``:
 
 .. parsed-literal::
 
-  % git submodule init
+  % git submodule init; git submodule update
   Submodule 'src/accumulators' (git://gitorious.org/boost/accumulators.git) registered for path 'src/accumulators'
   Submodule 'src/algorithm' (git://gitorious.org/boost/algorithm.git) registered for path 'src/algorithm'
   Submodule 'src/any' (git://gitorious.org/boost/any.git) registered for path 'src/any'
