@@ -83,7 +83,9 @@ Setting up prerequisites
    default, so you'll need to add something like `c:\Python26\Scripts`
    to your path to make the rest of this work.
 
-4. **Use setuptools to get Sphinx**.
+4. **Use setuptools to get Sphinx**.  The servers were really slow
+   last time I checked; expect this to take a while (add ``-v`` if
+   you're easily bored).
 
      % easy_install sphinx
 
@@ -114,11 +116,11 @@ Setting up prerequisites
 7. **Install** GraphViz_.  Use your native package manager or get it
    from the GraphViz `download page <http://graphviz.org/Download.php>`_
 
-Building the Docs
+Running the Build
 =================
 
-To build the documentation, enter the ``doc/`` subdirectory and issue
-the command::
+Now the easy part.  To *finally build* the documentation, enter the
+``doc/`` subdirectory and issue the command::
 
   $ make html
 
