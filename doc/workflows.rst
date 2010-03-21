@@ -102,23 +102,28 @@ details.
 Publishing Projects
 -------------------
 
-To make your project visible to the world,
+If you make changes to a project, you may want to submit those changes
+to the upstream maintainer, or share your changes with other
+interested users.  To make your (usually modified) project state
+visible to the world,
 
 .. parsed-literal::
 
    $ ryppl publish *project*
 
-Ryppl will dump instructions for creating a public clone of the
-official repository. [#siteclone]_
-
-.. Admonition:: Open Question
-
-   GitHub_ and Gitorious_ don't reveal the push URL unless you have
-   write permission on the repository. Is there some security concern
-   there? Push URLs are easily deduced from the other ones.
+If the project you are publishing was cloned from an existing
+project's “official” repository, Ryppl will dump instructions for
+creating a public clone of the official repository. [#siteclone]_
+Otherwise it will dump instructions for getting the project into the
+Ryppl collection.
 
 .. _Gitorious: http://gitorious.org
 .. _GitHub: http://github.com
+
+.. Note:: We don't know what the mechanism looks like to actually get
+   a project into the Ryppl collection.  Can anyone just add things
+   to Ryppl, or is there a gatekeeper, or even a human processing the
+   additions?
 
 Merge Requests
 --------------
