@@ -34,9 +34,18 @@ The developer of *libA* has a .ryppl file to his project at the top level::
 This specifies a dependency on a version of libX numbered 1.0 through
 2.2 or numbered 3.1.  
 
-.. Note:: We will need a rule for decoding and comparing version
-   names/numbers.  Likely it will need to cover more complicated
-   versions like 1.1b2, etc.
+.. Note:: A well formed version number has the following format:  
+
+   N.N[.N]+[{a|b|c|rc}N[.N]+][.postN][.devN]
+   
+   where the only mandatory parts are the initial N.N.
+
+   This is the same format accepted for Python versioning schema, see
+   http://www.python.org/dev/peps/pep-0386/ 
+
+   for a thorough explanation.
+   This choice covers the vast majority of cases (up to development, post-release versions)
+   and allows for comparisons.
 
 *libB* has a similar .ryppl file::
 
