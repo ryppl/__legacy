@@ -15,6 +15,7 @@ Distributed Development, Testing and Installation with Ryppl
 
    workflows
    dependency-management
+   superprojects
    gettingstarted
    modifying_the_python_lib
    svn_equivs
