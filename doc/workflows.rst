@@ -9,6 +9,19 @@ not just for library developers, but for end-users, integrators, etc.
 These use cases are not currently prioritized.  We divide them by the
 role of the initiator.
 
+Conventions
+-----------
+
+Most `ryppl` commands take the form:
+
+.. parsed-literal::
+
+  ryppl *command-name* [ *options*\ … ] [ *project-names*\ … ]
+
+If no *project-names* are supplied, such commands expect your current
+directory to be in the working tree of a Ryppl project, and that you
+intend to operate on that project.
+
 Fundamentals
 ============
 
