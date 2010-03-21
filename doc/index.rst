@@ -13,6 +13,7 @@ Distributed Development, Testing and Installation with Ryppl
 .. toctree::
    :maxdepth: 3
 
+   technology
    workflows
    dependency-management
    superprojects
@@ -26,7 +27,7 @@ Distributed Development, Testing and Installation with Ryppl
 Overview
 --------
 
-Think of Ryppl as a `package management system
+Think of Ryppl as a cross-platform [#platforms]_ `package management system
 <http://en.wikipedia.org/wiki/Package_management_system>`_ designed to
 accomodate both end-users *and* developers.  Unlike a traditional
 package manager, which delivers binaries and/or a source snapshot,
@@ -53,29 +54,6 @@ This documentation is written in `reStructuredText
 ``doc/`` subdirectory of the ``master`` branch of the git repository at
 ``git://github.com/ryppl/ryppl.git``.  
 
-Learning about Git
-------------------
+---------
 
-* `Pro Git <http://progit.org/book>`_.
-* `Contributing with Git
-  <http://www.youtube.com/watch?v=j45cs5_nY2k>`_ Johannes Schindelin's
-  Google Tech Talk Video.  Good for beginners.
-
-Internals and Other Resources
-.............................
-
-* `Git from the bottom up <http://ftp.newartisans.com/pub/git.from.bottom.up.pdf>`_ (See also the links at the end of this document).
-* `Git for Computer Scientists <http://eagain.net/articles/git-for-computer-scientists/>`_
-* `Git home page <http://git-scm.com>`_
-* `hub <http://github.com/defunkt/hub>`_: convenient shorthands for working with `GitHub <http://github.com>`_.
-
-Information on Git Submodules
------------------------------
-
-* http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html
-* http://woss.name/blog/2008/4/9/using-git-submodules-to-track-plugins.html
-* http://git.or.cz/gitwiki/GitSubmoduleTutorial
-* http://gaarai.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
-* http://progit.org/book/ch6-6.html
-
-
+.. [#platforms] Ryppl works on Windows and Posix systems.
