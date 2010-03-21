@@ -6,11 +6,10 @@ Workflows
 
 This section describes cases that need to be handled by this system,
 not just for library developers, but for end-users, integrators, etc.
-These use cases are not currently prioritized.  We divide them by the
-role of the initiator.
+These use cases are not currently fully-prioritized.  
 
 Conventions
------------
+===========
 
 Most `ryppl` commands take the form:
 
@@ -238,22 +237,17 @@ use when no other slaves are specified.
 Setting up a Test Slave
 -----------------------
 
-* Subset of projects
-* Subset of public repos/developers to pull from
+.. admonition:: WRITEME
+
+   * Subset of projects
+   * Subset of public repos/developers to pull from
 
 Subscribing to Test Results
 --------------------------- 
 
+.. admonition:: WRITEME
 
-.. What's Missing
-
-    * Dependency Management - probably independent from CMake
-    * Testing is busted?  Yes, for Python.
-    * Testing is unweildy (having to call ctest)
-
-    * if we want to use CDash, makes sense to have CTest run tests.
-      Incremental testing needs research in that case.
-
+   Some way to get notifications of tests you didn't initiate
 
 Releasability
 -------------
@@ -276,12 +270,14 @@ To summarize a project's releasability criteria, ::
 Packaging / Release
 ===================
 
-* Releasability overview (email)
-* Automatically notify maintainers of breakage (email).  Show test /failures/
-* Nightly Auto-tagged releasable branch for each library
-* Continuous testing of the release branch
-* Make binaries
+.. admonition:: WRITEME
 
+  Requirements:
+
+  * Automatically notify maintainers of breakage (email).  Show test /failures/
+  * Nightly Auto-tagged releasable branch for each library
+  * Continuous testing of the release branch
+  * Make binaries
 
 .. [#siteclone] If the official repository is hosted on Gitorious_ or
     GitHub_, these instructions will include directions for cloning
