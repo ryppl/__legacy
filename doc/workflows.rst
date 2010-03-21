@@ -156,6 +156,25 @@ directory, simply::
 
   $ ryppl test
 
+Testing Specific Projects
+-------------------------
+
+Testing specific Ryppl projects is just as easy:
+
+.. parsed-literal::
+
+   $ ryppl test *project1*\ , *project2*\ … 
+
+Testing Dependencies
+--------------------
+
+To also test all the projects that a given list of projects depends on
+(transitively):
+
+.. parsed-literal::
+
+   $ ryppl test --deep *project1*\ , *project2*\ … 
+
 Remote Testing
 --------------
 
@@ -198,6 +217,26 @@ presumably all Apple Macs.  Ryppl will choose among these slaves or
 workload.  The special slave alias ``default`` defines the slaves to
 use when no other slaves are specified.
 
+Setting up a Test Slave
+-----------------------
+
+* Subset of projects
+* Subset of public repos/developers to pull from
+
+Subscribing to Test Results
+--------------------------- 
+
+
+.. What's Missing
+
+    * Dependency Management - probably independent from CMake
+    * Testing is busted?  Yes, for Python.
+    * Testing is unweildy (having to call ctest)
+
+    * if we want to use CDash, makes sense to have CTest run tests.
+      Incremental testing needs research in that case.
+
+
 Releasability
 -------------
 
@@ -215,22 +254,6 @@ To summarize a project's releasability criteria, ::
 
 [This is a low-priority feature.]
 
-* Test these three Ryppl projects
-* Test these three Ryppl projects and whatever they depend on
-* Test a superproject (like Boost)
-* Prepare a testing slave machine
-  * Subset of projects
-  * Subset of public repos/developers to pull from
-* Subscribe to test results
-
-.. What's Missing
-
-    * Dependency Management - probably independent from CMake
-    * Testing is busted?  Yes, for Python.
-    * Testing is unweildy (having to call ctest)
-
-    * if we want to use CDash, makes sense to have CTest run tests.
-      Incremental testing needs research in that case.
 
 Packaging / Release
 ===================
