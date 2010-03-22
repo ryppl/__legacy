@@ -8,12 +8,6 @@ A Git-based Software Development / Testing / Installation System
 .. image:: http://www.ryppl.org/_static/ryppl.png
    :align: right
 
----------------
-About Donations
----------------
-
-I (Dave Abrahams) and many others are giving my time to this project for free.  If you make a donation to Ryppl, it will be used to pay for the time of professional software developers who can't afford to be quite so generous.  We need their help, and they need to pay the bills, so please consider `making a donation <http://pledgie.com/campaigns/9508>`_.  Thanks! 
-
 -----------
 About Ryppl
 -----------
@@ -25,6 +19,16 @@ developers.  Unlike a traditional package manager, which delivers
 binaries and/or a source snapshot, when ryppl downloads a package, it
 gives you a clone of a Git repository, with that package's entire
 development history.
+
+--------------------
+Support This Project
+--------------------
+
+Most contributors are giving their time to this project for free.  If
+you make a donation to Ryppl, it will be used to pay for the time of
+those who can't afford to be quite so generous.  We need their help,
+and they need to pay the bills, so please consider `making a donation
+<http://pledgie.com/campaigns/9508>`_.  Thanks!
 
 -------------
 Documentation
@@ -89,11 +93,11 @@ Setting up prerequisites
 
      % easy_install sphinx
 
-5. make sure `sphinx-build` is in your path:
+5. **make sure** `sphinx-build` is in your path:
 
      % sphinx-build --help
 
-6. **Get GNU Make**.  If you're on native Windows, to get a compatible
+6. **Install GNU Make**.  If you're on native Windows, to get a compatible
    GNU Make you should install the `MSYS Base System
    <http://sourceforge.net/projects/mingw/files/MSYS%20Base%20System/>`_.
    At the time of this writing, the latest with an executable
@@ -115,6 +119,12 @@ Setting up prerequisites
 
 7. **Install** GraphViz_.  Use your native package manager or get it
    from the GraphViz `download page <http://graphviz.org/Download.php>`_
+
+8. **Install** Git_.  On Windows, this means MSysGit_.
+
+.. _Git: http://git-scm.com
+.. _MSysGit: http://code.google.com/p/msysgit/
+
 
 Running the Build
 =================
