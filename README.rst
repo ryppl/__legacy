@@ -93,11 +93,11 @@ Setting up prerequisites
 
      % easy_install sphinx
 
-5. make sure `sphinx-build` is in your path:
+5. **make sure** `sphinx-build` is in your path:
 
      % sphinx-build --help
 
-6. **Get GNU Make**.  If you're on native Windows, to get a compatible
+6. **Install GNU Make**.  If you're on native Windows, to get a compatible
    GNU Make you should install the `MSYS Base System
    <http://sourceforge.net/projects/mingw/files/MSYS%20Base%20System/>`_.
    At the time of this writing, the latest with an executable
@@ -119,6 +119,12 @@ Setting up prerequisites
 
 7. **Install** GraphViz_.  Use your native package manager or get it
    from the GraphViz `download page <http://graphviz.org/Download.php>`_
+
+8. **Install** Git_.  On Windows, this means MSysGit_.
+
+.. _Git: http://git-scm.com
+.. _MSysGit: http://code.google.com/p/msysgit/
+
 
 Running the Build
 =================
