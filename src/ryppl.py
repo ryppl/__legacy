@@ -11,11 +11,10 @@ class Git:
     def git(self, *args, **kwargs):
         # From Troy Straszheim git-ryppl
         verbose = False
-        def yellow(a): return a
         if 'verbose' in kwargs:
             verbose = kwargs['verbose']
             del kwargs['verbose']
-        if verbose: print("$ git " + yellow(' '.join(args)))
+        if verbose: print("$ git " + ' '.join(args))
         req=None
         if 'req' in kwargs:
             req = kwargs['req']
