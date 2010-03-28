@@ -42,10 +42,15 @@ class Git:
         
 
     def check_for_git(self):
+        """checks if the current self.git_executable can be found on the path.
+It works by checking the return code.
+"""
         try:
             found = self.git("", req=1, verbose=False)
             return True
         except RuntimeError:
+            return False
+        except OSError:
             return False
 
     def install_git(self):
