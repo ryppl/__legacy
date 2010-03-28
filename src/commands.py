@@ -4,7 +4,7 @@ import sys
 def install(git, parser=None, parameters=None):
     print ("install command")
     print ("DEBUG install parameters: " + ','.join(parameters))
-    parser.add_option("--test", action="callback", callback=call_test, callback_args=(parameters,))
+    parser.add_option("--test", action="callback", callback=call_test, callback_args=(git, parameters,))
     parser.parse_args(parameters)
 
 def checkout(git, parser=None, parameters=None):
@@ -36,7 +36,7 @@ def show(git, parser=None, parameters=None):
 
 def test(git, parser=None, parameters=None):
     print ("test command")
-    print (parameters)
+    git.git("status", verbose=True) # placeholder
 
 def remote_test(git, parser=None, parameters=None):
     print ("remote-test command")
@@ -44,7 +44,7 @@ def remote_test(git, parser=None, parameters=None):
 
 
 def call_test(option, opt_str, value, parser, *args, **kwargs):
-    test(parameters=args[0])
+    test(git=args[0], parameters=args[1])
 
 ALL_COMMANDS = ( # see workflows.rst
     ("help", help),
