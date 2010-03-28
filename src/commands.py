@@ -2,35 +2,35 @@ from optparse import OptionParser
 import sys
 
 def install(parser=None, parameters=None):
-    print ("install")
-    print (parameters)
+    print ("install command")
+    print ("DEBUG install parameters: " + ','.join(parameters))
     parser.add_option("--test", action="callback", callback=call_test, callback_args=(parameters,))
     parser.parse_args(parameters)
 
-def checkout(parameters):
-    pass
+def checkout(parser=None, parameters=None):
+    print ("checkout command")
 
 def help(parser=None, parameters=None):
     print( HELP_MSG )
 
 def publish(parser=None, parameters=None):
-    pass
+    print ("publish command")
 
 def merge_request(parser=None, parameters=None):
-    pass
+    print ("merge-request command")
 
 def release(parser=None, parameters=None):
-    pass
+    print ("release command")
 
 def show(parser=None, parameters=None):
-    pass
+    print ("show command")
 
 def test(parser=None, parameters=None):
-    print ("test")
+    print ("test command")
     print (parameters)
 
 def remote_test(parser=None, parameters=None):
-    pass
+    print ("remote-test command")
 
 def call_test(option, opt_str, value, parser, *args, **kwargs):
     test(parameters=args[0])
