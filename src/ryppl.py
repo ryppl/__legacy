@@ -67,7 +67,7 @@ def main():
         git = Git()
         if not git.check_for_git():
             git.install_git()
-        handle_command(sys.argv[1], sys.argv[2:])
+        handle_command(git, sys.argv[1], sys.argv[2:])
 
 if __name__ == '__main__':
     main()
