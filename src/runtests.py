@@ -1,16 +1,13 @@
-"""Tests for distutils2.
+"""Tests for ryppl.
 
-The tests for distutils2 are defined in the distutils2.tests package;
+The tests for ryppl are defined in the ryppl.tests package;
 """
 
-import distutils2.tests
-from distutils2.tests import run_unittest, reap_children
-
-from distutils2._backport.tests import test_suite as btest_suite
+import ryppl.tests
+from ryppl.tests import run_unittest, reap_children
 
 def test_main():
-    run_unittest(distutils2.tests.test_suite())
-    run_unittest(btest_suite())
+    run_unittest(ryppl.tests.test_suite())
     reap_children()
 
 

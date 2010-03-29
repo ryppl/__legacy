@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-# -*- encoding: utf8 -*-
 __revision__ = "$Id$"
 import sys
 import os
 
-from distutils2.core import setup
-from distutils2.command.sdist import sdist
-from distutils2.command.install import install
-from distutils2 import __version__ as VERSION
+from distutils.core import setup
+from distutils.command.sdist import sdist
+from distutils.command.install import install
+from ryppl import __version__ as VERSION
 
 f = open('README.txt')
 try:
@@ -15,6 +14,7 @@ try:
 finally:
     f.close()
 
+# TODO: translate these hg things into git?
 def get_tip_revision(path=os.getcwd()):
     try:
         from mercurial.hg import repository
@@ -30,9 +30,9 @@ def get_tip_revision(path=os.getcwd()):
     except RepoError:
         return 0
 
-DEV_SUFFIX = '.dev%d' % get_tip_revision('..')
-
 class install_hg(install):
+
+    DEV_SUFFIX = '.dev%d' % get_tip_revision('..')
 
     user_options = install.user_options + [
             ('dev', None, "Add a dev marker")
@@ -50,6 +50,8 @@ class install_hg(install):
 
 class sdist_hg(sdist):
 
+    DEV_SUFFIX = '.dev%d' % get_tip_revision('..')
+
     user_options = sdist.user_options + [
             ('dev', None, "Add a dev marker")
             ]
@@ -63,24 +65,18 @@ class sdist_hg(sdist):
             self.distribution.metadata.version += DEV_SUFFIX
         sdist.run(self)
 
-setup_kwargs = {}
-if sys.version < '2.6':
-    kwargs['scripts'] = 'distutils2/mkpkg.py'
-
-setup (name="Distutils2",
+setup (name="Ryppl",
        version=VERSION,
-       description="Python Distribution Utilities",
-       author="Tarek Ziade",
-       author_email="tarek@ziade.org",
-       url="http://www.python.org/sigs/distutils-sig",
-       license="PSF",
+       description="A Git-based Software Development / Testing / Installation System",
+       author="Dave Abrahams & co.",
+       author_email="dave@boostpro.com",
+       url="http://ryppl.org",
+       license="Boost Software License 1.0",
        long_description=README,
-       packages=['distutils2',
-                 'distutils2.command',
-                 'distutils2.tests',
-                 'distutils2._backport'],
+       packages=['ryppl',
+                 'ryppl.command',
+                 'ryppl.tests'],
        cmdclass={'sdist': sdist_hg, 'install': install_hg},
-       package_data={'distutils2._backport': ['sysconfig.cfg']},
        **setup_kwargs
        )
 
