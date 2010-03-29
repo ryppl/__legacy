@@ -1,16 +1,9 @@
-"""distutils
+"""ryppl
 
-The main package for the Python Module Distribution Utilities.  Normally
-used from a setup script as
-
-   from distutils.core import setup
-
-   setup (...)
 """
-__all__ = ['__version__', 'setup']
+__version__ = ".090a1"
 
-__revision__ = "$Id: __init__.py 78020 2010-02-06 16:37:32Z benjamin.peterson $"
-__version__ = "1.0a1"
-
-from distutils2.core import setup
+# This should be pruned down to the parts we want to export.
+# __all__ = ['__version__']
+from ryppl.core import *
 
