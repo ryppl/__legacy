@@ -238,7 +238,7 @@ Setting up prerequisites
 
         This program built for i386-pc-mingw32
 
-   Then you've done something wrong.  The platform string should be `i386-pc-msys`.
+   Then you've done something wrong.  The platform string should be ``i386-pc-msys``.
 
 7. **Install** GraphViz_.  Use your native package manager or get it
    from the GraphViz `download page <http://graphviz.org/Download.php>`_
