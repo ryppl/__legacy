@@ -83,8 +83,8 @@ Setting up prerequisites
 
      % python ez_setup.py
 
-   On windows, `easy_install`ed executables don't go in your `PATH` by
-   default, so you'll need to add something like `c:\Python26\Scripts`
+   On windows, ``easy_install``\ ed executables don't go in your ``PATH`` by
+   default, so you'll need to add something like ``c:\Python26\Scripts``
    to your path to make the rest of this work.
 
 4. **Use setuptools to get Sphinx**.  The servers were really slow
