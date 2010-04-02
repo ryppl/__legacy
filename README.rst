@@ -8,6 +8,8 @@ A Git-based Software Development / Testing / Installation System
 .. image:: http://www.ryppl.org/_static/ryppl.png
    :align: right
 
+.. contents:: Index
+
 -----------
 About Ryppl
 -----------
@@ -34,14 +36,30 @@ and they need to pay the bills, so please consider `making a donation
 Documentation
 -------------
 
+User Documentation
+::::::::::::::::::
+
+For emergent user-level HTML documentation, see http://www.ryppl.org
+
+Developer Documentation
+:::::::::::::::::::::::
+
 This rest of this document is a getting-started guide for Ryppl
 developers - the people who will be checking out from this repository
 and are working on development of the ryppl project.  
 
-For emergent user-level HTML documentation, see http://www.ryppl.org
+...............
+Things To Learn
+...............
 
-For more detailed developer docs, please see the `Ryppl Wiki
-<http://wiki.github.com/ryppl/ryppl/>`_.
+* First, get a handle on `the technologies
+  <http://www.ryppl.org/technology.html>`_ we're using.
+
+* Then, take a look at `The Hitchhiker's Guide to Packaging
+  <http://guide.python-distribute.org/>`_, which describes some of the
+  Python packaging and distribution tools we're exploiting.  You can
+  find Git mirrors of the essential codebases `at Github
+  <http://github.com/ryppl>`_.
 
 .................
 Building The Docs
@@ -145,3 +163,12 @@ make (or environment) variable ``BUILDDIR``::
 .. _Sphinx: http://sphinx.pocoo.org/
 .. _GNU Make: http://www.gnu.org/software/make/
 .. _GraphViz: http://graphviz.org
+
+
+................
+Additional Notes
+................
+
+For more developer notes, please see the `Ryppl Wiki
+<http://wiki.github.com/ryppl/ryppl/>`_.
+
