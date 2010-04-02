@@ -1,3 +1,0 @@
-[submodule "distutils2"]
-	path = distutils2
-	url = git://github.com/ryppl/distutils2.git
