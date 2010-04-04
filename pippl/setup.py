@@ -29,6 +29,11 @@ if sys.platform == 'win32':
 else:
     kw = dict(scripts=['scripts/pip'])
 
+# Allows reset_env in test_pip.py to invoke setup.py from outside the
+# directory where it's located, which is needed to prepare a proper
+# virtual environment from without performing unnatural contortions.
+os.chdir(os.path.dirname(__file__))
+
 setup(name='pip',
       version=version,
       description="pip installs packages.  Python packages.  An easy_install replacement",

@@ -43,8 +43,13 @@ def reset_env(environ=None):
     env.run(sys.executable, '-m', 'virtualenv', '--no-site-packages', env.base_path)
     # make sure we have current setuptools to avoid svn incompatibilities
     env.run('%s/bin/easy_install' % env.base_path, 'setuptools==0.6c11')
-    # Uninstall (kind of) pip, so PYTHONPATH can take effect:
-    env.run('%s/bin/easy_install' % env.base_path, '-m', 'pip')
+
+    # Uninstall whatever version of pip might have been there
+    env.run('%s/bin/pip' % env.base_path, 'uninstall', '-y', 'pip')
+
+    # Install this version on top of it
+    env.run('python', os.path.join(here,os.pardir,'setup.py'), 'install')
+
     env.run('mkdir', 'src')
 
 def run_pip(*args, **kw):
