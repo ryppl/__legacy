@@ -61,6 +61,12 @@ Things To Learn
   find Git mirrors of the essential codebases `at Github
   <http://github.com/ryppl>`_.
 
+At the moment, most of our code development is actually happening in
+`our fork <http://github.com/ryppl/pip>`_ of the pip_ project, which
+seems to have many similar aims.
+
+.. _pip: http://pip.openplans.org
+
 .................
 Building The Docs
 .................
@@ -157,7 +163,7 @@ this project.  If you don't like building in your source tree, you can
 change the parent of the generated ``html/`` directory by setting the
 make (or environment) variable ``BUILDDIR``::
 
-  $ make BUILDDIR=/tmp/ryppl-build
+  $ make BUILDDIR=/tmp/ryppl-build html
 
 .. _Python: http://python.org
 .. _Sphinx: http://sphinx.pocoo.org/
