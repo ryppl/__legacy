@@ -6,10 +6,12 @@ Ryppl relies on the following technologies:
 * Python_ 2.x
 * Git_
 * CMake_
+* pip_
 
 .. _Python: http://python.org
 .. _Git: http://git-scm.com
 .. _CMake: http://cmake.org
+.. _pip: http://pip.openplans.org
 
 You don't need to know Python at all to use Ryppl; it's just an
 implementation language.  You also don't need to know Git… unless you
