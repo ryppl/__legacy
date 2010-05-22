@@ -1,3 +1,6 @@
 [submodule "submodule/pip"]
 	path = submodule/pip
 	url = git://github.com/ryppl/pip.git
+[submodule "submodule/distutils2"]
+	path = submodule/distutils2
+	url = git://github.com/ryppl/distutils2.git
