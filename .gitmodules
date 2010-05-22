@@ -1,0 +1,3 @@
+[submodule "submodule/pip"]
+	path = submodule/pip
+	url = git://github.com/ryppl/pip.git
