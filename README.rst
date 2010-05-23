@@ -79,13 +79,19 @@ broke something.
 Testing Prerequisites
 =====================
 
-1. **Install** Git_.  On Windows, this means MSysGit_.  We will
+0. **Install** Git_.  On Windows, this means MSysGit_.  We will
    probably eliminate this requirement one day by using Dulwich_, so
    end-users don't have to install Git.
 
+1. **Git submodules** need to be initialized and updated.  From the
+   root of your ryppl source tree, ::
+
+     % git submodule init
+     % git submodule update
+
 2. **Install** virtualenv_.  Get it from your OS package manager (usually
    listed as ``python-virtualenv`` or ``py-virtualenv``) if you can, and skip
-   to step 5.  Otherwise, use setuptools as detailed below
+   to `step 5`_.  Otherwise, use setuptools as detailed below
 
 .. _install-setuptools:
 
@@ -109,6 +115,8 @@ Testing Prerequisites
 
      % easy_install virtualenv
 
+.. _step-5:
+
 5. There is **no step 5**.  You're done!
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
@@ -122,7 +130,7 @@ script in the ``test/`` subdirectory.  It sets up a virtual python
 installation (using |virtualenv|_), installs all necessary
 prerequisites there, and then launches the tests.  Any command-line
 arguments are passed on to |nosetests|_ (but read on for two
-exceptions).
+exceptions).  This is the approach that will be used by BuildBots.
 
 .. |virtualenv| replace:: `virtualenv`
 .. |nosetests| replace:: `nosetests`
@@ -133,8 +141,8 @@ Testing For Local Development
 =============================
 
 To speed up the edit/test/debug cycle, you can ask ``self_test.py`` to
-create the testing environment once and then print out the command
-you can use repeatedly to run the tests:
+create the testing environment once and then print out the command you
+can use repeatedly to run the tests:
 
 .. parsed-literal:
 
