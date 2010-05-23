@@ -59,14 +59,18 @@ Things To Learn
   find Git mirrors of the essential codebases `at Github
   <http://github.com/ryppl>`_.
 
-Ryppl itself is, at the moment, a thin layer over distutils2_ and `our
-fork <http://github.com/ryppl/pip>`_ of pip_. [#upstream]_  It reads distutils2
-project metadata from the ``.ryppl`` folder and and feeds it to
-``setuptools.setup``.
+Ryppl itself is, at the moment, a thin layer over distutils2_ and 
+`our fork`_ of pip_. [#upstream]_  Ryppl reads 
+distutils2 project metadata from the ``.ryppl`` folder and and feeds
+it to ``setuptools.setup``.  If you don't see many changes in this
+project yet, it's because we spent a good man-month or more getting
+windows portability into pip_ (see `our fork`_).
 
 .. _pip: http://pip.openplans.org
 
 .. _distutils2: http://tarekziade.wordpress.com/2010/04/08/a-small-distutils2-foretaste/
+
+.. _our fork: http://github.com/ryppl/pip
 
 .................
 Running The Tests
