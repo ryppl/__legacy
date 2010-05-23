@@ -91,9 +91,13 @@ Testing Prerequisites
 
 2. **Install** virtualenv_.  Get it from your OS package manager (usually
    listed as ``python-virtualenv`` or ``py-virtualenv``) if you can, and skip
-   to `step 5`_.  Otherwise, use setuptools as detailed below
+   to `step 5`__.  Otherwise, use setuptools as detailed below
 
-.. _install-setuptools:
+   __ prerequisites-done_
+   .. _install-setuptools:
+
+      .. comment   
+
 
 3. **Install setuptools** (the ``easy_install`` program for installing
    Python packages) if you don't already have it.  Your package
@@ -115,7 +119,9 @@ Testing Prerequisites
 
      % easy_install virtualenv
 
-.. _step-5:
+   .. _prerequisites-done:
+
+      .. comment   
 
 5. There is **no step 5**.  You're done!
 
