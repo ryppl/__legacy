@@ -59,11 +59,95 @@ Things To Learn
   find Git mirrors of the essential codebases `at Github
   <http://github.com/ryppl>`_.
 
-At the moment, most of our code development is actually happening in
-`our fork <http://github.com/ryppl/pip>`_ of the pip_ project, which
-seems to have many similar aims.
+Ryppl itself is, at the moment, a thin layer over distutils2_ and `our
+fork <http://github.com/ryppl/pip>`_ of pip_. [#upstream]_  It reads distutils2
+project metadata from the ``.ryppl`` folder and and feeds it to
+``setuptools.setup``.
 
 .. _pip: http://pip.openplans.org
+
+.. _distutils2: http://tarekziade.wordpress.com/2010/04/08/a-small-distutils2-foretaste/
+
+.................
+Running The Tests
+.................
+
+Testing Prerequisites
+=====================
+
+1. **Install** Git_.  On Windows, this means MSysGit_.  We will
+   probably eliminate this requirement one day by using Dulwich_, so
+   end-users don't have to install Git.
+
+2. **Install** virtualenv_.  Get it from your OS package manager (usually
+   listed as ``python-virtualenv`` or ``py-virtualenv``) if you can, and skip
+   to step 5.  Otherwise, use setuptools as detailed below
+
+3. **Install setuptools** for installing Python packages.  Your
+   package manager may have it, or you may be able to get a prebuilt
+   package from `PyPi <http://pypi.python.org/pypi/setuptools>`_, but
+   the most universal way is to `download ez_setup.py
+   <http://peak.telecommunity.com/dist/ez_setup.py>`_ and run it with
+   Python::
+
+     % python ez_setup.py
+
+   On windows, ``easy_install``\ ed executables don't go in your
+   ``PATH`` by default, so you'll need to add something like
+   ``c:\Python26\Scripts`` to your path, or just spell the full path
+   to the executables, to make the rest of this work.
+
+4. **Use setuptools to get virtualenv**::
+
+     % easy_install sphinx
+
+5. There is **no step 5**.  You're done!
+
+.. _virtualenv: http://pypi.python.org/pypi/virtualenv
+.. _Dulwich: https://launchpad.net/dulwich
+
+Fully Automated Testing
+=======================
+
+The easiest way to run the tests is to invoke the ``self_test.py``
+script in the ``test/`` subdirectory.  It sets up a virtual python
+installation (using |virtualenv|_), installs all necessary
+prerequisites there, and then launches the tests.  Any command-line
+arguments are passed on to |nosetests|_ (but read on for two
+exceptions).
+
+.. |virtualenv| replace:: `virtualenv`
+.. |nosetests| replace:: `nosetests`
+.. _nosetests: nose_
+.. _nose: http://somethingaboutorange.com/mrl/projects/nose
+
+Testing For Local Development
+=============================
+
+To speed up the edit/test/debug cycle, you can ask ``self_test.py`` to
+create the testing environment once and then print out the command
+you can use repeatedly to run the tests:
+
+.. parsed-literal:
+
+  % self_test.py --prepare-env=\ *some-path*
+
+which will prepare a testing environment in *some-path*, and print out
+a |nosetests|_ command that runs the tests.  Please consult the nose_
+documentation for information about additional options you might want
+to pass.  Two likely candidates are ``-v`` and ``-x``.
+
+Using Distribute_ Instead of Setuptools
+=======================================
+
+.. _Distribute: http://pypi.python.org/pypi/distribute
+
+The only other argument recognized by ``self_test.py`` itself (and not
+passed on to nose_) is ``--distribute``, which will cause the testing
+environment to be prepared with Distribute_ rather than setuptools.
+This option should be considered experimental, at least until we have
+more information on `this issue
+<http://bitbucket.org/tarek/distribute/issue/164/>`_.
 
 .................
 Building The Docs
@@ -176,3 +260,5 @@ Additional Notes
 For more developer notes, please see the `Ryppl Wiki
 <http://wiki.github.com/ryppl/ryppl/>`_.
 
+.. [#upstream] Ian Bicking, the main developer of PIP, has signaled his
+   intention to integrate our changes.
