@@ -72,6 +72,10 @@ project metadata from the ``.ryppl`` folder and and feeds it to
 Running The Tests
 .................
 
+One of the first things you'll want to do as a developer is get
+something running, and have a framework that will tell you if you
+broke something.
+
 Testing Prerequisites
 =====================
 
@@ -83,10 +87,14 @@ Testing Prerequisites
    listed as ``python-virtualenv`` or ``py-virtualenv``) if you can, and skip
    to step 5.  Otherwise, use setuptools as detailed below
 
-3. **Install setuptools** for installing Python packages.  Your
-   package manager may have it, or you may be able to get a prebuilt
-   package from `PyPi <http://pypi.python.org/pypi/setuptools>`_, but
-   the most universal way is to `download ez_setup.py
+.. _install-setuptools:
+
+3. **Install setuptools** (the ``easy_install`` program for installing
+   Python packages) if you don't already have it.  Your package
+   manager may have it (e.g. as ``py-setuptools``), or you may be able
+   to get a prebuilt package from `PyPi
+   <http://pypi.python.org/pypi/setuptools>`_, but the most universal
+   way is to `download ez_setup.py
    <http://peak.telecommunity.com/dist/ez_setup.py>`_ and run it with
    Python::
 
@@ -97,9 +105,9 @@ Testing Prerequisites
    ``c:\Python26\Scripts`` to your path, or just spell the full path
    to the executables, to make the rest of this work.
 
-4. **Use setuptools to get virtualenv**::
+4. **Use setuptools** to get |virtualenv|_::
 
-     % easy_install sphinx
+     % easy_install virtualenv
 
 5. There is **no step 5**.  You're done!
 
@@ -180,18 +188,7 @@ Setting up prerequisites
    listed as ``python-sphinx`` or ``py-sphinx``) if you can, and skip
    to step 5.  Otherwise, use setuptools as detailed below
 
-3. **Install setuptools** for installing Python packages.  Your
-   package manager may have it, or you may be able to get a prebuilt
-   package from `PyPi <http://pypi.python.org/pypi/setuptools>`_, but
-   the most universal way is to `download ez_setup.py
-   <http://peak.telecommunity.com/dist/ez_setup.py>`_ and run it with
-   Python::
-
-     % python ez_setup.py
-
-   On windows, ``easy_install``\ ed executables don't go in your ``PATH`` by
-   default, so you'll need to add something like ``c:\Python26\Scripts``
-   to your path to make the rest of this work.
+3. **Install setuptools** (see `this step <#install-setuptools>`_).
 
 4. **Use setuptools to get Sphinx**.  The servers were really slow
    last time I checked; expect this to take a while (add ``-v`` if
