@@ -106,7 +106,7 @@ def main(argv):
             print 'Testing command:'
             print ' '.join(test_cmd)
         else:
-            run( test_cmd )
+            run( *test_cmd )
 
     finally:
         os.chdir(save_dir)
