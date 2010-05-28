@@ -261,10 +261,7 @@ class Environment(TestFileEnvironment):
         if self.verbose:
             print '>> running', args, kw
         cwd = kw.pop('cwd', None)
-        run_from = kw.pop('run_from',None)
-        assert not cwd or not run_from, "Don't use run_from; it's going away"
-        cwd = Path.string(cwd or run_from or self.cwd)
-        assert not isinstance(cwd,Path)
+
         return TestResult( super(Environment,self).run(cwd=cwd,*args,**kw), verbose=self.verbose )
 
     def __del__(self):
