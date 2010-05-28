@@ -1,5 +1,6 @@
 def main():
     import pip, pip.req, os
+    import ryppl.commands.install
 
     # Patch pip to do our bidding!
     pip.req.InstallRequirement.setup_py = os.path.join(

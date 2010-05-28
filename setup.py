@@ -43,7 +43,7 @@ setup(name='ryppl',
       # declaring them as a dependencies and allowing setuptools.setup()
       # to fetch it as necessary, but I'm not yet sure how to declare
       # such dependencies.  In the meantime, this works.
-      packages=['ryppl'] 
+      packages=find_packages('src')
       + ['pip', 'pip.commands', 'pip.vcs']
       + find_packages(distutils2_pkg)
       ,
