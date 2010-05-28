@@ -20,7 +20,7 @@ def test_fetch():
     env = new_test()
     index,project_paths = create_projects(
         env, my_proj=open(distutils2_src/'distutils2'/'tests'/'PKG-INFO').read())
-    env.ryppl('install', '--no-install', '-v', '-i', 'file://'+pathname2url(index), 'my_proj')
+    env.ryppl('install', '--no-install', '-vvv', '-i', 'file://'+pathname2url(index), 'my_proj')
 
 def test_diamond():
     env = new_test()
@@ -40,7 +40,7 @@ def test_diamond():
     env.run('git', 'tag', '1.1', cwd=d)
     env.ryppl('install', 
           # '--no-install', 
-          '-v', 
+          '-vvv', 
           '-i', 'file://'+pathname2url(index), 'ProjA')
 
 if __name__ == '__main__':
