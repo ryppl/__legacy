@@ -27,11 +27,13 @@ run on build slaves located “out there” on the internet. This allows
 developers to discover portability issues without having direct access
 to every build platform.
 
-Community
+Resources
 ---------
 
 * `Ryppl development mailing list <http://groups.google.com/group/ryppl-dev>`_
-* On IRC in the #ryppl channel at irc.freenode.net
+* #ryppl IRC channel at irc.freenode.net
+* Dave Abrahams' rough `ryppl slideset from BoostCon 2010 <http://www.filetolink.com/c644b59c>`_
+* David Cole's `CMake slideset from BoostCon 2010 <http://www.filetolink.com/0135fa83>`_
 
 Status as of 2010-06-22
 -----------------------
