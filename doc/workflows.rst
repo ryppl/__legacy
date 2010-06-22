@@ -30,26 +30,43 @@ non-technical people, so we intend them to be **dead simple.**
 Tool Installation
 -----------------
 
-Installation of the ryppl tools should be a single command with
-interactive steps as necessary.  Maybe this is just part of what
-happens every time the ryppl command is run:
+Installation of tools that ryppl needs to operate should be a single
+command with interactive steps as necessary.  Maybe this is just part
+of what happens every time the ryppl command is run:
 
 .. parsed-literal::
 
   $ ryppl *whatever*
-  I couldn't find Git in your path.  Type the path to a Git executable
-  here [default: I'll install one for you]:
+  I couldn't find a CMake installation in your path.  Type the path to 
+  a cmake executable here [default: I'll install one for you]:
+
+Workspaces
+----------
 
 Ryppl will need a place to check out packages; call this a “ryppl
-workspace.”  The Cygwin binary installer's package directory selection
-provides a nearly perfect model: you can say “download from internet,”
-which means you don't really care where it puts the package files, or
-you can supply a path.
+workspace.”  A **ryppl workspace** is just a directory with some sort
+of marker file (e.g. in its .ryppl subdirectory) and a subdirectory
+for each project in the workspace.
 
-Non-technical users who are installing software will typically choose
-“download from internet.”  Anyone doing development will typically
-choose a location for packages.  Invoking ``ryppl`` from within a
-ryppl workspace simply uses that workspace.
+The Cygwin binary installer's package directory selection provides a
+nearly perfect model: you can say “download from internet,” which
+means you don't really care where it puts the package files, or you
+can supply a path.  Non-technical users who are installing software
+will typically choose “download from internet.”  Anyone doing
+development will typically choose a location for packages.  Invoking
+``ryppl`` from within a ryppl workspace simply uses that workspace.
+
+Most users will only need to use a single workspace, but a developer
+who works on multiple projects that may have conflicting version
+dependencies might want to establish separate workspaces for each
+project.
+
+Workspaces may also contain a **virtual environment**: an extension of
+Python's `virtualenv functionality
+<http://iamzed.com/2009/05/07/a-primer-on-virtualenv/>`_ that—in many
+cases—allows complete testing of an installation without root (or
+administrator) access, and mostly isolated from effects of things
+*actually* installed on the system.
 
 Package Installation
 --------------------
@@ -66,7 +83,8 @@ With testing prior to installation:
 
 .. parsed-literal::
 
-   $ ryppl install --test *project1* *project2* *project3*\ …
+   $ ryppl test *project1* *project2* *project3*\ …
+   $ ryppl install *project1* *project2* *project3*\ …
 
 Development
 ===========
@@ -122,7 +140,7 @@ Ryppl collection.
 .. Note:: We don't know what the mechanism looks like to actually get
    a project into the Ryppl collection.  Can anyone just add things
    to Ryppl, or is there a gatekeeper, or even a human processing the
-   additions?
+   additions?  We need to decide.
 
 Merge Requests
 --------------
@@ -259,6 +277,10 @@ least initially, based on the `format
 <https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures.xsd>`_
 of `Boost's corresponding file
 <https://svn.boost.org/trac/boost/browser/trunk/status/explicit-failures-markup.xml>`_
+
+.. Note:: We have no particular attachment to using XML for this file;
+   it's just that we have precedent.  There's probably a better
+   choice.
 
 To summarize a project's releasability criteria, ::
 
