@@ -27,14 +27,48 @@ run on build slaves located “out there” on the internet. This allows
 developers to discover portability issues without having direct access
 to every build platform.
 
-About this documentation
-------------------------
+Status as of 2010-06-22
+-----------------------
 
-This documentation is written in `reStructuredText
-<http://docutils.sourceforge.net/rst.html>`_ and assembled by `Sphinx
-<http://sphinx.pocoo.org>`_.  You can get the source from the
-``doc/`` subdirectory of the ``master`` branch of the git repository at
-``git://github.com/ryppl/ryppl.git``.  
+Functionality
+.............
+
+What we can do currently:
+
+* Accept a request to get a project, optionally a specific version
+* Look up a project in the project index (a simple website) and find its Git repository.
+* Find the versions of that project based on tags in the Git repository
+* Read the project's metadata file to find its dependencies (and their
+  version requirements)
+* Recursively clone repositories for the project and all of its
+  dependencies at the appropriate version (subject to some limitations
+  ATM: http://bitbucket.org/ianb/pip/issue/119)
+
+Code
+....
+
+At the time of this writing, the `code in Ryppl itself
+<http://github.com/ryppl/ryppl/tree/master/src/ryppl>`_ is just an
+extraordinarily thin layer over PIP and Distutils2… which is how we
+want things.  The idea is to *not* end up with a system that requires
+much in the way of its own maintenance.
+
+Momentum
+........
+
+A huge effort was expended April-May 2010 to get `pip
+<http://pip.openplans.org>`_ to work properly on Windows and to be
+hookable with our functionality.  Development went into a slight lull
+(to accommodate other work) in late June 2010, but Eric Niebler is
+actually moving his physical address to Cambridge, MA on July 1 to
+work side-by-side, and essentially full-time, with Dave Abrahams on
+ryppl.  Expect a large burst of progress then.
+
+Also, Kitware has committed a *minimum* of one full man-month over the
+period ending May 2011 to getting all necessary CMake_ (and
+CTest/CDash) support in place.
+
+.. _CMake: http://cmake.org
 
 Support This Project
 --------------------
@@ -52,8 +86,8 @@ and they need to pay the bills, so please consider `making a donation
 <http://pledgie.com/campaigns/9508>`_.  Thanks!
 
 
-Full Table Of Contents
-----------------------
+Sections
+--------
 
 .. toctree:: 
    :maxdepth: 3
@@ -67,6 +101,16 @@ Full Table Of Contents
    svn_equivs
    various_howtos
    design-details
+
+
+About this documentation
+------------------------
+
+This documentation is written in `reStructuredText
+<http://docutils.sourceforge.net/rst.html>`_ and assembled by `Sphinx
+<http://sphinx.pocoo.org>`_.  You can get the source from the
+``doc/`` subdirectory of the ``master`` branch of the git repository at
+``git://github.com/ryppl/ryppl.git``.  
 
 
 ---------
