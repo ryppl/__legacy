@@ -27,6 +27,12 @@ run on build slaves located “out there” on the internet. This allows
 developers to discover portability issues without having direct access
 to every build platform.
 
+Community
+---------
+
+* `Ryppl development mailing list <http://groups.google.com/group/ryppl-dev>`_
+* On IRC in the #ryppl channel at irc.freenode.net
+
 Status as of 2010-06-22
 -----------------------
 
