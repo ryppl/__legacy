@@ -7,11 +7,13 @@ Ryppl relies on the following technologies:
 * Git_
 * CMake_
 * pip_
+* Distutils2_
 
 .. _Python: http://python.org
 .. _Git: http://git-scm.com
 .. _CMake: http://cmake.org
 .. _pip: http://pip.openplans.org
+.. _Distutils2: http://bitbucket.org/tarek/distutils2/wiki/GSoC_2010_teams
 
 You don't need to know Python at all to use Ryppl; it's just an
 implementation language.  You also don't need to know Git… unless you
@@ -19,6 +21,15 @@ are going to be doing development work on Ryppl projects.  Ryppl
 projects are always managed via Git repositories.  If you really must
 use a different SCM for real development work, there are ways to link
 Git with most popular SCMs.
+
+The Python Packaging Ecosystem
+------------------------------
+
+We're heavily leveraging the packaging technology under development in
+the Python world, specifically the Distutils2_ project (led by Tarek
+Ziadé) and the pip_ project (led by Ian Bicking).  You can read more
+about how these tools relate in `Tarek's blog posting
+<http://tarekziade.wordpress.com/2010/05/31/distutils2-vs-pip/>`_
 
 Learning about Git
 ------------------
@@ -50,6 +61,7 @@ Schindelin's introductory Google Tech Talk.
 Internals and Other Resources
 .............................
 
+* `Git Reference <http://gitref.org/>`_
 * `Git from the bottom up <http://ftp.newartisans.com/pub/git.from.bottom.up.pdf>`_ (See also the links at the end of this document).
 * `Git for Computer Scientists <http://eagain.net/articles/git-for-computer-scientists/>`_
 * `Git home page <http://git-scm.com>`_
