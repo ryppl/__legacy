@@ -123,13 +123,18 @@ Testing Prerequisites
 
      % easy_install virtualenv
 
+5. **Use setuptools** to get |scripttest|_::
+
+     % easy_install scripttest
+
    .. _prerequisites-done:
 
       .. comment   
 
-5. There is **no step 5**.  You're done!
+6. There is **no step 6**.  You're done!
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
+.. _scripttest: http://pythonpaste.org/scripttest
 .. _Dulwich: https://launchpad.net/dulwich
 
 Fully Automated Testing
@@ -143,6 +148,7 @@ arguments are passed on to |nosetests|_ (but read on for two
 exceptions).  This is the approach that will be used by BuildBots.
 
 .. |virtualenv| replace:: `virtualenv`
+.. |scripttest| replace:: `scripttest`
 .. |nosetests| replace:: `nosetests`
 .. _nosetests: nose_
 .. _nose: http://somethingaboutorange.com/mrl/projects/nose
@@ -154,7 +160,7 @@ To speed up the edit/test/debug cycle, you can ask ``self_test.py`` to
 create the testing environment once and then print out the command you
 can use repeatedly to run the tests:
 
-.. parsed-literal:
+.. parsed-literal::
 
   % self_test.py --prepare-env=\ *some-path*
 
@@ -210,11 +216,11 @@ Setting up prerequisites
 
 4. **Use setuptools to get Sphinx**.  The servers were really slow
    last time I checked; expect this to take a while (add ``-v`` if
-   you're easily bored).
+   you're easily bored)::
 
      % easy_install sphinx
 
-5. **make sure** ``sphinx-build`` is in your path:
+5. **make sure** ``sphinx-build`` is in your path::
 
      % sphinx-build --help
 
