@@ -171,6 +171,10 @@ Testing Prerequisites
 
      % easy_install virtualenv
 
+5. **Use setuptools** to get |scripttest|_::
+
+     % easy_install scripttest
+
    .. _prerequisites-done:
 
       .. comment   
