@@ -3,7 +3,7 @@ from subprocess import call, check_call, PIPE
 from path import Path
 import shutil
 from tempfile import mkdtemp, gettempdir
-from pkgtest import create_virtualenv, rmtree, mktree, exe_ext as EXE
+from testutil import create_virtualenv, rmtree, mktree, exe_ext as EXE
 
 use_distribute=False
 
