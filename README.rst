@@ -171,15 +171,11 @@ Testing Prerequisites
 
      % easy_install virtualenv
 
-5. **Use setuptools** to get |scripttest|_::
-
-     % easy_install scripttest
-
    .. _prerequisites-done:
 
       .. comment   
 
-6. There is **no step 6**.  You're done!
+5. There is **no step 5**.  You're done!
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 .. _scripttest: http://pythonpaste.org/scripttest
