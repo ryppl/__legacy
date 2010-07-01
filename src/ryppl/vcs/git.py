@@ -4,7 +4,7 @@ from pip.log import logger
 
 class Git(PipGit):
     def unpack(self, location):
-        """Clone the Git repository at the url to the destination location"""
+        """Clone the Git repository at a specific revision"""
         url, rev = self.get_url_rev()
 
         logger.notify('Cloning Git repository %s to %s' % (url, location))
