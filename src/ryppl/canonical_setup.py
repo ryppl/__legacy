@@ -1,27 +1,27 @@
 import os, sys
-
 from distutils2.metadata import DistributionMetadata
-import os
 
-# This option not working (yet)
+# This option not working (yet).  Should we use setup() from distutils2?
 use_distutils2 = '--distutils2' in sys.argv
 
 if use_distutils2:
-    from distutils2 import setup, find_packages
+    from distutils2 import setup
 else:
-    from setuptools import setup, find_packages
+    from setuptools import setup
 
+# Read the metadata out of the project's .ryppl/METADATA file
 metadata = DistributionMetadata(
     path=os.path.join(os.getcwd(), '.ryppl', 'METADATA'),
     platform_dependant=True
     )
 
-doc_dir = os.path.join(os.path.dirname(__file__), 'docs')
-
-simple_kw_map = dict(summary='description', )
 def metadata_to_setup_keywords(metadata):
-        
+    """
+    Convert a Distutils2 metadata object into a dict of named
+    arguments to be passed to setup()
+    """
     if use_distutils2:
+        # Everything *should* be this easy.
         return dict( metadata.items() )
     else:
         class item_to_attribute(object):
@@ -60,5 +60,5 @@ def metadata_to_setup_keywords(metadata):
           obsoletes = m.obsoletes_dist or m.obsoletes,
           )
 
-
+# Call setup with keyword arguments corresponding to the metadata
 setup( **metadata_to_setup_keywords(metadata) )
