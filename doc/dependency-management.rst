@@ -18,10 +18,23 @@ This configuration of dependencies should be enough to uncover many of the edge 
 *proj* is a project that might not be hosted at ryppl. *libA*, *libB*,
 *libC*, and *libX* are ryppl library projects.
 
-.. Admonition:: Question
+The ``.ryppl`` Directory
+------------------------
 
-   Can we simplify the diagram without losing important cases by
-   adding an arc from *proj* to *libX* and dropping *libB* altogether?
+At the top level of each ryppl project sits a directory called
+``.ryppl``, containing metadata file as `described`__ in `PEP 376`_.
+
+__ dist-info_
+.. _dist-info: http://www.python.org/dev/peps/pep-0376/#one-dist-info-directory-per-installed-distribution
+.. _PEP 376: http://www.python.org/dev/peps/pep-0376
+
+.. Note:: Today, the only difference between a ``.ryppl`` directory
+  and a ``.dist-info`` directory as described__ in `PEP 376`_ is the
+  directory name.  We are prepared to extend the contents of the
+  ``.ryppl`` directory by adding files if necessary.
+  
+  __ dist-info_
+
 
 Specifics of Setup
 ------------------
@@ -36,16 +49,15 @@ This specifies a dependency on a version of libX numbered 1.0 through
 
 .. Note:: A well formed version number has the following format:  
 
-   N.N[.N]+[{a|b|c|rc}N[.N]+][.postN][.devN]
+     N.N[.N]+[{a|b|c|rc}N[.N]+][.postN][.devN]
    
    where the only mandatory parts are the initial N.N.
 
    This is the same format accepted for Python versioning schema, see
-   http://www.python.org/dev/peps/pep-0386/ 
-
-   for a thorough explanation.
-   This choice covers the vast majority of cases (up to development, post-release versions)
-   and allows for comparisons.
+   `PEP 386 <http://www.python.org/dev/peps/pep-0386/>`_ for a
+   thorough explanation.  This choice covers the vast majority of
+   cases (up to development, post-release versions) and allows for
+   comparisons.
 
 *libB* has a similar .ryppl file::
 

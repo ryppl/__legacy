@@ -29,7 +29,11 @@ We're heavily leveraging the packaging technology under development in
 the Python world, specifically the Distutils2_ project (led by Tarek
 Ziadé) and the pip_ project (led by Ian Bicking).  You can read more
 about how these tools relate in `Tarek's blog posting
-<http://tarekziade.wordpress.com/2010/05/31/distutils2-vs-pip/>`_
+<http://tarekziade.wordpress.com/2010/05/31/distutils2-vs-pip/>`_.
+The state of Python Packaging is confusing and messy, but `this
+article
+<http://guide.python-distribute.org/introduction.html#current-state-of-packaging>`_
+helps a bit to clear things up.
 
 Learning about Git
 ------------------
