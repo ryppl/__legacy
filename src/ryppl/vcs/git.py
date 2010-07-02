@@ -10,17 +10,11 @@ class Git(PipGit):
         logger.notify('Cloning Git repository %s to %s' % (url, location))
         logger.indent += 2
         try:
-
             if os.path.exists(location):
                 os.rmdir(location)
-            if not rev:
-                rev = 'HEAD'
             call_subprocess(
-                [self.cmd, 'clone', '-n', url, location],
+                [self.cmd, 'clone', '-b', rev or 'HEAD', url, location],
                 filter_stdout=self._filter, show_stdout=False)
-            call_subprocess(
-                [self.cmd, 'checkout', '-b', rev],
-                filter_stdout=self._filter, show_stdout=False, cwd=location)
         finally:
             logger.indent -= 2
 
