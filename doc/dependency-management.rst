@@ -22,7 +22,7 @@ The ``.ryppl`` Directory
 ------------------------
 
 At the top level of each ryppl project sits a directory called
-``.ryppl``, containing metadata file as `described`__ in `PEP 376`_.
+``.ryppl``, containing ``METADATA`` file as `described`__ in `PEP 376`_.
 
 __ dist-info_
 .. _dist-info: http://www.python.org/dev/peps/pep-0376/#one-dist-info-directory-per-installed-distribution
@@ -39,13 +39,14 @@ __ dist-info_
 Specifics of Setup
 ------------------
 
-The developer of *libA* has a .ryppl file to his project at the top level::
+The developer of *libA* has a ``.ryppl/METADATA`` file to his project at the top level::
 
-  depends libX:1.0-2.2,3.1
-  depends libC
+  Requires-Dist: libX (>=1.0,!=3.0,<=3.1)
+  Requires-Dist: libC
 
 This specifies a dependency on a version of libX numbered 1.0 through
-2.2 or numbered 3.1.  
+3.1, excluding 3.0 (or the 3.0.x series if versions of *libA* have
+three numeric parts).  
 
 .. Note:: A well formed version number has the following format:  
 
@@ -59,9 +60,9 @@ This specifies a dependency on a version of libX numbered 1.0 through
    cases (up to development, post-release versions) and allows for
    comparisons.
 
-*libB* has a similar .ryppl file::
+*libB* has a similar ``.ryppl/METADATA`` file::
 
-  depends libX:2.0-2.5,3.0
+  Requires-Dist: libX:2.0-2.5,3.0
 
 The person developing *proj* does:
 
@@ -72,16 +73,18 @@ The person developing *proj* does:
 This will pull down the latest release of *libA*, *libB*, and *libC* and version 2.2 of *libX*, since it's the latest version
 compatible with both the latest *libA* and *libB*.
 
-Alternatively, the developer of *proj* can have his own .ryppl file::
+Alternatively, the developer of *proj* can have his own ``.ryppl/METADATA`` file::
 
-  depends libA libB
+  Requires-Dist: libA
+  Requires-Dist: libB
 
 and simply execute::
 
   ~/proj% ryppl
 
 In case of conflicts,where the latest *libA* and *libB* are not
-compatible with any common version of *libX*, the user should be offered options
+compatible with any common version of *libX*, the user should be
+offered options
 
 * Abort
 * Look for earlier versions of *libA* and *libB* that are compatible
