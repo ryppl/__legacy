@@ -83,27 +83,74 @@ broke something.
 Testing Prerequisites
 =====================
 
-0. **Install** Git_.  On Windows, this means MSysGit_.  We will
+1. **Install** Git_.  On Windows, this means MSysGit_.  We will
    probably eliminate this requirement one day by using Dulwich_, so
    end-users don't have to install Git.
 
-1. **Git submodules** need to be initialized and updated.  From the
+.. Note:: If you are going to use MSysGit on Windows and plan to use Git from
+   Windows command prompt (cmd.exe) as opposed to the bash shell, here are some
+   tricks to make your life easier.
+   
+   1. The MSysGit installer will give you three options for how you would like
+      to configure Git's environment. The default is (a) to run Git from bash.
+      The other two are (b) to put "git" in the Windows PATH, and (c) to put
+      "git" and all the other Unix utilities in the Windows PATH. You should
+      pick (b), the option called "Run Git from the Windows Command Prompt".
+   
+   2. When the MSysGit installer asks you how you would like Git to handle
+      newlines on checkout and commit, select the option that says, "Check out
+      as-is, commit as-is". That tells git to not mess with the line endings.
+      You are encouraged to not check in files with crlf line endings, however.
+      *TODO: is this the behavior we want?*
+
+   3. You can use notepad.exe as Git's text editor for things like commit
+      messages and the like, but you need to fix up the newline characters
+      first. Create a file ``notepad.cmd`` alongside ``git.cmd`` in your
+      ``C:\Program Files\Git\cmd`` directory. It should contain the following::
+      
+         @setlocal
+         @set COMMIT_EDITMSG=%1
+         @set COMMIT_EDITMSG=%COMMIT_EDITMSG:/=\%
+         @del /q %COMMIT_EDITMSG%.tmp 2>1 1>nul
+         @for /f "tokens=*" %%i in (%COMMIT_EDITMSG%) do @echo %%i >>%COMMIT_EDITMSG%.tmp
+         @move /y %COMMIT_EDITMSG%.tmp %COMMIT_EDITMSG% 2>1 1>nul
+         @notepad %COMMIT_EDITMSG%
+         @endlocal
+
+      Then execute the following command::
+
+         > git config --global core.editor notepad.cmd
+    
+   4. You need to disable the pager used internally by git. As of the time of
+      this writing (2010-7-2), MSysGit ships with a buggy version of
+      less.exe that will cause some git commands to hang or crash cmd.exe.
+      You can turn git's internal use of less.exe with the following::
+      
+      > git config --global core.pager cat
+      
+   5. There is a bug in how git handles various ``git help`` commands that
+      causes the external browser to fail to display the requested help topic.
+      You can work around the problem by going into the
+      ``C:\Program Files\Git\doc\git\html`` directory and copying all
+      ``git-*.html`` files to ``git*.html`` files (i.e., strip the hyphen
+      after ``git`` in the filename).
+    
+2. **Git submodules** need to be initialized and updated.  From the
    root of your ryppl source tree, ::
 
      % git submodule init
      % git submodule update
 
-2. **Install** virtualenv_.  Get it from your OS package manager (usually
+3. **Install** virtualenv_.  Get it from your OS package manager (usually
    listed as ``python-virtualenv`` or ``py-virtualenv``) if you can, and skip
-   to `step 5`__.  Otherwise, use setuptools as detailed below
+   to `step 6`__.  Otherwise, use setuptools as detailed below
 
    __ prerequisites-done_
    .. _install-setuptools:
 
       .. comment   
 
-
-3. **Install setuptools** (the ``easy_install`` program for installing
+4. **Install setuptools** (the ``easy_install`` program for installing
    Python packages) if you don't already have it.  Your package
    manager may have it (e.g. as ``py-setuptools``), or you may be able
    to get a prebuilt package from `PyPi
@@ -119,7 +166,7 @@ Testing Prerequisites
    ``c:\Python26\Scripts`` to your path, or just spell the full path
    to the executables, to make the rest of this work.
 
-4. **Use setuptools** to get |virtualenv|_::
+5. **Use setuptools** to get |virtualenv|_::
 
      % easy_install virtualenv
 
@@ -127,7 +174,7 @@ Testing Prerequisites
 
       .. comment   
 
-5. There is **no step 5**.  You're done!
+6. There is **no step 6**.  You're done!
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 .. _scripttest: http://pythonpaste.org/scripttest
