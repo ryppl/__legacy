@@ -158,7 +158,7 @@ target **genheaders**:
   Built target genheaders
 
 
-Now you'll notice that a  directory ``build-ryppl/include``
+Now you'll notice that a  directory ``boost-ryppl/include``
 exists and is full of headers::
 
   % ls include/boost
