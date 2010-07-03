@@ -175,7 +175,7 @@ Testing Prerequisites
 
       .. comment   
 
-5. There is **no step 5**.  You're done!
+6. There is **no step 6**.  You're done!
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 .. _scripttest: http://pythonpaste.org/scripttest
