@@ -65,7 +65,7 @@ def main(argv):
     save_dir = os.getcwd()
 
     if prepare_env:
-        venv_dir = prepare_env[-1][len('--prepare_env='):]
+        venv_dir = prepare_env[-1][len('--prepare-env='):]
         mktree(venv_dir)
     else:
         venv_dir = mkdtemp('-ryppl_self_test')
@@ -101,7 +101,19 @@ def main(argv):
         pip_install('scripttest>=1.0.4')
         print >> sys.stderr, 'ok'
         nosetests = abs_bin/'nosetests'+EXE
-        test_cmd = [nosetests, '-w', ryppl_root/'test'] + argv
+        #
+        # ericniebler, 2010-06-03:
+        # --exe is to force nose to look for tests in py files the os
+        # reports as executable. This is only an issue on cygwin.
+        # TODO: investigate nose/config.py, which uses the following
+        # global to control this behavior. It seems to have the logic
+        # reversed [site-packages/nose/config.py(24)]:
+        #
+        # # plaforms on which the exe check defaults to off
+        # # Windows and IronPython
+        # exe_allowed_platforms = ('win32', 'cli')
+        #
+        test_cmd = [nosetests, '--exe', '-w', ryppl_root/'test'] + argv
         if prepare_env:
             print 'Testing command:'
             print ' '.join(test_cmd)
