@@ -141,9 +141,10 @@ Testing Prerequisites
      % git submodule init
      % git submodule update
 
-3. **Install** virtualenv_.  Get it from your OS package manager (usually
-   listed as ``python-virtualenv`` or ``py-virtualenv``) if you can, and skip
-   to `step 6`__.  Otherwise, use setuptools as detailed below
+3. **Install** virtualenv_.  You need version 1.4.0 or greater. Get it from your
+   OS package manager (usually listed as ``python-virtualenv`` or
+   ``py-virtualenv``) if you can, and skip to `step 6`__.  Otherwise, use
+   setuptools as detailed below
 
    __ prerequisites-done_
    .. _install-setuptools:
