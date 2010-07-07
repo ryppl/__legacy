@@ -108,13 +108,13 @@ Testing Prerequisites
       first. Create a file ``notepad.cmd`` alongside ``git.cmd`` in your
       ``C:\Program Files\Git\cmd`` directory. It should contain the following::
       
-         @setlocal
-         @set COMMIT_EDITMSG=%1
-         @set COMMIT_EDITMSG=%COMMIT_EDITMSG:/=\%
-         @del /q %COMMIT_EDITMSG%.tmp 2>1 1>nul
-         @for /f "tokens=*" %%i in (%COMMIT_EDITMSG%) do @echo %%i >>%COMMIT_EDITMSG%.tmp
-         @move /y %COMMIT_EDITMSG%.tmp %COMMIT_EDITMSG% 2>1 1>nul
-         @notepad %COMMIT_EDITMSG%
+         @setlocal 
+         @set COMMIT_EDITMSG=%~1
+         @set COMMIT_EDITMSG=%COMMIT_EDITMSG:/=\% 
+         @del /q "%COMMIT_EDITMSG%.tmp" >nul 2>&1
+         @for /f "usebackq tokens=*" %%i in ("%COMMIT_EDITMSG%") do @echo %%i >> "%COMMIT_EDITMSG%.tmp"
+         @move /Y "%COMMIT_EDITMSG%.tmp" "%COMMIT_EDITMSG%" >nul 2>&1
+         @notepad.exe "%COMMIT_EDITMSG%"
          @endlocal
 
       Then execute the following command::
