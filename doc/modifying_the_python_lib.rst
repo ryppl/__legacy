@@ -1,7 +1,7 @@
 .. highlight:: git_shell
 
-Scenario:  I want to work on a library
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Making Changes to a Modularized Boost Library
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We want to make modifications to project boost.python, with the
 intention of eventually making a merge request to the project's owner.
