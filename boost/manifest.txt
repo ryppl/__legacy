@@ -1,62 +1,62 @@
-[accumulators] 
- 
-R100	boost/accumulators	accumulators/include/boost/accumulators
-R100	libs/accumulators/doc	accumulators/doc
-R100	libs/accumulators/example	accumulators/example
-R100	libs/accumulators/test	accumulators/test
+[accumulators]
+
+R100	boost/accumulators/	accumulators/include/boost/accumulators/
+R100	libs/accumulators/doc/	accumulators/doc/
+R100	libs/accumulators/example/	accumulators/example/
+R100	libs/accumulators/test/	accumulators/test/
 R100	libs/accumulators/index.html	accumulators/index.html
 A	accumulators/CMakeLists.txt
 A	accumulators/doc/CMakeLists.txt
 A	accumulators/example/CMakeLists.txt
 A	accumulators/module.cmake
 A	accumulators/test/CMakeLists.txt
- 
-[algorithm] 
- 
-R100	boost/algorithm	algorithm/include/boost/algorithm
-R100	libs/algorithm/minmax/doc	algorithm/minmax/doc
-R100	libs/algorithm/minmax/example	algorithm/minmax/example
-R100	libs/algorithm/minmax/test	algorithm/minmax/test
+
+[algorithm]
+
+R100	boost/algorithm/	algorithm/include/boost/algorithm/
+R100	libs/algorithm/minmax/doc/	algorithm/minmax/doc/
+R100	libs/algorithm/minmax/example/	algorithm/minmax/example/
+R100	libs/algorithm/minmax/test/	algorithm/minmax/test/
 R100	libs/algorithm/minmax/index.html	algorithm/minmax/index.html
-R100	libs/algorithm/string/doc	algorithm/string/doc
-R100	libs/algorithm/string/example	algorithm/string/example
-R100	libs/algorithm/string/test	algorithm/string/test
+R100	libs/algorithm/string/doc/	algorithm/string/doc/
+R100	libs/algorithm/string/example/	algorithm/string/example/
+R100	libs/algorithm/string/test/	algorithm/string/test/
 R100	libs/algorithm/string/index.html	algorithm/string/index.html
 R100	libs/algorithm/sublibs	algorithm/sublibs
 A	algorithm/CMakeLists.txt
 A	algorithm/minmax/test/CMakeLists.txt
 A	algorithm/module.cmake
 A	algorithm/string/test/CMakeLists.txt
- 
-[any] 
- 
+
+[any]
+
 R100	boost/any.hpp	any/include/boost/any.hpp
-R100	libs/any/doc	any/doc
-R100	libs/any/test	any/test
+R100	libs/any/doc/	any/doc/
+R100	libs/any/test/	any/test/
 R100	libs/any/any_test.cpp	any/any_test.cpp
 R100	libs/any/index.html	any/index.html
 R100	libs/any/test.hpp	any/test.hpp
 A	any/CMakeLists.txt
 A	any/module.cmake
 A	any/test/CMakeLists.txt
- 
-[array] 
- 
+
+[array]
+
 R100	boost/array.hpp	array/include/boost/array.hpp
-R100	libs/array/doc	array/doc
+R100	libs/array/doc/	array/doc/
 R100	libs/array/index.html	array/index.html
-R100	libs/array/test	array/test
+R100	libs/array/test/	array/test/
 A	array/CMakeLists.txt
 A	array/module.cmake
 A	array/test/CMakeLists.txt
- 
-[asio] 
- 
+
+[asio]
+
 R100	boost/asio.hpp	asio/include/boost/asio.hpp
-R100	boost/asio	asio/include/boost/asio
-R100	libs/asio/doc	asio/doc
-R100	libs/asio/example	asio/example
-R100	libs/asio/test	asio/test
+R100	boost/asio/	asio/include/boost/asio/
+R100	libs/asio/doc/	asio/doc/
+R100	libs/asio/example/	asio/example/
+R100	libs/asio/test/	asio/test/
 R100	libs/asio/index.html	asio/index.html
 A	asio/CMakeLists.txt
 A	asio/module.cmake
@@ -65,35 +65,35 @@ A	asio/test/ip/CMakeLists.txt
 A	asio/test/local/CMakeLists.txt
 A	asio/test/posix/CMakeLists.txt
 A	asio/test/ssl/CMakeLists.txt
- 
-[assign] 
- 
+
+[assign]
+
 R100	boost/assign.hpp	assign/include/boost/assign.hpp
-R100	boost/assign	assign/include/boost/assign
-R100	libs/assign/doc	assign/doc
-R100	libs/assign/test	assign/test
+R100	boost/assign/	assign/include/boost/assign/
+R100	libs/assign/doc/	assign/doc/
+R100	libs/assign/test/	assign/test/
 R100	libs/assign/index.html	assign/index.html
 A	assign/CMakeLists.txt
 A	assign/module.cmake
 A	assign/test/CMakeLists.txt
- 
-[bimap] 
- 
+
+[bimap]
+
 R100	boost/bimap.hpp	bimap/include/boost/bimap.hpp
-R100	boost/bimap	bimap/include/boost/bimap
-R100	libs/bimap/doc	bimap/doc
-R100	libs/bimap/example	bimap/example
-R100	libs/bimap/test	bimap/test
+R100	boost/bimap/	bimap/include/boost/bimap/
+R100	libs/bimap/doc/	bimap/doc/
+R100	libs/bimap/example/	bimap/example/
+R100	libs/bimap/test/	bimap/test/
 R100	libs/bimap/index.html	bimap/index.html
 A	bimap/CMakeLists.txt
 A	bimap/module.cmake
 A	bimap/test/CMakeLists.txt
- 
-[bind] 
- 
+
+[bind]
+
 R100	boost/is_placeholder.hpp	bind/include/boost/is_placeholder.hpp
 R100	boost/bind.hpp	bind/include/boost/bind.hpp
-R100	boost/bind	bind/include/boost/bind
+R100	boost/bind/	bind/include/boost/bind/
 R100	boost/mem_fn.hpp	bind/include/boost/mem_fn.hpp
 R100	libs/bind/bind.html	bind/bind.html
 R100	libs/bind/bind_as_compose.cpp	bind/bind_as_compose.cpp
@@ -101,31 +101,31 @@ R100	libs/bind/bind_visitor.cpp	bind/bind_visitor.cpp
 R100	libs/bind/index.html	bind/index.html
 R100	libs/bind/mem_fn.html	bind/mem_fn.html
 R100	libs/bind/ref.html	bind/ref.html
-R100	libs/bind/doc	bind/doc
-R100	libs/bind/test	bind/test
+R100	libs/bind/doc/	bind/doc/
+R100	libs/bind/test/	bind/test/
 A	bind/CMakeLists.txt
 A	bind/module.cmake
 A	bind/test/CMakeLists.txt
- 
-[circular_buffer] 
- 
+
+[circular_buffer]
+
 R100	boost/circular_buffer.hpp	circular_buffer/include/boost/circular_buffer.hpp
-R100	boost/circular_buffer	circular_buffer/include/boost/circular_buffer
+R100	boost/circular_buffer/	circular_buffer/include/boost/circular_buffer/
 R100	boost/circular_buffer_fwd.hpp	circular_buffer/include/boost/circular_buffer_fwd.hpp
 R100	libs/circular_buffer/index.html	circular_buffer/index.html
-R100	libs/circular_buffer/doc	circular_buffer/doc
-R100	libs/circular_buffer/test	circular_buffer/test
+R100	libs/circular_buffer/doc/	circular_buffer/doc/
+R100	libs/circular_buffer/test/	circular_buffer/test/
 A	circular_buffer/CMakeLists.txt
 A	circular_buffer/module.cmake
 A	circular_buffer/test/CMakeLists.txt
- 
-[concept_check] 
- 
+
+[concept_check]
+
 R100	boost/concept_archetype.hpp	concept_check/include/boost/concept_archetype.hpp
 R100	boost/concept_check.hpp	concept_check/include/boost/concept_check.hpp
-R100	boost/concept	concept_check/include/boost/concept
-R100	boost/concept_check	concept_check/include/boost/concept_check
-R100	libs/concept_check/doc	concept_check/doc
+R100	boost/concept/	concept_check/include/boost/concept/
+R100	boost/concept_check/	concept_check/include/boost/concept_check/
+R100	libs/concept_check/doc/	concept_check/doc/
 R100	libs/concept_check/Jamfile.v2	concept_check/Jamfile.v2
 R100	libs/concept_check/bad_error_eg.cpp	concept_check/bad_error_eg.cpp
 R100	libs/concept_check/bibliography.htm	concept_check/bibliography.htm
@@ -155,23 +155,23 @@ R100	libs/concept_check/where_fail.cpp	concept_check/where_fail.cpp
 A	concept_check/CMakeLists.txt
 A	concept_check/module.cmake
 A	concept_check/test/CMakeLists.txt
- 
-[config] 
- 
+
+[config]
+
 R100	boost/config.hpp	config/include/boost/config.hpp
-R100	boost/config	config/include/boost/config
+R100	boost/config/	config/include/boost/config/
 R100	libs/config/configure	config/configure
-R100	libs/config/doc	config/doc
-R100	libs/config/test	config/test
-R100	libs/config/tools	config/tools
+R100	libs/config/doc/	config/doc/
+R100	libs/config/test/	config/test/
+R100	libs/config/tools/	config/tools/
 R100	libs/config/config.htm	config/config.htm
 R100	libs/config/index.html	config/index.html
 A	config/CMakeLists.txt
 A	config/module.cmake
 A	config/test/CMakeLists.txt
- 
-[conversion] 
- 
+
+[conversion]
+
 R100	boost/implicit_cast.hpp	conversion/include/boost/implicit_cast.hpp
 R100	boost/cast.hpp	conversion/include/boost/cast.hpp
 R100	boost/lexical_cast.hpp	conversion/include/boost/lexical_cast.hpp
@@ -182,12 +182,12 @@ R100	libs/conversion/lexical_cast.htm	conversion/lexical_cast.htm
 R100	libs/conversion/lexical_cast_test.cpp	conversion/lexical_cast_test.cpp
 R100	libs/conversion/numeric_cast_test.cpp	conversion/numeric_cast_test.cpp
 R100	libs/conversion/test.hpp	conversion/test.hpp
-R100	libs/conversion/test	conversion/test
+R100	libs/conversion/test/	conversion/test/
 A	conversion/CMakeLists.txt
 A	conversion/test/CMakeLists.txt
- 
-[core] 
- 
+
+[core]
+
 R100	boost/blank.hpp	core/include/boost/blank.hpp
 R100	boost/blank_fwd.hpp	core/include/boost/blank_fwd.hpp
 R100	boost/cstdlib.hpp	core/include/boost/cstdlib.hpp
@@ -221,33 +221,33 @@ R100	boost/pending/stringtok.hpp	core/include/boost/pending/stringtok.hpp
 R100	boost/pending/detail/int_iterator.hpp	core/include/boost/pending/detail/int_iterator.hpp
 R100	boost/pending/detail/property.hpp	core/include/boost/pending/detail/property.hpp
 A	core/CMakeLists.txt
- 
-[date_time] 
- 
+
+[date_time]
+
 R100	boost/date_time.hpp	date_time/include/boost/date_time.hpp
-R100	boost/date_time	date_time/include/boost/date_time
+R100	boost/date_time/	date_time/include/boost/date_time/
 R100	libs/date_time/index.html	date_time/index.html
-R100	libs/date_time/build	date_time/build
-R100	libs/date_time/data	date_time/data
-R100	libs/date_time/doc	date_time/doc
-R100	libs/date_time/example	date_time/example
-R100	libs/date_time/src	date_time/src
-R100	libs/date_time/test	date_time/test
-R100	libs/date_time/xmldoc	date_time/xmldoc
+R100	libs/date_time/build/	date_time/build/
+R100	libs/date_time/data/	date_time/data/
+R100	libs/date_time/doc/	date_time/doc/
+R100	libs/date_time/example/	date_time/example/
+R100	libs/date_time/src/	date_time/src/
+R100	libs/date_time/test/	date_time/test/
+R100	libs/date_time/xmldoc/	date_time/xmldoc/
 A	date_time/module.cmake
 A	date_time/src/CMakeLists.txt
 A	date_time/test/CMakeLists.txt
 A	date_time/CMakeLists.txt
- 
-[detail] 
- 
-R100	boost/detail	detail/include/boost/detail
+
+[detail]
+
+R100	boost/detail/	detail/include/boost/detail/
 R100	libs/detail/utf8_codecvt_facet.cpp	detail/utf8_codecvt_facet.cpp
 A	detail/CMakeLists.txt
 A	detail/module.cmake
- 
-[disjoint_sets] 
- 
+
+[disjoint_sets]
+
 R100	boost/pending/disjoint_sets.hpp	disjoint_sets/include/boost/pending/disjoint_sets.hpp
 R100	boost/pending/detail/disjoint_sets.hpp	disjoint_sets/include/boost/pending/detail/disjoint_sets.hpp
 R100	libs/disjoint_sets/Jamfile	disjoint_sets/Jamfile
@@ -258,11 +258,11 @@ R100	libs/disjoint_sets/index.html	disjoint_sets/index.html
 A	disjoint_sets/CMakeLists.txt
 A	disjoint_sets/module.cmake
 A	disjoint_sets/test/CMakeLists.txt
- 
-[dynamic_bitset] 
- 
+
+[dynamic_bitset]
+
 R100	boost/dynamic_bitset.hpp	dynamic_bitset/include/boost/dynamic_bitset.hpp
-R100	boost/dynamic_bitset	dynamic_bitset/include/boost/dynamic_bitset
+R100	boost/dynamic_bitset/	dynamic_bitset/include/boost/dynamic_bitset/
 R100	boost/dynamic_bitset_fwd.hpp	dynamic_bitset/include/boost/dynamic_bitset_fwd.hpp
 R100	libs/dynamic_bitset/Jamfile.v2	dynamic_bitset/Jamfile.v2
 R100	libs/dynamic_bitset/bitset_test.hpp	dynamic_bitset/bitset_test.hpp
@@ -271,99 +271,97 @@ R100	libs/dynamic_bitset/dyn_bitset_unit_tests2.cpp	dynamic_bitset/dyn_bitset_un
 R100	libs/dynamic_bitset/dyn_bitset_unit_tests3.cpp	dynamic_bitset/dyn_bitset_unit_tests3.cpp
 R100	libs/dynamic_bitset/dyn_bitset_unit_tests4.cpp	dynamic_bitset/dyn_bitset_unit_tests4.cpp
 R100	libs/dynamic_bitset/dynamic_bitset.html	dynamic_bitset/dynamic_bitset.html
-R100	libs/dynamic_bitset/example	dynamic_bitset/example
+R100	libs/dynamic_bitset/example/	dynamic_bitset/example/
 R100	libs/dynamic_bitset/index.html	dynamic_bitset/index.html
 A	dynamic_bitset/CMakeLists.txt
 A	dynamic_bitset/module.cmake
 A	dynamic_bitset/test/CMakeLists.txt
- 
-[exception] 
- 
+
+[exception]
+
 R100	boost/exception.hpp	exception/include/boost/exception.hpp
 R100	boost/exception_ptr.hpp	exception/include/boost/exception_ptr.hpp
 R100	boost/throw_exception.hpp	exception/include/boost/throw_exception.hpp
-R100	boost/exception	exception/include/boost/exception
-R100	libs/exception/doc	exception/doc
-R100	libs/exception/example	exception/example
+R100	boost/exception/	exception/include/boost/exception/
+R100	libs/exception/doc/	exception/doc/
+R100	libs/exception/example/	exception/example/
 R100	libs/exception/index.html	exception/index.html
-R100	libs/exception/test	exception/test
-R100	libs/exception/test	exception/test
+R100	libs/exception/test/	exception/test/
+R100	libs/exception/test/	exception/test/
 A	exception/CMakeLists.txt
 A	exception/module.cmake
 A	exception/test/CMakeLists.txt
- 
-[filesystem] 
- 
+
+[filesystem]
+
 R100	boost/filesystem.hpp	filesystem/include/boost/filesystem.hpp
-R100	boost/filesystem	filesystem/include/boost/filesystem
+R100	boost/filesystem/	filesystem/include/boost/filesystem/
 R100	libs/filesystem/index.html	filesystem/index.html
-R100	libs/filesystem/build	filesystem/build
-R100	libs/filesystem/doc	filesystem/doc
-R100	libs/filesystem/example	filesystem/example
-R100	libs/filesystem/src	filesystem/src
-R100	libs/filesystem/src	filesystem/src
-R100	libs/filesystem/test	filesystem/test
+R100	libs/filesystem/build/	filesystem/build/
+R100	libs/filesystem/test/	filesystem/test/
+R100	libs/filesystem/v2/	filesystem/v2/
+R100	libs/filesystem/v3/	filesystem/v3/
 A	filesystem/CMakeLists.txt
 A	filesystem/module.cmake
 A	filesystem/src/CMakeLists.txt
 A	filesystem/src/utf8_codecvt_facet.cpp
 A	filesystem/test/CMakeLists.txt
- 
-[flyweight] 
- 
+
+[flyweight]
+
 R100	boost/flyweight.hpp	flyweight/include/boost/flyweight.hpp
-R100	boost/flyweight	flyweight/include/boost/flyweight
+R100	boost/flyweight/	flyweight/include/boost/flyweight/
 R100	libs/flyweight/index.html	flyweight/index.html
-R100	libs/flyweight/doc	flyweight/doc
-R100	libs/flyweight/example	flyweight/example
-R100	libs/flyweight/test	flyweight/test
+R100	libs/flyweight/doc/	flyweight/doc/
+R100	libs/flyweight/example/	flyweight/example/
+R100	libs/flyweight/test/	flyweight/test/
 A	flyweight/CMakeLists.txt
 A	flyweight/module.cmake
 A	flyweight/test/CMakeLists.txt
- 
-[foreach] 
- 
-R100	libs/foreach/doc	foreach/doc
+
+[foreach]
+
+R100	libs/foreach/doc/	foreach/doc/
 R100	boost/foreach.hpp	foreach/include/boost/foreach.hpp
 R100	boost/foreach_fwd.hpp	foreach/include/boost/foreach_fwd.hpp
 R100	libs/foreach/index.html	foreach/index.html
-R100	libs/foreach/test	foreach/test
+R100	libs/foreach/test/	foreach/test/
 A	foreach/CMakeLists.txt
 A	foreach/module.cmake
 A	foreach/test/CMakeLists.txt
- 
-[format] 
- 
+
+[format]
+
 R100	boost/format.hpp	format/include/boost/format.hpp
-R100	boost/format	format/include/boost/format
+R100	boost/format/	format/include/boost/format/
 R100	libs/format/index.html	format/index.html
 R100	libs/format/Jamfile	format/Jamfile
-R100	libs/format/benchmark	format/benchmark
-R100	libs/format/doc	format/doc
-R100	libs/format/example	format/example
-R100	libs/format/test	format/test
+R100	libs/format/benchmark/	format/benchmark/
+R100	libs/format/doc/	format/doc/
+R100	libs/format/example/	format/example/
+R100	libs/format/test/	format/test/
 A	format/CMakeLists.txt
 A	format/module.cmake
 A	format/test/CMakeLists.txt
- 
-[function] 
- 
+
+[function]
+
 R100	boost/function.hpp	function/include/boost/function.hpp
-R100	boost/function	function/include/boost/function
+R100	boost/function/	function/include/boost/function/
 R100	boost/function_equal.hpp	function/include/boost/function_equal.hpp
 R100	libs/function/index.html	function/index.html
-R100	libs/function/doc	function/doc
-R100	libs/function/example	function/example
-R100	libs/function/test	function/test
+R100	libs/function/doc/	function/doc/
+R100	libs/function/example/	function/example/
+R100	libs/function/test/	function/test/
 A	function/CMakeLists.txt
 A	function/doc/CMakeLists.txt
 A	function/module.cmake
 A	function/test/CMakeLists.txt
- 
-[functional] 
- 
+
+[functional]
+
 R100	boost/functional.hpp	functional/include/boost/functional.hpp
-R100	boost/functional	functional/include/boost/functional
+R100	boost/functional/	functional/include/boost/functional/
 R100	libs/functional/function_traits.html	functional/function_traits.html
 R100	libs/functional/index.html	functional/index.html
 R100	libs/functional/mem_fun.html	functional/mem_fun.html
@@ -372,420 +370,413 @@ R100	libs/functional/ptr_fun.html	functional/ptr_fun.html
 R100	libs/functional/binders.html	functional/binders.html
 R100	libs/functional/sublibs	functional/sublibs
 R100	libs/functional/hash/index.html	functional/hash/index.html
-R100	libs/functional/hash/doc	functional/hash/doc
-R100	libs/functional/hash/examples	functional/hash/examples
-R100	libs/functional/hash/test	functional/hash/test
-R100	libs/functional/test	functional/test
+R100	libs/functional/hash/doc/	functional/hash/doc/
+R100	libs/functional/hash/examples/	functional/hash/examples/
+R100	libs/functional/hash/test/	functional/hash/test/
+R100	libs/functional/test/	functional/test/
 A	functional/CMakeLists.txt
 A	functional/hash/doc/CMakeLists.txt
 A	functional/hash/examples/CMakeLists.txt
 A	functional/hash/test/CMakeLists.txt
 A	functional/module.cmake
 A	functional/test/CMakeLists.txt
- 
-[function_types] 
- 
-R100	boost/function_types	function_types/include/boost/function_types
+
+[function_types]
+
+R100	boost/function_types/	function_types/include/boost/function_types/
 R100	libs/function_types/index.html	function_types/index.html
-R100	libs/function_types/build	function_types/build
-R100	libs/function_types/doc	function_types/doc
-R100	libs/function_types/example	function_types/example
-R100	libs/function_types/test	function_types/test
+R100	libs/function_types/build/	function_types/build/
+R100	libs/function_types/doc/	function_types/doc/
+R100	libs/function_types/example/	function_types/example/
+R100	libs/function_types/test/	function_types/test/
 A	function_types/CMakeLists.txt
 A	function_types/module.cmake
 A	function_types/test/CMakeLists.txt
- 
-[fusion] 
- 
-R100	boost/fusion	fusion/include/boost/fusion
+
+[fusion]
+
+R100	boost/fusion/	fusion/include/boost/fusion/
 R100	libs/fusion/changelist.txt	fusion/changelist.txt
 R100	libs/fusion/index.html	fusion/index.html
 R100	libs/fusion/todo.txt	fusion/todo.txt
-R100	libs/fusion/doc	fusion/doc
-R100	libs/fusion/example	fusion/example
-R100	libs/fusion/test	fusion/test
+R100	libs/fusion/doc/	fusion/doc/
+R100	libs/fusion/example/	fusion/example/
+R100	libs/fusion/test/	fusion/test/
 A	fusion/CMakeLists.txt
 A	fusion/module.cmake
- 
-[gil] 
- 
-R100	boost/gil	gil/include/boost/gil
+
+[gil]
+
+R100	boost/gil/	gil/include/boost/gil/
 R100	libs/gil/index.html	gil/index.html
-R100	libs/gil/doc	gil/doc
-R100	libs/gil/example	gil/example
-R100	libs/gil/test	gil/test
+R100	libs/gil/doc/	gil/doc/
+R100	libs/gil/example/	gil/example/
+R100	libs/gil/test/	gil/test/
 A	gil/CMakeLists.txt
 A	gil/module.cmake
 A	gil/test/CMakeLists.txt
- 
-[graph] 
- 
-R100	boost/graph	graph/include/boost/graph
+
+[graph]
+
+R100	boost/graph/	graph/include/boost/graph/
 R100	libs/graph/index.html	graph/index.html
-R100	libs/graph/build	graph/build
-R100	libs/graph/doc	graph/doc
-R100	libs/graph/example	graph/example
-R100	libs/graph/src	graph/src
-R100	libs/graph/test	graph/test
+R100	libs/graph/build/	graph/build/
+R100	libs/graph/doc/	graph/doc/
+R100	libs/graph/example/	graph/example/
+R100	libs/graph/src/	graph/src/
+R100	libs/graph/test/	graph/test/
 A	graph/CMakeLists.txt
 A	graph/module.cmake
 A	graph/src/CMakeLists.txt
 A	graph/test/CMakeLists.txt
- 
-[graph_parallel] 
- 
+
+[graph_parallel]
+
 R100	libs/graph_parallel/index.html	graph_parallel/index.html
-R100	libs/graph_parallel/build	graph_parallel/build
-R100	libs/graph_parallel/doc	graph_parallel/doc
-R100	libs/graph_parallel/example	graph_parallel/example
-R100	libs/graph_parallel/src	graph_parallel/src
-R100	libs/graph_parallel/test	graph_parallel/test
+R100	libs/graph_parallel/build/	graph_parallel/build/
+R100	libs/graph_parallel/doc/	graph_parallel/doc/
+R100	libs/graph_parallel/example/	graph_parallel/example/
+R100	libs/graph_parallel/src/	graph_parallel/src/
+R100	libs/graph_parallel/test/	graph_parallel/test/
 A	graph_parallel/CMakeLists.txt
 A	graph_parallel/doc/CMakeLists.txt
 A	graph_parallel/example/CMakeLists.txt
 A	graph_parallel/module.cmake
 A	graph_parallel/src/CMakeLists.txt
 A	graph_parallel/test/CMakeLists.txt
- 
-[integer] 
- 
+
+[integer]
+
 R100	boost/cstdint.hpp	integer/include/boost/cstdint.hpp
 R100	boost/integer.hpp	integer/include/boost/integer.hpp
 R100	boost/integer_fwd.hpp	integer/include/boost/integer_fwd.hpp
 R100	boost/integer_traits.hpp	integer/include/boost/integer_traits.hpp
-R100	boost/integer	integer/include/boost/integer
-R100	libs/integer/cstdint.htm	integer/cstdint.htm
+R100	boost/integer/	integer/include/boost/integer/
 R100	libs/integer/index.html	integer/index.html
-R100	libs/integer/integer.htm	integer/integer.htm
-R100	libs/integer/integer_traits.html	integer/integer_traits.html
-R100	libs/integer/doc	integer/doc
-R100	libs/integer/test	integer/test
+R100	libs/integer/doc/	integer/doc/
+R100	libs/integer/test/	integer/test/
 A	integer/CMakeLists.txt
 A	integer/module.cmake
 A	integer/test/CMakeLists.txt
- 
-[interprocess] 
- 
-R100	boost/interprocess	interprocess/include/boost/interprocess
+
+[interprocess]
+
+R100	boost/interprocess/	interprocess/include/boost/interprocess/
 R100	libs/interprocess/index.html	interprocess/index.html
-R100	libs/interprocess/doc	interprocess/doc
-R100	libs/interprocess/example	interprocess/example
-R100	libs/interprocess/proj	interprocess/proj
-R100	libs/interprocess/test	interprocess/test
+R100	libs/interprocess/doc/	interprocess/doc/
+R100	libs/interprocess/example/	interprocess/example/
+R100	libs/interprocess/proj/	interprocess/proj/
+R100	libs/interprocess/test/	interprocess/test/
 A	interprocess/CMakeLists.txt
 A	interprocess/module.cmake
 A	interprocess/test/CMakeLists.txt
- 
-[intrusive] 
- 
-R100	boost/intrusive	intrusive/include/boost/intrusive
+
+[intrusive]
+
+R100	boost/intrusive/	intrusive/include/boost/intrusive/
 R100	libs/intrusive/index.html	intrusive/index.html
-R100	libs/intrusive/doc	intrusive/doc
-R100	libs/intrusive/example	intrusive/example
-R100	libs/intrusive/perf	intrusive/perf
-R100	libs/intrusive/proj	intrusive/proj
-R100	libs/intrusive/test	intrusive/test
+R100	libs/intrusive/doc/	intrusive/doc/
+R100	libs/intrusive/example/	intrusive/example/
+R100	libs/intrusive/perf/	intrusive/perf/
+R100	libs/intrusive/proj/	intrusive/proj/
+R100	libs/intrusive/test/	intrusive/test/
 A	intrusive/CMakeLists.txt
 A	intrusive/module.cmake
- 
-[io] 
- 
-R100	boost/io	io/include/boost/io
+
+[io]
+
+R100	boost/io/	io/include/boost/io/
 R100	boost/io_fwd.hpp	io/include/boost/io_fwd.hpp
 R100	libs/io/index.html	io/index.html
-R100	libs/io/doc	io/doc
-R100	libs/io/test	io/test
+R100	libs/io/doc/	io/doc/
+R100	libs/io/test/	io/test/
 A	io/CMakeLists.txt
 A	io/module.cmake
 A	io/test/CMakeLists.txt
- 
-[iostreams] 
- 
-R100	boost/iostreams	iostreams/include/boost/iostreams
+
+[iostreams]
+
+R100	boost/iostreams/	iostreams/include/boost/iostreams/
 R100	libs/iostreams/index.html	iostreams/index.html
-R100	libs/iostreams/build	iostreams/build
-R100	libs/iostreams/doc	iostreams/doc
-R100	libs/iostreams/example	iostreams/example
-R100	libs/iostreams/src	iostreams/src
-R100	libs/iostreams/test	iostreams/test
+R100	libs/iostreams/build/	iostreams/build/
+R100	libs/iostreams/doc/	iostreams/doc/
+R100	libs/iostreams/example/	iostreams/example/
+R100	libs/iostreams/src/	iostreams/src/
+R100	libs/iostreams/test/	iostreams/test/
 A	iostreams/CMakeLists.txt
 A	iostreams/example/CMakeLists.txt
 A	iostreams/module.cmake
 A	iostreams/src/CMakeLists.txt
 A	iostreams/test/CMakeLists.txt
- 
-[iterator] 
- 
+
+[iterator]
+
 R100	boost/iterator.hpp	iterator/include/boost/iterator.hpp
 R100	boost/iterator_adaptors.hpp	iterator/include/boost/iterator_adaptors.hpp
 R100	boost/function_output_iterator.hpp	iterator/include/boost/function_output_iterator.hpp
 R100	boost/pointee.hpp	iterator/include/boost/pointee.hpp
 R100	boost/shared_container_iterator.hpp	iterator/include/boost/shared_container_iterator.hpp
-R100	boost/iterator	iterator/include/boost/iterator
+R100	boost/iterator/	iterator/include/boost/iterator/
 R100	libs/iterator/index.html	iterator/index.html
-R100	libs/iterator/doc	iterator/doc
-R100	libs/iterator/example	iterator/example
-R100	libs/iterator/test	iterator/test
+R100	libs/iterator/doc/	iterator/doc/
+R100	libs/iterator/example/	iterator/example/
+R100	libs/iterator/test/	iterator/test/
 A	iterator/CMakeLists.txt
 A	iterator/module.cmake
 A	iterator/test/CMakeLists.txt
- 
-[lambda] 
- 
-R100	boost/lambda	lambda/include/boost/lambda
+
+[lambda]
+
+R100	boost/lambda/	lambda/include/boost/lambda/
 R100	libs/lambda/index.html	lambda/index.html
-R100	libs/lambda/doc	lambda/doc
-R100	libs/lambda/test	lambda/test
+R100	libs/lambda/doc/	lambda/doc/
+R100	libs/lambda/test/	lambda/test/
 A	lambda/CMakeLists.txt
 A	lambda/module.cmake
 A	lambda/test/CMakeLists.txt
- 
-[logic] 
- 
-R100	boost/logic	logic/include/boost/logic
-R100	libs/logic/doc	logic/doc
-R100	libs/logic/test	logic/test
+
+[logic]
+
+R100	boost/logic/	logic/include/boost/logic/
+R100	libs/logic/doc/	logic/doc/
+R100	libs/logic/test/	logic/test/
 A	logic/CMakeLists.txt
 A	logic/module.cmake
 A	logic/test/CMakeLists.txt
- 
-[math] 
- 
-R100	boost/math	math/include/boost/math
+
+[math]
+
+R100	boost/math/	math/include/boost/math/
 R100	boost/math_fwd.hpp	math/include/boost/math_fwd.hpp
 R100	libs/math/index.html	math/index.html
-R100	libs/math/build	math/build
-R100	libs/math/config	math/config
-R100	libs/math/doc	math/doc
-R100	libs/math/dot_net_example	math/dot_net_example
-R100	libs/math/example	math/example
-R100	libs/math/minimax	math/minimax
-R100	libs/math/octonion	math/octonion
-R100	libs/math/performance	math/performance
-R100	libs/math/quaternion	math/quaternion
-R100	libs/math/special_functions	math/special_functions
-R100	libs/math/src	math/src
-R100	libs/math/test	math/test
-R100	libs/math/tools	math/tools
-R100	libs/math/vc71_fix	math/vc71_fix
+R100	libs/math/build/	math/build/
+R100	libs/math/config/	math/config/
+R100	libs/math/doc/	math/doc/
+R100	libs/math/dot_net_example/	math/dot_net_example/
+R100	libs/math/example/	math/example/
+R100	libs/math/minimax/	math/minimax/
+R100	libs/math/octonion/	math/octonion/
+R100	libs/math/performance/	math/performance/
+R100	libs/math/quaternion/	math/quaternion/
+R100	libs/math/special_functions/	math/special_functions/
+R100	libs/math/src/	math/src/
+R100	libs/math/test/	math/test/
+R100	libs/math/tools/	math/tools/
+R100	libs/math/vc71_fix/	math/vc71_fix/
 A	math/CMakeLists.txt
 A	math/module.cmake
 A	math/test/CMakeLists.txt
- 
-[mpi] 
- 
+
+[mpi]
+
 R100	boost/mpi.hpp	mpi/include/boost/mpi.hpp
-R100	boost/mpi	mpi/include/boost/mpi
+R100	boost/mpi/	mpi/include/boost/mpi/
 R100	libs/mpi/index.html	mpi/index.html
-R100	libs/mpi/build	mpi/build
-R100	libs/mpi/doc	mpi/doc
-R100	libs/mpi/example	mpi/example
-R100	libs/mpi/src	mpi/src
-R100	libs/mpi/test	mpi/test
+R100	libs/mpi/build/	mpi/build/
+R100	libs/mpi/doc/	mpi/doc/
+R100	libs/mpi/example/	mpi/example/
+R100	libs/mpi/src/	mpi/src/
+R100	libs/mpi/test/	mpi/test/
 A	mpi/CMakeLists.txt
 A	mpi/doc/CMakeLists.txt
 A	mpi/module.cmake
 A	mpi/src/CMakeLists.txt
 A	mpi/test/CMakeLists.txt
- 
-[mpl] 
- 
-R100	boost/mpl	mpl/include/boost/mpl
+
+[mpl]
+
+R100	boost/mpl/	mpl/include/boost/mpl/
 R100	libs/mpl/index.html	mpl/index.html
-R100	libs/mpl/book	mpl/book
-R100	libs/mpl/doc	mpl/doc
-R100	libs/mpl/example	mpl/example
-R100	libs/mpl/preprocessed	mpl/preprocessed
-R100	libs/mpl/test	mpl/test
+R100	libs/mpl/book/	mpl/book/
+R100	libs/mpl/doc/	mpl/doc/
+R100	libs/mpl/example/	mpl/example/
+R100	libs/mpl/preprocessed/	mpl/preprocessed/
+R100	libs/mpl/test/	mpl/test/
 A	mpl/CMakeLists.txt
 A	mpl/module.cmake
 A	mpl/test/CMakeLists.txt
- 
-[multi_array] 
- 
+
+[multi_array]
+
 R100	boost/multi_array.hpp	multi_array/include/boost/multi_array.hpp
-R100	boost/multi_array	multi_array/include/boost/multi_array
+R100	boost/multi_array/	multi_array/include/boost/multi_array/
 R100	libs/mpl/index.html	multi_array/index.html
-R100	libs/multi_array/doc	multi_array/doc
-R100	libs/multi_array/example	multi_array/example
-R100	libs/multi_array/test	multi_array/test
+R100	libs/multi_array/doc/	multi_array/doc/
+R100	libs/multi_array/example/	multi_array/example/
+R100	libs/multi_array/test/	multi_array/test/
 A	multi_array/CMakeLists.txt
 A	multi_array/module.cmake
 A	multi_array/test/CMakeLists.txt
- 
-[multi_index] 
- 
+
+[multi_index]
+
 R100	boost/multi_index_container.hpp	multi_index/include/boost/multi_index_container.hpp
 R100	boost/multi_index_container_fwd.hpp	multi_index/include/boost/multi_index_container_fwd.hpp
-R100	boost/multi_index	multi_index/include/boost/multi_index
+R100	boost/multi_index/	multi_index/include/boost/multi_index/
 R100	libs/multi_index/index.html	multi_index/index.html
-R100	libs/multi_index/doc	multi_index/doc
-R100	libs/multi_index/example	multi_index/example
-R100	libs/multi_index/perf	multi_index/perf
-R100	libs/multi_index/test	multi_index/test
+R100	libs/multi_index/doc/	multi_index/doc/
+R100	libs/multi_index/example/	multi_index/example/
+R100	libs/multi_index/perf/	multi_index/perf/
+R100	libs/multi_index/test/	multi_index/test/
 A	multi_index/CMakeLists.txt
 A	multi_index/module.cmake
 A	multi_index/test/CMakeLists.txt
- 
-[numeric] 
- 
+
+[numeric]
+
 R100	boost/numeric/interval.hpp	numeric/include/boost/numeric/interval.hpp
-R100	boost/numeric/conversion	numeric/include/boost/numeric/conversion
-R100	boost/numeric/interval	numeric/include/boost/numeric/interval
-R100	boost/numeric/ublas	numeric/include/boost/numeric/ublas
+R100	boost/numeric/conversion/	numeric/include/boost/numeric/conversion/
+R100	boost/numeric/interval/	numeric/include/boost/numeric/interval/
+R100	boost/numeric/ublas/	numeric/include/boost/numeric/ublas/
 R100	libs/numeric/index.html	numeric/index.html
 R100	libs/numeric/sublibs	numeric/sublibs
 R100	libs/numeric/conversion/index.html	numeric/conversion/index.html
-R100	libs/numeric/conversion/doc	numeric/conversion/doc
-R100	libs/numeric/conversion/test	numeric/conversion/test
-R100	libs/numeric/interval/doc	numeric/interval/doc
-R100	libs/numeric/interval/examples	numeric/interval/examples
-R100	libs/numeric/interval/test	numeric/interval/test
+R100	libs/numeric/conversion/doc/	numeric/conversion/doc/
+R100	libs/numeric/conversion/test/	numeric/conversion/test/
+R100	libs/numeric/interval/doc/	numeric/interval/doc/
+R100	libs/numeric/interval/examples/	numeric/interval/examples/
+R100	libs/numeric/interval/test/	numeric/interval/test/
 R100	libs/numeric/ublas/index.html	numeric/ublas/index.html
-R100	libs/numeric/ublas/bench1	numeric/ublas/bench1
-R100	libs/numeric/ublas/bench2	numeric/ublas/bench2
-R100	libs/numeric/ublas/bench3	numeric/ublas/bench3
-R100	libs/numeric/ublas/bench4	numeric/ublas/bench4
-R100	libs/numeric/ublas/bench5	numeric/ublas/bench5
-R100	libs/numeric/ublas/doc	numeric/ublas/doc
-R100	libs/numeric/ublas/test	numeric/ublas/test
+R100	libs/numeric/ublas/bench1/	numeric/ublas/bench1/
+R100	libs/numeric/ublas/bench2/	numeric/ublas/bench2/
+R100	libs/numeric/ublas/bench3/	numeric/ublas/bench3/
+R100	libs/numeric/ublas/bench4/	numeric/ublas/bench4/
+R100	libs/numeric/ublas/bench5/	numeric/ublas/bench5/
+R100	libs/numeric/ublas/doc/	numeric/ublas/doc/
+R100	libs/numeric/ublas/test/	numeric/ublas/test/
 A	numeric/CMakeLists.txt
 A	numeric/conversion/test/CMakeLists.txt
 A	numeric/interval/test/CMakeLists.txt
 A	numeric/module.cmake
 A	numeric/ublas/test/CMakeLists.txt
- 
-[optional] 
- 
+
+[optional]
+
 R100	boost/none.hpp	optional/include/boost/none.hpp
 R100	boost/none_t.hpp	optional/include/boost/none_t.hpp
 R100	boost/optional.hpp	optional/include/boost/optional.hpp
-R100	boost/optional	optional/include/boost/optional
+R100	boost/optional/	optional/include/boost/optional/
 R100	libs/optional/index.html	optional/index.html
-R100	libs/optional/doc	optional/doc
-R100	libs/optional/test	optional/test
+R100	libs/optional/doc/	optional/doc/
+R100	libs/optional/test/	optional/test/
 A	optional/CMakeLists.txt
 A	optional/module.cmake
 A	optional/test/CMakeLists.txt
- 
-[parameter] 
- 
+
+[parameter]
+
 R100	boost/parameter.hpp	parameter/include/boost/parameter.hpp
-R100	boost/parameter	parameter/include/boost/parameter
+R100	boost/parameter/	parameter/include/boost/parameter/
 R100	libs/parameter/index.html	parameter/index.html
-R100	libs/parameter/doc	parameter/doc
-R100	libs/parameter/test	parameter/test
+R100	libs/parameter/doc/	parameter/doc/
+R100	libs/parameter/test/	parameter/test/
 A	parameter/CMakeLists.txt
 A	parameter/module.cmake
 A	parameter/test/CMakeLists.txt
- 
-[pool] 
- 
-R100	boost/pool	pool/include/boost/pool
+
+[pool]
+
+R100	boost/pool/	pool/include/boost/pool/
 R100	libs/pool/index.html	pool/index.html
 R100	libs/pool/TODO.txt	pool/TODO.txt
-R100	libs/pool/doc	pool/doc
-R100	libs/pool/test	pool/test
+R100	libs/pool/doc/	pool/doc/
+R100	libs/pool/test/	pool/test/
 A	pool/CMakeLists.txt
 A	pool/module.cmake
 A	pool/test/CMakeLists.txt
- 
-[preprocessor] 
- 
+
+[preprocessor]
+
 R100	boost/preprocessor.hpp	preprocessor/include/boost/preprocessor.hpp
-R100	boost/preprocessor	preprocessor/include/boost/preprocessor
+R100	boost/preprocessor/	preprocessor/include/boost/preprocessor/
 R100	libs/preprocessor/index.html	preprocessor/index.html
-R100	libs/preprocessor/doc	preprocessor/doc
-R100	libs/preprocessor/test	preprocessor/test
+R100	libs/preprocessor/doc/	preprocessor/doc/
+R100	libs/preprocessor/test/	preprocessor/test/
 A	preprocessor/CMakeLists.txt
 A	preprocessor/module.cmake
 A	preprocessor/test/CMakeLists.txt
- 
-[program_options] 
- 
+
+[program_options]
+
 R100	boost/program_options.hpp	program_options/include/boost/program_options.hpp
-R100	boost/program_options	program_options/include/boost/program_options
+R100	boost/program_options/	program_options/include/boost/program_options/
 R100	libs/program_options/index.html	program_options/index.html
-R100	libs/program_options/build	program_options/build
-R100	libs/program_options/doc	program_options/doc
-R100	libs/program_options/example	program_options/example
-R100	libs/program_options/src	program_options/src
-R100	libs/program_options/test	program_options/test
+R100	libs/program_options/build/	program_options/build/
+R100	libs/program_options/doc/	program_options/doc/
+R100	libs/program_options/example/	program_options/example/
+R100	libs/program_options/src/	program_options/src/
+R100	libs/program_options/test/	program_options/test/
 A	program_options/CMakeLists.txt
 A	program_options/module.cmake
 A	program_options/src/CMakeLists.txt
 A	program_options/test/CMakeLists.txt
- 
-[property_map] 
- 
-R100	boost/dynamic_property_map.hpp	property_map/include/boost/dynamic_property_map.hpp
-R100	boost/property_map.hpp	property_map/include/boost/property_map.hpp
-R100	boost/property_map_iterator.hpp	property_map/include/boost/property_map_iterator.hpp
-R100	boost/vector_property_map.hpp	property_map/include/boost/vector_property_map.hpp
-R100	boost/property_map	property_map/include/boost/property_map
+
+[property_map]
+
+R100	boost/property_map/	property_map/include/boost/property_map/
 R100	libs/property_map/index.html	property_map/index.html
-R100	libs/property_map/doc	property_map/doc
-R100	libs/property_map/example	property_map/example
-R100	libs/property_map/test	property_map/test
+R100	libs/property_map/doc/	property_map/doc/
+R100	libs/property_map/example/	property_map/example/
+R100	libs/property_map/test/	property_map/test/
 A	property_map/CMakeLists.txt
 A	property_map/module.cmake
 A	property_map/test/CMakeLists.txt
- 
-[property_tree] 
- 
-R100	boost/property_tree	property_tree/include/boost/property_tree
+
+[property_tree]
+
+R100	boost/property_tree/	property_tree/include/boost/property_tree/
 R100	libs/property_tree/breaking_changes.txt	property_tree/breaking_changes.txt
 R100	libs/property_tree/index.html	property_tree/index.html
-R100	libs/property_tree/doc	property_tree/doc
-R100	libs/property_tree/examples	property_tree/examples
-R100	libs/property_tree/test	property_tree/test
+R100	libs/property_tree/doc/	property_tree/doc/
+R100	libs/property_tree/examples/	property_tree/examples/
+R100	libs/property_tree/test/	property_tree/test/
 A	property_tree/CMakeLists.txt
- 
-[proto] 
- 
-R100	boost/proto	proto/include/boost/proto
+
+[proto]
+
+R100	boost/proto/	proto/include/boost/proto/
 R100	libs/proto/index.html	proto/index.html
-R100	libs/proto/doc	proto/doc
-R100	libs/proto/example	proto/example
-R100	libs/proto/test	proto/test
+R100	libs/proto/doc/	proto/doc/
+R100	libs/proto/example/	proto/example/
+R100	libs/proto/test/	proto/test/
 A	proto/CMakeLists.txt
 A	proto/module.cmake
 A	proto/test/CMakeLists.txt
- 
-[ptr_container] 
- 
-R100	boost/ptr_container	ptr_container/include/boost/ptr_container
+
+[ptr_container]
+
+R100	boost/ptr_container/	ptr_container/include/boost/ptr_container/
 R100	libs/ptr_container/index.html	ptr_container/index.html
-R100	libs/ptr_container/doc	ptr_container/doc
-R100	libs/ptr_container/test	ptr_container/test
+R100	libs/ptr_container/doc/	ptr_container/doc/
+R100	libs/ptr_container/test/	ptr_container/test/
 A	ptr_container/CMakeLists.txt
 A	ptr_container/module.cmake
 A	ptr_container/test/CMakeLists.txt
- 
-[python] 
- 
+
+[python]
+
 R100	boost/python.hpp	python/include/boost/python.hpp
-R100	boost/python	python/include/boost/python
+R100	boost/python/	python/include/boost/python/
 R100	libs/python/index.html	python/index.html
 R100	libs/python/release_notes.txt	python/release_notes.txt
 R100	libs/python/todo.html	python/todo.html
 R100	libs/python/todo.txt	python/todo.txt
-R100	libs/python/build	python/build
-R100	libs/python/doc	python/doc
-R100	libs/python/example	python/example
-R100	libs/python/pyste	python/pyste
-R100	libs/python/src	python/src
-R100	libs/python/test	python/test
+R100	libs/python/build/	python/build/
+R100	libs/python/doc/	python/doc/
+R100	libs/python/example/	python/example/
+R100	libs/python/pyste/	python/pyste/
+R100	libs/python/src/	python/src/
+R100	libs/python/test/	python/test/
 A	python/CMakeLists.txt
 A	python/module.cmake
 A	python/src/CMakeLists.txt
 A	python/test/CMakeLists.txt
- 
-[random] 
- 
+
+[random]
+
 R100	boost/nondet_random.hpp	random/include/boost/nondet_random.hpp
 R100	boost/random.hpp	random/include/boost/random.hpp
-R100	boost/random	random/include/boost/random
+R100	boost/random/	random/include/boost/random/
 R100	libs/random/index.html	random/index.html
 R100	libs/random/nondet_random.html	random/nondet_random.html
 R100	libs/random/random-concepts.html	random/random-concepts.html
@@ -794,120 +785,120 @@ R100	libs/random/random-generators.html	random/random-generators.html
 R100	libs/random/random-misc.html	random/random-misc.html
 R100	libs/random/random-performance.html	random/random-performance.html
 R100	libs/random/random-variate.html	random/random-variate.html
-R100	libs/random/build	random/build
-R100	libs/random/doc	random/doc
-R100	libs/random/example	random/example
-R100	libs/random/extra	random/extra
-R100	libs/random/performance	random/performance
-R100	libs/random/src	random/src
-R100	libs/random/test	random/test
+R100	libs/random/build/	random/build/
+R100	libs/random/doc/	random/doc/
+R100	libs/random/example/	random/example/
+R100	libs/random/extra/	random/extra/
+R100	libs/random/performance/	random/performance/
+R100	libs/random/src/	random/src/
+R100	libs/random/test/	random/test/
 A	random/CMakeLists.txt
 A	random/module.cmake
 A	random/test/CMakeLists.txt
- 
-[range] 
- 
+
+[range]
+
 R100	boost/range.hpp	range/include/boost/range.hpp
-R100	boost/range	range/include/boost/range
+R100	boost/range/	range/include/boost/range/
 R100	libs/range/index.html	range/index.html
-R100	libs/range/doc	range/doc
-R100	libs/range/test	range/test
+R100	libs/range/doc/	range/doc/
+R100	libs/range/test/	range/test/
 A	range/CMakeLists.txt
 A	range/doc/CMakeLists.txt
 A	range/module.cmake
 A	range/test/CMakeLists.txt
- 
-[rational] 
- 
+
+[rational]
+
 R100	boost/rational.hpp	rational/include/boost/rational.hpp
 R100	libs/rational/index.html	rational/index.html
 R100	libs/rational/rational.html	rational/rational.html
-R100	libs/rational/test	rational/test
+R100	libs/rational/test/	rational/test/
 A	rational/CMakeLists.txt
 A	rational/module.cmake
 A	rational/test/CMakeLists.txt
- 
-[regex] 
- 
+
+[regex]
+
 R100	boost/cregex.hpp	regex/include/boost/cregex.hpp
 R100	boost/regex.h	regex/include/boost/regex.h
 R100	boost/regex.hpp	regex/include/boost/regex.hpp
 R100	boost/regex_fwd.hpp	regex/include/boost/regex_fwd.hpp
-R100	boost/regex	regex/include/boost/regex
+R100	boost/regex/	regex/include/boost/regex/
 R100	libs/regex/index.html	regex/index.html
 R100	libs/regex/readme.txt	regex/readme.txt
-R100	libs/regex/build	regex/build
-R100	libs/regex/doc	regex/doc
-R100	libs/regex/example	regex/example
-R100	libs/regex/performance	regex/performance
-R100	libs/regex/src	regex/src
-R100	libs/regex/test	regex/test
-R100	libs/regex/tools	regex/tools
+R100	libs/regex/build/	regex/build/
+R100	libs/regex/doc/	regex/doc/
+R100	libs/regex/example/	regex/example/
+R100	libs/regex/performance/	regex/performance/
+R100	libs/regex/src/	regex/src/
+R100	libs/regex/test/	regex/test/
+R100	libs/regex/tools/	regex/tools/
 A	regex/CMakeLists.txt
 A	regex/example/CMakeLists.txt
 A	regex/module.cmake
 A	regex/src/CMakeLists.txt
 A	regex/test/CMakeLists.txt
- 
-[scope_exit] 
- 
+
+[scope_exit]
+
 R100	boost/scope_exit.hpp	scope_exit/include/boost/scope_exit.hpp
 R100	libs/scope_exit/index.html	scope_exit/index.html
-R100	libs/scope_exit/doc	scope_exit/doc
-R100	libs/scope_exit/example	scope_exit/example
-R100	libs/scope_exit/test	scope_exit/test
+R100	libs/scope_exit/doc/	scope_exit/doc/
+R100	libs/scope_exit/example/	scope_exit/example/
+R100	libs/scope_exit/test/	scope_exit/test/
 A	scope_exit/CMakeLists.txt
- 
-[serialization] 
- 
+
+[serialization]
+
 R100	boost/strong_typedef.hpp	serialization/include/boost/strong_typedef.hpp
-R100	boost/archive	serialization/include/boost/archive
-R100	boost/serialization	serialization/include/boost/serialization
+R100	boost/archive/	serialization/include/boost/archive/
+R100	boost/serialization/	serialization/include/boost/serialization/
 R100	libs/serialization/index.html	serialization/index.html
-R100	libs/serialization/build	serialization/build
-R100	libs/serialization/doc	serialization/doc
-R100	libs/serialization/example	serialization/example
-R100	libs/serialization/performance	serialization/performance
-R100	libs/serialization/src	serialization/src
-R100	libs/serialization/test	serialization/test
-R100	libs/serialization/util	serialization/util
-R100	libs/serialization/vc7ide	serialization/vc7ide
+R100	libs/serialization/build/	serialization/build/
+R100	libs/serialization/doc/	serialization/doc/
+R100	libs/serialization/example/	serialization/example/
+R100	libs/serialization/performance/	serialization/performance/
+R100	libs/serialization/src/	serialization/src/
+R100	libs/serialization/test/	serialization/test/
+R100	libs/serialization/util/	serialization/util/
+R100	libs/serialization/vc7ide/	serialization/vc7ide/
 A	serialization/CMakeLists.txt
 A	serialization/module.cmake
 A	serialization/src/CMakeLists.txt
 A	serialization/test/CMakeLists.txt
- 
-[signals] 
- 
+
+[signals]
+
 R100	boost/last_value.hpp	signals/include/boost/last_value.hpp
 R100	boost/signal.hpp	signals/include/boost/signal.hpp
 R100	boost/signals.hpp	signals/include/boost/signals.hpp
-R100	boost/signals	signals/include/boost/signals
+R100	boost/signals/	signals/include/boost/signals/
 R100	libs/signals/index.html	signals/index.html
-R100	libs/signals/build	signals/build
-R100	libs/signals/doc	signals/doc
-R100	libs/signals/example	signals/example
-R100	libs/signals/src	signals/src
-R100	libs/signals/test	signals/test
+R100	libs/signals/build/	signals/build/
+R100	libs/signals/doc/	signals/doc/
+R100	libs/signals/example/	signals/example/
+R100	libs/signals/src/	signals/src/
+R100	libs/signals/test/	signals/test/
 A	signals/CMakeLists.txt
 A	signals/module.cmake
 A	signals/src/CMakeLists.txt
 A	signals/test/CMakeLists.txt
- 
-[signals2] 
- 
+
+[signals2]
+
 R100	boost/signals2.hpp	signals2/include/boost/signals2.hpp
-R100	boost/signals2	signals2/include/boost/signals2
+R100	boost/signals2/	signals2/include/boost/signals2/
 R100	libs/signals2/index.html	signals2/index.html
-R100	libs/signals2/doc	signals2/doc
-R100	libs/signals2/example	signals2/example
-R100	libs/signals2/test	signals2/test
+R100	libs/signals2/doc/	signals2/doc/
+R100	libs/signals2/example/	signals2/example/
+R100	libs/signals2/test/	signals2/test/
 A	signals2/CMakeLists.txt
 A	signals2/module.cmake
 A	signals2/test/CMakeLists.txt
- 
-[smart_ptr] 
- 
+
+[smart_ptr]
+
 R100	boost/enable_shared_from_this.hpp	smart_ptr/include/boost/enable_shared_from_this.hpp
 R100	boost/intrusive_ptr.hpp	smart_ptr/include/boost/intrusive_ptr.hpp
 R100	boost/get_pointer.hpp	smart_ptr/include/boost/get_pointer.hpp
@@ -920,7 +911,7 @@ R100	boost/shared_array.hpp	smart_ptr/include/boost/shared_array.hpp
 R100	boost/shared_ptr.hpp	smart_ptr/include/boost/shared_ptr.hpp
 R100	boost/smart_ptr.hpp	smart_ptr/include/boost/smart_ptr.hpp
 R100	boost/weak_ptr.hpp	smart_ptr/include/boost/weak_ptr.hpp
-R100	boost/smart_ptr	smart_ptr/include/boost/smart_ptr
+R100	boost/smart_ptr/	smart_ptr/include/boost/smart_ptr/
 R100	libs/smart_ptr/compatibility.htm	smart_ptr/compatibility.htm
 R100	libs/smart_ptr/enable_shared_from_this.html	smart_ptr/enable_shared_from_this.html
 R100	libs/smart_ptr/gccspeed.gif	smart_ptr/gccspeed.gif
@@ -934,110 +925,110 @@ R100	libs/smart_ptr/scoped_array.htm	smart_ptr/scoped_array.htm
 R100	libs/smart_ptr/scoped_ptr.htm	smart_ptr/scoped_ptr.htm
 R100	libs/smart_ptr/shared_array.htm	smart_ptr/shared_array.htm
 R100	libs/smart_ptr/shared_ptr.htm	smart_ptr/shared_ptr.htm
-R100	libs/smart_ptr/smarttests.zip	smart_ptr/smarttests.zip
+R100	libs/smart_ptr/smarttest.zip	smart_ptr/smarttest.zip
 R100	libs/smart_ptr/smarttests.htm	smart_ptr/smarttests.htm
 R100	libs/smart_ptr/smart_ptr.htm	smart_ptr/smart_ptr.htm
 R100	libs/smart_ptr/sp_techniques.html	smart_ptr/sp_techniques.html
-R100	libs/smart_ptr/example	smart_ptr/example
-R100	libs/smart_ptr/src	smart_ptr/src
-R100	libs/smart_ptr/test	smart_ptr/test
+R100	libs/smart_ptr/example/	smart_ptr/example/
+R100	libs/smart_ptr/src/	smart_ptr/src/
+R100	libs/smart_ptr/test/	smart_ptr/test/
 R100	libs/smart_ptr/weak_ptr.htm	smart_ptr/weak_ptr.htm
 A	smart_ptr/CMakeLists.txt
 A	smart_ptr/module.cmake
 A	smart_ptr/test/CMakeLists.txt
- 
-[spirit] 
- 
+
+[spirit]
+
 R100	boost/spirit.hpp	spirit/include/boost/spirit.hpp
-R100	boost/spirit	spirit/include/boost/spirit
+R100	boost/spirit/	spirit/include/boost/spirit/
 R100	libs/spirit/index.html	spirit/index.html
-R100	libs/spirit/classic	spirit/classic
-R100	libs/spirit/doc	spirit/doc
-R100	libs/spirit/example	spirit/example
-R100	libs/spirit/optimization	spirit/optimization
-R100	libs/spirit/phoenix	spirit/phoenix
-R100	libs/spirit/repository	spirit/repository
-R100	libs/spirit/test	spirit/test
+R100	libs/spirit/classic/	spirit/classic/
+R100	libs/spirit/doc/	spirit/doc/
+R100	libs/spirit/example/	spirit/example/
+R100	libs/spirit/optimization/	spirit/optimization/
+R100	libs/spirit/phoenix/	spirit/phoenix/
+R100	libs/spirit/repository/	spirit/repository/
+R100	libs/spirit/test/	spirit/test/
 A	spirit/CMakeLists.txt
 A	spirit/module.cmake
 A	spirit/test/CMakeLists.txt
- 
-[statechart] 
- 
-R100	boost/statechart	statechart/include/boost/statechart
+
+[statechart]
+
+R100	boost/statechart/	statechart/include/boost/statechart/
 R100	libs/statechart/Jamfile.v2	statechart/Jamfile.v2
 R100	libs/statechart/Statechart.sln	statechart/Statechart.sln
 R100	libs/statechart/index.html	statechart/index.html
-R100	libs/statechart/doc	statechart/doc
-R100	libs/statechart/example	statechart/example
-R100	libs/statechart/test	statechart/test
+R100	libs/statechart/doc/	statechart/doc/
+R100	libs/statechart/example/	statechart/example/
+R100	libs/statechart/test/	statechart/test/
 A	statechart/CMakeLists.txt
 A	statechart/example/CMakeLists.txt
 A	statechart/module.cmake
 A	statechart/test/CMakeLists.txt
- 
-[system] 
- 
+
+[system]
+
 R100	boost/cerrno.hpp	system/include/boost/cerrno.hpp
-R100	boost/system	system/include/boost/system
+R100	boost/system/	system/include/boost/system/
 R100	libs/system/index.html	system/index.html
-R100	libs/system/build	system/build
-R100	libs/system/doc	system/doc
-R100	libs/system/src	system/src
-R100	libs/system/test	system/test
+R100	libs/system/build/	system/build/
+R100	libs/system/doc/	system/doc/
+R100	libs/system/src/	system/src/
+R100	libs/system/test/	system/test/
 A	system/CMakeLists.txt
 A	system/module.cmake
 A	system/src/CMakeLists.txt
- 
-[test] 
- 
-R100	boost/test	test/include/boost/test
+
+[test]
+
+R100	boost/test/	test/include/boost/test/
 R100	libs/test/Jamfile.v2	test/Jamfile.v2
 R100	libs/test/README	test/README
 R100	libs/test/index.html	test/index.html
-R100	libs/test/doc	test/doc
-R100	libs/test/docbook	test/docbook
-R100	libs/test/example	test/example
-R100	libs/test/src	test/src
-R100	libs/test/test	test/test
-R100	libs/test/tools	test/tools
+R100	libs/test/build/	test/build/
+R100	libs/test/doc/	test/doc/
+R100	libs/test/docbook/	test/docbook/
+R100	libs/test/example/	test/example/
+R100	libs/test/src/	test/src/
+R100	libs/test/test/	test/test/
+R100	libs/test/tools/	test/tools/
 A	test/CMakeLists.txt
 A	test/build/Jamfile.v2
 A	test/module.cmake
 A	test/src/CMakeLists.txt
 A	test/test/CMakeLists.txt
- 
-[thread] 
- 
+
+[thread]
+
 R100	boost/thread.hpp	thread/include/boost/thread.hpp
-R100	boost/thread	thread/include/boost/thread
+R100	boost/thread/	thread/include/boost/thread/
 R100	libs/thread/index.html	thread/index.html
-R100	libs/thread/build	thread/build
-R100	libs/thread/doc	thread/doc
-R100	libs/thread/docbook	thread/docbook
-R100	libs/thread/example	thread/example
-R100	libs/thread/src	thread/src
-R100	libs/thread/test	thread/test
-R100	libs/thread/tools	thread/tools
+R100	libs/thread/build/	thread/build/
+R100	libs/thread/doc/	thread/doc/
+R100	libs/thread/example/	thread/example/
+R100	libs/thread/src/	thread/src/
+R100	libs/thread/test/	thread/test/
+R100	libs/thread/tutorial/	thread/tutorial/
 A	thread/CMakeLists.txt
 A	thread/example/CMakeLists.txt
 A	thread/module.cmake
 A	thread/src/CMakeLists.txt
 A	thread/test/CMakeLists.txt
- 
-[timer] 
- 
+
+[timer]
+
 R100	boost/progress.hpp	timer/include/boost/progress.hpp
 R100	boost/timer.hpp	timer/include/boost/timer.hpp
 R100	libs/timer/index.html	timer/index.html
 R100	libs/timer/timer.htm	timer/timer.htm
-R100	libs/timer/test	timer/test
+R100	libs/timer/test/	timer/test/
 A	timer/CMakeLists.txt
 A	timer/module.cmake
 A	timer/test/CMakeLists.txt
- 
-[tokenizer] 
- 
+
+[tokenizer]
+
 R100	boost/token_functions.hpp	tokenizer/include/boost/token_functions.hpp
 R100	boost/token_iterator.hpp	tokenizer/include/boost/token_iterator.hpp
 R100	boost/tokenizer.hpp	tokenizer/include/boost/tokenizer.hpp
@@ -1053,90 +1044,90 @@ R100	libs/tokenizer/offset_separator.htm	tokenizer/offset_separator.htm
 R100	libs/tokenizer/token_iterator.htm	tokenizer/token_iterator.htm
 R100	libs/tokenizer/tokenizer.htm	tokenizer/tokenizer.htm
 R100	libs/tokenizer/tokenizerfunction.htm	tokenizer/tokenizerfunction.htm
-R100	libs/tokenizer/test	tokenizer/test
+R100	libs/tokenizer/test/	tokenizer/test/
 A	tokenizer/CMakeLists.txt
 A	tokenizer/module.cmake
 A	tokenizer/test/CMakeLists.txt
- 
-[tr1] 
- 
-R100	boost/tr1	tr1/include/boost/tr1
+
+[tr1]
+
+R100	boost/tr1/	tr1/include/boost/tr1/
 R100	libs/tr1/index.html	tr1/index.html
-R100	libs/tr1/doc	tr1/doc
-R100	libs/tr1/test	tr1/test
+R100	libs/tr1/doc/	tr1/doc/
+R100	libs/tr1/test/	tr1/test/
 A	tr1/CMakeLists.txt
 A	tr1/module.cmake
 A	tr1/test/CMakeLists.txt
- 
-[tuple] 
- 
-R100	boost/tuple	tuple/include/boost/tuple
+
+[tuple]
+
+R100	boost/tuple/	tuple/include/boost/tuple/
 R100	libs/tuple/index.html	tuple/index.html
-R100	libs/tuple/doc	tuple/doc
-R100	libs/tuple/test	tuple/test
+R100	libs/tuple/doc/	tuple/doc/
+R100	libs/tuple/test/	tuple/test/
 A	tuple/CMakeLists.txt
 A	tuple/module.cmake
 A	tuple/test/CMakeLists.txt
- 
-[typeof] 
- 
-R100	boost/typeof	typeof/include/boost/typeof
+
+[typeof]
+
+R100	boost/typeof/	typeof/include/boost/typeof/
 R100	libs/typeof/index.html	typeof/index.html
-R100	libs/typeof/doc	typeof/doc
-R100	libs/typeof/test	typeof/test
-R100	libs/typeof/tools	typeof/tools
+R100	libs/typeof/doc/	typeof/doc/
+R100	libs/typeof/test/	typeof/test/
+R100	libs/typeof/tools/	typeof/tools/
 A	typeof/CMakeLists.txt
 A	typeof/module.cmake
 A	typeof/test/CMakeLists.txt
- 
-[type_traits] 
- 
+
+[type_traits]
+
 R100	boost/aligned_storage.hpp	type_traits/include/boost/aligned_storage.hpp
 R100	boost/type_traits.hpp	type_traits/include/boost/type_traits.hpp
-R100	boost/type_traits	type_traits/include/boost/type_traits
+R100	boost/type_traits/	type_traits/include/boost/type_traits/
 R100	libs/type_traits/cxx_type_traits.htm	type_traits/cxx_type_traits.htm
 R100	libs/type_traits/index.html	type_traits/index.html
-R100	libs/type_traits/doc	type_traits/doc
-R100	libs/type_traits/examples	type_traits/examples
-R100	libs/type_traits/test	type_traits/test
-R100	libs/type_traits/tools	type_traits/tools
+R100	libs/type_traits/doc/	type_traits/doc/
+R100	libs/type_traits/examples/	type_traits/examples/
+R100	libs/type_traits/test/	type_traits/test/
+R100	libs/type_traits/tools/	type_traits/tools/
 A	type_traits/CMakeLists.txt
 A	type_traits/module.cmake
 A	type_traits/test/CMakeLists.txt
- 
-[units] 
- 
-R100	boost/units	units/include/boost/units
+
+[units]
+
+R100	boost/units/	units/include/boost/units/
 R100	libs/units/boost.css	units/boost.css
 R100	libs/units/index.html	units/index.html
-R100	libs/units/doc	units/doc
-R100	libs/units/example	units/example
-R100	libs/units/images	units/images
-R100	libs/units/test	units/test
-R100	libs/units/test_headers	units/test_headers
-R100	libs/units/tutorial	units/tutorial
+R100	libs/units/doc/	units/doc/
+R100	libs/units/example/	units/example/
+R100	libs/units/images/	units/images/
+R100	libs/units/test/	units/test/
+R100	libs/units/test_headers/	units/test_headers/
+R100	libs/units/tutorial/	units/tutorial/
 A	units/CMakeLists.txt
 A	units/doc/CMakeLists.txt
 A	units/module.cmake
 A	units/test/CMakeLists.txt
- 
-[unordered] 
- 
+
+[unordered]
+
 R100	boost/unordered_map.hpp	unordered/include/boost/unordered_map.hpp
 R100	boost/unordered_set.hpp	unordered/include/boost/unordered_set.hpp
-R100	boost/unordered	unordered/include/boost/unordered
+R100	boost/unordered/	unordered/include/boost/unordered/
 R100	libs/unordered/index.html	unordered/index.html
-R100	libs/unordered/doc	unordered/doc
-R100	libs/unordered/examples	unordered/examples
-R100	libs/unordered/test	unordered/test
+R100	libs/unordered/doc/	unordered/doc/
+R100	libs/unordered/examples/	unordered/examples/
+R100	libs/unordered/test/	unordered/test/
 A	unordered/CMakeLists.txt
 A	unordered/module.cmake
 A	unordered/test/CMakeLists.txt
 A	unordered/test/exception/CMakeLists.txt
 A	unordered/test/unordered/CMakeLists.txt
- 
-[utility] 
- 
+
+[utility]
+
 R100	boost/swap.hpp	utility/include/boost/swap.hpp
 R100	boost/ref.hpp	utility/include/boost/ref.hpp
 R100	boost/assert.hpp	utility/include/boost/assert.hpp
@@ -1149,7 +1140,7 @@ R100	boost/checked_delete.hpp	utility/include/boost/checked_delete.hpp
 R100	boost/call_traits.hpp	utility/include/boost/call_traits.hpp
 R100	boost/compressed_pair.hpp	utility/include/boost/compressed_pair.hpp
 R100	boost/utility.hpp	utility/include/boost/utility.hpp
-R100	boost/utility	utility/include/boost/utility
+R100	boost/utility/	utility/include/boost/utility/
 R100	libs/utility/Assignable.html	utility/Assignable.html
 R100	libs/utility/Collection.html	utility/Collection.html
 R100	libs/utility/CopyConstructible.html	utility/CopyConstructible.html
@@ -1200,51 +1191,51 @@ R100	libs/utility/value_init_test_fail1.cpp	utility/value_init_test_fail1.cpp
 R100	libs/utility/value_init_test_fail2.cpp	utility/value_init_test_fail2.cpp
 R100	libs/utility/value_init_test_fail3.cpp	utility/value_init_test_fail3.cpp
 R100	libs/utility/verify_test.cpp	utility/verify_test.cpp
-R100	libs/utility/enable_if	utility/enable_if
-R100	libs/utility/swap	utility/swap
-R100	libs/utility/test	utility/test
+R100	libs/utility/enable_if/	utility/enable_if/
+R100	libs/utility/swap/	utility/swap/
+R100	libs/utility/test/	utility/test/
 A	utility/CMakeLists.txt
 A	utility/module.cmake
 A	utility/swap/test/CMakeLists.txt
 A	utility/test/CMakeLists.txt
 A	utility/enable_if/test/CMakeLists.txt
- 
-[variant] 
- 
+
+[variant]
+
 R100	boost/variant.hpp	variant/include/boost/variant.hpp
-R100	boost/variant	variant/include/boost/variant
+R100	boost/variant/	variant/include/boost/variant/
 R100	libs/variant/index.html	variant/index.html
-R100	libs/variant/doc	variant/doc
-R100	libs/variant/test	variant/test
+R100	libs/variant/doc/	variant/doc/
+R100	libs/variant/test/	variant/test/
 A	variant/CMakeLists.txt
 A	variant/module.cmake
 A	variant/test/CMakeLists.txt
- 
-[wave] 
- 
+
+[wave]
+
 R100	boost/wave.hpp	wave/include/boost/wave.hpp
-R100	boost/wave	wave/include/boost/wave
+R100	boost/wave/	wave/include/boost/wave/
 R100	libs/wave/ChangeLog	wave/ChangeLog
 R100	libs/wave/index.html	wave/index.html
-R100	libs/wave/build	wave/build
-R100	libs/wave/doc	wave/doc
-R100	libs/wave/samples	wave/samples
-R100	libs/wave/src	wave/src
-R100	libs/wave/test	wave/test
+R100	libs/wave/build/	wave/build/
+R100	libs/wave/doc/	wave/doc/
+R100	libs/wave/samples/	wave/samples/
+R100	libs/wave/src/	wave/src/
+R100	libs/wave/test/	wave/test/
 A	wave/CMakeLists.txt
 A	wave/module.cmake
 A	wave/src/CMakeLists.txt
 A	wave/test/CMakeLists.txt
- 
-[xpressive] 
- 
-R100	boost/xpressive	xpressive/include/boost/xpressive
+
+[xpressive]
+
+R100	boost/xpressive/	xpressive/include/boost/xpressive/
 R100	libs/xpressive/index.html	xpressive/index.html
-R100	libs/xpressive/doc	xpressive/doc
-R100	libs/xpressive/example	xpressive/example
-R100	libs/xpressive/perf	xpressive/perf
-R100	libs/xpressive/test	xpressive/test
-R100	libs/xpressive/tools	xpressive/tools
+R100	libs/xpressive/doc/	xpressive/doc/
+R100	libs/xpressive/example/	xpressive/example/
+R100	libs/xpressive/perf/	xpressive/perf/
+R100	libs/xpressive/test/	xpressive/test/
+R100	libs/xpressive/tools/	xpressive/tools/
 A	xpressive/CMakeLists.txt
 A	xpressive/module.cmake
 A	xpressive/test/CMakeLists.txt

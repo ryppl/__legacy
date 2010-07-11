@@ -1,7 +1,7 @@
 import os, sys, getopt, stat, pickle
 from subprocess import PIPE, Popen
 
-boost_manifest_pkl = 'boost-live-manifest.pkl'
+boost_manifest_pkl = 'boost_manifest.cache'
 verbose = False
 
 # Print the usage message (there's probably a nifty python way to do this)
@@ -25,15 +25,16 @@ def gen_manifest(live_boost_repo_dir):
         sys.exit(2)
     if verbose:
         print '[INFO] generating manifest from ', live_boost_repo_dir
-    # boost = 'boost'
-    boost = os.path.normpath(os.path.join('boost', 'assign'))
-    libs = 'libs'
     # Read the files in the boost directory and put them in a list
-    o = Popen(['git', 'ls-files', boost], \
+    o = Popen(['git ls-files boost'], \
         stdout=PIPE, cwd=live_boost_repo_dir, shell=True).communicate()[0]
-    boost_manifest = o.split('\n')
-    with open(boost_manifest_pkl, 'wb') as f:
-        pickle.dump(boost_manifest, f)
+    files = o.split('\n')
+    # Read the files in the libs directory and put them in a list
+    o = Popen(['git ls-files libs'], \
+        stdout=PIPE, cwd=live_boost_repo_dir, shell=True).communicate()[0]
+    files.extend(o.split('\n'))
+    with open(boost_manifest_pkl, 'wb') as manifest:
+        pickle.dump([f for f in files if f != ''], manifest, -1)
 
 def main():
     # Parse the command line arguments
@@ -67,17 +68,17 @@ def main():
     # Load the boost file manifest from the pickle
     try:
         # Try to read the pickle
-        with open(boost_manifest_pkl, 'rb') as f:
-            boost_manifest = pickle.load(f)
+        with open(boost_manifest_pkl, 'rb') as manifest:
+            files = pickle.load(manifest)
     except IOError:
         # pickle wasn't there, generate it:
         gen_manifest(live_boost_repo_dir)
-        with open(boost_manifest_pkl, 'rb') as f:
-            boost_manifest = pickle.load(f)
+        with open(boost_manifest_pkl, 'rb') as manifest:
+            files = pickle.load(f)
 
     if verbose:
         print '[INFO] Boost manifest:'
-        print '    ' + '\n    '.join(boost_manifest)
+        print '[INFO]     ' + '\n[INFO]     '.join(files)
 
 if __name__ == "__main__":
     main()
