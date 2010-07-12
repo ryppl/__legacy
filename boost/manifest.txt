@@ -1,3 +1,13 @@
+[<ignore>]
+
+R100	libs/compose/index.htm	<ignore>
+R100	libs/compose/index.html	<ignore>
+R100	libs/index.html	<ignore>
+R100	libs/libraries.htm	<ignore>
+R100	libs/maintainers.txt	<ignore>
+R100	libs/mem_fn/index.html	<ignore>
+R100	libs/platform_maintainers.txt	<ignore>
+
 [accumulators]
 
 R100	boost/accumulators/	accumulators/include/boost/accumulators/
@@ -119,6 +129,13 @@ A	circular_buffer/CMakeLists.txt
 A	circular_buffer/module.cmake
 A	circular_buffer/test/CMakeLists.txt
 
+[compatibility]
+
+R100	boost/compatibility/	compatibility/include/boost/compatibility/
+R100	libs/compatibility/generate_cpp_c_headers.py	compatibility/generate_cpp_c_headers.py
+R100	libs/compatibility/index.html	compatibility/index.html
+
+
 [concept_check]
 
 R100	boost/concept_archetype.hpp	concept_check/include/boost/concept_archetype.hpp
@@ -195,7 +212,6 @@ R100	boost/indirect_reference.hpp	core/include/boost/indirect_reference.hpp
 R100	boost/limits.hpp	core/include/boost/limits.hpp
 R100	boost/memory_order.hpp	core/include/boost/memory_order.hpp
 R100	boost/non_type.hpp	core/include/boost/non_type.hpp
-R100	boost/static_assert.hpp	core/include/boost/static_assert.hpp
 R100	boost/type.hpp	core/include/boost/type.hpp
 R100	boost/version.hpp	core/include/boost/version.hpp
 R100	boost/visit_each.hpp	core/include/boost/visit_each.hpp
@@ -221,6 +237,14 @@ R100	boost/pending/stringtok.hpp	core/include/boost/pending/stringtok.hpp
 R100	boost/pending/detail/int_iterator.hpp	core/include/boost/pending/detail/int_iterator.hpp
 R100	boost/pending/detail/property.hpp	core/include/boost/pending/detail/property.hpp
 A	core/CMakeLists.txt
+
+[crc]
+
+R100	boost/crc.hpp	crc/include/boost/crc.hpp
+R100	libs/crc/crc.html	crc/crc.html
+R100	libs/crc/crc_example.cpp	crc/crc_example.cpp
+R100	libs/crc/index.html	crc/index.html
+R100	libs/crc/test/	crc/test/
 
 [date_time]
 
@@ -286,7 +310,6 @@ R100	boost/exception/	exception/include/boost/exception/
 R100	libs/exception/doc/	exception/doc/
 R100	libs/exception/example/	exception/example/
 R100	libs/exception/index.html	exception/index.html
-R100	libs/exception/test/	exception/test/
 R100	libs/exception/test/	exception/test/
 A	exception/CMakeLists.txt
 A	exception/module.cmake
@@ -373,6 +396,12 @@ R100	libs/functional/hash/index.html	functional/hash/index.html
 R100	libs/functional/hash/doc/	functional/hash/doc/
 R100	libs/functional/hash/examples/	functional/hash/examples/
 R100	libs/functional/hash/test/	functional/hash/test/
+R100	libs/functional/forward/index.html	functional/forward/index.html
+R100	libs/functional/forward/doc/	functional/forward/doc/
+R100	libs/functional/forward/test/	functional/forward/test/
+R100	libs/functional/factory/index.html	functional/factory/index.html
+R100	libs/functional/factory/doc/	functional/factory/doc/
+R100	libs/functional/factory/test/	functional/factory/test/
 R100	libs/functional/test/	functional/test/
 A	functional/CMakeLists.txt
 A	functional/hash/doc/CMakeLists.txt
@@ -423,6 +452,7 @@ R100	libs/graph/index.html	graph/index.html
 R100	libs/graph/build/	graph/build/
 R100	libs/graph/doc/	graph/doc/
 R100	libs/graph/example/	graph/example/
+R100	libs/graph/quickbook/	graph/quickbook/
 R100	libs/graph/src/	graph/src/
 R100	libs/graph/test/	graph/test/
 A	graph/CMakeLists.txt
@@ -596,11 +626,19 @@ A	mpl/CMakeLists.txt
 A	mpl/module.cmake
 A	mpl/test/CMakeLists.txt
 
+[msm]
+
+R100	boost/msm/	msm/include/boost/msm/
+R100	libs/msm/index.html	msm/index.html
+R100	libs/msm/doc/	msm/doc/
+R100	libs/msm/test/	msm/test/
+
+
 [multi_array]
 
 R100	boost/multi_array.hpp	multi_array/include/boost/multi_array.hpp
 R100	boost/multi_array/	multi_array/include/boost/multi_array/
-R100	libs/mpl/index.html	multi_array/index.html
+R100	libs/multi_array/index.html	multi_array/index.html
 R100	libs/multi_array/doc/	multi_array/doc/
 R100	libs/multi_array/example/	multi_array/example/
 R100	libs/multi_array/test/	multi_array/test/
@@ -673,6 +711,14 @@ R100	libs/parameter/test/	parameter/test/
 A	parameter/CMakeLists.txt
 A	parameter/module.cmake
 A	parameter/test/CMakeLists.txt
+
+[polygon]
+
+R100	boost/polygon/	polygon/include/boost/polygon/
+R100	libs/polygon/Jamfile.v2	polygon/Jamfile.v2
+R100	libs/polygon/index.html	polygon/index.html
+R100	libs/polygon/test/	polygon/test/
+R100	libs/polygon/doc/	polygon/doc/
 
 [pool]
 
@@ -967,6 +1013,28 @@ A	statechart/example/CMakeLists.txt
 A	statechart/module.cmake
 A	statechart/test/CMakeLists.txt
 
+[static_assert]
+R100	boost/static_assert.hpp	static_assert/include/boost/static_assert.hpp
+R100	libs/static_assert/Jamfile.v2	static_assert/Jamfile.v2
+R100	libs/static_assert/doc/Jamfile.v2	static_assert/doc/Jamfile.v2
+R100	libs/static_assert/doc/static_assert.qbk	static_assert/doc/static_assert.qbk
+R100	libs/static_assert/index.html	static_assert/index.html
+R100	libs/static_assert/static_assert.htm	static_assert/static_assert.htm
+R100	libs/static_assert/static_assert_example_1.cpp	static_assert/static_assert_example_1.cpp
+R100	libs/static_assert/static_assert_example_2.cpp	static_assert/static_assert_example_2.cpp
+R100	libs/static_assert/static_assert_example_3.cpp	static_assert/static_assert_example_3.cpp
+R100	libs/static_assert/static_assert_test.cpp	static_assert/static_assert_test.cpp
+R100	libs/static_assert/static_assert_test_fail_1.cpp	static_assert/static_assert_test_fail_1.cpp
+R100	libs/static_assert/static_assert_test_fail_10.cpp	static_assert/static_assert_test_fail_10.cpp
+R100	libs/static_assert/static_assert_test_fail_2.cpp	static_assert/static_assert_test_fail_2.cpp
+R100	libs/static_assert/static_assert_test_fail_3.cpp	static_assert/static_assert_test_fail_3.cpp
+R100	libs/static_assert/static_assert_test_fail_4.cpp	static_assert/static_assert_test_fail_4.cpp
+R100	libs/static_assert/static_assert_test_fail_5.cpp	static_assert/static_assert_test_fail_5.cpp
+R100	libs/static_assert/static_assert_test_fail_6.cpp	static_assert/static_assert_test_fail_6.cpp
+R100	libs/static_assert/static_assert_test_fail_7.cpp	static_assert/static_assert_test_fail_7.cpp
+R100	libs/static_assert/static_assert_test_fail_8.cpp	static_assert/static_assert_test_fail_8.cpp
+R100	libs/static_assert/static_assert_test_fail_9.cpp	static_assert/static_assert_test_fail_9.cpp
+
 [system]
 
 R100	boost/cerrno.hpp	system/include/boost/cerrno.hpp
@@ -1167,6 +1235,9 @@ R100	libs/utility/current_function_test.cpp	utility/current_function_test.cpp
 R100	libs/utility/enable_if.html	utility/enable_if.html
 R100	libs/utility/generator_iterator.htm	utility/generator_iterator.htm
 R100	libs/utility/in_place_factories.html	utility/in_place_factories.html
+R100	libs/utility/initialized_test.cpp	utility/initialized_test.cpp
+R100	libs/utility/initialized_test_fail1.cpp	utility/initialized_test_fail1.cpp
+R100	libs/utility/initialized_test_fail2.cpp	utility/initialized_test_fail2.cpp
 R100	libs/utility/index.html	utility/index.html
 R100	libs/utility/iterator_adaptors.htm	utility/iterator_adaptors.htm
 R100	libs/utility/iterators_test.cpp	utility/iterators_test.cpp
@@ -1190,6 +1261,7 @@ R100	libs/utility/value_init_test.cpp	utility/value_init_test.cpp
 R100	libs/utility/value_init_test_fail1.cpp	utility/value_init_test_fail1.cpp
 R100	libs/utility/value_init_test_fail2.cpp	utility/value_init_test_fail2.cpp
 R100	libs/utility/value_init_test_fail3.cpp	utility/value_init_test_fail3.cpp
+R100	libs/utility/value_init_workaround_test.cpp	utility/value_init_workaround_test.cpp
 R100	libs/utility/verify_test.cpp	utility/verify_test.cpp
 R100	libs/utility/enable_if/	utility/enable_if/
 R100	libs/utility/swap/	utility/swap/
@@ -1199,6 +1271,13 @@ A	utility/module.cmake
 A	utility/swap/test/CMakeLists.txt
 A	utility/test/CMakeLists.txt
 A	utility/enable_if/test/CMakeLists.txt
+
+[uuid]
+
+R100	boost/uuid/	polygon/include/boost/uuid/
+R100	libs/uuid/index.html	utility/index.html
+R100	libs/uuid/uuid.html	utility/uuid.html
+R100	libs/uuid/test/	utility/test/
 
 [variant]
 
