@@ -1390,7 +1390,6 @@ tools/inspect/minmax_check.cpp:	minmax_check.cpp
 tools/inspect/minmax_check.hpp:	minmax_check.hpp
 tools/inspect/path_name_check.cpp:	path_name_check.cpp
 tools/inspect/path_name_check.hpp:	path_name_check.hpp
-tools/inspect/run_inspect.sh:	run_inspect.sh
 tools/inspect/tab_check.cpp:	tab_check.cpp
 tools/inspect/tab_check.hpp:	tab_check.hpp
 tools/inspect/time_string.hpp:	time_string.hpp
