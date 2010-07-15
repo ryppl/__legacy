@@ -9,20 +9,22 @@ verbose = False
 src_repo_dir = None
 dst_repo_dir = None
 regen_existing_cache = False
+restart_at = None
 
 # Print the usage message (there's probably a nifty python way to do this)
 def usage():
     print '''Usage: findmoddiffs.py [-h] [-a] [-v] [--src=<dir>] [--dst=<dir>]
-    -h      : help
-    -v      : verbose
-    -a      : always regenerate the cache of existing boost files
-    --src   : local path to the git repository storing the unmodularized boost
-    --dst   : local path to the git repository storing the modularized boost'''
+    -h              : help
+    -v              : verbose
+    -a              : always regenerate the cache of existing boost files
+    --src           : local path to the git repository storing the unmodularized boost
+    --dst           : local path to the git repository storing the modularized boost
+    --restart-at    : section in the manifest at which to restart the copy'''
 
 def parse_command_line():
     # Parse the command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "ahv", ["help", "src=", "dst="])
+        opts, args = getopt.getopt(sys.argv[1:], "ahv", ["help", "src=", "dst=", "restart-at="])
     except getopt.GetoptError, err:
         print 'Error: ', str(err)
         usage()
@@ -44,6 +46,9 @@ def parse_command_line():
         elif o == "--dst":
             global dst_repo_dir
             dst_repo_dir = a
+        elif o == "--restart-at":
+            global restart_at
+            restart_at = a
         else:
             assert False, "unhandled option"
 
@@ -214,17 +219,29 @@ def main():
     validate_manifest(manifest)
 
     go = False
+    
+    sections = manifest.sections()
+    sections.sort()
 
     # Iterate over the sections, which represent submodules. For each
     # submodule, check it out onto branch 'eric-boost', remove all the
     # files, copy all the files from their source locations into their
     # destinations, add all the files that were copied, unstage the
     # removal of files marked as <new>, commit and push.
-    for section in manifest.sections():
+    for section in sections:
+
+        global restart_at
 
         # Skip the <ignore> section
         if section == '<ignore>':
             continue
+
+        # If the user has asked to restart at a given section, skip all until
+        # we get to that one.
+        if restart_at and section != restart_at:
+            continue
+
+        restart_at = None
 
         # Construct the directory in which this submodule lives.
         dst_module_dir = os.path.normpath(os.path.join(dst_repo_dir, section))

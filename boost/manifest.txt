@@ -1399,15 +1399,6 @@ tools/inspect/wrong_line_ends_test.cpp:	wrong_line_ends_test.cpp
 tools/inspect/build/:	build/
 tools/inspect/doc/:	doc/
 
-[tools/jam]
-
-tools/jam/build_dist.bat:	build_dist.bat
-tools/jam/build_dist.sh:	build_dist.sh
-tools/jam/index.html:	index.html
-tools/jam/doc/:	doc/
-tools/jam/src/:	src/
-tools/jam/test/:	test/
-
 [tools/litre]
 
 tools/litre/cplusplus.py:	cplusplus.py
