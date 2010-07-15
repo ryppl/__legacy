@@ -331,9 +331,10 @@ libs/filesystem/v2/:	v2/
 libs/filesystem/v3/:	v3/
 <new>:	CMakeLists.txt
 	module.cmake
-	src/CMakeLists.txt
-	src/utf8_codecvt_facet.cpp
+	build/CMakeLists.txt
 	test/CMakeLists.txt
+	v2/build/CMakeLists.txt
+	v3/build/CMakeLists.txt
 
 [src/flyweight]
 

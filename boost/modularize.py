@@ -1,8 +1,9 @@
-import os, sys, getopt, pickle, ConfigParser, shutil
+import os, sys, getopt, pickle, ConfigParser, shutil, re
 from subprocess import PIPE, Popen, check_call
 
-# This is a global constant. Do not change.
+# This are global constants. Do not change.
 existing_cache_pkl = 'existing.cache'
+is_win32 = (sys.platform == 'win32')
 
 # These are controlled by command-line parameters
 verbose = False
@@ -70,18 +71,18 @@ def gen_existing_cache(src_repo_dir):
         print '[INFO] generating existing file cache from ', src_repo_dir
 
     # Read the files in the boost directory and put them in a list
-    o = Popen(['git ls-files boost'], \
-        stdout=PIPE, cwd=src_repo_dir, shell=True).communicate()[0]
+    o = Popen(['git', 'ls-files', 'boost'], \
+        stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
     files = o.split('\n')
 
     # Read the files in the libs directory and put them in a list
-    o = Popen(['git ls-files libs'], \
-        stdout=PIPE, cwd=src_repo_dir, shell=True).communicate()[0]
+    o = Popen(['git', 'ls-files', 'libs'], \
+        stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
     files.extend(o.split('\n'))
 
     # Read the files in the tools directory and put them in a list
-    o = Popen(['git ls-files tools'], \
-        stdout=PIPE, cwd=src_repo_dir, shell=True).communicate()[0]
+    o = Popen(['git', 'ls-files', 'tools'], \
+        stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
     files.extend(o.split('\n'))
 
     with open(existing_cache_pkl, 'wb') as input:
@@ -218,8 +219,10 @@ def main():
     # else. This will abort the program if validation fails.
     validate_manifest(manifest)
 
-    go = False
-    
+    # Sort the section names so we can iterate them in order.
+    # We do this so that if anything fails mid-way, the user
+    # can specify the --restart-at option to pick up where the
+    # script last left off.
     sections = manifest.sections()
     sections.sort()
 
@@ -248,13 +251,10 @@ def main():
         print 'Processing module at:', dst_module_dir
 
         # make sure we're on the eric-boost branch
-        check_call(['git checkout -b eric-boost'], cwd=dst_module_dir, shell=True)
+        check_call(['git', 'checkout', '-b', 'eric-boost'], cwd=dst_module_dir, shell=is_win32)
 
         # remove everything
-        check_call(['git rm -r .'], cwd=dst_module_dir, shell=True)
-
-        if not go:
-            go = ('go' == raw_input('Type "go" to continue, <return> to step : '))
+        check_call(['git', 'rm', '-r', '.'], cwd=dst_module_dir, shell=is_win32)
 
         for key, value in manifest.items(section):
             # We'll handle this guy later
@@ -267,8 +267,6 @@ def main():
             print 'About to copy...'
             print '\tfrom :', src_path
             print '\tto   :', dst_path
-            if not go:
-                go = ('go' == raw_input('Type "go" to continue, <return> to step : '))
 
             # copy the files from src to target
             if key[-1] == '/':
@@ -280,32 +278,62 @@ def main():
                 shutil.copy2(src_path, dst_path)
 
             print 'Copied'
-            if not go:
-                go = ('go' == raw_input('Type "go" to continue, <return> to step : '))
 
             # Add the files we just copied
-            check_call(['git add ' + value], cwd=dst_module_dir, shell=True)
+            check_call(['git', 'add', value], cwd=dst_module_dir, shell=is_win32)
 
         # Handle the files that are new to the modularized boost
-        if not manifest.has_option(section, '<new>'):
-            continue
+        if manifest.has_option(section, '<new>'):
 
-        # add back the files we want to keep
-        new_files = manifest.get(section, '<new>').split('\n')
-        for file in new_files:
-            print 'Adding back ', file, 'in ', dst_module_dir
-            check_call(['git reset HEAD ' + file], cwd=dst_module_dir, shell=True)
-            check_call(['git checkout -- ' + file], cwd=dst_module_dir, shell=True)
+            # add back the files we want to keep
+            new_files = manifest.get(section, '<new>').split('\n')
+            for file in new_files:
+                print 'Adding back ', file, 'in ', dst_module_dir
+                check_call(['git', 'reset', 'HEAD', file], cwd=dst_module_dir, shell=is_win32)
+                check_call(['git', 'checkout', '--', file], cwd=dst_module_dir, shell=is_win32)
 
         print 'Committing changes to module at:', dst_module_dir
-        if not go:
-            go = ('go' == raw_input('Type "go" to continue, <return> to step : '))
 
         # everything looks good, so commit locally
-        check_call(['git commit -m"latest"'], cwd=dst_module_dir, shell=True)
+        check_call(['git', 'commit', '-m', 'latest from svn'], cwd=dst_module_dir, shell=is_win32)
 
         # Push this change up to the origin
-        check_call(['git push origin eric-boost'], cwd=dst_module_dir, shell=True)
+        check_call(['git', 'push', 'origin', 'eric-boost'], cwd=dst_module_dir, shell=is_win32)
+
+    # We now want to 'git add' all the modified submodules to the supermodules,
+    # commit them and push the new boost supermodule.
+    print 'Adding all modified submodues to the boost supermodule...'
+
+    # The RawConfigParser can *almost* handle git's .gitmodules
+    # file, with the exception being the leading whitespace
+    # on lines with "option = value" pairs, so subclass and fix.
+    class GitModulesParser(ConfigParser.RawConfigParser):
+        OPTCRE = re.compile(
+            r'\s*(?P<option>[^:=\s][^:=]*)'       # very permissive!
+            r'\s*(?P<vi>[:=])\s*'                 # any number of space/tab,
+                                                  # followed by separator
+                                                  # (either : or =), followed
+                                                  # by any # space/tab
+            r'(?P<value>.*)$'                     # everything up to eol
+            )
+
+    gitmodules = GitModulesParser()
+    gitmodules.optionxform = str # preserve case in key names
+    gitmodules.read(os.path.normpath(os.path.join(dst_repo_dir, '.gitmodules')))
+
+    # For each submodule in boost, 'git add' it.
+    for module in gitmodules.sections():
+        path = gitmodules.get(module, 'path')
+        check_call(['git', 'add', path], cwd=dst_repo_dir, shell=is_win32)
+
+    print 'Committing the boost supermodule...'
+    check_call(['git', 'commit', '-m' 'latest from svn'], cwd=dst_repo_dir, shell=is_win32)
+
+    # Push this change up to the origin
+    print 'Pushing the boost supermodule...'
+    check_call(['git', 'push', 'origin', 'eric-boost'], cwd=dst_repo_dir, shell=is_win32)
+
+    print 'Done'
 
 if __name__ == "__main__":
     main()
