@@ -3,12 +3,12 @@
 
 .. _getting_started:
 
-Getting started
----------------
+Getting Started With Modularized Boost
+--------------------------------------
 
 Boost is organized in Git as a “superproject” containing `submodules
 <http://progit.org/book/ch6-6.html>`_, each of which corresponds to an
-individual Boost library.  A **submodule** is a *reference* to a
+individual Boost library. [#submodule]_  A **submodule** is a *reference* to a
 commit in an *independent* Git repository.  The submodule is used by
 Git to clone the independent repository below the superproject's root
 directory, and check out the referenced commit.
@@ -217,3 +217,6 @@ the `help` target:
     
 
 .. How do I test my library?
+
+.. [#submodule] This organization will change soon; see `this note
+   <../superprojects.html#id1>`_ for rationale
