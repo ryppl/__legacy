@@ -1,4 +1,4 @@
-import os, sys, getopt, pickle, ConfigParser, shutil, re
+import os, sys, getopt, pickle, ConfigParser, shutil, re, string
 from subprocess import PIPE, Popen, check_call
 
 # This are global constants. Do not change.
@@ -10,22 +10,24 @@ verbose = False
 src_repo_dir = None
 dst_repo_dir = None
 regen_existing_cache = False
-restart_at = None
+start_at = None
+stop_at = None
 
 # Print the usage message (there's probably a nifty python way to do this)
 def usage():
-    print '''Usage: findmoddiffs.py [-h] [-a] [-v] [--src=<dir>] [--dst=<dir>]
+    print '''Usage: findmoddiffs.py [-h] [-a] [-v] [--src=<dir>] [--dst=<dir>] [--start-at=<dir>] [--stop-at=<dir>]
     -h              : help
     -v              : verbose
     -a              : always regenerate the cache of existing boost files
     --src           : local path to the git repository storing the unmodularized boost
     --dst           : local path to the git repository storing the modularized boost
-    --restart-at    : section in the manifest at which to restart the copy'''
+    --start-at      : section in the manifest at which to start the copy
+    --stop-at       : section in the manifest at which to stop the copy'''
 
 def parse_command_line():
     # Parse the command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "ahv", ["help", "src=", "dst=", "restart-at="])
+        opts, args = getopt.getopt(sys.argv[1:], "ahv", ["help", "src=", "dst=", "start-at=", "stop-at="])
     except getopt.GetoptError, err:
         print 'Error: ', str(err)
         usage()
@@ -47,9 +49,12 @@ def parse_command_line():
         elif o == "--dst":
             global dst_repo_dir
             dst_repo_dir = a
-        elif o == "--restart-at":
-            global restart_at
-            restart_at = a
+        elif o == "--start-at":
+            global start_at
+            start_at = a
+        elif o == "--stop-at":
+            global stop_at
+            stop_at = a
         else:
             assert False, "unhandled option"
 
@@ -123,7 +128,7 @@ def validate_manifest(manifest):
     # manifest_files list
     for section in manifest.sections():
         for item in manifest.items(section):
-            if not item[0] == '<new>':
+            if not item[0] == '<new>' and not item[0] == '<patch>':
                 manifest_files.append(item[0])
     manifest_files.sort()
 
@@ -221,7 +226,7 @@ def main():
 
     # Sort the section names so we can iterate them in order.
     # We do this so that if anything fails mid-way, the user
-    # can specify the --restart-at option to pick up where the
+    # can specify the --start-at option to pick up where the
     # script last left off.
     sections = manifest.sections()
     sections.sort()
@@ -233,7 +238,7 @@ def main():
     # removal of files marked as <new>, commit and push.
     for section in sections:
 
-        global restart_at
+        global start_at, stop_at
 
         # Skip the <ignore> section
         if section == '<ignore>':
@@ -241,10 +246,10 @@ def main():
 
         # If the user has asked to restart at a given section, skip all until
         # we get to that one.
-        if restart_at and section != restart_at:
+        if start_at and section != start_at:
             continue
 
-        restart_at = None
+        start_at = None
 
         # Construct the directory in which this submodule lives.
         dst_module_dir = os.path.normpath(os.path.join(dst_repo_dir, section))
@@ -257,8 +262,8 @@ def main():
         check_call(['git', 'rm', '-r', '.'], cwd=dst_module_dir, shell=is_win32)
 
         for key, value in manifest.items(section):
-            # We'll handle this guy later
-            if key == '<new>':
+            # We'll handle these guys later
+            if key == '<new>' or key == '<patch>':
                 continue
 
             src_path = os.path.normpath(os.path.join(src_repo_dir, key))
@@ -288,9 +293,25 @@ def main():
             # add back the files we want to keep
             new_files = manifest.get(section, '<new>').split('\n')
             for file in new_files:
-                print 'Adding back ', file, 'in ', dst_module_dir
+                print 'Adding back', file, 'in', dst_module_dir
                 check_call(['git', 'reset', 'HEAD', file], cwd=dst_module_dir, shell=is_win32)
                 check_call(['git', 'checkout', '--', file], cwd=dst_module_dir, shell=is_win32)
+
+        # If this library has a patch file specified, apply it.
+        if manifest.has_option(section, '<patch>'):
+
+            patch = os.path.abspath(manifest.get(section, '<patch>'))
+            print 'Applying patch', patch, 'in', dst_module_dir
+            check_call(['git', 'apply', patch], cwd=dst_module_dir, shell=is_win32)
+
+            # Find out what changed as a result of the patch and add those files
+            o = Popen(['git', 'status', '--porcelain', '--untracked-files=no'], \
+                stdout=PIPE, cwd=dst_module_dir, shell=is_win32, ).communicate()[0]
+            lines = [l for l in o.split('\n') if not l == '']
+            for line in lines:
+                file = string.split(line, None, 1)[1]
+                print 'Adding patched file', file
+                check_call(['git', 'add', file], cwd=dst_module_dir, shell=is_win32)
 
         print 'Committing changes to module at:', dst_module_dir
 
@@ -299,6 +320,9 @@ def main():
 
         # Push this change up to the origin
         check_call(['git', 'push', 'origin', 'eric-boost'], cwd=dst_module_dir, shell=is_win32)
+
+        if stop_at and section == stop_at:
+            break
 
     # We now want to 'git add' all the modified submodules to the supermodules,
     # commit them and push the new boost supermodule.
