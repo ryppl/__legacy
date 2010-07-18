@@ -1,4 +1,4 @@
-import os, sys, getopt, pickle, ConfigParser, shutil, re, string
+import os, sys, getopt, pickle, ConfigParser, shutil, re, string, time
 from subprocess import PIPE, Popen, check_call
 
 # This are global constants. Do not change.
@@ -210,6 +210,23 @@ def validate_manifest(manifest):
         print '[ERROR] Unaccounded for files. Please fix the manifest and re-run.'
         sys.exit(1)
 
+def clean_dir(dst_module_dir):
+    for i in range(10):
+        try:
+            files = [os.path.normpath(os.path.join(dst_module_dir, f))
+                for f in os.listdir(dst_module_dir) if not f.startswith('.git')]
+            for file in files:
+                if os.path.isdir(file):
+                    shutil.rmtree(file)
+                else:
+                    os.remove(file)
+            return
+        except:
+            print '[WARNING] Retrying to clean directory', dst_module_dir
+            time.sleep(.5)
+    print '[ERROR] Cannot clean directory', dst_module_dir
+    sys.exit(1)
+
 def main():
     # Parse the command line arguments
     parse_command_line()
@@ -260,6 +277,10 @@ def main():
 
         # remove everything
         check_call(['git', 'rm', '-r', '.'], cwd=dst_module_dir, shell=is_win32)
+        
+        # Make sure we've really removed everything (leaving behind the top-level)
+        # .git directory
+        clean_dir(dst_module_dir)
 
         for key, value in manifest.items(section):
             # We'll handle these guys later
@@ -309,7 +330,8 @@ def main():
                 stdout=PIPE, cwd=dst_module_dir, shell=is_win32, ).communicate()[0]
             lines = [l for l in o.split('\n') if not l == '']
             for line in lines:
-                file = string.split(line, None, 1)[1]
+                # line matches the regex [ MARC][ MD] file( -> file2)?
+                file = line[3:].split(' -> ')[0]
                 print 'Adding patched file', file
                 check_call(['git', 'add', file], cwd=dst_module_dir, shell=is_win32)
 

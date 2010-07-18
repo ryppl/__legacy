@@ -140,7 +140,6 @@ boost/compatibility/:	include/boost/compatibility/
 libs/compatibility/generate_cpp_c_headers.py:	generate_cpp_c_headers.py
 libs/compatibility/index.html:	index.html
 
-
 [src/concept_check]
 
 boost/concept_archetype.hpp:	include/boost/concept_archetype.hpp
@@ -191,6 +190,7 @@ libs/config/index.html:	index.html
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/conversion]
 
@@ -242,6 +242,7 @@ boost/pending/stringtok.hpp:	include/boost/pending/stringtok.hpp
 boost/pending/detail/int_iterator.hpp:	include/boost/pending/detail/int_iterator.hpp
 boost/pending/detail/property.hpp:	include/boost/pending/detail/property.hpp
 <new>:	CMakeLists.txt
+	.ryppl/METADATA
 
 [src/crc]
 
@@ -320,6 +321,7 @@ libs/exception/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/filesystem]
 
@@ -633,6 +635,7 @@ libs/mpl/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/msm]
 
@@ -748,6 +751,7 @@ libs/preprocessor/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/program_options]
 
@@ -992,6 +996,7 @@ libs/smart_ptr/weak_ptr.htm:	weak_ptr.htm
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/spirit]
 
@@ -1175,6 +1180,7 @@ libs/type_traits/tools/:	tools/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/units]
 
@@ -1284,6 +1290,7 @@ libs/utility/test/:	test/
 	swap/test/CMakeLists.txt
 	test/CMakeLists.txt
 	enable_if/test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/uuid]
 
