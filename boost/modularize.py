@@ -1,4 +1,4 @@
-import os, sys, getopt, pickle, ConfigParser, shutil, re, string, time
+import os, sys, getopt, pickle, ConfigParser, shutil, time
 from subprocess import PIPE, Popen, check_call
 
 # This are global constants. Do not change.
@@ -76,17 +76,17 @@ def gen_existing_cache(src_repo_dir):
         print '[INFO] generating existing file cache from ', src_repo_dir
 
     # Read the files in the boost directory and put them in a list
-    o = Popen(['git', 'ls-files', 'boost'], \
+    o = Popen(['git', 'ls-files', 'boost'],
         stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
     files = o.split('\n')
 
     # Read the files in the libs directory and put them in a list
-    o = Popen(['git', 'ls-files', 'libs'], \
+    o = Popen(['git', 'ls-files', 'libs'],
         stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
     files.extend(o.split('\n'))
 
     # Read the files in the tools directory and put them in a list
-    o = Popen(['git', 'ls-files', 'tools'], \
+    o = Popen(['git', 'ls-files', 'tools'],
         stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
     files.extend(o.split('\n'))
 
@@ -249,10 +249,10 @@ def main():
     sections.sort()
 
     # Iterate over the sections, which represent submodules. For each
-    # submodule, check it out onto branch 'eric-boost', remove all the
+    # submodule, make sure we're on the branch 'master', remove all the
     # files, copy all the files from their source locations into their
     # destinations, add all the files that were copied, unstage the
-    # removal of files marked as <new>, commit and push.
+    # removal of files marked as <new>, apply any patches and commit.
     for section in sections:
 
         global start_at, stop_at
@@ -272,11 +272,11 @@ def main():
         dst_module_dir = os.path.normpath(os.path.join(dst_repo_dir, section))
         print 'Processing module at:', dst_module_dir
 
-        # make sure we're on the eric-boost branch
-        check_call(['git', 'checkout', '-b', 'eric-boost'], cwd=dst_module_dir, shell=is_win32)
+        # make sure we're on the master branch
+        check_call(['git', 'checkout', 'master'], cwd=dst_module_dir, shell=is_win32)
 
         # remove everything
-        check_call(['git', 'rm', '-r', '.'], cwd=dst_module_dir, shell=is_win32)
+        check_call(['git', 'rm', '--quiet', '-r', '.'], cwd=dst_module_dir, shell=is_win32)
         
         # Make sure we've really removed everything (leaving behind the top-level)
         # .git directory
@@ -326,8 +326,8 @@ def main():
             check_call(['git', 'apply', patch], cwd=dst_module_dir, shell=is_win32)
 
             # Find out what changed as a result of the patch and add those files
-            o = Popen(['git', 'status', '--porcelain', '--untracked-files=no'], \
-                stdout=PIPE, cwd=dst_module_dir, shell=is_win32, ).communicate()[0]
+            o = Popen(['git', 'status', '--porcelain', '--untracked-files=no'],
+                stdout=PIPE, cwd=dst_module_dir, shell=is_win32).communicate()[0]
             lines = [l for l in o.split('\n') if not l == '']
             for line in lines:
                 # line matches the regex [ MARC][ MD] file( -> file2)?
@@ -340,44 +340,38 @@ def main():
         # everything looks good, so commit locally
         check_call(['git', 'commit', '-m', 'latest from svn'], cwd=dst_module_dir, shell=is_win32)
 
-        # Push this change up to the origin
-        check_call(['git', 'push', 'origin', 'eric-boost'], cwd=dst_module_dir, shell=is_win32)
-
         if stop_at and section == stop_at:
             break
+
+    # Ask the user whether they really, REALLY want to push this to the remote
+    raw_input('Hit <return> to push all local changes, Ctrl-Z to quit:')
+
+    # We now want to 'git add' all the modified submodules to the supermodules,
+    # commit them and push the new boost supermodule.
+    print 'Pushing all modified submodues...'
+
+    # Push the changes in each submodule to the remote repo
+    check_call(['git', 'submodule', 'foreach', 'git', 'push', 'origin', 'master'], cwd=dst_repo_dir, shell=is_win32)
 
     # We now want to 'git add' all the modified submodules to the supermodules,
     # commit them and push the new boost supermodule.
     print 'Adding all modified submodues to the boost supermodule...'
 
-    # The RawConfigParser can *almost* handle git's .gitmodules
-    # file, with the exception being the leading whitespace
-    # on lines with "option = value" pairs, so subclass and fix.
-    class GitModulesParser(ConfigParser.RawConfigParser):
-        OPTCRE = re.compile(
-            r'\s*(?P<option>[^:=\s][^:=]*)'       # very permissive!
-            r'\s*(?P<vi>[:=])\s*'                 # any number of space/tab,
-                                                  # followed by separator
-                                                  # (either : or =), followed
-                                                  # by any # space/tab
-            r'(?P<value>.*)$'                     # everything up to eol
-            )
-
-    gitmodules = GitModulesParser()
-    gitmodules.optionxform = str # preserve case in key names
-    gitmodules.read(os.path.normpath(os.path.join(dst_repo_dir, '.gitmodules')))
+    # Run the submodule foreach command and echo the $path to each
+    o = Popen(['git', 'submodule', '--quiet', 'foreach', 'echo $path'],
+        stdout=PIPE, cwd=dst_repo_dir, shell=is_win32).communicate()[0]
+    module_paths = [mp for mp in o.split('\n') if not mp == '']
 
     # For each submodule in boost, 'git add' it.
-    for module in gitmodules.sections():
-        path = gitmodules.get(module, 'path')
-        check_call(['git', 'add', path], cwd=dst_repo_dir, shell=is_win32)
+    for module_path in module_paths:
+        check_call(['git', 'add', module_path], cwd=dst_repo_dir, shell=is_win32)
 
     print 'Committing the boost supermodule...'
     check_call(['git', 'commit', '-m' 'latest from svn'], cwd=dst_repo_dir, shell=is_win32)
 
     # Push this change up to the origin
     print 'Pushing the boost supermodule...'
-    check_call(['git', 'push', 'origin', 'eric-boost'], cwd=dst_repo_dir, shell=is_win32)
+    check_call(['git', 'push', 'origin', 'master'], cwd=dst_repo_dir, shell=is_win32)
 
     print 'Done'
 
