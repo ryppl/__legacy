@@ -31,7 +31,21 @@ clean:
 	-rm -rf $(BUILDDIR)/*
 
 html:
-	mkdir -p $(BUILDDIR)/html $(BUILDDIR)/doctrees
+	mkdir -p $(BUILDDIR)/doctrees
+
+	if [ ! -d "$(BUILDDIR)/html" ] ; then 					    \
+	    git clone git://github.com/ryppl/ryppl.github.com.git $(BUILDDIR)/html; \
+	fi
+
+	cd "$(BUILDDIR)/html"				\
+	&& git fetch origin	 			\
+	&& git reset --mixed origin/master		\
+	&& for x in `ls` ; do 				\
+	    if [[ "$$x" =~ 'README.*|_.*' ]] ; then	\
+	        rm -r "$$x" ; 				\
+	    fi ; 					\
+	done
+
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
@@ -79,6 +93,9 @@ linkcheck:
 	      "or in $(BUILDDIR)/linkcheck/output.txt."
 
 deploy: html
-	rsync -va --delete $(BUILDDIR)/html/ dave@www.ryppl.org:www.ryppl.org/
+	cd $(BUILDDIR)/html 						\
+	&& git add * 							\
+	&& git commit -a -m "deployed $$(date)" 			\
+	&& git push git@github.com:ryppl/ryppl.github.com.git master
 
 

@@ -5,7 +5,7 @@
 A Git-based Software Development / Testing / Installation System
 ================================================================
 
-.. image:: http://www.ryppl.org/_static/ryppl.png
+.. image:: http://ryppl.github.com/_static/ryppl.png
    :align: right
 
 -----------

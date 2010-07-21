@@ -9,16 +9,21 @@ Distributed Development, Testing and Installation with Ryppl
 Overview
 --------
 
-Think of Ryppl as a cross-platform [#platforms]_ `package management system
-<http://en.wikipedia.org/wiki/Package_management_system>`_ designed to
-accomodate both end-users *and* developers.  Unlike a traditional
-package manager, which delivers binaries and/or a source snapshot,
-when ryppl downloads a package, it gives you a clone of a Git
-repository, with that package's entire development history.  If you're
-an ordinary end-user, the fact that it's a git repository may be
-invisible to you, but if you're a developer, it means you're already
-prepared to work on the package, keep track of your changes, and
-submit them to the official maintainer(s).
+Think of Ryppl as a distributed cross-platform software management
+system designed to accommodate both end-users and developers. Ryppl
+unites version control, test management, `package management
+<http://en.wikipedia.org/wiki/Package_management_system>`_ , release
+management, reporting, and other sub-systems into a coherent and
+scalable software management system.
+
+Unlike a traditional package manager, which only delivers binaries
+and/or a source snapshot, when ryppl downloads a package, it can give
+you a clone of a Git repository, with that package's entire
+development history.  If you're an ordinary end-user, the fact that
+it's a git repository may be invisible to you, but if you're a
+developer, it means you're already prepared to work on the package,
+keep track of your changes, and submit them to the official
+maintainer(s).
 
 Ryppl includes facilities for building, testing, and installing
 packages on the local machine.  However, it also has integrated
