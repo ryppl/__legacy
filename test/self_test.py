@@ -32,7 +32,7 @@ def clean(root):
     print >> sys.stderr, 'ok'
 
 
-def main(argv):
+def main(argv = []):
     global use_distribute
 
     # Grab this script's options
