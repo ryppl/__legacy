@@ -20,6 +20,7 @@ libs/accumulators/doc/:	doc/
 libs/accumulators/example/:	example/
 libs/accumulators/test/:	test/
 libs/accumulators/index.html:	index.html
+<name>: boost-accumulators
 <new>:	CMakeLists.txt
 	doc/CMakeLists.txt
 	example/CMakeLists.txt
@@ -38,6 +39,7 @@ libs/algorithm/string/example/:	string/example/
 libs/algorithm/string/test/:	string/test/
 libs/algorithm/string/index.html:	string/index.html
 libs/algorithm/sublibs:	sublibs
+<name>: boost-algorithm
 <new>:	CMakeLists.txt
 	minmax/test/CMakeLists.txt
 	module.cmake
@@ -51,6 +53,7 @@ libs/any/test/:	test/
 libs/any/any_test.cpp:	any_test.cpp
 libs/any/index.html:	index.html
 libs/any/test.hpp:	test.hpp
+<name>: boost-any
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -61,6 +64,7 @@ boost/array.hpp:	include/boost/array.hpp
 libs/array/doc/:	doc/
 libs/array/index.html:	index.html
 libs/array/test/:	test/
+<name>: boost-array
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -73,6 +77,7 @@ libs/asio/doc/:	doc/
 libs/asio/example/:	example/
 libs/asio/test/:	test/
 libs/asio/index.html:	index.html
+<name>: boost-asio
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -88,6 +93,7 @@ boost/assign/:	include/boost/assign/
 libs/assign/doc/:	doc/
 libs/assign/test/:	test/
 libs/assign/index.html:	index.html
+<name>: boost-assign
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -100,6 +106,7 @@ libs/bimap/doc/:	doc/
 libs/bimap/example/:	example/
 libs/bimap/test/:	test/
 libs/bimap/index.html:	index.html
+<name>: boost-bimap
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -118,6 +125,7 @@ libs/bind/mem_fn.html:	mem_fn.html
 libs/bind/ref.html:	ref.html
 libs/bind/doc/:	doc/
 libs/bind/test/:	test/
+<name>: boost-bind
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -130,6 +138,7 @@ boost/circular_buffer_fwd.hpp:	include/boost/circular_buffer_fwd.hpp
 libs/circular_buffer/index.html:	index.html
 libs/circular_buffer/doc/:	doc/
 libs/circular_buffer/test/:	test/
+<name>: boost-circular_buffer
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -139,6 +148,7 @@ libs/circular_buffer/test/:	test/
 boost/compatibility/:	include/boost/compatibility/
 libs/compatibility/generate_cpp_c_headers.py:	generate_cpp_c_headers.py
 libs/compatibility/index.html:	index.html
+<name>: boost-compatibility
 
 [src/concept_check]
 
@@ -173,6 +183,7 @@ libs/concept_check/usage_fail.cpp:	usage_fail.cpp
 libs/concept_check/using_concept_check.htm:	using_concept_check.htm
 libs/concept_check/where.cpp:	where.cpp
 libs/concept_check/where_fail.cpp:	where_fail.cpp
+<name>: boost-concept_check
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -187,6 +198,7 @@ libs/config/test/:	test/
 libs/config/tools/:	tools/
 libs/config/config.htm:	config.htm
 libs/config/index.html:	index.html
+<name>: boost-config
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -205,6 +217,7 @@ libs/conversion/lexical_cast_test.cpp:	lexical_cast_test.cpp
 libs/conversion/numeric_cast_test.cpp:	numeric_cast_test.cpp
 libs/conversion/test.hpp:	test.hpp
 libs/conversion/test/:	test/
+<name>: boost-conversion
 <new>:	CMakeLists.txt
 	test/CMakeLists.txt
 
@@ -241,6 +254,7 @@ boost/pending/relaxed_heap.hpp:	include/boost/pending/relaxed_heap.hpp
 boost/pending/stringtok.hpp:	include/boost/pending/stringtok.hpp
 boost/pending/detail/int_iterator.hpp:	include/boost/pending/detail/int_iterator.hpp
 boost/pending/detail/property.hpp:	include/boost/pending/detail/property.hpp
+<name>: boost-core
 <new>:	CMakeLists.txt
 	.ryppl/METADATA
 
@@ -251,6 +265,7 @@ libs/crc/crc.html:	crc.html
 libs/crc/crc_example.cpp:	crc_example.cpp
 libs/crc/index.html:	index.html
 libs/crc/test/:	test/
+<name>: boost-crc
 
 [src/date_time]
 
@@ -264,6 +279,7 @@ libs/date_time/example/:	example/
 libs/date_time/src/:	src/
 libs/date_time/test/:	test/
 libs/date_time/xmldoc/:	xmldoc/
+<name>: boost-date_time
 <new>:	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
@@ -273,6 +289,7 @@ libs/date_time/xmldoc/:	xmldoc/
 
 boost/detail/:	include/boost/detail/
 libs/detail/utf8_codecvt_facet.cpp:	utf8_codecvt_facet.cpp
+<name>: boost-detail
 <new>:	CMakeLists.txt
 	module.cmake
         include/boost/detail/utf8_codecvt_facet_impl.hpp
@@ -286,6 +303,7 @@ libs/disjoint_sets/bibliography.html:	bibliography.html
 libs/disjoint_sets/disjoint_set_test.cpp:	disjoint_set_test.cpp
 libs/disjoint_sets/disjoint_sets.html:	disjoint_sets.html
 libs/disjoint_sets/index.html:	index.html
+<name>: boost-disjoint_sets
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -304,6 +322,7 @@ libs/dynamic_bitset/dyn_bitset_unit_tests4.cpp:	dyn_bitset_unit_tests4.cpp
 libs/dynamic_bitset/dynamic_bitset.html:	dynamic_bitset.html
 libs/dynamic_bitset/example/:	example/
 libs/dynamic_bitset/index.html:	index.html
+<name>: boost-dynamic_bitset
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -318,6 +337,7 @@ libs/exception/doc/:	doc/
 libs/exception/example/:	example/
 libs/exception/index.html:	index.html
 libs/exception/test/:	test/
+<name>: boost-exception
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -332,6 +352,7 @@ libs/filesystem/build/:	build/
 libs/filesystem/test/:	test/
 libs/filesystem/v2/:	v2/
 libs/filesystem/v3/:	v3/
+<name>: boost-filesystem
 <new>:	CMakeLists.txt
 	module.cmake
 	build/CMakeLists.txt
@@ -348,6 +369,7 @@ libs/flyweight/index.html:	index.html
 libs/flyweight/doc/:	doc/
 libs/flyweight/example/:	example/
 libs/flyweight/test/:	test/
+<name>: boost-flyweight
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -359,6 +381,7 @@ boost/foreach.hpp:	include/boost/foreach.hpp
 boost/foreach_fwd.hpp:	include/boost/foreach_fwd.hpp
 libs/foreach/index.html:	index.html
 libs/foreach/test/:	test/
+<name>: boost-foreach
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -373,6 +396,7 @@ libs/format/benchmark/:	benchmark/
 libs/format/doc/:	doc/
 libs/format/example/:	example/
 libs/format/test/:	test/
+<name>: boost-format
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -386,6 +410,7 @@ libs/function/index.html:	index.html
 libs/function/doc/:	doc/
 libs/function/example/:	example/
 libs/function/test/:	test/
+<name>: boost-function
 <new>:	CMakeLists.txt
 	doc/CMakeLists.txt
 	module.cmake
@@ -413,6 +438,7 @@ libs/functional/factory/index.html:	factory/index.html
 libs/functional/factory/doc/:	factory/doc/
 libs/functional/factory/test/:	factory/test/
 libs/functional/test/:	test/
+<name>: boost-functional
 <new>:	CMakeLists.txt
 	hash/doc/CMakeLists.txt
 	hash/examples/CMakeLists.txt
@@ -428,6 +454,7 @@ libs/function_types/build/:	build/
 libs/function_types/doc/:	doc/
 libs/function_types/example/:	example/
 libs/function_types/test/:	test/
+<name>: boost-function_types
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -441,6 +468,7 @@ libs/fusion/todo.txt:	todo.txt
 libs/fusion/doc/:	doc/
 libs/fusion/example/:	example/
 libs/fusion/test/:	test/
+<name>: boost-fusion
 <new>:	CMakeLists.txt
 	module.cmake
 
@@ -451,6 +479,7 @@ libs/gil/index.html:	index.html
 libs/gil/doc/:	doc/
 libs/gil/example/:	example/
 libs/gil/test/:	test/
+<name>: boost-gil
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -465,6 +494,7 @@ libs/graph/example/:	example/
 libs/graph/quickbook/:	quickbook/
 libs/graph/src/:	src/
 libs/graph/test/:	test/
+<name>: boost-graph
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
@@ -478,6 +508,7 @@ libs/graph_parallel/doc/:	doc/
 libs/graph_parallel/example/:	example/
 libs/graph_parallel/src/:	src/
 libs/graph_parallel/test/:	test/
+<name>: boost-graph_parallel
 <new>:	CMakeLists.txt
 	doc/CMakeLists.txt
 	example/CMakeLists.txt
@@ -495,6 +526,7 @@ boost/integer/:	include/boost/integer/
 libs/integer/index.html:	index.html
 libs/integer/doc/:	doc/
 libs/integer/test/:	test/
+<name>: boost-integer
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -507,6 +539,7 @@ libs/interprocess/doc/:	doc/
 libs/interprocess/example/:	example/
 libs/interprocess/proj/:	proj/
 libs/interprocess/test/:	test/
+<name>: boost-interprocess
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -520,6 +553,7 @@ libs/intrusive/example/:	example/
 libs/intrusive/perf/:	perf/
 libs/intrusive/proj/:	proj/
 libs/intrusive/test/:	test/
+<name>: boost-intrusive
 <new>:	CMakeLists.txt
 	module.cmake
 
@@ -530,6 +564,7 @@ boost/io_fwd.hpp:	include/boost/io_fwd.hpp
 libs/io/index.html:	index.html
 libs/io/doc/:	doc/
 libs/io/test/:	test/
+<name>: boost-io
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -543,6 +578,7 @@ libs/iostreams/doc/:	doc/
 libs/iostreams/example/:	example/
 libs/iostreams/src/:	src/
 libs/iostreams/test/:	test/
+<name>: boost-iostreams
 <new>:	CMakeLists.txt
 	example/CMakeLists.txt
 	module.cmake
@@ -561,6 +597,7 @@ libs/iterator/index.html:	index.html
 libs/iterator/doc/:	doc/
 libs/iterator/example/:	example/
 libs/iterator/test/:	test/
+<name>: boost-iterator
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -571,6 +608,7 @@ boost/lambda/:	include/boost/lambda/
 libs/lambda/index.html:	index.html
 libs/lambda/doc/:	doc/
 libs/lambda/test/:	test/
+<name>: boost-lambda
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -580,6 +618,7 @@ libs/lambda/test/:	test/
 boost/logic/:	include/boost/logic/
 libs/logic/doc/:	doc/
 libs/logic/test/:	test/
+<name>: boost-logic
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -603,6 +642,7 @@ libs/math/src/:	src/
 libs/math/test/:	test/
 libs/math/tools/:	tools/
 libs/math/vc71_fix/:	vc71_fix/
+<name>: boost-math
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -617,6 +657,7 @@ libs/mpi/doc/:	doc/
 libs/mpi/example/:	example/
 libs/mpi/src/:	src/
 libs/mpi/test/:	test/
+<name>: boost-mpi
 <new>:	CMakeLists.txt
 	doc/CMakeLists.txt
 	module.cmake
@@ -632,6 +673,7 @@ libs/mpl/doc/:	doc/
 libs/mpl/example/:	example/
 libs/mpl/preprocessed/:	preprocessed/
 libs/mpl/test/:	test/
+<name>: boost-mpl
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -643,6 +685,7 @@ boost/msm/:	include/boost/msm/
 libs/msm/index.html:	index.html
 libs/msm/doc/:	doc/
 libs/msm/test/:	test/
+<name>: boost-msm
 
 [src/multi_array]
 
@@ -652,6 +695,7 @@ libs/multi_array/index.html:	index.html
 libs/multi_array/doc/:	doc/
 libs/multi_array/example/:	example/
 libs/multi_array/test/:	test/
+<name>: boost-multi_array
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -666,6 +710,7 @@ libs/multi_index/doc/:	doc/
 libs/multi_index/example/:	example/
 libs/multi_index/perf/:	perf/
 libs/multi_index/test/:	test/
+<name>: boost-multi_index
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -692,6 +737,7 @@ libs/numeric/ublas/bench4/:	ublas/bench4/
 libs/numeric/ublas/bench5/:	ublas/bench5/
 libs/numeric/ublas/doc/:	ublas/doc/
 libs/numeric/ublas/test/:	ublas/test/
+<name>: boost-numeric
 <new>:	CMakeLists.txt
 	conversion/test/CMakeLists.txt
 	interval/test/CMakeLists.txt
@@ -707,6 +753,7 @@ boost/optional/:	include/boost/optional/
 libs/optional/index.html:	index.html
 libs/optional/doc/:	doc/
 libs/optional/test/:	test/
+<name>: boost-optional
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -718,6 +765,7 @@ boost/parameter/:	include/boost/parameter/
 libs/parameter/index.html:	index.html
 libs/parameter/doc/:	doc/
 libs/parameter/test/:	test/
+<name>: boost-parameter
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -729,6 +777,7 @@ libs/polygon/Jamfile.v2:	Jamfile.v2
 libs/polygon/index.html:	index.html
 libs/polygon/doc/:	doc/
 libs/polygon/test/:	test/
+<name>: boost-polygon
 
 [src/pool]
 
@@ -737,6 +786,7 @@ libs/pool/index.html:	index.html
 libs/pool/TODO.txt:	TODO.txt
 libs/pool/doc/:	doc/
 libs/pool/test/:	test/
+<name>: boost-pool
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -748,6 +798,7 @@ boost/preprocessor/:	include/boost/preprocessor/
 libs/preprocessor/index.html:	index.html
 libs/preprocessor/doc/:	doc/
 libs/preprocessor/test/:	test/
+<name>: boost-preprocessor
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -763,6 +814,7 @@ libs/program_options/doc/:	doc/
 libs/program_options/example/:	example/
 libs/program_options/src/:	src/
 libs/program_options/test/:	test/
+<name>: boost-program_options
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
@@ -776,6 +828,7 @@ libs/property_map/index.html:	index.html
 libs/property_map/doc/:	doc/
 libs/property_map/example/:	example/
 libs/property_map/test/:	test/
+<name>: boost-property_map
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -788,6 +841,7 @@ libs/property_tree/index.html:	index.html
 libs/property_tree/doc/:	doc/
 libs/property_tree/examples/:	examples/
 libs/property_tree/test/:	test/
+<name>: boost-property_tree
 <new>:	CMakeLists.txt
 <patch>: property_tree.patch
 
@@ -798,6 +852,7 @@ libs/proto/index.html:	index.html
 libs/proto/doc/:	doc/
 libs/proto/example/:	example/
 libs/proto/test/:	test/
+<name>: boost-proto
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -808,6 +863,7 @@ boost/ptr_container/:	include/boost/ptr_container/
 libs/ptr_container/index.html:	index.html
 libs/ptr_container/doc/:	doc/
 libs/ptr_container/test/:	test/
+<name>: boost-ptr_container
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -826,6 +882,7 @@ libs/python/example/:	example/
 libs/python/pyste/:	pyste/
 libs/python/src/:	src/
 libs/python/test/:	test/
+<name>: boost-python
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
@@ -851,6 +908,7 @@ libs/random/extra/:	extra/
 libs/random/performance/:	performance/
 libs/random/src/:	src/
 libs/random/test/:	test/
+<name>: boost-random
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -862,6 +920,7 @@ boost/range/:	include/boost/range/
 libs/range/index.html:	index.html
 libs/range/doc/:	doc/
 libs/range/test/:	test/
+<name>: boost-range
 <new>:	CMakeLists.txt
 	doc/CMakeLists.txt
 	module.cmake
@@ -873,6 +932,7 @@ boost/rational.hpp:	include/boost/rational.hpp
 libs/rational/index.html:	index.html
 libs/rational/rational.html:	rational.html
 libs/rational/test/:	test/
+<name>: boost-rational
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -893,6 +953,7 @@ libs/regex/performance/:	performance/
 libs/regex/src/:	src/
 libs/regex/test/:	test/
 libs/regex/tools/:	tools/
+<name>: boost-regex
 <new>:	CMakeLists.txt
 	example/CMakeLists.txt
 	module.cmake
@@ -906,6 +967,7 @@ libs/scope_exit/index.html:	index.html
 libs/scope_exit/doc/:	doc/
 libs/scope_exit/example/:	example/
 libs/scope_exit/test/:	test/
+<name>: boost-scope_exit
 <new>:	CMakeLists.txt
 
 [src/serialization]
@@ -922,6 +984,7 @@ libs/serialization/src/:	src/
 libs/serialization/test/:	test/
 libs/serialization/util/:	util/
 libs/serialization/vc7ide/:	vc7ide/
+<name>: boost-serialization
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
@@ -940,6 +1003,7 @@ libs/signals/doc/:	doc/
 libs/signals/example/:	example/
 libs/signals/src/:	src/
 libs/signals/test/:	test/
+<name>: boost-signals
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
@@ -953,6 +1017,7 @@ libs/signals2/index.html:	index.html
 libs/signals2/doc/:	doc/
 libs/signals2/example/:	example/
 libs/signals2/test/:	test/
+<name>: boost-signals2
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -993,6 +1058,7 @@ libs/smart_ptr/example/:	example/
 libs/smart_ptr/src/:	src/
 libs/smart_ptr/test/:	test/
 libs/smart_ptr/weak_ptr.htm:	weak_ptr.htm
+<name>: boost-smart_ptr
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1010,6 +1076,7 @@ libs/spirit/optimization/:	optimization/
 libs/spirit/phoenix/:	phoenix/
 libs/spirit/repository/:	repository/
 libs/spirit/test/:	test/
+<name>: boost-spirit
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1023,6 +1090,7 @@ libs/statechart/index.html:	index.html
 libs/statechart/doc/:	doc/
 libs/statechart/example/:	example/
 libs/statechart/test/:	test/
+<name>: boost-statechart
 <new>:	CMakeLists.txt
 	example/CMakeLists.txt
 	module.cmake
@@ -1049,6 +1117,7 @@ libs/static_assert/static_assert_test_fail_7.cpp:	static_assert_test_fail_7.cpp
 libs/static_assert/static_assert_test_fail_8.cpp:	static_assert_test_fail_8.cpp
 libs/static_assert/static_assert_test_fail_9.cpp:	static_assert_test_fail_9.cpp
 libs/static_assert/doc/:	doc/
+<name>: boost-static_assert
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1062,6 +1131,7 @@ libs/system/build/:	build/
 libs/system/doc/:	doc/
 libs/system/src/:	src/
 libs/system/test/:	test/
+<name>: boost-system
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
@@ -1079,6 +1149,7 @@ libs/test/example/:	example/
 libs/test/src/:	src/
 libs/test/test/:	test/
 libs/test/tools/:	tools/
+<name>: boost-test
 <new>:	CMakeLists.txt
 	build/Jamfile.v2
 	module.cmake
@@ -1096,6 +1167,7 @@ libs/thread/example/:	example/
 libs/thread/src/:	src/
 libs/thread/test/:	test/
 libs/thread/tutorial/:	tutorial/
+<name>: boost-thread
 <new>:	CMakeLists.txt
 	example/CMakeLists.txt
 	module.cmake
@@ -1109,6 +1181,7 @@ boost/timer.hpp:	include/boost/timer.hpp
 libs/timer/index.html:	index.html
 libs/timer/timer.htm:	timer.htm
 libs/timer/test/:	test/
+<name>: boost-timer
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1131,6 +1204,7 @@ libs/tokenizer/token_iterator.htm:	token_iterator.htm
 libs/tokenizer/tokenizer.htm:	tokenizer.htm
 libs/tokenizer/tokenizerfunction.htm:	tokenizerfunction.htm
 libs/tokenizer/test/:	test/
+<name>: boost-tokenizer
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1141,6 +1215,7 @@ boost/tr1/:	include/boost/tr1/
 libs/tr1/index.html:	index.html
 libs/tr1/doc/:	doc/
 libs/tr1/test/:	test/
+<name>: boost-tr1
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1151,6 +1226,7 @@ boost/tuple/:	include/boost/tuple/
 libs/tuple/index.html:	index.html
 libs/tuple/doc/:	doc/
 libs/tuple/test/:	test/
+<name>: boost-tuple
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1162,6 +1238,7 @@ libs/typeof/index.html:	index.html
 libs/typeof/doc/:	doc/
 libs/typeof/test/:	test/
 libs/typeof/tools/:	tools/
+<name>: boost-typeof
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1177,6 +1254,7 @@ libs/type_traits/doc/:	doc/
 libs/type_traits/examples/:	examples/
 libs/type_traits/test/:	test/
 libs/type_traits/tools/:	tools/
+<name>: boost-type_traits
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1193,6 +1271,7 @@ libs/units/images/:	images/
 libs/units/test/:	test/
 libs/units/test_headers/:	test_headers/
 libs/units/tutorial/:	tutorial/
+<name>: boost-units
 <new>:	CMakeLists.txt
 	doc/CMakeLists.txt
 	module.cmake
@@ -1207,6 +1286,7 @@ libs/unordered/index.html:	index.html
 libs/unordered/doc/:	doc/
 libs/unordered/examples/:	examples/
 libs/unordered/test/:	test/
+<name>: boost-unordered
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1285,6 +1365,7 @@ libs/utility/verify_test.cpp:	verify_test.cpp
 libs/utility/enable_if/:	enable_if/
 libs/utility/swap/:	swap/
 libs/utility/test/:	test/
+<name>: boost-utility
 <new>:	CMakeLists.txt
 	module.cmake
 	swap/test/CMakeLists.txt
@@ -1298,6 +1379,7 @@ boost/uuid/:	include/boost/uuid/
 libs/uuid/index.html:	index.html
 libs/uuid/uuid.html:	uuid.html
 libs/uuid/test/:	test/
+<name>: boost-uuid
 
 [src/variant]
 
@@ -1306,6 +1388,7 @@ boost/variant/:	include/boost/variant/
 libs/variant/index.html:	index.html
 libs/variant/doc/:	doc/
 libs/variant/test/:	test/
+<name>: boost-variant
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1321,6 +1404,7 @@ libs/wave/doc/:	doc/
 libs/wave/samples/:	samples/
 libs/wave/src/:	src/
 libs/wave/test/:	test/
+<name>: boost-wave
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
@@ -1335,6 +1419,7 @@ libs/xpressive/example/:	example/
 libs/xpressive/perf/:	perf/
 libs/xpressive/test/:	test/
 libs/xpressive/tools/:	tools/
+<name>: boost-xpressive
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
@@ -1361,6 +1446,7 @@ tools/bcp/scan_cvs_path.cpp:	scan_cvs_path.cpp
 tools/bcp/scan_licence.cpp:	scan_licence.cpp
 tools/bcp/doc/:	doc/
 tools/bcp/test/:	test/
+<name>: boost-bcp
 
 [tools/boostbook]
 
@@ -1371,12 +1457,14 @@ tools/boostbook/doc/:	doc/
 tools/boostbook/dtd/:	dtd/
 tools/boostbook/test/:	test/
 tools/boostbook/xsl/:	xsl/
+<name>: boost-boostbook
 
 [tools/build]
 
 tools/build/boost.css:	boost.css
 tools/build/index.html:	index.html
 tools/build/v2/:	v2/
+<name>: boost-build
 
 [tools/inspect]
 
@@ -1411,12 +1499,14 @@ tools/inspect/unnamed_namespace_check.hpp:	unnamed_namespace_check.hpp
 tools/inspect/wrong_line_ends_test.cpp:	wrong_line_ends_test.cpp
 tools/inspect/build/:	build/
 tools/inspect/doc/:	doc/
+<name>: boost-inspect
 
 [tools/litre]
 
 tools/litre/cplusplus.py:	cplusplus.py
 tools/litre/litre.py:	litre.py
 tools/litre/tool.py:	tool.py
+<name>: boost-litre
 
 [tools/quickbook]
 
@@ -1431,6 +1521,7 @@ tools/quickbook/detail/:	detail/
 tools/quickbook/doc/:	doc/
 tools/quickbook/extra/:	extra/
 tools/quickbook/test/:	test/
+<name>: boost-quickbook
 
 [tools/wave]
 
@@ -1441,3 +1532,4 @@ tools/wave/cpp_version.hpp:	cpp_version.hpp
 tools/wave/stop_watch.hpp:	stop_watch.hpp
 tools/wave/trace_macro_expansion.hpp:	trace_macro_expansion.hpp
 tools/wave/build/:	build/
+<name>: boost-wave_driver

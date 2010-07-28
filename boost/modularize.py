@@ -128,7 +128,8 @@ def validate_manifest(manifest):
     # manifest_files list
     for section in manifest.sections():
         for item in manifest.items(section):
-            if not item[0] == '<new>' and not item[0] == '<patch>':
+            # items beginning with '<' are special
+            if not item[0][0] == '<':
                 manifest_files.append(item[0])
     manifest_files.sort()
 
@@ -283,8 +284,8 @@ def main():
         clean_dir(dst_module_dir)
 
         for key, value in manifest.items(section):
-            # We'll handle these guys later
-            if key == '<new>' or key == '<patch>':
+            # We'll handle these special keys later
+            if key[0] == '<':
                 continue
 
             src_path = os.path.normpath(os.path.join(src_repo_dir, key))
@@ -346,7 +347,7 @@ def main():
     # Ask the user whether they really, REALLY want to push this to the remote
     raw_input('Hit <return> to push all local changes, Ctrl-Z to quit:')
 
-    # We now want to 'git add' all the modified submodules to the supermodules,
+    # We now want to 'git add' all the modified submodules to the supermodule,
     # commit them and push the new boost supermodule.
     print 'Pushing all modified submodues...'
 
