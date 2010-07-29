@@ -564,8 +564,6 @@ libs/integer/test/:	test/
 
 boost/interprocess/:	include/boost/interprocess/
 libs/interprocess/index.html:	index.html
-libs/interprocess/CMakeLists.txt:	<ignore>
-libs/interprocess/module.cmake:	<ignore>
 libs/interprocess/index.html:	index.html
 libs/interprocess/doc/:	doc/
 libs/interprocess/example/:	example/
