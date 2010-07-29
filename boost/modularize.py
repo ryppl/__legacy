@@ -288,6 +288,10 @@ def main():
             if key[0] == '<':
                 continue
 
+            # These are files we're specifically not copying
+            if value == '<ignore>':
+                continue
+
             src_path = os.path.normpath(os.path.join(src_repo_dir, key))
             dst_path = os.path.normpath(os.path.join(dst_module_dir, value))
 
@@ -299,8 +303,8 @@ def main():
             if key[-1] == '/':
                 shutil.copytree(src_path, dst_path)
             else:
-                print 'Making directory:', os.path.dirname(dst_path)
                 if not os.path.isdir(os.path.dirname(dst_path)):
+                    print 'Making directory:', os.path.dirname(dst_path)
                     os.makedirs(os.path.dirname(dst_path))
                 shutil.copy2(src_path, dst_path)
 

@@ -26,6 +26,7 @@ libs/accumulators/index.html:	index.html
 	example/CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/algorithm]
 
@@ -44,6 +45,7 @@ libs/algorithm/sublibs:	sublibs
 	minmax/test/CMakeLists.txt
 	module.cmake
 	string/test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/any]
 
@@ -57,6 +59,7 @@ libs/any/test.hpp:	test.hpp
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/array]
 
@@ -68,6 +71,7 @@ libs/array/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/asio]
 
@@ -85,6 +89,7 @@ libs/asio/index.html:	index.html
 	test/local/CMakeLists.txt
 	test/posix/CMakeLists.txt
 	test/ssl/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/assign]
 
@@ -97,6 +102,7 @@ libs/assign/index.html:	index.html
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/bimap]
 
@@ -110,6 +116,7 @@ libs/bimap/index.html:	index.html
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/bind]
 
@@ -129,6 +136,7 @@ libs/bind/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/circular_buffer]
 
@@ -142,6 +150,7 @@ libs/circular_buffer/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/compatibility]
 
@@ -149,6 +158,7 @@ boost/compatibility/:	include/boost/compatibility/
 libs/compatibility/generate_cpp_c_headers.py:	generate_cpp_c_headers.py
 libs/compatibility/index.html:	index.html
 <name>: boost-compatibility
+<new>:	.ryppl/METADATA
 
 [src/concept_check]
 
@@ -187,6 +197,7 @@ libs/concept_check/where_fail.cpp:	where_fail.cpp
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/config]
 
@@ -220,6 +231,7 @@ libs/conversion/test/:	test/
 <name>: boost-conversion
 <new>:	CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/core]
 
@@ -266,6 +278,7 @@ libs/crc/crc_example.cpp:	crc_example.cpp
 libs/crc/index.html:	index.html
 libs/crc/test/:	test/
 <name>: boost-crc
+<new>:	.ryppl/METADATA
 
 [src/date_time]
 
@@ -284,6 +297,7 @@ libs/date_time/xmldoc/:	xmldoc/
 	src/CMakeLists.txt
 	test/CMakeLists.txt
 	CMakeLists.txt
+	.ryppl/METADATA
 
 [src/detail]
 
@@ -293,6 +307,7 @@ libs/detail/utf8_codecvt_facet.cpp:	utf8_codecvt_facet.cpp
 <new>:	CMakeLists.txt
 	module.cmake
         include/boost/detail/utf8_codecvt_facet_impl.hpp
+	.ryppl/METADATA
 
 [src/disjoint_sets]
 
@@ -307,6 +322,7 @@ libs/disjoint_sets/index.html:	index.html
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/dynamic_bitset]
 
@@ -326,6 +342,7 @@ libs/dynamic_bitset/index.html:	index.html
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/exception]
 
@@ -359,6 +376,7 @@ libs/filesystem/v3/:	v3/
 	test/CMakeLists.txt
 	v2/build/CMakeLists.txt
 	v3/build/CMakeLists.txt
+	.ryppl/METADATA
 <patch>: filesystem.patch
 
 [src/flyweight]
@@ -373,6 +391,7 @@ libs/flyweight/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/foreach]
 
@@ -385,6 +404,7 @@ libs/foreach/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/format]
 
@@ -400,6 +420,7 @@ libs/format/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/function]
 
@@ -415,6 +436,7 @@ libs/function/test/:	test/
 	doc/CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/functional]
 
@@ -445,6 +467,7 @@ libs/functional/test/:	test/
 	hash/test/CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/function_types]
 
@@ -458,6 +481,7 @@ libs/function_types/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/fusion]
 
@@ -471,6 +495,7 @@ libs/fusion/test/:	test/
 <name>: boost-fusion
 <new>:	CMakeLists.txt
 	module.cmake
+	.ryppl/METADATA
 
 [src/gil]
 
@@ -483,6 +508,7 @@ libs/gil/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/graph]
 
@@ -499,6 +525,7 @@ libs/graph/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/graph_parallel]
 
@@ -515,6 +542,7 @@ libs/graph_parallel/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/integer]
 
@@ -530,10 +558,14 @@ libs/integer/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/interprocess]
 
 boost/interprocess/:	include/boost/interprocess/
+libs/interprocess/index.html:	index.html
+libs/interprocess/CMakeLists.txt:	<ignore>
+libs/interprocess/module.cmake:	<ignore>
 libs/interprocess/index.html:	index.html
 libs/interprocess/doc/:	doc/
 libs/interprocess/example/:	example/
@@ -543,6 +575,7 @@ libs/interprocess/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/intrusive]
 
@@ -556,6 +589,7 @@ libs/intrusive/test/:	test/
 <name>: boost-intrusive
 <new>:	CMakeLists.txt
 	module.cmake
+	.ryppl/METADATA
 
 [src/io]
 
@@ -568,6 +602,7 @@ libs/io/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/iostreams]
 
@@ -584,6 +619,7 @@ libs/iostreams/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/iterator]
 
@@ -601,6 +637,7 @@ libs/iterator/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/lambda]
 
@@ -612,6 +649,7 @@ libs/lambda/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/logic]
 
@@ -622,6 +660,7 @@ libs/logic/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/math]
 
@@ -646,6 +685,7 @@ libs/math/vc71_fix/:	vc71_fix/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/mpi]
 
@@ -663,6 +703,7 @@ libs/mpi/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/mpl]
 
@@ -686,6 +727,7 @@ libs/msm/index.html:	index.html
 libs/msm/doc/:	doc/
 libs/msm/test/:	test/
 <name>: boost-msm
+<new>:	.ryppl/METADATA
 
 [src/multi_array]
 
@@ -699,6 +741,7 @@ libs/multi_array/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/multi_index]
 
@@ -714,6 +757,7 @@ libs/multi_index/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/numeric]
 
@@ -743,6 +787,7 @@ libs/numeric/ublas/test/:	ublas/test/
 	interval/test/CMakeLists.txt
 	module.cmake
 	ublas/test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/optional]
 
@@ -757,6 +802,7 @@ libs/optional/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/parameter]
 
@@ -769,6 +815,7 @@ libs/parameter/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/polygon]
 
@@ -778,6 +825,7 @@ libs/polygon/index.html:	index.html
 libs/polygon/doc/:	doc/
 libs/polygon/test/:	test/
 <name>: boost-polygon
+<new>:	.ryppl/METADATA
 
 [src/pool]
 
@@ -790,6 +838,7 @@ libs/pool/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/preprocessor]
 
@@ -819,6 +868,7 @@ libs/program_options/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 <patch>: program_options.patch
 
 [src/property_map]
@@ -832,6 +882,7 @@ libs/property_map/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/property_tree]
 
@@ -843,6 +894,7 @@ libs/property_tree/examples/:	examples/
 libs/property_tree/test/:	test/
 <name>: boost-property_tree
 <new>:	CMakeLists.txt
+	.ryppl/METADATA
 <patch>: property_tree.patch
 
 [src/proto]
@@ -856,6 +908,7 @@ libs/proto/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/ptr_container]
 
@@ -867,6 +920,7 @@ libs/ptr_container/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/python]
 
@@ -887,6 +941,7 @@ libs/python/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/random]
 
@@ -912,6 +967,7 @@ libs/random/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/range]
 
@@ -925,6 +981,7 @@ libs/range/test/:	test/
 	doc/CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/rational]
 
@@ -936,6 +993,7 @@ libs/rational/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/regex]
 
@@ -959,6 +1017,7 @@ libs/regex/tools/:	tools/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/scope_exit]
 
@@ -969,6 +1028,7 @@ libs/scope_exit/example/:	example/
 libs/scope_exit/test/:	test/
 <name>: boost-scope_exit
 <new>:	CMakeLists.txt
+	.ryppl/METADATA
 
 [src/serialization]
 
@@ -989,6 +1049,7 @@ libs/serialization/vc7ide/:	vc7ide/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 <patch>: serialization.patch
 
 [src/signals]
@@ -1008,6 +1069,7 @@ libs/signals/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/signals2]
 
@@ -1021,6 +1083,7 @@ libs/signals2/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/smart_ptr]
 
@@ -1080,6 +1143,7 @@ libs/spirit/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/statechart]
 
@@ -1095,6 +1159,7 @@ libs/statechart/test/:	test/
 	example/CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/static_assert]
 
@@ -1121,6 +1186,7 @@ libs/static_assert/doc/:	doc/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/system]
 
@@ -1135,6 +1201,7 @@ libs/system/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	src/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/test]
 
@@ -1155,6 +1222,7 @@ libs/test/tools/:	tools/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/thread]
 
@@ -1173,6 +1241,7 @@ libs/thread/tutorial/:	tutorial/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/timer]
 
@@ -1185,6 +1254,7 @@ libs/timer/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/tokenizer]
 
@@ -1208,6 +1278,7 @@ libs/tokenizer/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/tr1]
 
@@ -1219,6 +1290,7 @@ libs/tr1/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/tuple]
 
@@ -1230,6 +1302,7 @@ libs/tuple/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/typeof]
 
@@ -1242,6 +1315,7 @@ libs/typeof/tools/:	tools/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/type_traits]
 
@@ -1276,6 +1350,7 @@ libs/units/tutorial/:	tutorial/
 	doc/CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/unordered]
 
@@ -1292,6 +1367,7 @@ libs/unordered/test/:	test/
 	test/CMakeLists.txt
 	test/exception/CMakeLists.txt
 	test/unordered/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/utility]
 
@@ -1380,6 +1456,7 @@ libs/uuid/index.html:	index.html
 libs/uuid/uuid.html:	uuid.html
 libs/uuid/test/:	test/
 <name>: boost-uuid
+<new>:	.ryppl/METADATA
 
 [src/variant]
 
@@ -1392,6 +1469,7 @@ libs/variant/test/:	test/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/wave]
 
@@ -1409,6 +1487,7 @@ libs/wave/test/:	test/
 	module.cmake
 	src/CMakeLists.txt
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/xpressive]
 
@@ -1423,6 +1502,7 @@ libs/xpressive/tools/:	tools/
 <new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [tools/bcp]
 
@@ -1447,6 +1527,7 @@ tools/bcp/scan_licence.cpp:	scan_licence.cpp
 tools/bcp/doc/:	doc/
 tools/bcp/test/:	test/
 <name>: boost-bcp
+<new>:	.ryppl/METADATA
 
 [tools/boostbook]
 
@@ -1458,6 +1539,7 @@ tools/boostbook/dtd/:	dtd/
 tools/boostbook/test/:	test/
 tools/boostbook/xsl/:	xsl/
 <name>: boost-boostbook
+<new>:	.ryppl/METADATA
 
 [tools/build]
 
@@ -1465,6 +1547,7 @@ tools/build/boost.css:	boost.css
 tools/build/index.html:	index.html
 tools/build/v2/:	v2/
 <name>: boost-build
+<new>:	.ryppl/METADATA
 
 [tools/inspect]
 
@@ -1500,6 +1583,7 @@ tools/inspect/wrong_line_ends_test.cpp:	wrong_line_ends_test.cpp
 tools/inspect/build/:	build/
 tools/inspect/doc/:	doc/
 <name>: boost-inspect
+<new>:	.ryppl/METADATA
 
 [tools/litre]
 
@@ -1507,6 +1591,7 @@ tools/litre/cplusplus.py:	cplusplus.py
 tools/litre/litre.py:	litre.py
 tools/litre/tool.py:	tool.py
 <name>: boost-litre
+<new>:	.ryppl/METADATA
 
 [tools/quickbook]
 
@@ -1522,6 +1607,7 @@ tools/quickbook/doc/:	doc/
 tools/quickbook/extra/:	extra/
 tools/quickbook/test/:	test/
 <name>: boost-quickbook
+<new>:	.ryppl/METADATA
 
 [tools/wave]
 
@@ -1533,3 +1619,4 @@ tools/wave/stop_watch.hpp:	stop_watch.hpp
 tools/wave/trace_macro_expansion.hpp:	trace_macro_expansion.hpp
 tools/wave/build/:	build/
 <name>: boost-wave_driver
+<new>:	.ryppl/METADATA
