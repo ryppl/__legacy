@@ -13,7 +13,7 @@ intention of eventually making a merge request to the project's owner.
 .. see what I mean.  These should be regular sections, or ordered
 .. lists, or something.
 
-.. rubric:: Clone the Boost superproject on Gitorious
+.. rubric:: Clone the Boost superproject on Github
 
 
 .. I cleaned up the below as best I could, but you need to get rid of
@@ -21,20 +21,17 @@ intention of eventually making a merge request to the project's owner.
 .. it.  Please do that and check the paragraph over to make sure it
 .. makes sense.
 
-Make a clone of boost on gitorious, using the "Clone this repository
-on gitorious" link on `ryppl's gitorious page
-<http://gitorious.org/ryppl/boost>`_.  Later this will contain a
+Make a clone of boost on github, using the "Fork" link on
+`ryppl's github page
+<http://github.com/boost-lib/boost>`_.  Later this will contain a
 modified submodule pointing to our clone of python, which we will
 create later.  The other Boost library submodules will continue to
-refer to their standard “official” locations.  I have called mine
-*straszheims-ryppl*, here:
-http://gitorious.org/~straszheim/ryppl/straszheims-ryppl
+refer to their standard “official” locations.
 
-.. rubric:: Clone the Boost.Python project on gitorious
+.. rubric:: Clone the Boost.Python project on github
 
 Using the same procedure as .above, clone the python project.  The
-clone button is on `this page <http://gitorious.org/boost/python>`_.
-
+Fork button is on `this page <http://github.com/boost-lib/python>`_.
 
 .. rubric:: Clone your Boost clone the local
    machine
@@ -43,7 +40,7 @@ clone button is on `this page <http://gitorious.org/boost/python>`_.
 .. just with superproject clones and then we move on to the
 .. subproject.
 
-See :ref:`getting_started`, using the url of your clone on gitorious.
+See :ref:`getting_started`, using the url of your clone on github.
 .. That sentence should be made clearer, but it may be best just to
 .. repeat the instructions here so the poor reader doesn't have to
 .. bounce around with hyperlinks.
@@ -59,7 +56,7 @@ Remove these lines from :file:`.gitmodules`::
 
   [submodule "src/python"]
           path = src/python
-          url = git://gitorious.org/boost/python.git
+          url = git://github.com/boost-lib/python.git
   
 Add :file:`.gitmodules` to the pending commit::
 
@@ -68,7 +65,7 @@ Add :file:`.gitmodules` to the pending commit::
 Remove these lines from :file:`.git/config`::
 
   [submodule "src/python"]
-          url = git://gitorious.org/boost/python.git
+          url = git://github.com/boost-lib/python.git
   
 This is just for cleanliness, not part of the commit.
 
@@ -116,8 +113,8 @@ First remove the untracked directory corresponding to the submodule::
 
 Now add the new one::
 
-  % git submodule add git://gitorious.org/boost/straszheims-python.git src/python
-  Initialized empty Git repository in /home/troy/Projects/ryppl/tmp/boost2/src/python/.git/
+  % git submodule add git://github.com/boost-lib/your-python.git src/python
+  Initialized empty Git repository in /home/you/Projects/ryppl/tmp/boost2/src/python/.git/
   remote: Counting objects: 1191, done.
   remote: Compressing objects: 100% (768/768), done.
   remote: Total 1191 (delta 468), reused 1117 (delta 396)
@@ -134,7 +131,7 @@ Now add the new one::
 Now that the python repository now points to the right place::
 
   $ grep url src/python/.git/config 
-          url = git://gitorious.org/boost/straszheims-python.git
+          url = git://github.com/boost-lib/your-python.git
 
 Now git tells us that we've added the submodule, and shows the new
 head commit::
@@ -164,10 +161,10 @@ And ``git diff --cached tells me``::
   @@ -10,3 +10,6 @@
    [submodule "cmake"]
           path = cmake
-          url = git://gitorious.org/ryppl/cmake.git
+          url = git://github.com/boost-lib/cmake.git
   +[submodule "src/python"]
   +       path = src/python
-  +       url = git://gitorious.org/boost/straszheims-python.git
+  +       url = git://github.com/boost-lib/your-python.git
   diff --git a/src/python b/src/python
   new file mode 160000
   index 0000000..d6e0e56
@@ -213,7 +210,7 @@ complains::
 So add a remote that is writable.  I use the 'push' (``git@``) url and
 name it *readwrite*::
 
-  $ git remote add readwrite git@gitorious.org:boost/straszheims-python.git
+  $ git remote add readwrite git@github.com:boost-lib/your-python.git
 
 And push::
 
@@ -223,8 +220,8 @@ And push::
   Compressing objects: 100% (4/4), done.
   Writing objects: 100% (5/5), 453 bytes, done.
   Total 5 (delta 2), reused 0 (delta 0)
-  => Syncing Gitorious... [OK]
-  To git@gitorious.org:boost/straszheims-python.git
+  => Syncing github... [OK]
+  To git@github.com:boost-lib/your-python.git
      8d3d698..d6e0e56  HEAD -> master
 
 Now check your status up in the ryppl directory::

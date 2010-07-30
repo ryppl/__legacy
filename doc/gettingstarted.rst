@@ -18,7 +18,7 @@ Clone the Boost superproject
 
 ::
 
-  git clone git://gitorious.org/ryppl/boost.git boost-ryppl
+  git clone git://github.com/boost-lib/boost.git boost-ryppl
 
 This will clone the rypplized boost *superproject* and place the
 result in the top-level workspace directory ``boost-ryppl/``.  Have a look at
@@ -29,10 +29,10 @@ the contents.  Most of boost is there, but:
 
     [submodule "src/accumulators"]
     	path = src/accumulators
-    	url = git://gitorious.org/boost/accumulators.git
+    	url = git://github.com/boost-lib/accumulators.git
     [submodule "src/algorithm"]
     	path = src/algorithm
-    	url = git://gitorious.org/boost/algorithm.git
+    	url = git://github.com/boost-lib/algorithm.git
     etc
     
 * Under ``src`` there is an empty subdirectory for each boost library
@@ -57,10 +57,10 @@ Issue the command ``git submodule init`` followed by ``git submodule update``:
 .. parsed-literal::
 
   % git submodule init
-  Submodule 'src/accumulators' (git://gitorious.org/boost/accumulators.git) registered for path 'src/accumulators'
-  Submodule 'src/algorithm' (git://gitorious.org/boost/algorithm.git) registered for path 'src/algorithm'
-  Submodule 'src/any' (git://gitorious.org/boost/any.git) registered for path 'src/any'
-  Submodule 'src/array' (git://gitorious.org/boost/array.git) registered for path 'src/array'
+  Submodule 'src/accumulators' (git://github.com/boost-lib/accumulators.git) registered for path 'src/accumulators'
+  Submodule 'src/algorithm' (git://github.com/boost-lib/algorithm.git) registered for path 'src/algorithm'
+  Submodule 'src/any' (git://github.com/boost-lib.git) registered for path 'src/any'
+  Submodule 'src/array' (git://github.com/boost-lib/array.git) registered for path 'src/array'
 
   *etc…*
 
@@ -158,7 +158,7 @@ target **genheaders**:
   Built target genheaders
 
 
-Now you'll notice that a  directory ``boost-ryppl/include``
+Now you'll notice that a  directory ``build-ryppl/include``
 exists and is full of headers::
 
   % ls include/boost
