@@ -32,7 +32,7 @@ setup(name='ryppl',
       url='http://ryppl.org',
       license='MIT',
 
-      #setup_requires=['pip'],
+      install_requires=['pip>=0.8'],
       # dependency_links=[
       #   'http://github.com/ryppl/pip/zipball/master#egg=pip',
       #   'http://bitbucket.org/tarek/distutils2/get/7eff59171017.gz#egg=distutils2'
@@ -44,13 +44,11 @@ setup(name='ryppl',
       # to fetch it as necessary, but I'm not yet sure how to declare
       # such dependencies.  In the meantime, this works.
       packages=find_packages('src')
-      + ['pip', 'pip.commands', 'pip.vcs']
       + find_packages(distutils2_pkg)
       ,
 
       package_dir = dict(
         ryppl=os.path.join('src','ryppl'), 
-        pip=os.path.join('submodule','pip','pip'),
         distutils2=os.path.join(distutils2_pkg,'distutils2')
         ),
 

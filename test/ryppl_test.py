@@ -4,6 +4,9 @@ from urllib import pathname2url
 from cStringIO import StringIO
 from pkgtest import mktree
 from path import Path
+import glob
+import testutil
+import shutil
 
 here = Path(__file__).abspath.folder
 
@@ -12,16 +15,20 @@ class Environment(pkgtest.Environment):
     def __init__(self, environ=None):
         super(Environment,self).__init__(environ=environ)
 
-        # Uninstall whatever version of pip came with the virtualenv.
-        # Earlier versions of pip were incapable of
-        # self-uninstallation on Windows, so first we upgrade, then we uninstall
-        self.run('easy_install', '--upgrade', 'pip')
-        
-        # But invoking 'pip uninstall pip' will attempt to delete the
-        # very executable that is running, so instead we do it via Python
-        self.run('python', '-c', 'import pip;pip.main(["uninstall","-y","pip"])')
+        tmppath = Path(testutil.mkdtemp())
 
-        # Install this version instead
+        # On Windows, we can't use pip to upgrade the pip package because
+        # it fails upgrading the pip.exe that is currently running.
+        # So, we copy all of pip from the bin_path to some temporary
+        # directory and invoke it from there.
+        for pip in glob.glob(self.bin_path/'pip*'):
+           shutil.copy2(pip, tmppath) 
+
+        pip_exe = tmppath/'pip'+testutil.exe_ext
+        self.run(pip_exe, 'install', '--upgrade', 'pip')
+
+        # Now, we install ryppl by running it's setup.py from
+        # the ryppl/ directory (one directory up)
         self.run('python', 'setup.py', 'install', cwd=here.folder)
 
     def ryppl(self, *args, **kw):
