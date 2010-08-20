@@ -1,5 +1,9 @@
 import os, sys
+from subprocess import check_call
 from distutils2.metadata import DistributionMetadata
+
+# This are global constants. Do not change.
+is_win32 = (sys.platform == 'win32')
 
 # This option not working (yet).  Should we use setup() from distutils2?
 use_distutils2 = '--distutils2' in sys.argv
@@ -14,16 +18,25 @@ else:
     # setuptools command object to execute during ryppl build
     class cmake_build(build):
       def run (self):
-        print "cmake_build!!!"
-        pass
+        if os.path.isfile(os.path.join(os.getcwd(), 'CMakeLists.txt')):
+          #print "cmake_build!!!"
+          #print os.getcwd()
+          #print self.build_temp
+          if not os.path.isdir(self.build_base):
+            os.makedirs(self.build_base)
+          check_call(['cmake', os.getcwd()], cwd=self.build_base, shell=is_win32)
+          check_call(['cmake', '--build', '.'], cwd=self.build_base, shell=is_win32)
+        #raw_input('Build done. Hit <return> to continue...')
 
     # setuptools command object to execute during ryppl install
     class cmake_install(install):
       def run (self):
-        print "cmake_install!!!"
-        # Must build before we can install
-        self.run_command('build')
-        pass
+        if os.path.isfile(os.path.join(os.getcwd(), 'CMakeLists.txt')):
+          #print "cmake_install!!!"
+          # Must build before we can install
+          self.run_command('build')
+          check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)
+          #raw_input('Install done. Hit <return> to continue...')
 
 # Read the metadata out of the project's .ryppl/METADATA file
 metadata = DistributionMetadata(
