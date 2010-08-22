@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, shutil
 from subprocess import check_call
 from distutils2.metadata import DistributionMetadata
 
@@ -12,31 +12,52 @@ if use_distutils2:
     from distutils2 import setup
 else:
     from setuptools import setup
-    from setuptools.command.install import install
-    from distutils.command.build import build
+    from setuptools.command.egg_info import egg_info as _egg_info
+    from distutils.command.build import build as _build
+    from setuptools.command.install import install as _install
+
+    class cmake_egg_info(_egg_info):
+      def run (self):
+        # Record the egg info path someplace so that cmake_install
+        # can find it later.
+        with open('egg_info_path.txt', 'w') as egg_info:
+          egg_info.writelines([os.path.join(os.getcwd(), self.egg_info)])
+        _egg_info.run(self)
 
     # setuptools command object to execute during ryppl build
-    class cmake_build(build):
+    class cmake_build(_build):
       def run (self):
+        # If this is a cmake project, use cmake to build it.
         if os.path.isfile(os.path.join(os.getcwd(), 'CMakeLists.txt')):
-          #print "cmake_build!!!"
-          #print os.getcwd()
-          #print self.build_temp
+          # Make the target directory if it doesn't exist already
           if not os.path.isdir(self.build_base):
             os.makedirs(self.build_base)
-          check_call(['cmake', os.getcwd()], cwd=self.build_base, shell=is_win32)
+          # Configure cmake if it hasn't been done already.
+          if not os.path.isfile(os.path.join(self.build_base, 'CMakeCache.txt')):
+            check_call(['cmake', os.getcwd()], cwd=self.build_base, shell=is_win32)
+          # actually build 
           check_call(['cmake', '--build', '.'], cwd=self.build_base, shell=is_win32)
-        #raw_input('Build done. Hit <return> to continue...')
+        else:
+          _build.run(self)
 
     # setuptools command object to execute during ryppl install
-    class cmake_install(install):
+    class cmake_install(_install):
       def run (self):
         if os.path.isfile(os.path.join(os.getcwd(), 'CMakeLists.txt')):
-          #print "cmake_install!!!"
-          # Must build before we can install
+          # Make sure the project is actually built first
           self.run_command('build')
+          # Now install it.
           check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)
-          #raw_input('Install done. Hit <return> to continue...')
+          # Copy the install_manifest.txt to the install record file
+          print >>sys.stderr, 'record-install.txt =', self.record
+          shutil.copy2(os.path.join(self.build_base, 'install_manifest.txt'), self.record)
+          egg_info_path = '';
+          with open('egg_info_path.txt', 'r') as egg_info:
+            egg_info_path = egg_info.readline()
+          with open(self.record, 'a+') as install_record:
+            install_record.writelines([egg_info_path])
+        else:
+          _install.run(self)
 
 # Read the metadata out of the project's .ryppl/METADATA file
 metadata = DistributionMetadata(
@@ -69,68 +90,12 @@ def metadata_to_setup_keywords(metadata):
         # EAN: these parameters are documented at
         # http://docs.python.org/distutils/apiref.html
         return dict(
-          # Meaning: The Distribution class to use.
-          # Type: A subclass of distutils.core.Distribution
-          # 'distclass': ???
-          
-          # Meaning: The name of the setup.py script - defaults to sys.argv[0].
-          # Type: a string
-          # 'script_name':???
-          
-          # Meaning: Arguments to supply to the setup script.
-          # Type: a list of strings
-          # 'script_args', ???
-          
-          # Meaning: default options for the setup script.
-          # Type: a string
-          # 'options', ???
-
-          # Copied from setuputils/dist.py. Looks like these could be useful.
-          #'extras_require' -- a dictionary mapping names of optional "extras" to the
-          #     additional requirement(s) that using those extras incurs. For example,
-          #     this::
-          #
-          #     extras_require = dict(reST = ["docutils>=0.3", "reSTedit"])
-          #
-          #     indicates that the distribution can optionally provide an extra
-          #     capability called "reST", but it can only be used if docutils and
-          #     reSTedit are installed.  If the user installs your package using
-          #     EasyInstall and requests one of your extras, the corresponding
-          #     additional requirements will be installed if needed.
-          # 
-          #'features' -- a dictionary mapping option names to 'setuptools.Feature'
-          #   objects.  Features are a portion of the distribution that can be
-          #   included or excluded based on user options, inter-feature dependencies,
-          #   and availability on the current system.  Excluded features are omitted
-          #   from all setup commands, including source and binary distributions, so
-          #   you can create multiple distributions from the same source tree.
-          #   Feature names should be valid Python identifiers, except that they may
-          #   contain the '-' (minus) sign.  Features can be included or excluded
-          #   via the command line options '--with-X' and '--without-X', where 'X' is
-          #   the name of the feature.  Whether a feature is included by default, and
-          #   whether you are allowed to control this from the command line, is
-          #   determined by the Feature object.  See the 'Feature' class for more
-          #   information.
-          #
-          #'test_suite' -- the name of a test suite to run for the 'test' command.
-          #   If the user runs 'python setup.py test', the package will be installed,
-          #   and the named test suite will be run.  The format is the same as
-          #   would be used on a 'unittest.py' command line.  That is, it is the
-          #   dotted name of an object to import and call to generate a test suite.
-          #
-          #'package_data' -- a dictionary mapping package names to lists of filenames
-          #   or globs to use to find data files contained in the named packages.
-          #   If the dictionary has filenames or globs listed under '""' (the empty
-          #   string), those names will be searched for in every package, in addition
-          #   to any names for the specific package.  Data files found using these
-          #   names/globs will be installed along with the package, in the same
-          #   location as the package.  Note that globs are allowed to reference
-          #   the contents of non-package subdirectories, as long as you use '/' as
-          #   a path separator.  (Globs are automatically converted to
-          #   platform-specific paths at runtime.)
-
-          # This hooks the "build" and "install" commands to do our bidding.
-          cmdclass = {'build': cmake_build, 'install': cmake_install},
+          # This hooks various ryppl commands to do our bidding.
+          cmdclass = {
+            'egg_info'  : cmake_egg_info,
+            'build'     : cmake_build,
+            'install'   : cmake_install
+          },
 
           name = m.name,
           version = m.version,
