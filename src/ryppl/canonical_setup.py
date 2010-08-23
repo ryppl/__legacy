@@ -25,7 +25,7 @@ else:
             _egg_info.run(self)
 
     # Configure cmake if it hasn't been done already.
-    def cmake_configure(src_dir, build_dir):
+    def cmake_configure(src_dir, build_dir, install_cmd):
         if not os.path.isfile(os.path.join(build_dir, 'CMakeCache.txt')):
 
             # create a CMake build directory in build_dir that is
@@ -33,12 +33,11 @@ else:
             if not os.path.isdir(build_dir):
                 os.makedirs(build_dir)
 
-            # XXX using sys.prefix isn't quite right here; we will adjust
-            # it to deal properly with venvs on Windows
+            # use the install_scripts directory as calculated by setuptools
+            # Note: we'll need to let users override this on the command line
             check_call([
                     'cmake', 
-                    '-DCMAKE_INSTALL_PREFIX='+sys.prefix, 
-                    '-DRYPPL_ENV_BINDIR=bin', 
+                    '-DCMAKE_INSTALL_PREFIX='+install_cmd.install_scripts, 
                     os.path.abspath(src_dir)], 
                        cwd=build_dir, shell=is_win32)
 
@@ -50,8 +49,14 @@ else:
       def run (self):
           src_dir = os.getcwd()
           if is_cmake_project(src_dir):
+              # Setuptools doesn't calculate the install directories
+              # until 'install' is called, but we need them here in
+              # 'build' so we can configure cmake.
+              install_cmd = cmake_install()
+              install_cmd.finalize_options()
+
               # Configure cmake if it hasn't been done already.
-              cmake_configure(src_dir, self.build_base)
+              cmake_configure(src_dir, self.build_base, install_cmd)
 
               # actually build 
               check_call(['cmake', '--build', self.build_base], shell=is_win32)
@@ -64,7 +69,7 @@ else:
           src_dir = os.getcwd()
           if is_cmake_project(src_dir):
               # Configure cmake if it hasn't been done already.
-              cmake_configure(src_dir, self.build_base)
+              cmake_configure(src_dir, self.build_base, self)
 
               # Now install it.
               check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)

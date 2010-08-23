@@ -5,6 +5,13 @@ from pip.log import logger
 import os
 
 class Git(PipGit):
+    def get_url_rev(self):
+        url, rev = PipGit.get_url_rev(self)
+        # cluggy temporary hack to get around non-uniform local URI handling
+        if os.name == 'nt' and url[:8] == 'file:///' and not url[9] == ':':
+            url = url[:8] + 'C:/cygwin/' + url[8:]
+        return url, rev
+
     def unpack(self, location):
         """Clone the Git repository at a specific revision"""
         url, rev = self.get_url_rev()
