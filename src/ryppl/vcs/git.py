@@ -1,13 +1,15 @@
 from pip import call_subprocess
+from pip.vcs import vcs
 from pip.vcs.git import Git as PipGit
 from pip.log import logger
+import os
 
 class Git(PipGit):
     def unpack(self, location):
         """Clone the Git repository at a specific revision"""
         url, rev = self.get_url_rev()
 
-        logger.notify('Cloning Git repository %s to %s' % (url, location))
+        logger.notify('Cloning Git repository %s @%s to %s' % (url, rev, location))
         logger.indent += 2
         try:
             if os.path.exists(location):
@@ -34,3 +36,5 @@ class Git(PipGit):
                 (line.strip().split() for line in remote_refs.splitlines() ))
     
     
+vcs.unregister(PipGit)
+vcs.register(Git)
