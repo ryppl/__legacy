@@ -11,7 +11,9 @@ import shutil
 here = Path(__file__).abspath.folder
 
 class Environment(pkgtest.Environment):
-    
+    """
+    Specialized package testing pkgtest.Environment for testing ryppl.
+    """
     def __init__(self, environ=None):
         super(Environment,self).__init__(environ=environ)
 
@@ -46,6 +48,21 @@ class Environment(pkgtest.Environment):
 
         
 def create_projects(env, **projects):
+    """
+    Create git repositories and an index for projects within env.
+
+    env should be an Environment
+
+    projects should be a dict mapping project names to
+    DistributionMetadata objects representing their metadata.  
+
+    Returns (index,projdirs) where:
+
+    * index is the path to the locally-generated index
+
+    * projdirs is a dict mapping project names to the paths to the
+      locally-generated git repositories.
+    """
     from distutils2.metadata import DistributionMetadata
 
     index = env.scratch_path/'index'
