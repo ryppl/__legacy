@@ -17,47 +17,65 @@ else:
     from setuptools.command.install import install as _install
 
     class cmake_egg_info(_egg_info):
-      def run (self):
-        # Record the egg info path someplace so that cmake_install
-        # can find it later.
-        with open('egg_info_path.txt', 'w') as egg_info:
-          egg_info.writelines([os.path.join(os.getcwd(), self.egg_info)])
-        _egg_info.run(self)
+        def run (self):
+            # Record the egg info path someplace so that cmake_install
+            # can find it later.
+            open('egg_info_path.txt', 'w').write(os.path.join(os.getcwd(), self.egg_info))
+
+            _egg_info.run(self)
+
+    # Configure cmake if it hasn't been done already.
+    def cmake_configure(src_dir, build_dir):
+        if not os.path.isfile(os.path.join(build_dir, 'CMakeCache.txt')):
+
+            # create a CMake build directory in build_dir that is
+            # prepared to build code in src_dir
+            if not os.path.isdir(build_dir):
+                os.makedirs(build_dir)
+
+            # XXX using sys.prefix isn't quite right here; we will adjust
+            # it to deal properly with venvs on Windows
+            check_call([
+                    'cmake', 
+                    '-DCMAKE_INSTALL_PREFIX='+sys.prefix, 
+                    '-DRYPPL_ENV_BINDIR=bin', 
+                    os.path.abspath(src_dir)], 
+                       cwd=build_dir, shell=is_win32)
+
+    def is_cmake_project(dir):
+        return os.path.isfile(os.path.join(dir, 'CMakeLists.txt'))
 
     # setuptools command object to execute during ryppl build
     class cmake_build(_build):
       def run (self):
-        # If this is a cmake project, use cmake to build it.
-        if os.path.isfile(os.path.join(os.getcwd(), 'CMakeLists.txt')):
-          # Make the target directory if it doesn't exist already
-          if not os.path.isdir(self.build_base):
-            os.makedirs(self.build_base)
-          # Configure cmake if it hasn't been done already.
-          if not os.path.isfile(os.path.join(self.build_base, 'CMakeCache.txt')):
-            check_call(['cmake', os.getcwd()], cwd=self.build_base, shell=is_win32)
-          # actually build 
-          check_call(['cmake', '--build', '.'], cwd=self.build_base, shell=is_win32)
-        else:
-          _build.run(self)
+          src_dir = os.getcwd()
+          if is_cmake_project(src_dir):
+              # Configure cmake if it hasn't been done already.
+              cmake_configure(src_dir, self.build_base)
+
+              # actually build 
+              check_call(['cmake', '--build', self.build_base], shell=is_win32)
+          else:
+              _build.run(self)
 
     # setuptools command object to execute during ryppl install
     class cmake_install(_install):
       def run (self):
-        if os.path.isfile(os.path.join(os.getcwd(), 'CMakeLists.txt')):
-          # Make sure the project is actually built first
-          self.run_command('build')
-          # Now install it.
-          check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)
-          # Copy the install_manifest.txt to the install record file
-          print >>sys.stderr, 'record-install.txt =', self.record
-          shutil.copy2(os.path.join(self.build_base, 'install_manifest.txt'), self.record)
-          egg_info_path = '';
-          with open('egg_info_path.txt', 'r') as egg_info:
-            egg_info_path = egg_info.readline()
-          with open(self.record, 'a+') as install_record:
-            install_record.writelines([egg_info_path])
-        else:
-          _install.run(self)
+          src_dir = os.getcwd()
+          if is_cmake_project(src_dir):
+              # Configure cmake if it hasn't been done already.
+              cmake_configure(src_dir, self.build_base)
+
+              # Now install it.
+              check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)
+
+              # Copy the install_manifest.txt to the install record file
+              print >>sys.stderr, 'record-install.txt =', self.record
+              shutil.copy2(os.path.join(self.build_base, 'install_manifest.txt'), self.record)
+
+              open(self.record, 'a+').write( open('egg_info_path.txt', 'r').read() + '\n' )
+          else:
+              _install.run(self)
 
 # Read the metadata out of the project's .ryppl/METADATA file
 metadata = DistributionMetadata(
@@ -91,28 +109,28 @@ def metadata_to_setup_keywords(metadata):
         # http://docs.python.org/distutils/apiref.html
         return dict(
           # This hooks various ryppl commands to do our bidding.
-          cmdclass = {
-            'egg_info'  : cmake_egg_info,
-            'build'     : cmake_build,
-            'install'   : cmake_install
-          },
+            cmdclass = {
+                'egg_info'  : cmake_egg_info,
+                'build'     : cmake_build,
+                'install'   : cmake_install
+                },
 
-          name = m.name,
-          version = m.version,
-          author = m.author,
-          author_email = m.author_email,
-          maintainer = m.maintainer,
-          maintainer_email = m.maintainer_email,
-          url = m.project_url,
-          description = m.summary,
-          long_description = m.description,
-          keywords = ' '.join(m.keywords),
-          platforms = m.platform,
-          classifiers = m.classifier, 
-          download_url = m.download_url,
-          install_requires = m.requires_dist or m.requires,
-          provides = m.provides_dist or m.provides,
-          obsoletes = m.obsoletes_dist or m.obsoletes,
+            name = m.name,
+            version = m.version,
+            author = m.author,
+            author_email = m.author_email,
+            maintainer = m.maintainer,
+            maintainer_email = m.maintainer_email,
+            url = m.project_url,
+            description = m.summary,
+            long_description = m.description,
+            keywords = ' '.join(m.keywords),
+            platforms = m.platform,
+            classifiers = m.classifier, 
+            download_url = m.download_url,
+            install_requires = m.requires_dist or m.requires,
+            provides = m.provides_dist or m.provides,
+            obsoletes = m.obsoletes_dist or m.obsoletes,
           )
 
 # Call setup with keyword arguments corresponding to the metadata
