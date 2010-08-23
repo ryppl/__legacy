@@ -39,8 +39,8 @@ setup(name='ryppl',
       #  ],
       #install_requires=['distutils2'],
       
-      # It is somewhat evil to install pip and distutils2 this way; we should be
-      # declaring them as a dependencies and allowing setuptools.setup()
+      # It is somewhat evil to install distutils2 this way; we should be
+      # declaring it as a dependency and allowing setuptools.setup()
       # to fetch it as necessary, but I'm not yet sure how to declare
       # such dependencies.  In the meantime, this works.
       packages=find_packages('src')
