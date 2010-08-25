@@ -50,7 +50,7 @@ def main(argv = []):
 
     # Make sure all external tools are set up to be used.
     print >> sys.stderr, 'Checking for installed prerequisites in PATH:',
-    for tool in ('git',):
+    for tool in ('git', 'cmake'):
         print >> sys.stderr, tool,'...',
         assert_in_path(tool)
     print >> sys.stderr, 'ok'

@@ -7,6 +7,7 @@ from path import Path
 import glob
 import testutil
 import shutil
+from urllib import pathname2url
 
 here = Path(__file__).abspath.folder
 
@@ -46,14 +47,29 @@ class Environment(pkgtest.Environment):
         else:
             return self.run('ryppl', *args, **kw)
 
-        
+
+class Project(object):
+
+    def __init__(self, name, path, env):
+        self.name = name
+        self.path = path
+        self.env = env
+
+    def add_file(self, file_path, contents):
+        fullpath = os.abspath(os.path.join(self.path, file_path))
+        dir = os.path.dirname(fullpath)
+        mktree(dir)
+        open(fullpath, 'w').write(contents)
+        self.env.run('git', 'add', file_path, cwd=self.path)
+        self.env.run('git', 'commit', '--amend', '-m', 'initial checkin', cwd=self.path)
+
 def create_projects(env, **projects):
     """
     Create git repositories and an index for projects within env.
 
     env should be an Environment
 
-    projects should be a dict mapping project names to
+    proj_metadata should be a dict mapping project names to
     DistributionMetadata objects representing their metadata.  
 
     Returns (index,projdirs) where:
@@ -72,18 +88,18 @@ def create_projects(env, **projects):
     open(index/'index.html', 'w').write(
         '\n'.join(
             ['<html><head><title>Simple Index</title></head><body>']
-            + [ '<a href=%r/>%s</a><br/>' % (p,p) for p in projects ]
+            + [ '<a href=%r/>%s</a><br/>' % (p,p) for p in proj_metadata ]
             + ['</body></html>'])
         )
     
-    paths = {}
+    projects = {}
 
-    for p,metadata in projects.items():
+    for p,metadata in proj_metadata.items():
 
         mktree(index/p)
         
         root = repo/p
-        paths[p] = root
+        projects[p] = Project(p, root, env)
         mktree(root)
 
         env.run('git', 'init', cwd = root)
@@ -127,7 +143,7 @@ def create_projects(env, **projects):
             % locals()
             )
         
-    return index,paths
+    return 'file://'+pathname2url(index),projects
 
 def reset():
     return ryppl_test.Environment()
