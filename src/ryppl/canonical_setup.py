@@ -12,17 +12,8 @@ if use_distutils2:
     from distutils2 import setup
 else:
     from setuptools import setup
-    from setuptools.command.egg_info import egg_info as _egg_info
     from distutils.command.build import build as _build
     from setuptools.command.install import install as _install
-
-    class cmake_egg_info(_egg_info):
-        def run (self):
-            # Record the egg info path someplace so that cmake_install
-            # can find it later.
-            open('egg_info_path.txt', 'w').write(os.path.join(os.getcwd(), self.egg_info))
-
-            _egg_info.run(self)
 
     # Configure cmake if it hasn't been done already.
     def cmake_configure(src_dir, build_dir, install_cmd):
@@ -46,41 +37,46 @@ else:
 
     # setuptools command object to execute during ryppl build
     class cmake_build(_build):
-      def run (self):
-          src_dir = os.getcwd()
-          if is_cmake_project(src_dir):
-              # Setuptools doesn't calculate the install directories
-              # until 'install' is called, but we need them here in
-              # 'build' so we can configure cmake.
-              install_cmd = cmake_install()
-              install_cmd.finalize_options()
-
-              # Configure cmake if it hasn't been done already.
-              cmake_configure(src_dir, self.build_base, install_cmd)
-
-              # actually build 
-              check_call(['cmake', '--build', self.build_base], shell=is_win32)
-          else:
-              _build.run(self)
+        def run (self):
+            src_dir = os.getcwd()
+            if is_cmake_project(src_dir):
+                # Setuptools doesn't calculate the install directories
+                # until 'install' is called, but we need them here in
+                # 'build' so we can configure cmake.
+                install_cmd = cmake_install()
+                install_cmd.finalize_options()
+  
+                # Configure cmake if it hasn't been done already.
+                cmake_configure(src_dir, self.build_base, install_cmd)
+  
+                # actually build 
+                check_call(['cmake', '--build', self.build_base], shell=is_win32)
+            else:
+                _build.run(self)
 
     # setuptools command object to execute during ryppl install
     class cmake_install(_install):
-      def run (self):
-          src_dir = os.getcwd()
-          if is_cmake_project(src_dir):
-              # Configure cmake if it hasn't been done already.
-              cmake_configure(src_dir, self.build_base, self)
+        def run (self):
+            src_dir = os.getcwd()
+            if is_cmake_project(src_dir):
+                # Configure cmake if it hasn't been done already.
+                cmake_configure(src_dir, self.build_base, self)
 
-              # Now install it.
-              check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)
+                # Now install it.
+                check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)
 
-              # Copy the install_manifest.txt to the install record file
-              print >>sys.stderr, 'record-install.txt =', self.record
-              shutil.copy2(os.path.join(self.build_base, 'install_manifest.txt'), self.record)
+                # install the .egg-info for this guy
+                self.run_command('install_egg_info')
 
-              open(self.record, 'a+').write( open('egg_info_path.txt', 'r').read() + '\n' )
-          else:
-              _install.run(self)
+                # Copy the install_manifest.txt to the install record file
+                shutil.copy2(os.path.join(self.build_base, 'install_manifest.txt'), self.record)
+
+                # Add the .egg-info directory and its contents to the install_record.txt
+                ei = self.get_finalized_command('install_egg_info')
+                open(self.record, 'a+').write( '\n'.join(ei.get_outputs())+'\n' )
+
+            else:
+                _install.run(self)
 
 # Read the metadata out of the project's .ryppl/METADATA file
 metadata = DistributionMetadata(
@@ -115,9 +111,8 @@ def metadata_to_setup_keywords(metadata):
         return dict(
           # This hooks various ryppl commands to do our bidding.
             cmdclass = {
-                'egg_info'  : cmake_egg_info,
-                'build'     : cmake_build,
-                'install'   : cmake_install
+                'build'             : cmake_build,
+                'install'           : cmake_install
                 },
 
             name = m.name,
