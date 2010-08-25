@@ -48,24 +48,31 @@ def test_cmake():
         env,
         greet=dict())
 
-    greet = project_paths['greet']
+    greet = projects['greet']
     greet.add_file('CMakeLists.txt', '''
 cmake_minimum_required(VERSION 2.8)
 project (greet)
 add_executable(greet hello.cpp)
 install (TARGETS greet 
-  RUNTIME DESTINATION ${RYPPL_ENV_BINDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
 )
 ''')
 
     greet.add_file('hello.cpp', '''
 #include <iostream>
 int main() {
-    std::cout << "hello ryppl\n";
+    std::cout << "hello ryppl\\n";
 }
 ''')
     env.ryppl('install', '-vvv', '-i', index, 'greet')
-    env.run('greet')
+    result = env.run('greet')
+    #print >> sys.stderr, result.stdout
+    if not result.stdout == 'hello ryppl\n':
+        raise AssertionError(
+            'Unexpected output from greet executable. Expected "%s", got "%s"'
+                % ('hello ryppl\\n', result.stdout))
+
+
 
 if __name__ == '__main__':
     test_diamond()

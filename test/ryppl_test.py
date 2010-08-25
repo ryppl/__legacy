@@ -1,3 +1,4 @@
+import os
 import sys
 import pkgtest
 from urllib import pathname2url
@@ -56,14 +57,14 @@ class Project(object):
         self.env = env
 
     def add_file(self, file_path, contents):
-        fullpath = os.abspath(os.path.join(self.path, file_path))
+        fullpath = os.path.abspath(os.path.join(self.path, file_path))
         dir = os.path.dirname(fullpath)
         mktree(dir)
         open(fullpath, 'w').write(contents)
         self.env.run('git', 'add', file_path, cwd=self.path)
         self.env.run('git', 'commit', '--amend', '-m', 'initial checkin', cwd=self.path)
 
-def create_projects(env, **projects):
+def create_projects(env, **proj_metadata):
     """
     Create git repositories and an index for projects within env.
 
