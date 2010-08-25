@@ -73,11 +73,6 @@ else:
     # folks uninstall and reinstall python, the ryppl install isn't completely
     # hosed.
     class cmake_install(_install):
-
-        # For now, install does all the work and doesn't defer anything to
-        # sub-commands. This isn't strictly necessary, but it's cleaner.
-        sub_commands = []
-
         def run (self):
             src_dir = os.getcwd()
             if is_cmake_project(src_dir):
