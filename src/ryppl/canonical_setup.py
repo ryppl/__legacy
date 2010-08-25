@@ -25,7 +25,11 @@ else:
                 os.makedirs(build_dir)
 
             # use the install_scripts directory as calculated by setuptools
-            # Note: we'll need to let users override this on the command line
+            # FUTURE: we'll need to let users override this on the command line.
+            # FUTURE: just dumping outputs into Python's bin directory seems
+            # like a bad idea. Also, need a way to specify locations for libs,
+            # headers, etc. We'll need to choose the names of some env vars that
+            # people can use in their CMakeLists.txt files.
             check_call([
                     'cmake', 
                     '-DCMAKE_INSTALL_PREFIX='+install_cmd.install_scripts, 
@@ -43,8 +47,7 @@ else:
                 # Setuptools doesn't calculate the install directories
                 # until 'install' is called, but we need them here in
                 # 'build' so we can configure cmake.
-                install_cmd = cmake_install()
-                install_cmd.finalize_options()
+                install_cmd = self.get_finalized_command('install')
   
                 # Configure cmake if it hasn't been done already.
                 cmake_configure(src_dir, self.build_base, install_cmd)
@@ -54,8 +57,27 @@ else:
             else:
                 _build.run(self)
 
-    # setuptools command object to execute during ryppl install
+    # class cmake_install:
+    #     setuptools command object to execute during ryppl install
+    # NOTE: this is a radical departure from the setuptools version of the
+    # install command, which is really just wrapper over its sub-commands
+    # (install_headers, install_libs, ... install_egg_info. See
+    # setuptools.command.install). This version just delegates its logic to
+    # cmake and then calls install_egg_info to build the .egg-info directory
+    # so that this package can be uninstalled.
+    # FUTURE: consider breaking this back out into sub-commands the way that
+    # setuptools does it so that users can separately install things like
+    # headers and libs and whatnot. Not sure what the cmake interaction would
+    # look like.
+    # FUTURE: put the .egg-info directory in a ryppl-specific place so that if
+    # folks uninstall and reinstall python, the ryppl install isn't completely
+    # hosed.
     class cmake_install(_install):
+
+        # For now, install does all the work and doesn't defer anything to
+        # sub-commands. This isn't strictly necessary, but it's cleaner.
+        sub_commands = []
+
         def run (self):
             src_dir = os.getcwd()
             if is_cmake_project(src_dir):
@@ -63,17 +85,17 @@ else:
                 cmake_configure(src_dir, self.build_base, self)
 
                 # Now install it.
-                check_call(['cmake', '--build', '.', '--target', 'install'], cwd=self.build_base, shell=is_win32)
+                check_call(['cmake', '--build', '.', '--target', 'install'],cwd=self.build_base, shell=is_win32)
 
                 # install the .egg-info for this guy
-                self.run_command('install_egg_info')
+                install_egg_info_cmd = self.get_finalized_command('install_egg_info')
+                install_egg_info_cmd.run()
 
                 # Copy the install_manifest.txt to the install record file
                 shutil.copy2(os.path.join(self.build_base, 'install_manifest.txt'), self.record)
 
                 # Add the .egg-info directory and its contents to the install_record.txt
-                ei = self.get_finalized_command('install_egg_info')
-                open(self.record, 'a+').write( '\n'.join(ei.get_outputs())+'\n' )
+                open(self.record, 'a+').write( '\n'.join(install_egg_info_cmd.get_outputs())+'\n' )
 
             else:
                 _install.run(self)
