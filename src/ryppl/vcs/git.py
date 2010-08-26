@@ -22,8 +22,11 @@ class Git(PipGit):
             if os.path.exists(location):
                 os.rmdir(location)
             call_subprocess(
-                [self.cmd, 'clone', '-b', rev or 'HEAD', url, location],
+                [self.cmd, 'clone', '-n', url, location],
                 filter_stdout=self._filter, show_stdout=False)
+            call_subprocess(
+                [self.cmd, 'checkout', rev],
+                filter_stdout=self._filter, show_stdout=False, cwd=location)
         finally:
             logger.indent -= 2
 
