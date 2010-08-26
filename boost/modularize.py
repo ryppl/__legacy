@@ -12,6 +12,7 @@ dst_repo_dir = None
 regen_existing_cache = False
 start_at = None
 stop_at = None
+sections = None
 
 # Print the usage message (there's probably a nifty python way to do this)
 def usage():
@@ -22,41 +23,46 @@ def usage():
     --src           : local path to the git repository storing the unmodularized boost
     --dst           : local path to the git repository storing the modularized boost
     --start-at      : section in the manifest at which to start the copy
-    --stop-at       : section in the manifest at which to stop the copy'''
+    --stop-at       : section in the manifest at which to stop the copy
+    --sections      : comma-separated list of section in the manifest to copy'''
 
 def parse_command_line():
     # Parse the command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "ahv", ["help", "src=", "dst=", "start-at=", "stop-at="])
+        opts, args = getopt.getopt(sys.argv[1:], "ahv", ["help", "src=", "dst=", "start-at=", "stop-at=", "sections="])
     except getopt.GetoptError, err:
         print 'Error: ', str(err)
         usage()
         sys.exit(2)
 
+    global verbose, regen_existing_cache, src_repo_dir, dst_repo_dir
+    global sections, start_at, stop_at
     for o, a in opts:
         if o == "-v":
-            global verbose
             verbose = True
         elif o == "-a":
-            global regen_existing_cache
             regen_existing_cache = True
         elif o in ("-h", "--help"):
             usage()
             sys.exit()
         elif o == "--src":
-            global src_repo_dir
             src_repo_dir = a
         elif o == "--dst":
-            global dst_repo_dir
             dst_repo_dir = a
         elif o == "--start-at":
-            global start_at
             start_at = a
         elif o == "--stop-at":
-            global stop_at
             stop_at = a
+        elif o == "--sections":
+            sections = a.split(',')
         else:
             assert False, "unhandled option"
+
+    if sections is not None:
+        if start_at is not None or stop_at is not None:
+            print >>sys.stderr, 'If --sections is specified, you cannot', \
+                'specify --start-at or --stop-at'
+            sys.exit(2)
 
 # Generate the existing file cache from the live git repo
 # found at src_repo_dir
@@ -246,8 +252,33 @@ def main():
     # We do this so that if anything fails mid-way, the user
     # can specify the --start-at option to pick up where the
     # script last left off.
-    sections = manifest.sections()
+    global sections
+    if sections is not None:
+        for section in sections:
+            if section not in manifest.sections():
+                print >>sys.stderr, '%s is not a section in manifest.txt' % section
+                sys.exit(2)
+    else:
+        sections = [section for section in manifest.sections() if section != '<ignore>']
     sections.sort()
+
+    # validate the command line params
+    global start_at, stop_at
+    if start_at is not None and start_at not in sections:
+        print >>sys.stderr, '%s is not a section in manifest.txt' % start_at
+        sys.exit(2)
+    if stop_at is not None and stop_at not in sections:
+        print >>sys.stderr, '%s is not a section in manifest.txt' % start_at
+        sys.exit(2)
+
+    # If the user has asked to restart at a given section, skip all until
+    # we get to that one.
+    if start_at is not None and stop_at is not None:
+        sections = [section for section in sections if section >= start_at and section <= stop_at]
+    elif start_at:
+        sections = [section for section in sections if section >= start_at]
+    elif stop_at:
+        sections = [section for section in sections if section <= stop_at]
 
     # Iterate over the sections, which represent submodules. For each
     # submodule, make sure we're on the branch 'master', remove all the
@@ -255,19 +286,6 @@ def main():
     # destinations, add all the files that were copied, unstage the
     # removal of files marked as <new>, apply any patches and commit.
     for section in sections:
-
-        global start_at, stop_at
-
-        # Skip the <ignore> section
-        if section == '<ignore>':
-            continue
-
-        # If the user has asked to restart at a given section, skip all until
-        # we get to that one.
-        if start_at and section != start_at:
-            continue
-
-        start_at = None
 
         # Construct the directory in which this submodule lives.
         dst_module_dir = os.path.normpath(os.path.join(dst_repo_dir, section))
@@ -278,7 +296,7 @@ def main():
 
         # remove everything
         check_call(['git', 'rm', '--quiet', '-r', '.'], cwd=dst_module_dir, shell=is_win32)
-        
+
         # Make sure we've really removed everything (leaving behind the top-level)
         # .git directory
         clean_dir(dst_module_dir)
@@ -344,9 +362,6 @@ def main():
 
         # everything looks good, so commit locally
         check_call(['git', 'commit', '-m', 'latest from svn'], cwd=dst_module_dir, shell=is_win32)
-
-        if stop_at and section == stop_at:
-            break
 
     # Ask the user whether they really, REALLY want to push this to the remote
     raw_input('Hit <return> to push all local changes, Ctrl-Z to quit:')
