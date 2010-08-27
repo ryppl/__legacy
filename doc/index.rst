@@ -35,6 +35,7 @@ to every build platform.
 Resources
 ---------
 
+* `Home Page <http://ryppl.org>`_
 * `Source Code on GitHub <http://github.com/ryppl>`_
 * `Issue Tracker <http://github.com/ryppl/ryppl/issues>`_
 * Dave Abrahams' rough `ryppl slideset from BoostCon 2010
