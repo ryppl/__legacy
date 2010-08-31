@@ -1593,16 +1593,11 @@ tools/litre/tool.py:	tool.py
 
 [tools/quickbook]
 
-tools/quickbook/block.hpp:	block.hpp
-tools/quickbook/code_snippet.hpp:	code_snippet.hpp
-tools/quickbook/doc_info.hpp:	doc_info.hpp
 tools/quickbook/index.html:	index.html
 tools/quickbook/Jamfile.v2:	Jamfile.v2
-tools/quickbook/phrase.hpp:	phrase.hpp
-tools/quickbook/syntax_highlight.hpp:	syntax_highlight.hpp
-tools/quickbook/detail/:	detail/
 tools/quickbook/doc/:	doc/
 tools/quickbook/extra/:	extra/
+tools/quickbook/src/:	src/
 tools/quickbook/test/:	test/
 <name>: boost-quickbook
 <new>:	.ryppl/METADATA
