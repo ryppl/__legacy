@@ -124,8 +124,76 @@ install (TARGETS empty
             'Failed to uninstall file at "%s"' % (runtime_dst/('empty'+EXE)))
 
 
+# Test that two cmake projects, one which depends on the other, both get
+# downloaded, built and installed correctly
+def test_library():
+    env = new_test()
+    index,projects = create_projects(
+        env,
+        greetexe=dict(requires_dist=['greetlib']),
+        greetlib=dict())
+
+    greetexe = projects['greetexe']
+    greetexe.add_file('CMakeLists.txt', '''
+cmake_minimum_required(VERSION 2.8)
+project (greetexe)
+add_executable(greetexe hello.cpp)
+find_library (GREETLIB_LIBRARY NAMES greetlib)
+if (GREETLIB_LIBRARY)
+    MESSAGE(STATUS "Found greetlib: ${GREETLIB_LIBRARY}")
+else (GREETLIB_LIBRARY)
+    MESSAGE(FATAL_ERROR "Could not find greetlib")
+endif (GREETLIB_LIBRARY)
+include_directories ("${CMAKE_INSTALL_PREFIX}/include")
+target_link_libraries (greetexe "${GREETLIB_LIBRARY}")
+install (TARGETS greetexe DESTINATION "${CMAKE_INSTALL_PREFIX}")
+''')
+
+    greetexe.add_file('hello.cpp', '''
+#include "projB/hello.hpp"
+int main() {
+    greet();
+}
+''')
+
+    greetlib = projects['greetlib']
+    greetlib.add_file('CMakeLists.txt', '''
+cmake_minimum_required(VERSION 2.8)
+add_library(greetlib hello.cpp)
+install (TARGETS greetlib DESTINATION "${CMAKE_INSTALL_PREFIX}")
+install (FILES hello.hpp DESTINATION "${CMAKE_INSTALL_PREFIX}/include/projB")
+''')
+
+    greetlib.add_file('hello.cpp', '''
+#include "./hello.hpp"
+#include <iostream>
+void greet() {
+    std::cout << "hello ryppl\\n";
+}
+''')
+
+    greetlib.add_file('hello.hpp', '''
+#ifndef GREET_HPP
+#define GREET_HPP
+void greet();
+#endif
+''')
+
+    # BUGBUG pip doesn't have a notion of build/install
+    # dependencies, so we have to be explicit about installing
+    # the lib before the exe. MUST FIX UPSTREAM IF POSSIBLE.
+    env.ryppl('install', '-vvv', '-i', index, 'greetlib')
+    env.ryppl('install', '-vvv', '-i', index, 'greetexe')
+    result = env.run('greetexe')
+    if not result.stdout == 'hello ryppl\n':
+        raise AssertionError(
+            'Unexpected output from greetexe executable. Expected "%s", got "%s"'
+                % ('hello ryppl\\n', result.stdout))
+
 if __name__ == '__main__':
+    test_fetch()
     test_diamond()
     test_cmake()
     test_uninstall()
+    test_library()
 
