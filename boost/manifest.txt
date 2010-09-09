@@ -350,9 +350,11 @@ boost/exception.hpp:	include/boost/exception.hpp
 boost/exception_ptr.hpp:	include/boost/exception_ptr.hpp
 boost/throw_exception.hpp:	include/boost/throw_exception.hpp
 boost/exception/:	include/boost/exception/
+libs/exception/build/:	build/
 libs/exception/doc/:	doc/
 libs/exception/example/:	example/
 libs/exception/index.html:	index.html
+libs/exception/src/:	src/
 libs/exception/test/:	test/
 <name>: boost-exception
 <new>:	CMakeLists.txt
