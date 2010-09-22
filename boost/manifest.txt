@@ -1438,6 +1438,7 @@ libs/utility/value_init_test_fail2.cpp:	value_init_test_fail2.cpp
 libs/utility/value_init_test_fail3.cpp:	value_init_test_fail3.cpp
 libs/utility/value_init_workaround_test.cpp:	value_init_workaround_test.cpp
 libs/utility/verify_test.cpp:	verify_test.cpp
+libs/utility/doc/:	doc/
 libs/utility/enable_if/:	enable_if/
 libs/utility/swap/:	swap/
 libs/utility/test/:	test/
