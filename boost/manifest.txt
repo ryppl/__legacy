@@ -546,6 +546,14 @@ libs/graph_parallel/test/:	test/
 	test/CMakeLists.txt
 	.ryppl/METADATA
 
+[src/icl]
+
+boost/icl/:	include/boost/icl/
+libs/icl/doc/:	doc/
+libs/icl/example/:	example/
+libs/icl/test/:	test/
+<name>:	boost-icl
+
 [src/integer]
 
 boost/cstdint.hpp:	include/boost/cstdint.hpp
