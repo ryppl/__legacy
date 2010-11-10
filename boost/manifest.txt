@@ -553,6 +553,10 @@ libs/icl/doc/:	doc/
 libs/icl/example/:	example/
 libs/icl/test/:	test/
 <name>:	boost-icl
+<new>:	CMakeLists.txt
+	module.cmake
+	test/CMakeLists.txt
+	.ryppl/METADATA
 
 [src/integer]
 
