@@ -252,7 +252,6 @@ boost/pending/fenced_priority_queue.hpp:	include/boost/pending/fenced_priority_q
 boost/pending/fibonacci_heap.hpp:	include/boost/pending/fibonacci_heap.hpp
 boost/pending/indirect_cmp.hpp:	include/boost/pending/indirect_cmp.hpp
 boost/pending/integer_log2.hpp:	include/boost/pending/integer_log2.hpp
-boost/pending/integer_range.hpp:	include/boost/pending/integer_range.hpp
 boost/pending/is_heap.hpp:	include/boost/pending/is_heap.hpp
 boost/pending/iterator_adaptors.hpp:	include/boost/pending/iterator_adaptors.hpp
 boost/pending/iterator_tests.hpp:	include/boost/pending/iterator_tests.hpp
@@ -303,6 +302,7 @@ libs/date_time/xmldoc/:	xmldoc/
 
 boost/detail/:	include/boost/detail/
 libs/detail/utf8_codecvt_facet.cpp:	utf8_codecvt_facet.cpp
+libs/detail/test/:	test/
 <name>: boost-detail
 <new>:	CMakeLists.txt
 	module.cmake
@@ -549,6 +549,7 @@ libs/graph_parallel/test/:	test/
 [src/icl]
 
 boost/icl/:	include/boost/icl/
+libs/icl/index.html:	index.html
 libs/icl/doc/:	doc/
 libs/icl/example/:	example/
 libs/icl/test/:	test/
@@ -577,7 +578,7 @@ libs/integer/test/:	test/
 [src/interprocess]
 
 boost/interprocess/:	include/boost/interprocess/
-libs/interprocess/index.html:	index.html
+libs/interprocess/Jamfile.v2:	Jamfile.v2
 libs/interprocess/index.html:	index.html
 libs/interprocess/doc/:	doc/
 libs/interprocess/example/:	example/
@@ -737,6 +738,7 @@ libs/mpl/test/:	test/
 boost/msm/:	include/boost/msm/
 libs/msm/index.html:	index.html
 libs/msm/doc/:	doc/
+libs/msm/example/:	example/
 libs/msm/test/:	test/
 <name>: boost-msm
 <new>:	.ryppl/METADATA
@@ -1566,6 +1568,8 @@ tools/build/v2/:	v2/
 
 tools/inspect/apple_macro_check.cpp:	apple_macro_check.cpp
 tools/inspect/apple_macro_check.hpp:	apple_macro_check.hpp
+tools/inspect/assert_macro_check.cpp:	assert_macro_check.cpp
+tools/inspect/assert_macro_check.hpp:	assert_macro_check.hpp
 tools/inspect/ascii_check.cpp:	ascii_check.cpp
 tools/inspect/ascii_check.hpp:	ascii_check.hpp
 tools/inspect/copyright_check.cpp:	copyright_check.cpp
