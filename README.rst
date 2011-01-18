@@ -87,53 +87,53 @@ Testing Prerequisites
    probably eliminate this requirement one day by using Dulwich_, so
    end-users don't have to install Git.
 
-.. Note:: If you are going to use MSysGit on Windows and plan to use Git from
-   Windows command prompt (cmd.exe) as opposed to the bash shell, here are some
-   tricks to make your life easier.
-   
-   1. The MSysGit installer will give you three options for how you would like
-      to configure Git's environment. The default is (a) to run Git from bash.
-      The other two are (b) to put "git" in the Windows PATH, and (c) to put
-      "git" and all the other Unix utilities in the Windows PATH. You should
-      pick (b), the option called "Run Git from the Windows Command Prompt".
-   
-   2. When the MSysGit installer asks you how you would like Git to handle
-      newlines on checkout and commit, select the option that says, "Check out
-      as-is, commit as-is". That tells git to not mess with the line endings.
-      You are encouraged to not check in files with crlf line endings, however.
-      *TODO: is this the behavior we want?*
+   .. Note:: If you are going to use MSysGit on Windows and plan to use Git from
+      Windows command prompt (cmd.exe) as opposed to the bash shell, here are some
+      tricks to make your life easier.
 
-   3. You can use notepad.exe as Git's text editor for things like commit
-      messages and the like, but you need to fix up the newline characters
-      first. Create a file ``notepad.cmd`` alongside ``git.cmd`` in your
-      ``C:\Program Files\Git\cmd`` directory. It should contain the following::
-      
-         @setlocal 
-         @set COMMIT_EDITMSG=%~1
-         @set COMMIT_EDITMSG=%COMMIT_EDITMSG:/=\% 
-         @del /q "%COMMIT_EDITMSG%.tmp" >nul 2>&1
-         @for /f "usebackq tokens=*" %%i in ("%COMMIT_EDITMSG%") do @echo %%i >> "%COMMIT_EDITMSG%.tmp"
-         @move /Y "%COMMIT_EDITMSG%.tmp" "%COMMIT_EDITMSG%" >nul 2>&1
-         @notepad.exe "%COMMIT_EDITMSG%"
-         @endlocal
+      1. The MSysGit installer will give you three options for how you would like
+         to configure Git's environment. The default is (a) to run Git from bash.
+         The other two are (b) to put "git" in the Windows PATH, and (c) to put
+         "git" and all the other Unix utilities in the Windows PATH. You should
+         pick (b), the option called "Run Git from the Windows Command Prompt".
 
-      Then execute the following command::
+      2. When the MSysGit installer asks you how you would like Git to handle
+         newlines on checkout and commit, select the option that says, "Check out
+         as-is, commit as-is". That tells git to not mess with the line endings.
+         You are encouraged to not check in files with crlf line endings, however.
+         *TODO: is this the behavior we want?*
 
-         > git config --global core.editor notepad.cmd
-    
-   4. You need to disable the pager used internally by git. As of the time of
-      this writing (2010-7-2), MSysGit ships with a buggy version of
-      less.exe that will cause some git commands to hang or crash cmd.exe.
-      You can turn git's internal use of less.exe with the following::
-      
-      > git config --global core.pager cat
-      
-   5. There is a bug in how git handles various ``git help`` commands that
-      causes the external browser to fail to display the requested help topic.
-      You can work around the problem by going into the
-      ``C:\Program Files\Git\doc\git\html`` directory and copying all
-      ``git-*.html`` files to ``git*.html`` files (i.e., strip the hyphen
-      after ``git`` in the filename).
+      3. You can use notepad.exe as Git's text editor for things like commit
+         messages and the like, but you need to fix up the newline characters
+         first. Create a file ``notepad.cmd`` alongside ``git.cmd`` in your
+         ``C:\Program Files\Git\cmd`` directory. It should contain the following::
+
+            @setlocal 
+            @set COMMIT_EDITMSG=%~1
+            @set COMMIT_EDITMSG=%COMMIT_EDITMSG:/=\% 
+            @del /q "%COMMIT_EDITMSG%.tmp" >nul 2>&1
+            @for /f "usebackq tokens=*" %%i in ("%COMMIT_EDITMSG%") do @echo %%i >> "%COMMIT_EDITMSG%.tmp"
+            @move /Y "%COMMIT_EDITMSG%.tmp" "%COMMIT_EDITMSG%" >nul 2>&1
+            @notepad.exe "%COMMIT_EDITMSG%"
+            @endlocal
+
+         Then execute the following command::
+
+            > git config --global core.editor notepad.cmd
+
+      4. You need to disable the pager used internally by git. As of the time of
+         this writing (2010-7-2), MSysGit ships with a buggy version of
+         less.exe that will cause some git commands to hang or crash cmd.exe.
+         You can turn git's internal use of less.exe with the following::
+
+         > git config --global core.pager cat
+
+      5. There is a bug in how git handles various ``git help`` commands that
+         causes the external browser to fail to display the requested help topic.
+         You can work around the problem by going into the
+         ``C:\Program Files\Git\doc\git\html`` directory and copying all
+         ``git-*.html`` files to ``git*.html`` files (i.e., strip the hyphen
+         after ``git`` in the filename).
     
 2. **Git submodules** need to be initialized and updated.  From the
    root of your ryppl source tree, ::
