@@ -9,3 +9,4 @@ dist
 *.egg-info
 .noseids
 .DS_Store
+/boost/existing.cache
