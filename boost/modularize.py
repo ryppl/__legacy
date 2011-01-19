@@ -1,14 +1,16 @@
-import os, sys, getopt, pickle, ConfigParser, shutil, time
-from subprocess import PIPE, Popen, check_call
+import os, sys, getopt, pickle, ConfigParser, shutil, time, subprocess, string
 
 # This are global constants. Do not change.
 existing_cache_pkl = 'existing.cache'
 is_win32 = (sys.platform == 'win32')
 
 # These are controlled by command-line parameters
+args = []
 verbose = False
+debug = False
 src_repo_dir = None
 dst_repo_dir = None
+dst_module_dir = None
 regen_existing_cache = False
 start_at = None
 stop_at = None
@@ -26,20 +28,36 @@ def usage():
     --stop-at       : section in the manifest at which to stop the copy
     --sections      : comma-separated list of section in the manifest to copy'''
 
+def run(*args, **kwargs):
+    if verbose: print "[INFO] ", string.join(args, ' ')
+    return subprocess.check_call(args,
+                                 cwd=kwargs['cwd'] if 'cwd' in kwargs else dst_module_dir,
+                                 shell=is_win32)
+
+def popen(*args, **kwargs):
+    if verbose: print "[INFO] ", string.join(args, ' ')
+    return subprocess.Popen(args, stdout=subprocess.PIPE,
+                            cwd=kwargs['cwd'] if 'cwd' in kwargs else dst_module_dir,
+                            shell=is_win32).communicate()[0]
+
 def parse_command_line():
+    global args
+
     # Parse the command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "ahv", ["help", "src=", "dst=", "start-at=", "stop-at=", "sections="])
+        opts, args = getopt.getopt(sys.argv[1:], "ahvd", ["help", "src=", "dst=", "start-at=", "stop-at=", "sections="])
     except getopt.GetoptError, err:
         print 'Error: ', str(err)
         usage()
         sys.exit(2)
 
     global verbose, regen_existing_cache, src_repo_dir, dst_repo_dir
-    global sections, start_at, stop_at
+    global sections, start_at, stop_at, debug
     for o, a in opts:
         if o == "-v":
             verbose = True
+        elif o == "-d":
+            debug = True
         elif o == "-a":
             regen_existing_cache = True
         elif o in ("-h", "--help"):
@@ -82,18 +100,15 @@ def gen_existing_cache(src_repo_dir):
         print '[INFO] generating existing file cache from ', src_repo_dir
 
     # Read the files in the boost directory and put them in a list
-    o = Popen(['git', 'ls-files', 'boost'],
-        stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
+    o = popen('git', 'ls-files', 'boost', cwd=src_repo_dir)
     files = o.split('\n')
 
     # Read the files in the libs directory and put them in a list
-    o = Popen(['git', 'ls-files', 'libs'],
-        stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
+    o = popen('git', 'ls-files', 'libs', cwd=src_repo_dir)
     files.extend(o.split('\n'))
 
     # Read the files in the tools directory and put them in a list
-    o = Popen(['git', 'ls-files', 'tools'],
-        stdout=PIPE, cwd=src_repo_dir, shell=is_win32).communicate()[0]
+    o = popen('git', 'ls-files', 'tools', cwd=src_repo_dir)
     files.extend(o.split('\n'))
 
     with open(existing_cache_pkl, 'wb') as input:
@@ -122,10 +137,10 @@ def validate_manifest(manifest):
         with open(existing_cache_pkl, 'rb') as existing_cache:
             existing_files = pickle.load(existing_cache)
 
-    if verbose:
-        print '[INFO] Existing boost files:'
-        print '[INFO]     ' + '\n[INFO]     '.join(existing_files)
-        print '[INFO]\n'
+    if debug:
+        print '[DEBUG] Existing boost files:'
+        print '[DEBUG]     ' + '\n[DEBUG]     '.join(existing_files)
+        print '[DEBUG]\n'
 
     # The list of files found in the manifest
     manifest_files = []
@@ -139,10 +154,10 @@ def validate_manifest(manifest):
                 manifest_files.append(item[0])
     manifest_files.sort()
 
-    if verbose:
-        print '[INFO] Modularized boost manifest_files:'
-        print '[INFO]     ' + '\n[INFO]     '.join(manifest_files)
-        print '[INFO]\n'
+    if debug:
+        print '[DEBUG] Modularized boost manifest_files:'
+        print '[DEBUG]     ' + '\n[DEBUG]     '.join(manifest_files)
+        print '[DEBUG]\n'
 
     # Make "manifest_files" and "existing_files" essentially a map of paths to counts.
     # Use lists instead of dictionaries to keep ordering intact, and
@@ -200,7 +215,7 @@ def validate_manifest(manifest):
     for e in existing_files:
         if 0 == e[1]:
             errors += 1
-            print '[INFO] No destination for existing file:', e[0]
+            print '[ERROR] No destination for existing file:', e[0]
 
     # Display the files and directories in the manifest_files that
     # have no correspondence with files or directories in the
@@ -210,7 +225,7 @@ def validate_manifest(manifest):
     for f in manifest_files:
         if 0 == f[1]:
             errors += 1
-            print '[INFO] No source found corresponding to:', f[0]
+            print '[ERROR] No source found corresponding to:', f[0]
 
     # If we encountered any errors, bail
     if not errors == 0:
@@ -234,10 +249,7 @@ def clean_dir(dst_module_dir):
     print '[ERROR] Cannot clean directory', dst_module_dir
     sys.exit(1)
 
-def main():
-    # Parse the command line arguments
-    parse_command_line()
-
+def update_modules():
     # Parse the manifest
     manifest = ConfigParser.ConfigParser()
     manifest.optionxform = str # preserve case in key names
@@ -286,16 +298,34 @@ def main():
     # destinations, add all the files that were copied, unstage the
     # removal of files marked as <new>, apply any patches and commit.
     for section in sections:
-
         # Construct the directory in which this submodule lives.
+        global dst_module_dir
         dst_module_dir = os.path.normpath(os.path.join(dst_repo_dir, section))
         print 'Processing module at:', dst_module_dir
 
-        # make sure we're on the master branch
-        check_call(['git', 'checkout', 'master'], cwd=dst_module_dir, shell=is_win32)
+        if os.path.isdir(dst_module_dir):
+            # make sure we're on the master branch
+            o = popen('git', 'branch')
+            lines = [l for l in o.split('\n') if not l == '']
+            if len(lines):
+                run('git', 'checkout', 'master')
+                run('git', 'rm', '--quiet', '-r', '.') # remove everything
 
-        # remove everything
-        check_call(['git', 'rm', '--quiet', '-r', '.'], cwd=dst_module_dir, shell=is_win32)
+                new_module = False
+            else:
+                new_module = True
+        else:
+            os.makedirs(dst_module_dir)
+            base = os.path.basename(section)
+            run('git', 'init')
+            run('git', 'remote', 'add', 'origin',
+                'git@github.com:boost-lib/%s.git' % base)
+            run('git', 'config', 'branch.master.remote', 'origin')
+            run('git', 'config', 'branch.master.merge', 'refs/heads/master')
+            run('git', 'submodule', 'add', 'git://github.com/boost-lib/%s.git' % base,
+                section, cwd=dst_repo_dir)
+            run('git', 'commit', '-a', '-m', 'Added submodule %s' % base, cwd=dst_repo_dir)
+            new_module = True
 
         # Make sure we've really removed everything (leaving behind the top-level)
         # .git directory
@@ -313,23 +343,25 @@ def main():
             src_path = os.path.normpath(os.path.join(src_repo_dir, key))
             dst_path = os.path.normpath(os.path.join(dst_module_dir, value))
 
-            print 'About to copy...'
-            print '\tfrom :', src_path
-            print '\tto   :', dst_path
+            if verbose:
+                print '[INFO] About to copy...'
+                print '[INFO]     from :', src_path
+                print '[INFO]     to   :', dst_path
 
             # copy the files from src to target
             if key[-1] == '/':
                 shutil.copytree(src_path, dst_path)
             else:
                 if not os.path.isdir(os.path.dirname(dst_path)):
-                    print 'Making directory:', os.path.dirname(dst_path)
+                    if verbose:
+                        print '[INFO] Making directory:', os.path.dirname(dst_path)
                     os.makedirs(os.path.dirname(dst_path))
                 shutil.copy2(src_path, dst_path)
 
-            print 'Copied'
+            if verbose: print '[INFO] Copied'
 
             # Add the files we just copied
-            check_call(['git', 'add', value], cwd=dst_module_dir, shell=is_win32)
+            run('git', 'add', value)
 
         # Handle the files that are new to the modularized boost
         if manifest.has_option(section, '<new>'):
@@ -337,63 +369,83 @@ def main():
             # add back the files we want to keep
             new_files = manifest.get(section, '<new>').split('\n')
             for file in new_files:
-                print 'Adding back', file, 'in', dst_module_dir
-                check_call(['git', 'reset', 'HEAD', file], cwd=dst_module_dir, shell=is_win32)
-                check_call(['git', 'checkout', '--', file], cwd=dst_module_dir, shell=is_win32)
+                if new_module:
+                    if verbose:
+                        print '[INFO] Create', file, 'in', dst_module_dir
+                    path = os.path.join(dst_module_dir, file)
+                    if not os.path.isdir(os.path.dirname(path)):
+                        os.makedirs(os.path.dirname(path))
+                    fd = open(path, "w")
+                    fd.write('')
+                    fd.close()
+                    run('git', 'add', file)
+                else:
+                    if verbose:
+                        print '[INFO] Adding back', file, 'in', dst_module_dir
+                    run('git', 'checkout', '-f', 'HEAD', '--', file)
 
         # If this library has a patch file specified, apply it.
-        if manifest.has_option(section, '<patch>'):
+        if manifest.has_option(section, '<patch>') and not new_module:
 
             patch = os.path.abspath(manifest.get(section, '<patch>'))
-            print 'Applying patch', patch, 'in', dst_module_dir
-            check_call(['git', 'apply', patch], cwd=dst_module_dir, shell=is_win32)
+            if verbose:
+                print '[INFO] Applying patch', patch, 'in', dst_module_dir
+            run('git', 'apply', patch)
 
             # Find out what changed as a result of the patch and add those files
-            o = Popen(['git', 'status', '--porcelain', '--untracked-files=no'],
-                stdout=PIPE, cwd=dst_module_dir, shell=is_win32).communicate()[0]
+            o = popen('git', 'status', '--porcelain', '--untracked-files=no')
             lines = [l for l in o.split('\n') if not l == '']
             for line in lines:
                 # line matches the regex [ MARC][ MD] file( -> file2)?
                 file = line[3:].split(' -> ')[0]
-                print 'Adding patched file', file
-                check_call(['git', 'add', file], cwd=dst_module_dir, shell=is_win32)
+                if verbose:
+                    print '[INFO] Adding patched file', file
+                run('git', 'add', file)
 
-        print 'Committing changes to module at:', dst_module_dir
+        if verbose:
+            print '[INFO] Committing changes to module at:', dst_module_dir
 
         # everything looks good, so commit locally
-        check_call(['git', 'commit', '-m', 'latest from svn'], cwd=dst_module_dir, shell=is_win32)
+        o = popen('git', 'status', '--porcelain', '--untracked-files=no')
+        lines = [l for l in o.split('\n') if not l == '']
+        if len(lines):
+            run('git', 'commit', '-m', 'latest from svn')
 
-    # Ask the user whether they really, REALLY want to push this to the remote
-    raw_input('Hit <return> to push all local changes, Ctrl-Z to quit:')
-
+def push_modules():
     # We now want to 'git add' all the modified submodules to the supermodule,
     # commit them and push the new boost supermodule.
     print 'Pushing all modified submodues...'
 
     # Push the changes in each submodule to the remote repo
-    check_call(['git', 'submodule', 'foreach', 'git', 'push', 'origin', 'master'], cwd=dst_repo_dir, shell=is_win32)
+    run('git', 'submodule', 'foreach', 'git', 'push', 'origin', 'master',
+        cwd=dst_repo_dir)
 
     # We now want to 'git add' all the modified submodules to the supermodules,
     # commit them and push the new boost supermodule.
     print 'Adding all modified submodues to the boost supermodule...'
 
     # Run the submodule foreach command and echo the $path to each
-    o = Popen(['git', 'submodule', '--quiet', 'foreach', 'echo $path'],
-        stdout=PIPE, cwd=dst_repo_dir, shell=is_win32).communicate()[0]
+    o = popen('git', 'submodule', '--quiet', 'foreach', 'echo $path', cwd=dst_repo_dir)
     module_paths = [mp for mp in o.split('\n') if not mp == '']
 
     # For each submodule in boost, 'git add' it.
     for module_path in module_paths:
-        check_call(['git', 'add', module_path], cwd=dst_repo_dir, shell=is_win32)
+        run('git', 'add', module_path, cwd=dst_repo_dir)
 
     print 'Committing the boost supermodule...'
-    check_call(['git', 'commit', '-m' 'latest from svn'], cwd=dst_repo_dir, shell=is_win32)
+    o = popen('git', 'status', '--porcelain', '--untracked-files=no')
+    lines = [l for l in o.split('\n') if not l == '']
+    if len(lines):
+        run('git', 'commit', '-m' 'latest from svn', cwd=dst_repo_dir)
 
     # Push this change up to the origin
     print 'Pushing the boost supermodule...'
-    check_call(['git', 'push', 'origin', 'master'], cwd=dst_repo_dir, shell=is_win32)
+    run('git', 'push', 'origin', 'master', cwd=dst_repo_dir)
 
     print 'Done'
 
 if __name__ == "__main__":
-    main()
+    parse_command_line()
+
+    if "update" in args: update_modules()
+    if "push" in args:   push_modules()
