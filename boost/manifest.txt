@@ -138,6 +138,21 @@ libs/bind/test/:	test/
 	test/CMakeLists.txt
 	.ryppl/METADATA
 
+[src/chrono]
+
+boost/chrono.hpp:	include/boost/chrono.hpp
+boost/chrono/:	include/boost/chrono/
+libs/chrono/build/:	build/
+libs/chrono/doc/:	doc/
+libs/chrono/example/:	example/
+libs/chrono/src/:	src/
+libs/chrono/test/:	test/
+<name>: boost-chrono
+<new>:	CMakeLists.txt
+	module.cmake
+	test/CMakeLists.txt
+	.ryppl/METADATA
+
 [src/circular_buffer]
 
 boost/circular_buffer.hpp:	include/boost/circular_buffer.hpp
@@ -497,6 +512,19 @@ libs/fusion/test/:	test/
 <name>: boost-fusion
 <new>:	CMakeLists.txt
 	module.cmake
+	.ryppl/METADATA
+
+[src/geometry]
+
+boost/geometry/:	include/boost/geometry/
+libs/geometry/index.html:	index.html
+libs/geometry/doc/:	doc/
+libs/geometry/example/:	example/
+libs/geometry/test/:	test/
+<name>: boost-geometry
+<new>:	CMakeLists.txt
+	module.cmake
+	test/CMakeLists.txt
 	.ryppl/METADATA
 
 [src/gil]
@@ -993,6 +1021,19 @@ libs/range/test/:	test/
 <name>: boost-range
 <new>:	CMakeLists.txt
 	doc/CMakeLists.txt
+	module.cmake
+	test/CMakeLists.txt
+	.ryppl/METADATA
+
+[src/ratio]
+
+boost/ratio.hpp:	include/boost/ratio.hpp
+boost/ratio/:	include/boost/ratio/
+libs/ratio/doc/:	doc/
+libs/ratio/example/:	example/
+libs/ratio/test/:	test/
+<name>: boost-ratio
+<new>:	CMakeLists.txt
 	module.cmake
 	test/CMakeLists.txt
 	.ryppl/METADATA
