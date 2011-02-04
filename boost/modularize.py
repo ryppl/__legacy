@@ -433,7 +433,7 @@ def push_modules():
         run('git', 'add', module_path, cwd=dst_repo_dir)
 
     print 'Committing the boost supermodule...'
-    o = popen('git', 'status', '--porcelain', '--untracked-files=no')
+    o = popen('git', 'status', '--porcelain', '--untracked-files=no', cwd=dst_repo_dir)
     lines = [l for l in o.split('\n') if not l == '']
     if len(lines):
         run('git', 'commit', '-m' 'latest from svn', cwd=dst_repo_dir)
