@@ -1194,6 +1194,7 @@ libs/spirit/optimization/:	optimization/
 libs/spirit/phoenix/:	phoenix/
 libs/spirit/repository/:	repository/
 libs/spirit/test/:	test/
+libs/spirit/sublibs:	sublibs
 <name>: boost-spirit
 <new>:	CMakeLists.txt
 	module.cmake
