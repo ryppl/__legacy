@@ -80,6 +80,7 @@ boost/asio/:	include/boost/asio/
 libs/asio/doc/:	doc/
 libs/asio/example/:	example/
 libs/asio/test/:	test/
+libs/asio/tools/:	tools/
 libs/asio/index.html:	index.html
 <name>: boost-asio
 <new>:	CMakeLists.txt
