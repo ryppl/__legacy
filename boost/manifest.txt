@@ -143,6 +143,7 @@ libs/bind/test/:	test/
 
 boost/chrono.hpp:	include/boost/chrono.hpp
 boost/chrono/:	include/boost/chrono/
+libs/chrono/index.html:	index.html
 libs/chrono/build/:	build/
 libs/chrono/doc/:	doc/
 libs/chrono/example/:	example/
@@ -1030,6 +1031,7 @@ libs/range/test/:	test/
 
 boost/ratio.hpp:	include/boost/ratio.hpp
 boost/ratio/:	include/boost/ratio/
+libs/ratio/index.html:	index.html
 libs/ratio/doc/:	doc/
 libs/ratio/example/:	example/
 libs/ratio/test/:	test/
