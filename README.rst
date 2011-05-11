@@ -34,6 +34,13 @@ and they need to pay the bills, so please consider `making a donation
 Documentation
 -------------
 
+.. Note:: The source code hosted in this repo is mostly not in use
+   anymore.  The project is still active, but things are in the
+   process of being shuffled around, so if you're curious about the
+   state of the project, come join us on #ryppl at irc.freenode.net or
+   on the `ryppl-dev google group
+   <http://groups.google.com/group/ryppl-dev>`_.
+
 User Documentation
 ::::::::::::::::::
 
