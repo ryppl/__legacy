@@ -33,6 +33,17 @@ build slaves located “out there” on the internet. Remote testing allows
 developers to discover portability issues without having direct access
 to every build platform.
 
+---------------
+This Repository
+---------------
+
+The project is very active and making progress, but has evolved
+considerably, and this repository no longer has any useful code in it.
+You can explore the `old-master
+<https://github.com/ryppl/ryppl/tree/old-master>`_ branch to find code
+and docs that may be relevant.  We're trying to keep the useful
+documentation together at `ryppl.org <http://ryppl.org>`_.
+
 ---------
 Resources
 ---------
